@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Figgie bot that counts cards and reads the market · Rasmus Suonio</title>
+<meta name="description" content="An exact Bayesian card counter that trades Jane Street’s card game, live on figgie.com and in a Python simulator.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/figgie-bot/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A Figgie bot that counts cards and reads the market">
+<meta property="og:description" content="An exact Bayesian card counter that trades Jane Street’s card game, live on figgie.com and in a Python simulator.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/figgie-bot/"><meta property="og:image" content="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/03-how-it-works.svg">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A Figgie bot that counts cards and reads the market</h1>
+<p class="post__sub">An exact Bayesian card counter that trades Jane Street’s card game, live on figgie.com and in a Python simulator.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-19">19 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/figgie-bot/" data-title="A Figgie bot that counts cards and reads the market">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/figgie-bot/&amp;text=A%20Figgie%20bot%20that%20counts%20cards%20and%20reads%20the%20market" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/figgie-bot/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20Figgie%20bot%20that%20counts%20cards%20and%20reads%20the%20market&amp;body=https%3A//rasmuscodes.github.io/projects/figgie-bot/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--live">Building</span>
+<span class="sheet__company">Since Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/figgie-bot" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="/essays/teaching-a-bot-to-trade-figgie/"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>The full story</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Live profit, 142 rounds</dt><dd class="is-text">+$6,958 (play money)</dd></div><div><dt>Last 41 rounds</dt><dd class="is-text">+$81 a round (±$18)</dd></div><div><dt>Live tests in profit</dt><dd class="is-text">Every one since v3</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>JavaScript</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/teaching-a-bot-to-trade-figgie/03-how-it-works.svg" alt="Flow diagram: the bot&#39;s own cards, every bid and offer, the trade tape and the clock feed three steps (count the cards, value every card, trade), with side inputs from reading the other players and learning from the table."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Figgie is Jane Street’s card-trading game. Four players each get ten cards from a 40-card deck in which one suit is secretly the goal, then trade with each other for four minutes in an open market. Every goal card pays $10 at the bell, and the rest of the pot goes to whoever holds the most of them. This bot plays it, live on <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> against the site’s Hard bots and in a simulator against opponents written to beat it.</p>
+<p>The <a href="/essays/teaching-a-bot-to-trade-figgie/">full write-up</a> tells the story version by version, including the ideas that lost money.</p>
+<h2 id="how-it-thinks">How it thinks <a class="header-anchor" href="#how-it-thinks">#</a></h2>
+<ol>
+<li><strong>It counts cards exactly.</strong> There are only 12 possible decks, so it keeps the probability of each. Its own hand is the first evidence, and the tape adds hard facts: nobody can sell a card they don’t hold.</li>
+<li><strong>It reads the market.</strong> High bids are votes for a suit. The cleanest tell is player by player: every Hard bot bids the goal suit up at some point, while a dead suit draws a big bid from only one of them. A bid counts only once it has stood on the book in two different seconds, so a flashed bid can’t steer it.</li>
+<li><strong>It prices adverse selection.</strong> Early in a round, whoever buys from it probably knows more, so its offers are priced as if they do, and it never sells a card for less than the option of holding it.</li>
+<li><strong>It values the majority bonus.</strong> Once it holds half the goal suit, the next card decides between a tie and a win, and it pays up for it.</li>
+<li><strong>It learns from the table.</strong> An online Bayesian logistic regression learns which cheap offers resell within seconds, from every offer on the tape, and at each bell it updates how far to trust each market signal at that table.</li>
+</ol>
+<h2 id="results">Results <a class="header-anchor" href="#results">#</a></h2>
+<p>Across 142 live rounds it made $6,958 in play money. Every live test since v3 has been profitable, and over the last 41 rounds (v11 to v13.3) it averaged $81 a round, ±$18 at 95% confidence, with 34 of 41 rounds in profit. The newest version opens its own tables and runs unattended: its first long session made $810 over 11 rounds at three tables.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Version</th>
+<th style="text-align:right">Live rounds</th>
+<th style="text-align:right">Per round</th>
+<th style="text-align:right">±95%</th>
+<th>What changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">−$29.0</td>
+<td style="text-align:right">±35</td>
+<td>Exact card counting, naive market-making</td>
+</tr>
+<tr>
+<td>v3</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$42.3</td>
+<td style="text-align:right">±35</td>
+<td>Won’t sell a card before the market reveals the goal</td>
+</tr>
+<tr>
+<td>v8</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$33.5</td>
+<td style="text-align:right">±34</td>
+<td>Weighs whether every opponent bid a suit up</td>
+</tr>
+<tr>
+<td>v10</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$60.3</td>
+<td style="text-align:right">±34</td>
+<td>Buys cheap dead cards and resells them, with a kill switch</td>
+</tr>
+<tr>
+<td>v12</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$79.9</td>
+<td style="text-align:right">±34</td>
+<td>Learns which cheap offers resell, from the tape</td>
+</tr>
+<tr>
+<td>v13</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$98.9</td>
+<td style="text-align:right">±32</td>
+<td>Learns which market signals to trust at a table</td>
+</tr>
+<tr>
+<td>v13.3</td>
+<td style="text-align:right">11</td>
+<td style="text-align:right">+$73.6</td>
+<td style="text-align:right">±37</td>
+<td>Reacts to each quote at once; runs unattended</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ten rounds is a small sample: most single steps between versions are inside the noise, so decisions were made on paired simulations (the same deals for both versions) and replays of logged rounds, with live tests as the final check.</p>
+<h2 id="what-it-still-gets-wrong">What it still gets wrong <a class="header-anchor" href="#what-it-still-gets-wrong">#</a></h2>
+<ul>
+<li><strong>Colluders who know the goal beat it.</strong> Three of them take about $60 a round in the simulator whatever it believes, because they sell it dead cards and buy its goal cards.</li>
+<li><strong>Its opponents are bots, not people.</strong> <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots are predictable in ways people aren’t.</li>
+<li><strong>A better forecast didn’t pay.</strong> A model that read each opponent’s tells put more probability on the true goal and still lost $2 a round in simulation, because the bonus goes to whoever commits.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>The game engine, the probability model, a simulator with fifteen kinds of opponents and the analysis tools are about 4,400 lines of standard-library Python. A test bench, the arena, plays every change in paired sessions at 21 tables with separate seeds for tuning, choosing and reporting. The live bot is a 2,900-line userscript that carries a line-for-line JavaScript port into the page, and a harness checks that both versions compute the same probabilities and send the same orders.</p>
+<p>It only trades at private tables where every other seat is a <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> bot, for play money, uses only what a player can see and places at most four orders a second.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/trading/">trading</a><a class="tag" href="/tags/game-theory/">game theory</a><a class="tag" href="/tags/bots/">bots</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/figgie-bot/" data-title="A Figgie bot that counts cards and reads the market">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/figgie-bot/&amp;text=A%20Figgie%20bot%20that%20counts%20cards%20and%20reads%20the%20market" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/figgie-bot/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20Figgie%20bot%20that%20counts%20cards%20and%20reads%20the%20market&amp;body=https%3A//rasmuscodes.github.io/projects/figgie-bot/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/optical-intel/"><span>Previous</span><b>A deal tracker for Coherent and AAOI that quotes every claim verbatim</b></a><a class="pager__item pager__item--next" href="/projects/plo-solver/"><span>Next</span><b>A game-theory solver for six-handed Pot-Limit Omaha</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

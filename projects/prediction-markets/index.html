@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A prediction-market lab: fast prices, little edge after fees · Rasmus Suonio</title>
+<meta name="description" content="A simulated exchange, market maker and arbitrage engine, plus a working paper on 29,703 resolved Kalshi and Polymarket markets and a 13.9-hour live capture.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/prediction-markets/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A prediction-market lab: fast prices, little edge after fees">
+<meta property="og:description" content="A simulated exchange, market maker and arbitrage engine, plus a working paper on 29,703 resolved Kalshi and Polymarket markets and a 13.9-hour live capture.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/prediction-markets/"><meta property="og:image" content="https://rasmuscodes.github.io/media/prediction-markets/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A prediction-market lab: fast prices, little edge after fees</h1>
+<p class="post__sub">A simulated exchange, market maker and arbitrage engine, plus a working paper on 29,703 resolved Kalshi and Polymarket markets and a 13.9-hour live capture.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-17">17 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/prediction-markets/" data-title="A prediction-market lab: fast prices, little edge after fees">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/prediction-markets/&amp;text=A%20prediction-market%20lab%3A%20fast%20prices%2C%20little%20edge%20after%20fees" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/prediction-markets/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20prediction-market%20lab%3A%20fast%20prices%2C%20little%20edge%20after%20fees&amp;body=https%3A//rasmuscodes.github.io/projects/prediction-markets/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/prediction-markets" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Resolved markets studied</dt><dd class="is-text">20,000 Kalshi, 9,703 Polymarket</dd></div><div><dt>Spot move priced within the minute</dt><dd class="is-text">96% (Kalshi 15-minute crypto)</dd></div><div><dt>Replayed strategies on real data</dt><dd class="is-text">All lose 5–6¢ a contract</dd></div><div><dt>Simulated market maker</dt><dd class="is-text">+$167 an hour, 27 of 32 seeds</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>NumPy</li><li>SciPy</li><li>JavaScript</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/prediction-markets/cover.png" alt="Reliability diagrams for Kalshi and Polymarket 24 hours before close, with realised frequencies close to the market probabilities in every bin."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Prediction markets trade contracts that pay $1 if an event happens, so their prices read as probabilities. This project asks how good those probabilities are once real costs are counted, using a simulated exchange where the true probability is known and market data from Kalshi and Polymarket. It ends in a working paper on five questions: speed, calibration, short-term predictability, arbitrage and liquidity.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>A simulated exchange</strong> with one-cent ticks, Kalshi’s published fee formula, latency on every order, price-time queue priority and fully collateralised accounts. Each event’s true probability is known exactly, and every experimental arm faces the same information path.</li>
+<li><strong>A market maker</strong> that learns fair value only from public quotes and trades, through a Kalman filter in log-odds, and quotes around it with an Avellaneda–Stoikov rule.</li>
+<li><strong>An arbitrage engine</strong> that solves a linear program across related contracts (outcome sets, strike ladders, conjunctions) for the best worst-case profit after fees.</li>
+<li><strong>Real data, read-only.</strong> 20,000 resolved Kalshi markets, 9,703 resolved Polymarket markets and a 13.9-hour live capture of both venues on 13 November 2026, including 4.73 million Kalshi trades. Only public market-data endpoints were used, under conservative rate limits, and no order was ever placed.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed</td>
+<td>In Kalshi’s 15-minute bitcoin and ether markets, about 65% of a large spot move shows up in the same second and 96% within the minute</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>24 hours before close, Kalshi is mildly compressed towards 50% (slope 1.07, s.e. 0.04) and Polymarket mildly too extreme (0.93, s.e. 0.03)</td>
+</tr>
+<tr>
+<td>Longshots</td>
+<td>Kalshi contracts under 5¢, bought at the ask, lose 72% after fees (95% CI 52% to 88%)</td>
+</tr>
+<tr>
+<td>Predictability</td>
+<td>Order flow predicts the next 30 seconds (out-of-sample R² 1.5%), but the predictable move, 0.9¢, is smaller than the 1.6¢ cost of acting on it</td>
+</tr>
+<tr>
+<td>Arbitrage</td>
+<td>On complete Kalshi outcome sets, after-fee arbitrage appears in under 1% of snapshots and is gone in about 14 seconds</td>
+</tr>
+</tbody>
+</table></div>
+<p>None of this is tradable. Recalibration rules fitted on the earlier half of markets do not profit on the later half, and three strategies replayed through the live capture’s 15-minute crypto markets all lose 5–6¢ a contract.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/prediction-markets/flb_returns.png" alt="Mean return to buying YES by price bucket, 24 hours before close, on Kalshi and Polymarket, with 95% intervals" /><figcaption>Mean return to buying YES by price bucket, 24 hours before close, on Kalshi and Polymarket, with 95% intervals</figcaption></figure>
+<p>The simulator suggests why the real markets look this clean. With nobody arbitraging, executable arbitrage exists in 99% of scans; a single linear-programming arbitrageur cuts that to 70% and the pricing error against the truth by 30%. Removing the automated market makers raises pricing error by 55%. In the model, market makers and arbitrageurs keep prices coherent.</p>
+<p><strong>Market-maker design</strong> (32 paired seeds). The default maker earns $167 per simulated hour (95% CI ±$59; profitable in 27 of 32 seeds). Its fair-value model is what earns it: swapping it for the external mid costs $135 an hour. Inventory skew and spread width change risk, not mean profit. A cross-market portfolio skew cost $245 an hour, so it is off by default.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The tick-level evidence is one 13.9-hour recording, dominated by crypto and sports markets.</li>
+<li>The speed study uses Coinbase spot, polled once a second, as a proxy, so sub-second lead-lag cannot be resolved.</li>
+<li>Simulated agents are stylised, so the experiments speak to mechanisms, not to real-world profit levels. Most use eight seeds: enough for pricing error, not for P&amp;L. At eight seeds the market-maker ablations suggested effects that 32 seeds did not confirm.</li>
+<li>The market maker’s default parameters come from an informal sweep that is not part of the reproducible pipeline.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with an order book, a discrete-event simulator, pricing, strategy, risk and backtest layers, and a local dashboard. Every simulation run is reproducible from its configuration and seed and writes a manifest with a code hash; the 32-seed suite reproduced the earlier suite’s 16 shared runs exactly. 25 tests cover matching, accounting conservation, pricing and replay. The raw data (about 2.8 GB) is not in the repository: the collectors rebuild the resolved-market datasets, but the live capture was a one-time recording.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/prediction-markets/">prediction markets</a><a class="tag" href="/tags/market-making/">market making</a><a class="tag" href="/tags/calibration/">calibration</a><a class="tag" href="/tags/simulation/">simulation</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/prediction-markets/" data-title="A prediction-market lab: fast prices, little edge after fees">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/prediction-markets/&amp;text=A%20prediction-market%20lab%3A%20fast%20prices%2C%20little%20edge%20after%20fees" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/prediction-markets/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20prediction-market%20lab%3A%20fast%20prices%2C%20little%20edge%20after%20fees&amp;body=https%3A//rasmuscodes.github.io/projects/prediction-markets/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/altalpha/"><span>Previous</span><b>A point-in-time lab for free alternative data, and what survived it</b></a><a class="pager__item pager__item--next" href="/projects/sports-quant/"><span>Next</span><b>Do models beat the closing line? Not in the NBA or NFL</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

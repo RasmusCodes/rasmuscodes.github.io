@@ -1,0 +1,1670 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does Netflix trade flat between earnings? · Rasmus Suonio</title>
+<meta name="description" content="Earnings days are 1.6% of trading days but carry 28% of the variance. Between prints NFLX runs at about 36% annualised volatility, and neither half produced an edge after costs.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/research/netflix-between-earnings/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Does Netflix trade flat between earnings?">
+<meta property="og:description" content="Earnings days are 1.6% of trading days but carry 28% of the variance. Between prints NFLX runs at about 36% annualised volatility, and neither half produced an edge after costs.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/research/netflix-between-earnings/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-research">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab is-active" href="/research/" aria-current="page">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab" href="/projects/">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post post--toc">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/research/">Research</a><span class="kicker__kind">Quant study</span></div>
+    <h1 class="post__title">Does Netflix trade flat between earnings?</h1>
+<p class="post__sub">Earnings days are 1.6% of trading days but carry 28% of the variance. Between prints NFLX runs at about 36% annualised volatility, and neither half produced an edge after costs.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-10-25">25 Oct 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>20 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/research/netflix-between-earnings/" data-title="Does Netflix trade flat between earnings?">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/research/netflix-between-earnings/&amp;text=Does%20Netflix%20trade%20flat%20between%20earnings%3F" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/research/netflix-between-earnings/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Does%20Netflix%20trade%20flat%20between%20earnings%3F&amp;body=https%3A//rasmuscodes.github.io/research/netflix-between-earnings/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--none" aria-label="Research summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+<span class="sheet__ticker">NFLX</span><span class="sheet__company">Netflix · NASDAQ</span>    </div>
+    
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Verdict</dt><dd class="is-text">Partly supported</dd></div><div><dt>Earnings days&#39; share of variance</dt><dd class="is-text">28% (95% CI 15–39%)</dd></div><div><dt>Volatility between earnings</dt><dd class="is-text">≈36% annualised</dd></div>  </dl>
+</section>
+
+
+  <div class="post__body">
+    <nav class="toc" aria-label="Contents">
+      <details class="toc__box" open>
+        <summary>Contents</summary>
+        <ol><li><a href="#executive-summary">Executive summary</a></li><li><a href="#key-findings">Key findings</a></li><li><a href="#statistical-evidence">Statistical evidence</a></li><li><a href="#trading-implications">Trading implications</a></li><li><a href="#risks-and-alternative-explanations">Risks and alternative explanations</a></li><li><a href="#final-verdict">Final verdict</a></li><li><a href="#data-and-methods">Data and methods</a></li><li><a href="#appendix-a-every-cycle">Appendix A: every cycle</a></li><li><a href="#appendix-b-cross-section">Appendix B: cross-section</a></li><li><a href="#more-charts">More charts</a></li></ol>
+      </details>
+    </nav>
+    <div class="prose">
+<p><em>Quantitative research report. Data through the 23 October 2026 close. Prepared 25 October 2026.</em>
+<em>Every number below is reproduced in the accompanying notebook (<a href="/media/netflix-between-earnings/nflx_earnings_vol.ipynb">Jupyter file</a>, or <a href="/media/netflix-between-earnings/nflx_earnings_vol.html">read it as a web page</a>). Section numbers in brackets point to the notebook.</em></p>
+<hr />
+<h2 id="executive-summary">Executive summary <a class="header-anchor" href="#executive-summary">#</a></h2>
+<p><strong>Verdict: the evidence partially supports the thesis.</strong> The concentration half is right: a large,
+statistically robust share of NFLX’s price risk arrives on earnings days. The “flat between earnings” half
+is wrong. Between releases NFLX is a high-volatility stock that travels a long way. Neither half produced a
+demonstrable trading edge after realistic costs in the options data available.</p>
+<ul>
+<li><strong>Earnings dominate the risk budget.</strong> The 44 earnings reaction days are 1.6% of trading days and carry
+28% of NFLX’s daily return variance (95% CI 15% to 39%). A reaction day has 24 times the variance of an
+ordinary day. The median absolute move is 7.4% against 1.2%.</li>
+<li><strong>Between earnings NFLX is volatile, not flat.</strong> Inter-earnings volatility is about 36% annualized: 2.0
+times SPY’s on the same days and 14% above the median comparable large-cap. The median inter-earnings
+period ends 12% from where it started, and only 23% end within ±5% (SPY on the same days: 41%). The paths
+behave like a random walk with NFLX’s own volatility.</li>
+<li><strong>The contrast is large but not unique.</strong> NFLX ranks 2nd of 14 comparable stocks on the earnings share of
+variance, behind META. It is significantly above the five steadiest mega-caps and statistically
+indistinguishable from the other eight.</li>
+<li><strong>Options already price the pattern.</strong> Implied volatility drops about 15 vol points after each release.
+From 2020 to 2026 the earnings move implied by options matched the realized move on average. Buying or
+selling the event, calendar spreads and selling volatility after the release all failed to show reliable
+profits after bid-ask costs.</li>
+</ul>
+<hr />
+<h2 id="key-findings">Key findings <a class="header-anchor" href="#key-findings">#</a></h2>
+<h3 id="1-the-earnings-session-against-everything-else">1. The earnings session against everything else <a class="header-anchor" href="#1-the-earnings-session-against-everything-else">#</a></h3>
+<p>Pooled over 44 complete cycles, 2,769 trading days, 13-Oct-2015 to 16-Oct-2026 [section 5]:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Days</th>
+<th style="text-align:right">Count</th>
+<th style="text-align:right">RMS daily move</th>
+<th style="text-align:right">Annualized vol</th>
+<th style="text-align:right">Median abs move</th>
+<th style="text-align:right">Variance vs a core day</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reaction day R (first session after the release)</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">11.19%</td>
+<td style="text-align:right">178%</td>
+<td style="text-align:right">7.37%</td>
+<td style="text-align:right">24.2x</td>
+</tr>
+<tr>
+<td>R-1 (announcement day, pre-release session)</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">1.89%</td>
+<td style="text-align:right">30%</td>
+<td style="text-align:right">0.98%</td>
+<td style="text-align:right">0.69x</td>
+</tr>
+<tr>
+<td>R+1</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">2.94%</td>
+<td style="text-align:right">47%</td>
+<td style="text-align:right">2.18%</td>
+<td style="text-align:right">1.67x</td>
+</tr>
+<tr>
+<td>±1-session window</td>
+<td style="text-align:right">132</td>
+<td style="text-align:right">6.77%</td>
+<td style="text-align:right">107%</td>
+<td style="text-align:right">2.44%</td>
+<td style="text-align:right">8.9x</td>
+</tr>
+<tr>
+<td>All inter-earnings days (every day except R)</td>
+<td style="text-align:right">2,725</td>
+<td style="text-align:right">2.28%</td>
+<td style="text-align:right">36%</td>
+<td style="text-align:right">1.22%</td>
+<td style="text-align:right">1.00x</td>
+</tr>
+<tr>
+<td>Core inter-earnings (3+ sessions after R)</td>
+<td style="text-align:right">2,549</td>
+<td style="text-align:right">2.28%</td>
+<td style="text-align:right">36%</td>
+<td style="text-align:right">1.21%</td>
+<td style="text-align:right">1.00x</td>
+</tr>
+<tr>
+<td>All days</td>
+<td style="text-align:right">2,769</td>
+<td style="text-align:right">2.66%</td>
+<td style="text-align:right">42%</td>
+<td style="text-align:right">1.25%</td>
+<td style="text-align:right">1.37x</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Release timing.</strong> Netflix released all 45 reports after the close, between 16:01 and 16:57 ET per SEC
+timestamps. The reaction therefore arrives as an overnight gap.</li>
+<li><strong>The gap carries the move.</strong> It holds 84% of the earnings-day squared return. The first full session
+added little: it reversed the gap’s direction 40% of the time, and the gap and session returns correlate
+at only 0.14.</li>
+<li><strong>Earnings moves.</strong> Mean absolute move 8.2%, median 7.3%. Two thirds of releases moved more than 5% and
+29% more than 10%. The extremes were +19.0% (Oct-2016) and -35.1% (Apr-2022).</li>
+<li><strong>Pre-release quiet.</strong> The sessions before a release are slightly quieter than the core inter-earnings
+days (0.69-0.74x). The day after is louder (1.67x).</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/02_cycle_volatility.png" alt="Earnings-window moves vs inter-earnings volatility" /><figcaption>Earnings-window moves vs inter-earnings volatility</figcaption></figure>
+<h3 id="2-what-an-inter-earnings-period-looks-like">2. What an inter-earnings period looks like <a class="header-anchor" href="#2-what-an-inter-earnings-period-looks-like">#</a></h3>
+<p>The 44 cycles, each measured from the first post-release close to the last pre-release close
+(about 62 sessions) [section 4]:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Per-cycle metric</th>
+<th style="text-align:right">10th pct</th>
+<th style="text-align:right">Median</th>
+<th style="text-align:right">90th pct</th>
+<th style="text-align:right">Worst / best</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Annualized realized volatility</td>
+<td style="text-align:right">23%</td>
+<td style="text-align:right">31%</td>
+<td style="text-align:right">51%</td>
+<td style="text-align:right">17% / 64%</td>
+</tr>
+<tr>
+<td>Net return over the period</td>
+<td style="text-align:right">-12.2%</td>
+<td style="text-align:right">+6.7%</td>
+<td style="text-align:right">+24.9%</td>
+<td style="text-align:right">-23.6% / +47.8%</td>
+</tr>
+<tr>
+<td>Absolute net return</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">12.1%</td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Peak-to-trough drawdown (closes)</td>
+<td style="text-align:right">-26%</td>
+<td style="text-align:right">-12%</td>
+<td style="text-align:right">-6%</td>
+<td style="text-align:right">-36%</td>
+</tr>
+<tr>
+<td>Trough-to-peak run-up (closes)</td>
+<td style="text-align:right">11%</td>
+<td style="text-align:right">22%</td>
+<td style="text-align:right">37%</td>
+<td style="text-align:right">52%</td>
+</tr>
+<tr>
+<td>High-low range ÷ starting price</td>
+<td style="text-align:right">16%</td>
+<td style="text-align:right">26%</td>
+<td style="text-align:right">39%</td>
+<td style="text-align:right">52%</td>
+</tr>
+<tr>
+<td>Largest single-day move</td>
+<td style="text-align:right">3.9%</td>
+<td style="text-align:right">5.7%</td>
+<td style="text-align:right">9.6%</td>
+<td style="text-align:right">13.8%</td>
+</tr>
+<tr>
+<td>Share of days moving less than 1% / 2% / 3%</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">42% / 72% / 88%</td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Return reference.</strong> Including the release, the median announcement-to-announcement return was +6.3%
+(10th-90th percentile: -25.6% to +31.1%).</li>
+<li><strong>Excursion frequencies.</strong>
+<ul>
+<li>61% of cycles had a closing drawdown of at least 10% and 27% one of at least 20%.</li>
+<li>93% had a run-up of at least 10% and 55% one of at least 20%.</li>
+<li>In 20% of cycles the stock ended within ±5% while its high-low range exceeded 15%. A small net change
+and a small range are different things.</li>
+</ul>
+</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/05_inter_earnings_paths.png" alt="Inter-earnings price paths" /><figcaption>Inter-earnings price paths</figcaption></figure>
+<h3 id="3-where-the-variance-comes-from">3. Where the variance comes from <a class="header-anchor" href="#3-where-the-variance-comes-from">#</a></h3>
+<p>Close-to-close decomposition, with every day counted exactly once [section 6]:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Event window</th>
+<th style="text-align:right">Share of total variance</th>
+<th style="text-align:right">95% CI</th>
+<th style="text-align:right">Share of trading days</th>
+<th style="text-align:right">Concentration</th>
+<th style="text-align:right">Randomization p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reaction day only</td>
+<td style="text-align:right">28.0%</td>
+<td style="text-align:right">15.3% to 39.3%</td>
+<td style="text-align:right">1.6%</td>
+<td style="text-align:right">17.6x</td>
+<td style="text-align:right">&lt; 0.001</td>
+</tr>
+<tr>
+<td>±1 session</td>
+<td style="text-align:right">30.8%</td>
+<td style="text-align:right">18.8% to 41.4%</td>
+<td style="text-align:right">4.8%</td>
+<td style="text-align:right">6.5x</td>
+<td style="text-align:right">&lt; 0.001</td>
+</tr>
+<tr>
+<td>±2 sessions</td>
+<td style="text-align:right">32.9%</td>
+<td style="text-align:right">21.1% to 43.3%</td>
+<td style="text-align:right">7.9%</td>
+<td style="text-align:right">4.1x</td>
+<td style="text-align:right">&lt; 0.001</td>
+</tr>
+<tr>
+<td>Reaction day, market-adjusted returns</td>
+<td style="text-align:right">35.9%</td>
+<td style="text-align:right">20.9% to 49.8%</td>
+<td style="text-align:right">1.6%</td>
+<td style="text-align:right">22.6x</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<p>Splitting each day into overnight and session returns:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align:right">Share of variance (sum of squared overnight and session returns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Earnings overnight gaps</td>
+<td style="text-align:right">24.0%</td>
+</tr>
+<tr>
+<td>Earnings first sessions</td>
+<td style="text-align:right">2.3%</td>
+</tr>
+<tr>
+<td>Other overnight returns</td>
+<td style="text-align:right">16.9%</td>
+</tr>
+<tr>
+<td>Other sessions</td>
+<td style="text-align:right">56.8%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Overnight risk.</strong> Earnings gaps are 59% of all overnight variance.</li>
+<li><strong>Cross term.</strong> The overnight-session cross term is 2.4% of close-to-close variance, nearly all on
+reaction days. It is reported separately rather than assigned to a bucket.</li>
+</ul>
+<p>The share is sensitive to the tails and to the regime:</p>
+<ul>
+<li><strong>Tails.</strong> The single worst day, 20-Apr-2022, holds 9.5% of all variance.</li>
+<li><strong>Largest moves removed.</strong> Without the 1, 3 and 5 largest moves the share falls to 21.6%, 18.1% and 15.9%.</li>
+<li><strong>Halves.</strong> It was 18.3% in 2015-2021 and 36.5% in 2021-2026.</li>
+<li><strong>Without the four 2022 cycles.</strong> It is 20.1%.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/04_variance_decomposition.png" alt="Variance decomposition" /><figcaption>Variance decomposition</figcaption></figure>
+<h3 id="4-nflx-against-comparable-stocks-and-the-market">4. NFLX against comparable stocks and the market <a class="header-anchor" href="#4-nflx-against-comparable-stocks-and-the-market">#</a></h3>
+<p>Every stock is measured with its own EDGAR release calendar over 2015-2026 [section 7]:</p>
+<ul>
+<li><strong>NFLX’s rank.</strong> NFLX’s 28.0% earnings share ranks 2nd of 14, behind META’s 29.8%, against a peer
+median of 14.2% (full table in Appendix B).</li>
+<li><strong>Inter-earnings vol.</strong> At 36% NFLX ranks 5th of 14: above META, CRM, ADBE, BKNG, AMZN, AAPL, GOOGL,
+DIS and MSFT (26-33%), below ROKU, TSLA, NVDA and SPOT (43-63%).</li>
+<li><strong>The market.</strong> SPY ran 18% and QQQ 22% on NFLX’s inter-earnings days. Only 1.1% of SPY’s variance falls
+on NFLX reaction days, below the 1.6% day share. NFLX’s earnings days are not market-wide volatility
+days, so the contrast is NFLX-specific.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/07_peer_comparison.png" alt="NFLX vs peers" /><figcaption>NFLX vs peers</figcaption></figure>
+<h3 id="5-options">5. Options <a class="header-anchor" href="#5-options">#</a></h3>
+<p>Data from 2019-2026 [section 8.6]:</p>
+<ul>
+<li><strong>Implied vol before a release.</strong> At the last pre-release close the ~2-week ATM straddle priced 62%
+implied vol and the ~4-week one 51%. The 30-day constant-maturity series averaged 50%.</li>
+<li><strong>After the release.</strong> 30-day IV averaged 36%. The mean drop was 14.8 vol points (29%) across 31
+releases. There was no drop after the January and April 2022 shocks.</li>
+<li><strong>Inter-earnings implied vol.</strong> The ex-event base vol was about 35%, against about 34% subsequently
+realized.</li>
+<li><strong>Implied vs realized earnings move.</strong> The term structure implied an earnings-day standard deviation
+averaging 10.4% across 28 releases. Under a normal jump that implies an 8.3% mean absolute move; the
+realized mean was 9.1%. Realized moves exceeded the implied standard deviation in 32% of releases, the
+same as the 32% a correctly priced normal distribution would give.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/08_implied_vs_realized.png" alt="Implied vs realized" /><figcaption>Implied vs realized</figcaption></figure>
+<hr />
+<h2 id="statistical-evidence">Statistical evidence <a class="header-anchor" href="#statistical-evidence">#</a></h2>
+<p><strong>Inference design.</strong> The unit of observation is the earnings cycle. Days within a cycle cluster, and
+neighbouring cycles share volatility regimes, so intervals come from:</p>
+<ul>
+<li>moving-block bootstraps over cycles (blocks of 4 cycles, 10,000 replicates);</li>
+<li>randomization within each cycle, where the real release day is swapped for random days of the same cycle;</li>
+<li>HAC (Newey-West) regressions;</li>
+<li>for cross-stock comparisons, a calendar-quarter block bootstrap that resamples all stocks jointly.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Hypothesis and test</th>
+<th style="text-align:right">Estimate</th>
+<th style="text-align:right">95% CI</th>
+<th style="text-align:right">n</th>
+<th>Test result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1</strong> NFLX vs SPY inter-earnings vol, same days</td>
+<td style="text-align:right">2.04x</td>
+<td style="text-align:right">1.69 to 2.50</td>
+<td style="text-align:right">44 cycles</td>
+<td>NFLX higher in 44/44, Wilcoxon p &lt; 0.001</td>
+</tr>
+<tr>
+<td>H1 NFLX vs QQQ</td>
+<td style="text-align:right">1.63x</td>
+<td style="text-align:right">1.45 to 1.85</td>
+<td style="text-align:right">44</td>
+<td>44/44, p &lt; 0.001</td>
+</tr>
+<tr>
+<td>H1 NFLX vs median peer, same days, peers’ earnings windows removed</td>
+<td style="text-align:right">1.14x</td>
+<td style="text-align:right">1.04 to 1.27</td>
+<td style="text-align:right">44</td>
+<td>31/44, p &lt; 0.001</td>
+</tr>
+<tr>
+<td>H1 same, market-adjusted</td>
+<td style="text-align:right">1.36x</td>
+<td style="text-align:right">1.23 to 1.50</td>
+<td style="text-align:right">44</td>
+<td>36/44, p &lt; 0.001</td>
+</tr>
+<tr>
+<td>H1 First 5 post-release sessions vs mid-cycle</td>
+<td style="text-align:right">0.99x</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>Wilcoxon p = 0.85 (no mid-cycle lull)</td>
+</tr>
+<tr>
+<td>H1 Last 5 pre-release sessions vs mid-cycle</td>
+<td style="text-align:right">0.95x</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>p = 0.07</td>
+</tr>
+<tr>
+<td><strong>H2</strong> Reaction-day share of variance</td>
+<td style="text-align:right">28.0%</td>
+<td style="text-align:right">15.3% to 39.3%</td>
+<td style="text-align:right">44</td>
+<td>randomization p &lt; 0.001; null 99th pct 10.6%</td>
+</tr>
+<tr>
+<td>H2 Earnings-day variance multiple</td>
+<td style="text-align:right">24.2x</td>
+<td style="text-align:right">11.3x to 40.0x</td>
+<td style="text-align:right">44</td>
+<td></td>
+</tr>
+<tr>
+<td>H2 ±1 windows above their own cycle’s 90th-percentile placebo window</td>
+<td style="text-align:right">30/44</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>binomial vs 10%: p ≈ 3e-20</td>
+</tr>
+<tr>
+<td><strong>H3</strong> 40-session return inside ex-ante ±1σ band</td>
+<td style="text-align:right">68%</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>nominal 68%; binomial p = 1.0</td>
+</tr>
+<tr>
+<td>H3 Inside ±2σ band</td>
+<td style="text-align:right">91%</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>nominal 95%: fat tails</td>
+</tr>
+<tr>
+<td>H3 Vol forecast: median absolute error</td>
+<td style="text-align:right">21%</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>Mincer-Zarnowitz slope 0.47 (SE 0.10), R² 0.23</td>
+</tr>
+<tr>
+<td>H3 Out-of-sample R² vs the long-run mean</td>
+<td style="text-align:right">0.02</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">43</td>
+<td>trailing vol barely beats the average</td>
+</tr>
+<tr>
+<td>H3 Earnings-move size vs trailing 4-quarter average</td>
+<td style="text-align:right">Spearman 0.02</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">45</td>
+<td>p = 0.88: not predictable</td>
+</tr>
+<tr>
+<td><strong>H4</strong> NFLX minus peer median, reaction-day share</td>
+<td style="text-align:right">+13.8 pts</td>
+<td style="text-align:right">+1.6 to +24.7</td>
+<td style="text-align:right">44 quarters</td>
+<td>P(NFLX ranks 1st) = 35%, P(top 3) = 84%</td>
+</tr>
+<tr>
+<td>H4 ±1-session share</td>
+<td style="text-align:right">+11.0 pts</td>
+<td style="text-align:right">-0.0 to +22.7</td>
+<td style="text-align:right"></td>
+<td>borderline</td>
+</tr>
+<tr>
+<td>H4 Variance multiple</td>
+<td style="text-align:right">+14.0x</td>
+<td style="text-align:right">+1.2 to +28.8</td>
+<td style="text-align:right"></td>
+<td></td>
+</tr>
+<tr>
+<td>H4 Market-adjusted share</td>
+<td style="text-align:right">+13.3 pts</td>
+<td style="text-align:right">-0.3 to +26.4</td>
+<td style="text-align:right"></td>
+<td>borderline</td>
+</tr>
+<tr>
+<td><strong>Flat</strong> Mean of cum² ÷ Σr² per cycle (random walk = 1)</td>
+<td style="text-align:right">1.04</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>no excess flatness</td>
+</tr>
+<tr>
+<td>Flat Variance ratio VR(20), within cycles</td>
+<td style="text-align:right">0.77</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">2,725 days</td>
+<td>z = -2.0; SPY 0.85, peer median 0.83</td>
+</tr>
+<tr>
+<td>Flat Actual range vs shuffled paths (percentile)</td>
+<td style="text-align:right">0.48</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">44</td>
+<td>Wilcoxon p = 0.55</td>
+</tr>
+<tr>
+<td>Flat Earnings return vs following inter-earnings return</td>
+<td style="text-align:right">r = 0.37</td>
+<td style="text-align:right">0.10 to 0.54</td>
+<td style="text-align:right">44</td>
+<td>continuation, not reversal</td>
+</tr>
+<tr>
+<td><strong>Options</strong> Realized ÷ implied event variance</td>
+<td style="text-align:right">1.31</td>
+<td style="text-align:right">0.48 to 2.73</td>
+<td style="text-align:right">28</td>
+<td>no detectable mispricing</td>
+</tr>
+<tr>
+<td>Options Inter-earnings IV minus next-30-day RV</td>
+<td style="text-align:right">+0.3 pts</td>
+<td style="text-align:right">-1.6 to +2.0</td>
+<td style="text-align:right">837 days</td>
+<td>no detectable premium</td>
+</tr>
+<tr>
+<td>Options Post-release short straddle, delta-hedged, at the bid</td>
+<td style="text-align:right">+0.34% of stock</td>
+<td style="text-align:right">-0.46% to +1.16%</td>
+<td style="text-align:right">27</td>
+<td>not significant</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>How strong the findings are.</strong></p>
+<ul>
+<li><strong>Survive any correction for multiple testing:</strong>
+<ul>
+<li>the earnings concentration;</li>
+<li>NFLX’s higher inter-earnings vol versus SPY, QQQ and the peer median.</li>
+</ul>
+</li>
+<li><strong>Tentative:</strong>
+<ul>
+<li>the mild mean reversion inside cycles (VR(20) z = -2.0, typical of large caps);</li>
+<li>post-earnings drift continuation;</li>
+<li>the 28-of-44 negative earnings reactions (sign test p = 0.10).</li>
+</ul>
+</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/10_range_calibration.png" alt="Ex-ante range band calibration" /><figcaption>Ex-ante range band calibration</figcaption></figure>
+<hr />
+<h2 id="trading-implications">Trading implications <a class="header-anchor" href="#trading-implications">#</a></h2>
+<p><strong>Nothing here clears costs and risk with statistical confidence.</strong> Five strategy families were tested with
+real bid/ask quotes and $0.65-per-contract commissions [section 8.6]. P&amp;L is in % of the stock price per
+trade.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th style="text-align:right">Trades</th>
+<th style="text-align:right">Mean</th>
+<th style="text-align:right">95% CI</th>
+<th style="text-align:right">Win rate</th>
+<th style="text-align:right">Worst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buy the event straddle (ask in, bid out), quoted trades</td>
+<td style="text-align:right">24</td>
+<td style="text-align:right">-0.49%</td>
+<td style="text-align:right">-2.08% to +1.28%</td>
+<td style="text-align:right">38%</td>
+<td style="text-align:right">-5.8%</td>
+</tr>
+<tr>
+<td>Sell the event straddle (bid in, ask out), quoted trades</td>
+<td style="text-align:right">24</td>
+<td style="text-align:right">-0.75%</td>
+<td style="text-align:right">-2.54% to +0.83%</td>
+<td style="text-align:right">58%</td>
+<td style="text-align:right">-15.1%</td>
+</tr>
+<tr>
+<td>Sell the event straddle, all 28 releases, unquoted exits at intrinsic (best case for the seller)</td>
+<td style="text-align:right">28</td>
+<td style="text-align:right">-1.20%</td>
+<td style="text-align:right">-3.94% to +1.01%</td>
+<td style="text-align:right">54%</td>
+<td style="text-align:right">-21.8%</td>
+</tr>
+<tr>
+<td>Calendar: sell nearer straddle, buy later one</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">-1.67%</td>
+<td style="text-align:right">-2.06% to -1.26%</td>
+<td style="text-align:right">0%</td>
+<td style="text-align:right">-2.9%</td>
+</tr>
+<tr>
+<td>Sell ~1-month straddle after the release, unhedged</td>
+<td style="text-align:right">27</td>
+<td style="text-align:right">-0.09%</td>
+<td style="text-align:right">-2.26% to +2.16%</td>
+<td style="text-align:right">48%</td>
+<td style="text-align:right">-11.9%</td>
+</tr>
+<tr>
+<td>Same, delta-hedged daily (2 bp stock costs)</td>
+<td style="text-align:right">27</td>
+<td style="text-align:right">+0.34%</td>
+<td style="text-align:right">-0.46% to +1.16%</td>
+<td style="text-align:right">67%</td>
+<td style="text-align:right">-4.0%</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>Selling short-dated options after earnings.</strong> Implied vol does collapse, but to a level that
+subsequent realized vol roughly matches (35.6% entry IV vs 33.0% realized). The delta-hedged seller
+earned about 0.3% of the stock per month with a two-thirds hit rate, but the interval includes zero. The
+unhedged seller earned nothing on average and lost 12% in the worst month. The two NFLX facts that make
+this tempting, a quiet stock after a big move, are not in the data. The session after the release is the
+second-noisiest day of the cycle, and volatility does not decline mid-cycle.</li>
+<li><strong>Selling when implied vol is elevated.</strong> In inter-earnings windows where 30-day IV was in the top third
+of its past year, subsequent realized vol exceeded it by 1.9 points (CI -3.2 to -0.4). High IV preceded
+even higher realized vol, as in 2022. Selling only after an event has passed was mildly better (+2.1
+points, CI includes zero).</li>
+<li><strong>Calendar spreads around the event.</strong> At mid prices the calendar was roughly flat (-0.24%). Four legs of
+bid-ask turned that into a loss on all 12 executable trades.</li>
+<li><strong>Buying vs selling ahead of earnings.</strong>
+<ul>
+<li><strong>Pricing is fair on average.</strong> The implied event move was in line with the realized one, and the
+tail frequency matched a normal jump.</li>
+<li><strong>Spread cost.</strong> A round trip in the event straddle cost 0.61% of the stock price, enough to sink
+either side when the average edge is near zero.</li>
+<li><strong>Selection bias.</strong> Four releases lack a quote on both dates, and they averaged a 17.1% move against
+7.8% for the quoted ones. A quoted-only backtest flatters the seller.</li>
+<li><strong>Skew.</strong> Selling wins most of the time and loses big: -15% of the stock in January 2022 and at least
+-22% in April 2022.</li>
+</ul>
+</li>
+<li><strong>Holding cash or shares instead of options.</strong> This needs only stock data, so it spans all 44 cycles.
+<ul>
+<li><strong>Risk.</strong> Holding NFLX only between releases, flat over each print, cut annualized volatility from 42%
+to 36% and maximum drawdown from -76% to -53%.</li>
+<li><strong>Return.</strong> Return rose from 16.6% to 22.9% a year (log), because the average earnings reaction was
+-1.7% (log). That return gain is not statistically reliable (t ≈ -1). Treat it as luck; the risk
+reduction is structural.</li>
+<li><strong>Practical form.</strong> For a long-term holder, sidestepping or hedging the print is a risk-management
+tool, not an alpha source.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Today’s setup</strong> (Cboe, 23-Oct-2026 close, NFLX $65.78):</p>
+<ul>
+<li><strong>Term structure.</strong> ATM implied vol is 29.7% for the 30-Oct expiry, 30.5% for 18-Dec, 32.9% for
+15-Jan-2027 and 36.3% for 19-Mar-2027.</li>
+<li><strong>Next release.</strong> It is expected around 19-21 January 2027. The implied event standard deviation is 6.1%
+to 9.7%, depending on the base-vol assumption. Historically the median absolute move was 7.5% and the RMS
+move 11.1%.</li>
+<li><strong>Inter-earnings vol.</strong> Ex-event implied vol of about 30% sits at or below realized inter-earnings vol:
+31% for the median cycle and 32.8% over the trailing 63 ex-earnings sessions. There is no cushion for
+selling inter-earnings volatility now.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/08b_iv_through_cycle.png" alt="Implied vol through the cycle" /><figcaption>Implied vol through the cycle</figcaption></figure>
+<hr />
+<h2 id="risks-and-alternative-explanations">Risks and alternative explanations <a class="header-anchor" href="#risks-and-alternative-explanations">#</a></h2>
+<ul>
+<li><strong>The share is driven by a few events.</strong> One day, 20-Apr-2022, holds 9.5% of all variance, and the CI
+spans 15% to 39%. Removing the five largest moves halves the share.</li>
+<li><strong>Regime change.</strong>
+<ul>
+<li><strong>Concentration doubled.</strong> It went from 18% (2015-2021) to 37% (2021-2026). The jump coincides with
+the 2022 subscriber shocks and a calmer 2023-2025 between releases.</li>
+<li><strong>Disclosure changed.</strong> Netflix stopped reporting quarterly membership counts from 2025, which could
+change what each print reveals.</li>
+<li><strong>Limited window.</strong> Eleven years is 44 independent events, not 2,700.</li>
+</ul>
+</li>
+<li><strong>NFLX is not special among event-driven growth names.</strong> META shows the same pattern at a slightly higher
+level, ROKU nearly as strongly, and the median peer has half NFLX’s share. The pattern is a property of
+single-name growth stocks whose value hinges on a few quarterly metrics.</li>
+<li><strong>Market regime confounds.</strong> COVID-2020 and the 2022 rate shock raised inter-earnings vol for all stocks.
+The market-adjusted results (NFLX 1.36x the median peer) show NFLX’s excess inter-earnings vol is not
+just beta.</li>
+<li><strong>Inter-earnings vol includes non-earnings news by construction.</strong> Corporate actions, sector news and macro
+surprises are part of “between earnings” risk. The question is whether the stock is quiet, and it is not.</li>
+<li><strong>Peer selection.</strong> The peers are large caps that survived and grew (survivorship). SPOT and ROKU have
+shorter samples, and ROKU was a mid-cap for much of the period. A broader universe could move NFLX’s rank
+either way.</li>
+<li><strong>Data.</strong>
+<ul>
+<li><strong>Yahoo opens.</strong> A few opens equal the previous close (41 NFLX days, none on reaction days).</li>
+<li><strong>Options source.</strong> The DoltHub data is community-maintained with undocumented methodology. Its quotes
+matched Cboe exactly on the one overlapping close, but its strike subsets shift daily, its expiries
+skip the nearest weekly, and its pre-2024 snapshots are three days a week.</li>
+<li><strong>Model simplifications.</strong> Implied vols come from Black-76 on put-call-parity forwards, ignoring the
+small early-exercise premium in puts. Hedging uses the entry implied vol.</li>
+</ul>
+</li>
+<li><strong>Look-ahead checks.</strong>
+<ul>
+<li>Earnings dates are pre-announced, so classifying days by them is not look-ahead.</li>
+<li>Betas use only the prior 252 sessions.</li>
+<li>Volatility forecasts use only data up to the forecast date.</li>
+<li>Options trades use only quotes available at entry.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="final-verdict">Final verdict <a class="header-anchor" href="#final-verdict">#</a></h2>
+<ol>
+<li><strong>Does NFLX actually trade relatively flat between earnings reports?</strong> No.
+<ul>
+<li><strong>Volatility.</strong> It runs about 36% annualized between releases: twice the S&amp;P 500’s on the same days
+and above the median comparable stock, raw and market-adjusted.</li>
+<li><strong>Net change.</strong> The median cycle ends 12% from its start, and only 23% end within ±5%.</li>
+<li><strong>Range.</strong> The median high-low range is 26% of the starting price.</li>
+<li><strong>Path shape.</strong> Paths are statistically indistinguishable from a random walk with that volatility.</li>
+</ul>
+</li>
+<li><strong>What proportion of realized variance is attributable to earnings-related price movements?</strong>
+<ul>
+<li><strong>Reaction day.</strong> 28% of close-to-close variance (95% CI 15% to 39%) on 1.6% of days.</li>
+<li><strong>Wider windows.</strong> 31% within ±1 session and 33% within ±2.</li>
+<li><strong>Market-adjusted.</strong> 36% of idiosyncratic variance.</li>
+<li><strong>Overnight gaps alone.</strong> 24% of sub-daily variance.</li>
+<li><strong>Sensitivity.</strong> The estimate drops to 16% without the five largest moves.</li>
+</ul>
+</li>
+<li><strong>Is the pattern statistically significant?</strong>
+<ul>
+<li><strong>Concentration: yes.</strong> It holds by every test used: randomization p &lt; 0.001, bootstrap CI far above
+the 1.6% day share, and 30 of 44 earnings windows beating the 90th percentile of their own cycle’s
+placebo windows.</li>
+<li><strong>“Low inter-earnings volatility”: significant in the opposite direction.</strong> NFLX’s between-release vol
+is significantly higher than SPY’s, QQQ’s and the median peer’s.</li>
+<li><strong>Mid-cycle lull: not significant.</strong></li>
+</ul>
+</li>
+<li><strong>Is it unusual compared with comparable stocks?</strong> Partly.
+<ul>
+<li><strong>Rank.</strong> NFLX ranks 2nd of 14 on the earnings share of variance, 14 points above the peer median
+(CI +2 to +25).</li>
+<li><strong>Significant gaps.</strong> It is significantly above AAPL, MSFT, AMZN, GOOGL and TSLA.</li>
+<li><strong>No significant gap.</strong> It cannot be distinguished from META (higher), ROKU, ADBE, SPOT, CRM, NVDA,
+BKNG or DIS.</li>
+<li><strong>Against the market.</strong> It is very unusual relative to the market.</li>
+</ul>
+</li>
+<li><strong>Does the evidence suggest an exploitable trading opportunity?</strong> No, not with the data available.
+<ul>
+<li><strong>Fair pricing.</strong> Options price the earnings jump and the post-release volatility roughly fairly.</li>
+<li><strong>Costs and tails.</strong> Bid-ask costs (about 0.6% of the stock per straddle round trip) and fat-tailed
+outcomes absorb the small edges observed.</li>
+<li><strong>Best candidate.</strong> Delta-hedged selling of one-month volatility after the release earned +0.34% per
+trade, CI -0.46% to +1.16%, n = 27. It is not significant and would need far more data to trust.</li>
+<li><strong>Robust use.</strong> Risk management: avoiding or hedging the print materially lowers volatility and
+drawdowns for a holder of the stock.</li>
+</ul>
+</li>
+<li><strong>What additional data would most improve confidence?</strong> In order of value:
+<ol>
+<li><strong>OptionMetrics IvyDB via WRDS</strong> (available through Wharton). It has full daily NFLX chains and
+standardized implied vols since 1996, including the front weekly expiries. That allows event
+straddle, calendar and post-earnings strategies on all 45 releases with consistent maturities and
+no missing-quote bias.</li>
+<li><strong>Intraday and extended-hours trade data</strong> (TAQ). It would split the after-hours reaction from the
+opening auction and the first session, and test whether the post-release session is predictable
+from the after-hours move.</li>
+<li><strong>Earnings-surprise data</strong> (I/B/E/S consensus, guidance, membership and revenue surprises). It would
+test whether the size of the earnings move is predictable. The price history alone says it is not.</li>
+<li><strong>A full-universe benchmark</strong> (all S&amp;P 500 or Russell 1000 members). It would place NFLX’s 28% in a
+proper cross-sectional distribution.</li>
+<li><strong>Pre-2015 history.</strong> It would check whether the concentration is stable across Netflix’s business
+regimes.</li>
+</ol>
+</li>
+</ol>
+<hr />
+<h2 id="data-and-methods">Data and methods <a class="header-anchor" href="#data-and-methods">#</a></h2>
+<ul>
+<li><strong>Universe and sample.</strong>
+<ul>
+<li><strong>Releases.</strong> 45 NFLX earnings releases, from Q3-2015 (14-Oct-2015) to Q3-2026 (20-Oct-2026).</li>
+<li><strong>Cycles.</strong> 44 complete cycles. The current cycle has two sessions and is excluded.</li>
+<li><strong>Benchmarks.</strong> SPY and QQQ.</li>
+<li><strong>Peers, in three groups:</strong>
+<ul>
+<li>mega-cap tech/internet: AAPL, MSFT, AMZN, GOOGL, META, NVDA, TSLA;</li>
+<li>large-cap software and platforms: ADBE, CRM, BKNG;</li>
+<li>media and streaming: DIS, SPOT, ROKU.</li>
+</ul>
+</li>
+<li><strong>Why these peers.</strong> They share NFLX’s investor base and factor exposure, or its business model.</li>
+</ul>
+</li>
+<li><strong>Prices.</strong>
+<ul>
+<li><strong>Source.</strong> Yahoo Finance daily OHLCV.</li>
+<li><strong>Adjustment.</strong> Every OHLC field is scaled by adjclose/close, so returns are total returns and the
+7-for-1 (2015) and 10-for-1 (2025) splits leave no artefact.</li>
+<li><strong>Checks.</strong> Every series was checked for missing values, high/low consistency, zero volume,
+calendar gaps and split-date jumps.</li>
+</ul>
+</li>
+<li><strong>Earnings calendar.</strong>
+<ul>
+<li><strong>Source.</strong> SEC EDGAR 8-K Item 2.02 filings, and 6-Ks for Spotify. The acceptance timestamp
+determines before-open or after-close timing.</li>
+<li><strong>Manual inputs.</strong> Non-earnings 2.02 filings are excluded, and each exclusion is documented.</li>
+<li><strong>Validation.</strong> Every calendar was checked against prices: average squared return peaks on the
+assigned reaction day, and spacing is 35-85 sessions.</li>
+</ul>
+</li>
+<li><strong>Timing and returns.</strong>
+<ul>
+<li><strong>Return definitions.</strong>
+<ul>
+<li>Close-to-close: r = ln(C_t/C_{t-1}).</li>
+<li>Overnight: o = ln(O_t/C_{t-1}).</li>
+<li>Session: i = ln(C_t/O_t), so r = o + i exactly.</li>
+</ul>
+</li>
+<li><strong>After-close releases</strong> (all NFLX): the reaction day R is the next session, the after-hours reaction
+is in that day’s overnight return, and the announcement day’s session is pre-release.</li>
+<li><strong>Before-open releases</strong> (Disney from 2024, most Spotify): the gap is the same day’s open.</li>
+<li><strong>Why it matters.</strong> Misclassifying the timing would push the gap into the wrong day. The
+price-based checks rule that out.</li>
+</ul>
+</li>
+<li><strong>Segmentation.</strong>
+<ul>
+<li><strong>Cycles.</strong> Cycle k runs from R_k to the last pre-release close before release k+1. The
+inter-earnings period starts the session after R_k.</li>
+<li><strong>Event blocks.</strong> For pooled statistics, block k = [R_k-2, R_{k+1}-2). Every ±2-session event
+window then sits inside one block and every day is counted once.</li>
+</ul>
+</li>
+<li><strong>Volatility.</strong>
+<ul>
+<li><strong>Realized variance.</strong> The sum of squared log returns, not demeaned. Annualized with 252 sessions.</li>
+<li><strong>Market adjustment.</strong> Uses a rolling 252-session beta on SPY. It is estimated through t-1 and
+excludes the stock’s ±1 earnings windows.</li>
+</ul>
+</li>
+<li><strong>Options.</strong>
+<ul>
+<li><strong>What is used.</strong> Black-76 implied vols from straddle mids, with put-call-parity forwards and a
+trading-session clock.</li>
+<li><strong>Implied event move.</strong> It comes from the two nearest post-release expiries (term-structure
+decomposition).</li>
+<li><strong>Trade P&amp;L.</strong> Real bids and asks on both dates. Where a two-date quote was missing, the exit is
+bounded at intrinsic value and labelled as such.</li>
+<li><strong>What is not done.</strong> No quotes were invented.</li>
+</ul>
+</li>
+</ul>
+<h3 id="what-the-options-data-cannot-answer">What the options data cannot answer <a class="header-anchor" href="#what-the-options-data-cannot-answer">#</a></h3>
+<ul>
+<li><strong>Pre-2020 events.</strong> There is no chain data before 2020, and the IV series only starts in 2019.</li>
+<li><strong>True front-week straddles.</strong> The dataset omits expiries under about 11 days. The traded straddles are
+2-9 weeks long and dilute the event exposure.</li>
+<li><strong>Clean long-run backtests.</strong> Sample sizes are 24-28 events per strategy, too few to separate a 0.3%
+edge from noise.</li>
+<li><strong>Skew dynamics around earnings.</strong> Only a shifting subset of near-the-money strikes is stored.</li>
+<li><strong>Margin, assignment and financing costs</strong> are not modelled.</li>
+</ul>
+<hr />
+<h2 id="appendix-a-every-cycle">Appendix A: every cycle <a class="header-anchor" href="#appendix-a-every-cycle">#</a></h2>
+<p>The gap and reaction-day return measure the release. The remaining columns measure the inter-earnings
+period that follows it. Full metrics are in the notebook.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Release</th>
+<th>Reaction day</th>
+<th style="text-align:right">Gap</th>
+<th style="text-align:right">Reaction-day return</th>
+<th style="text-align:right">Inter-earnings return</th>
+<th style="text-align:right">Inter-earnings vol (ann.)</th>
+<th style="text-align:right">Max drawdown</th>
+<th style="text-align:right">High-low range</th>
+<th style="text-align:right">Days</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q3-2015</td>
+<td>2015-10-15</td>
+<td style="text-align:right">-5.9%</td>
+<td style="text-align:right">-8.3%</td>
+<td style="text-align:right">+6.7%</td>
+<td style="text-align:right">47%</td>
+<td style="text-align:right">-21%</td>
+<td style="text-align:right">37%</td>
+<td style="text-align:right">64</td>
+</tr>
+<tr>
+<td>Q4-2015</td>
+<td>2016-01-20</td>
+<td style="text-align:right">+0.9%</td>
+<td style="text-align:right">-0.1%</td>
+<td style="text-align:right">+0.6%</td>
+<td style="text-align:right">44%</td>
+<td style="text-align:right">-23%</td>
+<td style="text-align:right">30%</td>
+<td style="text-align:right">61</td>
+</tr>
+<tr>
+<td>Q1-2016</td>
+<td>2016-04-19</td>
+<td style="text-align:right">-8.2%</td>
+<td style="text-align:right">-13.0%</td>
+<td style="text-align:right">+4.7%</td>
+<td style="text-align:right">32%</td>
+<td style="text-align:right">-17%</td>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q2-2016</td>
+<td>2016-07-19</td>
+<td style="text-align:right">-13.5%</td>
+<td style="text-align:right">-13.1%</td>
+<td style="text-align:right">+16.3%</td>
+<td style="text-align:right">28%</td>
+<td style="text-align:right">-6%</td>
+<td style="text-align:right">26%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2016</td>
+<td>2016-10-18</td>
+<td style="text-align:right">+16.9%</td>
+<td style="text-align:right">+19.0%</td>
+<td style="text-align:right">+12.2%</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">-11%</td>
+<td style="text-align:right">21%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q4-2016</td>
+<td>2017-01-19</td>
+<td style="text-align:right">+6.6%</td>
+<td style="text-align:right">+3.9%</td>
+<td style="text-align:right">+6.4%</td>
+<td style="text-align:right">17%</td>
+<td style="text-align:right">-4%</td>
+<td style="text-align:right">8%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q1-2017</td>
+<td>2017-04-18</td>
+<td style="text-align:right">+0.1%</td>
+<td style="text-align:right">-2.6%</td>
+<td style="text-align:right">+12.8%</td>
+<td style="text-align:right">28%</td>
+<td style="text-align:right">-12%</td>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q2-2017</td>
+<td>2017-07-18</td>
+<td style="text-align:right">+8.9%</td>
+<td style="text-align:right">+13.5%</td>
+<td style="text-align:right">+10.4%</td>
+<td style="text-align:right">27%</td>
+<td style="text-align:right">-12%</td>
+<td style="text-align:right">21%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2017</td>
+<td>2017-10-17</td>
+<td style="text-align:right">-1.3%</td>
+<td style="text-align:right">-1.6%</td>
+<td style="text-align:right">+14.1%</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">-8%</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">65</td>
+</tr>
+<tr>
+<td>Q4-2017</td>
+<td>2018-01-23</td>
+<td style="text-align:right">+12.1%</td>
+<td style="text-align:right">+10.0%</td>
+<td style="text-align:right">+23.0%</td>
+<td style="text-align:right">46%</td>
+<td style="text-align:right">-15%</td>
+<td style="text-align:right">39%</td>
+<td style="text-align:right">57</td>
+</tr>
+<tr>
+<td>Q1-2018</td>
+<td>2018-04-17</td>
+<td style="text-align:right">+7.1%</td>
+<td style="text-align:right">+9.2%</td>
+<td style="text-align:right">+19.2%</td>
+<td style="text-align:right">32%</td>
+<td style="text-align:right">-9%</td>
+<td style="text-align:right">39%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q2-2018</td>
+<td>2018-07-17</td>
+<td style="text-align:right">-13.4%</td>
+<td style="text-align:right">-5.2%</td>
+<td style="text-align:right">-8.7%</td>
+<td style="text-align:right">41%</td>
+<td style="text-align:right">-17%</td>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">64</td>
+</tr>
+<tr>
+<td>Q3-2018</td>
+<td>2018-10-17</td>
+<td style="text-align:right">+9.2%</td>
+<td style="text-align:right">+5.3%</td>
+<td style="text-align:right">-3.2%</td>
+<td style="text-align:right">60%</td>
+<td style="text-align:right">-36%</td>
+<td style="text-align:right">36%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q4-2018</td>
+<td>2019-01-18</td>
+<td style="text-align:right">-0.3%</td>
+<td style="text-align:right">-4.0%</td>
+<td style="text-align:right">+6.0%</td>
+<td style="text-align:right">30%</td>
+<td style="text-align:right">-8%</td>
+<td style="text-align:right">18%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q1-2019</td>
+<td>2019-04-17</td>
+<td style="text-align:right">+1.6%</td>
+<td style="text-align:right">-1.3%</td>
+<td style="text-align:right">+2.2%</td>
+<td style="text-align:right">28%</td>
+<td style="text-align:right">-13%</td>
+<td style="text-align:right">15%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q2-2019</td>
+<td>2019-07-18</td>
+<td style="text-align:right">-10.7%</td>
+<td style="text-align:right">-10.3%</td>
+<td style="text-align:right">-12.0%</td>
+<td style="text-align:right">33%</td>
+<td style="text-align:right">-24%</td>
+<td style="text-align:right">26%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2019</td>
+<td>2019-10-17</td>
+<td style="text-align:right">+6.4%</td>
+<td style="text-align:right">+2.5%</td>
+<td style="text-align:right">+15.3%</td>
+<td style="text-align:right">30%</td>
+<td style="text-align:right">-9%</td>
+<td style="text-align:right">27%</td>
+<td style="text-align:right">64</td>
+</tr>
+<tr>
+<td>Q4-2019</td>
+<td>2020-01-22</td>
+<td style="text-align:right">-1.6%</td>
+<td style="text-align:right">-3.6%</td>
+<td style="text-align:right">+33.1%</td>
+<td style="text-align:right">61%</td>
+<td style="text-align:right">-23%</td>
+<td style="text-align:right">49%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q1-2020</td>
+<td>2020-04-22</td>
+<td style="text-align:right">-0.9%</td>
+<td style="text-align:right">-2.9%</td>
+<td style="text-align:right">+25.1%</td>
+<td style="text-align:right">37%</td>
+<td style="text-align:right">-9%</td>
+<td style="text-align:right">43%</td>
+<td style="text-align:right">59</td>
+</tr>
+<tr>
+<td>Q2-2020</td>
+<td>2020-07-17</td>
+<td style="text-align:right">-6.2%</td>
+<td style="text-align:right">-6.5%</td>
+<td style="text-align:right">+6.6%</td>
+<td style="text-align:right">44%</td>
+<td style="text-align:right">-16%</td>
+<td style="text-align:right">23%</td>
+<td style="text-align:right">66</td>
+</tr>
+<tr>
+<td>Q3-2020</td>
+<td>2020-10-21</td>
+<td style="text-align:right">-4.6%</td>
+<td style="text-align:right">-6.9%</td>
+<td style="text-align:right">+2.6%</td>
+<td style="text-align:right">35%</td>
+<td style="text-align:right">-9%</td>
+<td style="text-align:right">17%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q4-2020</td>
+<td>2021-01-20</td>
+<td style="text-align:right">+12.7%</td>
+<td style="text-align:right">+16.9%</td>
+<td style="text-align:right">-6.3%</td>
+<td style="text-align:right">33%</td>
+<td style="text-align:right">-16%</td>
+<td style="text-align:right">16%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q1-2021</td>
+<td>2021-04-21</td>
+<td style="text-align:right">-7.6%</td>
+<td style="text-align:right">-7.4%</td>
+<td style="text-align:right">+4.4%</td>
+<td style="text-align:right">19%</td>
+<td style="text-align:right">-6%</td>
+<td style="text-align:right">16%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q2-2021</td>
+<td>2021-07-21</td>
+<td style="text-align:right">-0.9%</td>
+<td style="text-align:right">-3.3%</td>
+<td style="text-align:right">+24.4%</td>
+<td style="text-align:right">22%</td>
+<td style="text-align:right">-6%</td>
+<td style="text-align:right">28%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2021</td>
+<td>2021-10-20</td>
+<td style="text-align:right">-2.1%</td>
+<td style="text-align:right">-2.2%</td>
+<td style="text-align:right">-18.7%</td>
+<td style="text-align:right">29%</td>
+<td style="text-align:right">-27%</td>
+<td style="text-align:right">31%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q4-2021</td>
+<td>2022-01-21</td>
+<td style="text-align:right">-21.2%</td>
+<td style="text-align:right">-21.8%</td>
+<td style="text-align:right">-12.3%</td>
+<td style="text-align:right">54%</td>
+<td style="text-align:right">-28%</td>
+<td style="text-align:right">32%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q1-2022</td>
+<td>2022-04-20</td>
+<td style="text-align:right">-29.7%</td>
+<td style="text-align:right">-35.1%</td>
+<td style="text-align:right">-10.9%</td>
+<td style="text-align:right">64%</td>
+<td style="text-align:right">-26%</td>
+<td style="text-align:right">29%</td>
+<td style="text-align:right">61</td>
+</tr>
+<tr>
+<td>Q2-2022</td>
+<td>2022-07-20</td>
+<td style="text-align:right">+3.2%</td>
+<td style="text-align:right">+7.3%</td>
+<td style="text-align:right">+11.3%</td>
+<td style="text-align:right">52%</td>
+<td style="text-align:right">-14%</td>
+<td style="text-align:right">19%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2022</td>
+<td>2022-10-19</td>
+<td style="text-align:right">+10.0%</td>
+<td style="text-align:right">+13.1%</td>
+<td style="text-align:right">+15.9%</td>
+<td style="text-align:right">49%</td>
+<td style="text-align:right">-15%</td>
+<td style="text-align:right">31%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q4-2022</td>
+<td>2023-01-20</td>
+<td style="text-align:right">+6.7%</td>
+<td style="text-align:right">+8.5%</td>
+<td style="text-align:right">-2.6%</td>
+<td style="text-align:right">36%</td>
+<td style="text-align:right">-20%</td>
+<td style="text-align:right">27%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q1-2023</td>
+<td>2023-04-19</td>
+<td style="text-align:right">-2.8%</td>
+<td style="text-align:right">-3.2%</td>
+<td style="text-align:right">+47.8%</td>
+<td style="text-align:right">34%</td>
+<td style="text-align:right">-7%</td>
+<td style="text-align:right">52%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q2-2023</td>
+<td>2023-07-20</td>
+<td style="text-align:right">-6.4%</td>
+<td style="text-align:right">-8.4%</td>
+<td style="text-align:right">-20.9%</td>
+<td style="text-align:right">30%</td>
+<td style="text-align:right">-23%</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2023</td>
+<td>2023-10-19</td>
+<td style="text-align:right">+16.9%</td>
+<td style="text-align:right">+16.1%</td>
+<td style="text-align:right">+22.5%</td>
+<td style="text-align:right">24%</td>
+<td style="text-align:right">-7%</td>
+<td style="text-align:right">27%</td>
+<td style="text-align:right">64</td>
+</tr>
+<tr>
+<td>Q4-2023</td>
+<td>2024-01-24</td>
+<td style="text-align:right">+9.3%</td>
+<td style="text-align:right">+10.7%</td>
+<td style="text-align:right">+12.1%</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">-5%</td>
+<td style="text-align:right">17%</td>
+<td style="text-align:right">59</td>
+</tr>
+<tr>
+<td>Q1-2024</td>
+<td>2024-04-19</td>
+<td style="text-align:right">-7.0%</td>
+<td style="text-align:right">-9.1%</td>
+<td style="text-align:right">+15.9%</td>
+<td style="text-align:right">24%</td>
+<td style="text-align:right">-7%</td>
+<td style="text-align:right">28%</td>
+<td style="text-align:right">61</td>
+</tr>
+<tr>
+<td>Q2-2024</td>
+<td>2024-07-19</td>
+<td style="text-align:right">+2.7%</td>
+<td style="text-align:right">-1.5%</td>
+<td style="text-align:right">+8.6%</td>
+<td style="text-align:right">23%</td>
+<td style="text-align:right">-8%</td>
+<td style="text-align:right">24%</td>
+<td style="text-align:right">63</td>
+</tr>
+<tr>
+<td>Q3-2024</td>
+<td>2024-10-18</td>
+<td style="text-align:right">+7.3%</td>
+<td style="text-align:right">+11.1%</td>
+<td style="text-align:right">+13.8%</td>
+<td style="text-align:right">24%</td>
+<td style="text-align:right">-12%</td>
+<td style="text-align:right">26%</td>
+<td style="text-align:right">62</td>
+</tr>
+<tr>
+<td>Q4-2024</td>
+<td>2025-01-22</td>
+<td style="text-align:right">+14.8%</td>
+<td style="text-align:right">+9.7%</td>
+<td style="text-align:right">+2.0%</td>
+<td style="text-align:right">42%</td>
+<td style="text-align:right">-19%</td>
+<td style="text-align:right">26%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q1-2025</td>
+<td>2025-04-21</td>
+<td style="text-align:right">+1.2%</td>
+<td style="text-align:right">+1.5%</td>
+<td style="text-align:right">+29.0%</td>
+<td style="text-align:right">26%</td>
+<td style="text-align:right">-7%</td>
+<td style="text-align:right">34%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q2-2025</td>
+<td>2025-07-18</td>
+<td style="text-align:right">-2.5%</td>
+<td style="text-align:right">-5.1%</td>
+<td style="text-align:right">+2.7%</td>
+<td style="text-align:right">23%</td>
+<td style="text-align:right">-9%</td>
+<td style="text-align:right">11%</td>
+<td style="text-align:right">66</td>
+</tr>
+<tr>
+<td>Q3-2025</td>
+<td>2025-10-22</td>
+<td style="text-align:right">-7.9%</td>
+<td style="text-align:right">-10.1%</td>
+<td style="text-align:right">-21.8%</td>
+<td style="text-align:right">28%</td>
+<td style="text-align:right">-25%</td>
+<td style="text-align:right">27%</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Q4-2025</td>
+<td>2026-01-21</td>
+<td style="text-align:right">-5.4%</td>
+<td style="text-align:right">-2.2%</td>
+<td style="text-align:right">+26.3%</td>
+<td style="text-align:right">40%</td>
+<td style="text-align:right">-12%</td>
+<td style="text-align:right">40%</td>
+<td style="text-align:right">59</td>
+</tr>
+<tr>
+<td>Q1-2026</td>
+<td>2026-04-17</td>
+<td style="text-align:right">-10.6%</td>
+<td style="text-align:right">-9.7%</td>
+<td style="text-align:right">-23.6%</td>
+<td style="text-align:right">30%</td>
+<td style="text-align:right">-27%</td>
+<td style="text-align:right">27%</td>
+<td style="text-align:right">61</td>
+</tr>
+<tr>
+<td>Q2-2026</td>
+<td>2026-07-17</td>
+<td style="text-align:right">-11.9%</td>
+<td style="text-align:right">-7.3%</td>
+<td style="text-align:right">-0.4%</td>
+<td style="text-align:right">32%</td>
+<td style="text-align:right">-19%</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">66</td>
+</tr>
+</tbody>
+</table></div>
+<p>The Q3-2026 release (reaction day 21-Oct-2026: gap -6.6%, close-to-close -5.3%) opened the current,
+incomplete cycle.</p>
+<h2 id="appendix-b-cross-section">Appendix B: cross-section <a class="header-anchor" href="#appendix-b-cross-section">#</a></h2>
+<p>Each stock is measured on its own release calendar from late 2015. SPOT starts in 2018 and ROKU in 2017.
+Shares of variance and vols are in %. The full table is in the notebook.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Stock</th>
+<th>Group</th>
+<th style="text-align:right">Cycles</th>
+<th style="text-align:right">Reaction-day share of variance</th>
+<th style="text-align:right">±1-session share</th>
+<th style="text-align:right">Earnings-day variance multiple</th>
+<th style="text-align:right">Market-adjusted share</th>
+<th style="text-align:right">Inter-earnings vol (ann.)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>META</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">29.8%</td>
+<td style="text-align:right">32.3%</td>
+<td style="text-align:right">26.5x</td>
+<td style="text-align:right">41.7%</td>
+<td style="text-align:right">33%</td>
+</tr>
+<tr>
+<td><strong>NFLX</strong></td>
+<td></td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">28.0%</td>
+<td style="text-align:right">30.8%</td>
+<td style="text-align:right">24.2x</td>
+<td style="text-align:right">35.9%</td>
+<td style="text-align:right">36%</td>
+</tr>
+<tr>
+<td>ROKU</td>
+<td>Media &amp; streaming</td>
+<td style="text-align:right">35</td>
+<td style="text-align:right">23.3%</td>
+<td style="text-align:right">27.3%</td>
+<td style="text-align:right">19.4x</td>
+<td style="text-align:right">26.0%</td>
+<td style="text-align:right">63%</td>
+</tr>
+<tr>
+<td>ADBE</td>
+<td>Large-cap software / platforms</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">18.0%</td>
+<td style="text-align:right">23.1%</td>
+<td style="text-align:right">14.1x</td>
+<td style="text-align:right">24.0%</td>
+<td style="text-align:right">32%</td>
+</tr>
+<tr>
+<td>SPOT</td>
+<td>Media &amp; streaming</td>
+<td style="text-align:right">34</td>
+<td style="text-align:right">17.4%</td>
+<td style="text-align:right">22.4%</td>
+<td style="text-align:right">13.4x</td>
+<td style="text-align:right">20.7%</td>
+<td style="text-align:right">43%</td>
+</tr>
+<tr>
+<td>CRM</td>
+<td>Large-cap software / platforms</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">16.8%</td>
+<td style="text-align:right">20.6%</td>
+<td style="text-align:right">12.6x</td>
+<td style="text-align:right">24.9%</td>
+<td style="text-align:right">33%</td>
+</tr>
+<tr>
+<td>AMZN</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">16.4%</td>
+<td style="text-align:right">22.2%</td>
+<td style="text-align:right">12.7x</td>
+<td style="text-align:right">27.1%</td>
+<td style="text-align:right">30%</td>
+</tr>
+<tr>
+<td>DIS</td>
+<td>Media &amp; streaming</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">14.2%</td>
+<td style="text-align:right">17.5%</td>
+<td style="text-align:right">10.2x</td>
+<td style="text-align:right">22.1%</td>
+<td style="text-align:right">26%</td>
+</tr>
+<tr>
+<td>GOOGL</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">13.8%</td>
+<td style="text-align:right">18.0%</td>
+<td style="text-align:right">10.1x</td>
+<td style="text-align:right">22.6%</td>
+<td style="text-align:right">27%</td>
+</tr>
+<tr>
+<td>NVDA</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">13.6%</td>
+<td style="text-align:right">17.2%</td>
+<td style="text-align:right">9.9x</td>
+<td style="text-align:right">21.7%</td>
+<td style="text-align:right">46%</td>
+</tr>
+<tr>
+<td>BKNG</td>
+<td>Large-cap software / platforms</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">12.9%</td>
+<td style="text-align:right">19.7%</td>
+<td style="text-align:right">9.6x</td>
+<td style="text-align:right">20.3%</td>
+<td style="text-align:right">31%</td>
+</tr>
+<tr>
+<td>MSFT</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">11.4%</td>
+<td style="text-align:right">14.8%</td>
+<td style="text-align:right">8.1x</td>
+<td style="text-align:right">23.6%</td>
+<td style="text-align:right">26%</td>
+</tr>
+<tr>
+<td>TSLA</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">9.1%</td>
+<td style="text-align:right">11.4%</td>
+<td style="text-align:right">6.2x</td>
+<td style="text-align:right">10.5%</td>
+<td style="text-align:right">56%</td>
+</tr>
+<tr>
+<td>AAPL</td>
+<td>Mega-cap tech / internet</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">9.0%</td>
+<td style="text-align:right">12.1%</td>
+<td style="text-align:right">6.1x</td>
+<td style="text-align:right">16.1%</td>
+<td style="text-align:right">28%</td>
+</tr>
+<tr>
+<td>SPY</td>
+<td>Market (on NFLX’s calendar)</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">1.1%</td>
+<td style="text-align:right">3.1%</td>
+<td style="text-align:right">0.7x</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">18%</td>
+</tr>
+<tr>
+<td>QQQ</td>
+<td>Market (on NFLX’s calendar)</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">1.4%</td>
+<td style="text-align:right">3.4%</td>
+<td style="text-align:right">0.8x</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">22%</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="more-charts">More charts <a class="header-anchor" href="#more-charts">#</a></h2>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/01_price_with_earnings.png" alt="NFLX price with every earnings reaction marked." /><figcaption>NFLX price with every earnings reaction marked.</figcaption></figure>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/03_abs_return_distribution.png" alt="Absolute daily returns: earnings-associated days against ordinary days." /><figcaption>Absolute daily returns: earnings-associated days against ordinary days.</figcaption></figure>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/06_rolling_volatility.png" alt="Rolling 63-session volatility: all days, excluding earnings, and SPY." /><figcaption>Rolling 63-session volatility: all days, excluding earnings, and SPY.</figcaption></figure>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/netflix-between-earnings/09_event_time_profile.png" alt="Volatility by session relative to the release, NFLX against the peer median." /><figcaption>Volatility by session relative to the release, NFLX against the peer median.</figcaption></figure>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <aside class="disclaimer" aria-label="Disclaimer">This note is research analysis for discussion and education, not personalised investment advice, and I am not a licensed financial adviser. Forecasts are scenario arithmetic on stated assumptions and can be wrong, and short positions can lose more than the amount invested. Prices are as of the dates shown.</aside>
+    <div class="tags"><a class="tag" href="/tags/volatility/">volatility</a><a class="tag" href="/tags/options/">options</a><a class="tag" href="/tags/earnings/">earnings</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/research/netflix-between-earnings/" data-title="Does Netflix trade flat between earnings?">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/research/netflix-between-earnings/&amp;text=Does%20Netflix%20trade%20flat%20between%20earnings%3F" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/research/netflix-between-earnings/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Does%20Netflix%20trade%20flat%20between%20earnings%3F&amp;body=https%3A//rasmuscodes.github.io/research/netflix-between-earnings/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More research">
+<a class="pager__item" href="/research/neocloud-capital-structures/"><span>Previous</span><b>Neocloud capital structures: CoreWeave, Nebius and IREN</b></a><a class="pager__item pager__item--next" href="/research/optical-forensic-screen/"><span>Next</span><b>Forensic screen: AAOI, Coherent and Lumentum</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

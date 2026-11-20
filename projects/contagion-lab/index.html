@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six tests of market contagion: no early warning, adaptive models win · Rasmus Suonio</title>
+<meta name="description" content="A reproducible platform for how shocks spread across US stocks, rates, credit, currencies and commodities, with every claim labelled descriptive, predictive or causal.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/contagion-lab/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Six tests of market contagion: no early warning, adaptive models win">
+<meta property="og:description" content="A reproducible platform for how shocks spread across US stocks, rates, credit, currencies and commodities, with every claim labelled descriptive, predictive or causal.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/contagion-lab/"><meta property="og:image" content="https://rasmuscodes.github.io/media/contagion-lab/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">Six tests of market contagion: no early warning, adaptive models win</h1>
+<p class="post__sub">A reproducible platform for how shocks spread across US stocks, rates, credit, currencies and commodities, with every claim labelled descriptive, predictive or causal.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-17">17 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/contagion-lab/" data-title="Six tests of market contagion: no early warning, adaptive models win">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/contagion-lab/&amp;text=Six%20tests%20of%20market%20contagion%3A%20no%20early%20warning%2C%20adaptive%20models%20win" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/contagion-lab/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Six%20tests%20of%20market%20contagion%3A%20no%20early%20warning%2C%20adaptive%20models%20win&amp;body=https%3A//rasmuscodes.github.io/projects/contagion-lab/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/contagion-lab" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Connectedness before crises</dt><dd class="is-text">No reliable rise (placebo p 0.47)</dd></div><div><dt>Stress-day error, EWMA vs static network</dt><dd class="is-text">−18% (t −3.9)</dd></div><div><dt>Hedge variance cut, DCC vs regime model</dt><dd class="is-text">24.7% vs 6.1%</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>pandas</li><li>statsmodels</li><li>D3.js</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/contagion-lab/cover.png" alt="Line chart of total connectedness in a 15-asset US macro network from 2004 to 2026, daily and rolling 500-day estimates, with bear markets shaded in grey."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Contagion Lab is a research platform for how financial shocks spread across US stocks, sectors, banks, Treasury yields, credit, currencies, commodities and volatility indices. It asks six questions a risk manager would ask, and writes each answer from the computed numbers rather than from a verdict decided in advance.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Data.</strong> 93 daily series from Yahoo Finance, FRED, Cboe and the Federal Reserve, aligned on NYSE trading days. The main cross-asset network has 15 series from April 2003, and the data run to November 2026.</li>
+<li><strong>Timing as data.</strong> Every series carries its closing time. Tokyo closes before New York opens and some prices are stale, so part of what looks like a shock spreading over several days is a series taking in the previous day’s US news late. That lag is measured for each series.</li>
+<li><strong>Clean inputs.</strong> Yahoo’s daily currency bars changed convention around 2011, so FX comes from the Fed’s noon rates; oil and gold futures are spliced into ETF prices to remove roll jumps and the negative oil print of April 2020.</li>
+<li><strong>Models.</strong> Correlation and partial-correlation networks, dynamic factors, Granger and VAR networks, Diebold-Yilmaz connectedness (the share of each asset’s forecast-error variance that comes from the others), tail dependence and CoVaR, copulas, hidden Markov regimes, change-point detection and DCC-GARCH.</li>
+<li><strong>Claim levels.</strong> Every result is labelled descriptive (co-movement only), predictive (lead-lag content, tested out of sample) or identified (causal under stated assumptions), and the report keeps them apart. Every out-of-sample routine sees data up to the previous day only.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Does connectedness rise before crises?</td>
+<td>Not reliably: no consistent build-up before 7 bear-market peaks (placebo p 0.47; smallest corrected q 0.36). It rises during crises and adds nothing out of sample beyond VIX and realised volatility</td>
+</tr>
+<tr>
+<td>Which assets transmit shocks?</td>
+<td>Equities in the standard sense, but about 90% of that is same-day co-movement. Lagged spillovers are 1–3% of connectedness and line up with series that react late</td>
+</tr>
+<tr>
+<td>Which sectors are most rate-sensitive?</td>
+<td>Real estate, homebuilders and utilities on descriptive betas. FOMC days identify the S&amp;P 500’s response, −0.98% per 10bp policy-driven rise in the 2-year yield, but only 3 of 18 sector responses precisely</td>
+</tr>
+<tr>
+<td>Do dynamic networks improve stress tests?</td>
+<td>Yes. An exponentially weighted (EWMA) covariance cuts stress-day prediction error by 18% against a static network (t −3.9). Yet every model’s 90% intervals cover only 62–80% of stress-day moves</td>
+</tr>
+<tr>
+<td>Are tail correlations more informative?</td>
+<td>Tail dependence is real, but correlations measured on past tail days forecast future ones no better than the full history</td>
+</tr>
+<tr>
+<td>Does regime detection improve hedging?</td>
+<td>No. Hedging with Treasuries, gold and the dollar, an adaptive (DCC) hedge cuts S&amp;P 500 variance by 24.7%; hedges built on a hidden Markov regime model cut it by about 6%, no better than a static hedge</td>
+</tr>
+</tbody>
+</table></div>
+<p>The models that win the stress tests all weight recent data heavily, while covariances conditioned on past crises do worse. Crises differ: the stock-bond correlation had opposite signs in 2008–2020 and in 2022.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/contagion-lab/hedge_variance.png" alt="Bar charts of S&amp;P 500 variance reduction by hedging method, with Treasuries, gold and the dollar as hedges and with Treasuries only; DCC and EWMA hedges lead and the regime-model hedges come last" /><figcaption>Bar charts of S&amp;P 500 variance reduction by hedging method, with Treasuries, gold and the dollar as hedges and with Treasuries only; DCC and EWMA hedges lead and the regime-model hedges come last</figcaption></figure>
+<p>The regime model’s value is episodic. In the 2020 crash its hedge lost 22.7% against 33.4% unhedged. In the 2022 rate shock it stayed long Treasuries while stocks and bonds fell together, and lost 40.1% against 24.1% unhedged. That fits a high-volatility state learned from flight-to-quality crises: the model can tell that markets are stressed, but a hedge needs the current correlation, not that of past crises.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Seven crisis onsets is a small sample, so a modest pre-crisis effect could be missed.</li>
+<li>Long credit history relies on Moody’s Baa spread, which updates a day late relative to equities, because the free ICE BofA spreads go back only three years.</li>
+<li>No model is well calibrated: every stress-test interval here is too narrow for real stress days.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with a data pipeline, network and regime libraries, a stress-testing engine with seven covariance views, and portfolio-risk tools (value at risk, expected shortfall, Euler risk decomposition). 33 estimator tests run on simulated data. A report and a six-view D3 dashboard are generated from the same outputs. The public repository holds the code, figures, tables and report, but no market data.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/systemic-risk/">systemic risk</a><a class="tag" href="/tags/networks/">networks</a><a class="tag" href="/tags/regimes/">regimes</a><a class="tag" href="/tags/stress-testing/">stress testing</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/contagion-lab/" data-title="Six tests of market contagion: no early warning, adaptive models win">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/contagion-lab/&amp;text=Six%20tests%20of%20market%20contagion%3A%20no%20early%20warning%2C%20adaptive%20models%20win" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/contagion-lab/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Six%20tests%20of%20market%20contagion%3A%20no%20early%20warning%2C%20adaptive%20models%20win&amp;body=https%3A//rasmuscodes.github.io/projects/contagion-lab/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/axon-contracts/"><span>Previous</span><b>Reading Axon’s government business from public procurement records</b></a><a class="pager__item pager__item--next" href="/projects/clash-royale-ai/"><span>Next</span><b>A Clash Royale win-probability engine, tested in a synthetic toy world</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

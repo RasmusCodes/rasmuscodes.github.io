@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nine reinforcement-learning traders, and none beat buy and hold · Rasmus Suonio</title>
+<meta name="description" content="A trading environment with realistic costs, nine RL algorithms, a full baseline suite and a holdout evaluated once. The controls work; the agents add nothing.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/rl-trading-lab/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Nine reinforcement-learning traders, and none beat buy and hold">
+<meta property="og:description" content="A trading environment with realistic costs, nine RL algorithms, a full baseline suite and a holdout evaluated once. The controls work; the agents add nothing.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/rl-trading-lab/"><meta property="og:image" content="https://rasmuscodes.github.io/media/rl-trading-lab/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">Nine reinforcement-learning traders, and none beat buy and hold</h1>
+<p class="post__sub">A trading environment with realistic costs, nine RL algorithms, a full baseline suite and a holdout evaluated once. The controls work; the agents add nothing.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-17">17 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/rl-trading-lab/" data-title="Nine reinforcement-learning traders, and none beat buy and hold">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/rl-trading-lab/&amp;text=Nine%20reinforcement-learning%20traders%2C%20and%20none%20beat%20buy%20and%20hold" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/rl-trading-lab/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Nine%20reinforcement-learning%20traders%2C%20and%20none%20beat%20buy%20and%20hold&amp;body=https%3A//rasmuscodes.github.io/projects/rl-trading-lab/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/rl-trading-lab" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>SPY 2007–18 Sharpe, agents vs buy and hold</dt><dd class="is-text">0.19–0.53 vs 0.41</dd></div><div><dt>Holdout 2019–26, evaluated once</dt><dd class="is-text">Buy and hold 0.77; agents 0.67 to −0.52</dd></div><div><dt>Best of 72 strategies vs buy and hold</dt><dd class="is-text">Information ratio −0.03</dd></div><div><dt>One leaky feature on a random walk</dt><dd class="is-text">Sharpe 6.9</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>PyTorch</li><li>NumPy</li><li>Optuna</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/rl-trading-lab/cover.png" alt="Out-of-sample Sharpe ratios of nine RL agents on SPY, 2007–2018, after all costs, with wide 95% intervals spanning buy and hold&#39;s 0.41."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Any reinforcement-learning (RL) agent can be made to produce a good backtest. The question here is whether RL adds anything over simple, well-understood strategies once execution is realistic and the evaluation is honest. On daily data the answer was no: none of nine algorithms beat simple strategies out of sample, and nothing, rule or agent, beat holding SPY on returns.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>The environment.</strong> An agent decides at the close and fills at the next open, paying a tick-size spread, slippage, square-root market impact, commission, a participation cap, financing and short borrow. Every baseline goes through the same environment and pays the same costs.</li>
+<li><strong>Nine algorithms</strong>, all in PyTorch: tabular Q-learning, DQN, Double DQN, A2C, PPO, SAC, TD3, Moody–Saffell recurrent RL and PPO-LSTM. Each was first checked on problems with known answers.</li>
+<li><strong>Controls before conclusions.</strong> Synthetic markets with a planted edge, a pure random walk, and an “oracle” feature that reveals the next day’s return.</li>
+<li><strong>Honest evaluation.</strong> Six walk-forward folds on SPY, a 2019–2026 holdout evaluated once with every access logged, seed ensembles with bootstrap intervals, and deflated Sharpe ratios that count all 72 strategies tried. The Sharpe ratio is annualised excess return over volatility.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<ul>
+<li><strong>The controls pass.</strong> PPO, A2C and recurrent RL find planted edges (test Sharpe 0.64–1.19), no agent beats chance on a random walk, and all nine reach a Sharpe of 12–14 with the oracle, so the implementations work.</li>
+<li><strong>SPY, 2007–2018.</strong> The agents score 0.19–0.53 against buy and hold’s 0.41, with no significant difference, and all trail a 50/200-day moving-average trend filter (0.61). Across all 72 strategies, the best information ratio against buy and hold is −0.03. Higher Sharpe ratios came from holding less risk in 2008, not from earning more.</li>
+<li><strong>Holdout, 2019–2026.</strong> Buy and hold scores 0.77; the RL configurations 0.67 down to −0.52. The development ranking reversed (rank correlation −0.63): the best development agents were among the worst.</li>
+<li><strong>More assets did not help:</strong> on nine ETFs the best agent’s 0.52 trails minimum variance’s 1.09.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/rl-trading-lab/leakage.png" alt="Mean test Sharpe of PPO with one leaky feature added, on a random walk and on SPY" /><figcaption>Mean test Sharpe of PPO with one leaky feature added, on a random walk and on SPY</figcaption></figure>
+<p>The lessons about method travel further than the null result:</p>
+<ul>
+<li><strong>Validation does not predict test.</strong> Across 162 runs, the validation Sharpe of the chosen checkpoint had almost no relation to the next two years’ test Sharpe, and training to the end beat validation-selected checkpoints for six of nine algorithms. A hyperparameter search bought nothing out of sample.</li>
+<li><strong>Leakage beats every algorithm.</strong> One feature built from a centred moving average, which sees ten days ahead, turns a random walk into a Sharpe of 6.9 and fools validation just as much.</li>
+<li><strong>Turnover is the hidden variable.</strong> High-turnover agents lose half their Sharpe by about $20 million of capital, even in SPY.</li>
+<li><strong>Reward hacking appears in mild forms.</strong> Drawdown penalties collapse exposure while the Sharpe ratio survives, and a risk stop without a penalty invites more risk.</li>
+</ul>
+<h2 id="audit-and-limits">Audit and limits <a class="header-anchor" href="#audit-and-limits">#</a></h2>
+<p>An independent audit of the code found no look-ahead, but nine real problems in data, costs and statistics, such as fictitious futures roll jumps and hindsight in a stock list. All were fixed and earlier runs re-scored. Writing the report exposed one more: a policy that never trades had a Sharpe ratio made of rounding noise, which had steered the first hyperparameter search towards doing nothing. The metric was fixed and the search repeated.</p>
+<p>The data is daily bars from a free source, with no intraday or order-book data, and the cost parameters are generic rather than broker quotes. With two or three seeds per configuration and twelve years of test data, differences below about 0.3 Sharpe cannot be resolved.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with a vectorised numpy environment (about 17,000 steps a second per core), PyTorch agents, a baseline suite, Optuna search and a training dashboard. Every run records its config, seed, environment version and code fingerprint. 23 tests cover exact P&amp;L accounting, execution timing, costs, short-sale bans and causality, including a check that catches four deliberately leaky features.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/reinforcement-learning/">reinforcement learning</a><a class="tag" href="/tags/backtesting/">backtesting</a><a class="tag" href="/tags/machine-learning/">machine learning</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/rl-trading-lab/" data-title="Nine reinforcement-learning traders, and none beat buy and hold">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/rl-trading-lab/&amp;text=Nine%20reinforcement-learning%20traders%2C%20and%20none%20beat%20buy%20and%20hold" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/rl-trading-lab/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Nine%20reinforcement-learning%20traders%2C%20and%20none%20beat%20buy%20and%20hold&amp;body=https%3A//rasmuscodes.github.io/projects/rl-trading-lab/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/earnings-engine/"><span>Previous</span><b>Forecasting chipmaker revenue against management’s own guidance</b></a><a class="pager__item pager__item--next" href="/projects/axon-contracts/"><span>Next</span><b>Reading Axon’s government business from public procurement records</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

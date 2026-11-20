@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects · Rasmus Suonio</title>
+<meta name="description" content="Things I build, grouped by area. Trading bots and solvers, market simulators, alternative-data pipelines and the tools behind my research, with what each one found.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Projects">
+<meta property="og:description" content="Things I build, grouped by area. Trading bots and solvers, market simulators, alternative-data pipelines and the tools behind my research, with what each one found.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-section page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<header class="page-head wrap wrap--md">
+  <h1 class="page-title">Projects</h1>
+<p class="page-lede">Things I build, grouped by area. Trading bots and solvers, market simulators, alternative-data pipelines and the tools behind my research, with what each one found.</p></header>
+
+  <nav class="wrap wrap--md pcats" aria-label="Project areas">
+<a href="#bots-solvers-and-games">Bots, solvers and games<span>5</span></a><a href="#market-simulators-and-trading-research">Market simulators and trading research<span>6</span></a><a href="#alternative-data">Alternative data<span>8</span></a><a href="#risk-credit-and-volatility">Risk, credit and volatility<span>4</span></a><a href="#tools">Tools<span>1</span></a>  </nav>
+  <section class="wrap wrap--md block pgroup" id="bots-solvers-and-games" aria-labelledby="bots-solvers-and-games-h">
+    <h2 id="bots-solvers-and-games-h" class="label label--block">Bots, solvers and games</h2>
+    <div class="pgrid"><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">2 to 10</span><span class="pcard__factlabel">Players per table</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/nlh-solver/">A No-Limit Hold’em solver, from heads-up flops to tournament push/fold</a></h3>
+<p class="pcard__sub">A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.</p>  <dl class="pcard__facts">
+<div><dt>Roadmap</dt><dd>Phase 5 of 7 done</dd></div><div><dt>Automated tests</dt><dd>249, all passing</dd></div>  </dl>
+<ul class="stack"><li>Rust</li><li>TypeScript</li><li>React</li><li>Python</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">Over 2,100 since 15 Nov</span><span class="pcard__factlabel">Exact library flops</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/plo-solver/">A game-theory solver for six-handed Pot-Limit Omaha</a></h3>
+<p class="pcard__sub">A Rust solver and study app for 6-max PLO, built milestone by milestone, from an exact rules engine to a library of exactly solved flops that grows in the background.</p>  <dl class="pcard__facts">
+<div><dt>Roadmap</dt><dd>M1-M15 done, M16-M17 under way</dd></div><div><dt>Preflop hand classes</dt><dd>16,432</dd></div>  </dl>
+<ul class="stack"><li>Rust</li><li>TypeScript</li><li>React</li><li>Python</li></ul></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/teaching-a-bot-to-trade-figgie/03-how-it-works.svg" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/figgie-bot/">A Figgie bot that counts cards and reads the market</a></h3>
+<p class="pcard__sub">An exact Bayesian card counter that trades Jane Street’s card game, live on figgie.com and in a Python simulator.</p>  <dl class="pcard__facts">
+<div><dt>Live profit, 142 rounds</dt><dd>+$6,958 (play money)</dd></div><div><dt>Last 41 rounds</dt><dd>+$81 a round (±$18)</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>JavaScript</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/figgie-bot" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">None yet: a synthetic toy world</span><span class="pcard__factlabel">Real game data used</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/clash-royale-ai/">A Clash Royale win-probability engine, tested in a synthetic toy world</a></h3>
+<p class="pcard__sub">A research codebase for win probabilities, video-to-game-state reconstruction and an offline game-playing bot. No real game data has been used yet; everything runs on fictional cards.</p>  <dl class="pcard__facts">
+<div><dt>Toy world</dt><dd>600 fictional players, 12,000 matches</dd></div><div><dt>Pre-match winner picked (toy)</dt><dd>66%, against 53% for a baseline</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>LightGBM</li><li>OpenCV</li><li>JavaScript</li></ul></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/chess-trainer/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Oct 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/chess-trainer/">A chess trainer built from my blunders in over 12,000 online games</a></h3>
+<p class="pcard__sub">Stockfish checked every move of my online games against my opponents’ moves in the same games, then 1,212 of the positions became a browser trainer with spaced repetition.</p>  <dl class="pcard__facts">
+<div><dt>Games checked by the engine</dt><dd>11,907 (819,411 positions)</dd></div><div><dt>Biggest leak</dt><dd>Pins allowed 84% more often than my opponents</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>Stockfish</li><li>JavaScript</li></ul></article></div>
+  </section>
+  <section class="wrap wrap--md block pgroup" id="market-simulators-and-trading-research" aria-labelledby="market-simulators-and-trading-research-h">
+    <h2 id="market-simulators-and-trading-research-h" class="label label--block">Market simulators and trading research</h2>
+    <div class="pgrid"><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/statarb/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/statarb/">Statistical arbitrage on the S&amp;P 500: what survives costs</a></h3>
+<p class="pcard__sub">A point-in-time research platform for pairs trading, momentum and fundamental signals in S&amp;P 500 stocks, with fourteen research notes, most of them pre-registered.</p>  <dl class="pcard__facts">
+<div><dt>Research notes</dt><dd>14, twelve pre-registered</dd></div><div><dt>Cointegration pairs, 2016–26</dt><dd>−1.4% a year net</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>pandas</li><li>NumPy</li><li>cvxpy</li><li>JavaScript</li></ul></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/options-lab/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/options-lab/">An options pricing and volatility lab, validated at every step</a></h3>
+<p class="pcard__sub">Pricing engines, SPX volatility surfaces and volatility forecasts on free Cboe data, each checked against independent references before the next phase starts.</p>  <dl class="pcard__facts">
+<div><dt>SPX surface fit, hybrid vs SVI</dt><dd>0.11 vs 0.23 vol points (median)</dd></div><div><dt>Static arbitrage in the hybrid surface</dt><dd>None, at 213 maturities checked</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>NumPy</li><li>SciPy</li><li>pandas</li><li>SQLite</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">1,136 of 1,136</span><span class="pcard__factlabel">Bitstamp snapshots reproduced</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/hft-sim/">A market simulator in Rust, checked order by order against real data</a></h3>
+<p class="pcard__sub">A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.</p>  <dl class="pcard__facts">
+<div><dt>Real Bitstamp fills recovered</dt><dd>292 of 298 (99.6% of volume)</dd></div><div><dt>False fills, 801,154 Nasdaq orders</dt><dd>0</dd></div>  </dl>
+<ul class="stack"><li>Rust</li><li>Python</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/hft-sim" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a><a href="https://rasmuscodes.github.io/hft-sim/" target="_blank" rel="noopener">Project site<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/rl-trading-lab/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/rl-trading-lab/">Nine reinforcement-learning traders, and none beat buy and hold</a></h3>
+<p class="pcard__sub">A trading environment with realistic costs, nine RL algorithms, a full baseline suite and a holdout evaluated once. The controls work; the agents add nothing.</p>  <dl class="pcard__facts">
+<div><dt>SPY 2007–18 Sharpe, agents vs buy and hold</dt><dd>0.19–0.53 vs 0.41</dd></div><div><dt>Holdout 2019–26, evaluated once</dt><dd>Buy and hold 0.77; agents 0.67 to −0.52</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>PyTorch</li><li>NumPy</li><li>Optuna</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/rl-trading-lab" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/sports-quant/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/sports-quant/">Do models beat the closing line? Not in the NBA or NFL</a></h3>
+<p class="pcard__sub">Elo, state-space and machine-learning models for NBA and NFL games, tested against Kalshi, Polymarket and sportsbook closing prices. The markets win.</p>  <dl class="pcard__facts">
+<div><dt>Out-of-sample NBA games</dt><dd>14,338</dd></div><div><dt>Best NBA model vs Kalshi close</dt><dd>0.016 log loss worse (1,556 games)</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>pandas</li><li>LightGBM</li><li>statsmodels</li><li>SQLite</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/sports-quant" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/prediction-markets/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/prediction-markets/">A prediction-market lab: fast prices, little edge after fees</a></h3>
+<p class="pcard__sub">A simulated exchange, market maker and arbitrage engine, plus a working paper on 29,703 resolved Kalshi and Polymarket markets and a 13.9-hour live capture.</p>  <dl class="pcard__facts">
+<div><dt>Resolved markets studied</dt><dd>20,000 Kalshi, 9,703 Polymarket</dd></div><div><dt>Spot move priced within the minute</dt><dd>96% (Kalshi 15-minute crypto)</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>NumPy</li><li>SciPy</li><li>JavaScript</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/prediction-markets" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article></div>
+  </section>
+  <section class="wrap wrap--md block pgroup" id="alternative-data" aria-labelledby="alternative-data-h">
+    <h2 id="alternative-data-h" class="label label--block">Alternative data</h2>
+    <div class="pgrid"><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">13,297 from 20 sources</span><span class="pcard__factlabel">Documents at first build</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/optical-intel/">A deal tracker for Coherent and AAOI that quotes every claim verbatim</a></h3>
+<p class="pcard__sub">A daily pipeline over filings, newsrooms, trade press and Chinese exchange disclosures, with a hand-curated layer of deals re-checked against its sources on every run.</p>  <dl class="pcard__facts">
+<div><dt>Curated records</dt><dd>149, every quote found verbatim</dd></div><div><dt>Refresh</dt><dd>Daily report, weekly trends</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>SQLite</li><li>pandas</li></ul></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/altalpha/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/altalpha/">A point-in-time lab for free alternative data, and what survived it</a></h3>
+<p class="pcard__sub">Insider buying and federal contract awards gave no tradeable edge. Inventory build predicts semiconductor gross margins, but barely moves returns.</p>  <dl class="pcard__facts">
+<div><dt>Hypotheses tested</dt><dd>3 of 5, each pre-registered</dd></div><div><dt>Insider-buy filing day</dt><dd>+1.18% abnormal (t 24)</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>pandas</li><li>DuckDB</li><li>scikit-learn</li><li>LightGBM</li></ul></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/axon-contracts/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/axon-contracts/">Reading Axon’s government business from public procurement records</a></h3>
+<p class="pcard__sub">A traceable database of federal awards, city payments and council approvals, and an operating model built on it. The data explains demand, not quarterly surprises.</p>  <dl class="pcard__facts">
+<div><dt>Axon federal obligations</dt><dd>$19M (FY2020) to $149M (FY2026)</dd></div><div><dt>Federal dollars awarded without competition</dt><dd>71%</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>SQLite</li><li>pandas</li><li>Excel</li></ul></article><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/earnings-engine/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/earnings-engine/">Forecasting chipmaker revenue against management’s own guidance</a></h3>
+<p class="pcard__sub">A point-in-time engine built from SEC filings alone. Its models predict how far 50 chipmakers beat their guidance, but not whether they will.</p>  <dl class="pcard__facts">
+<div><dt>Revenue error vs guidance, 2021–26 holdout</dt><dd>2.30% vs 3.32%</dd></div><div><dt>Quarters beating the guidance midpoint</dt><dd>82% of 1,777</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>pandas</li><li>scikit-learn</li><li>XGBoost</li><li>SQLite</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/earnings-engine" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">7</span><span class="pcard__factlabel">Data series</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/aaoi-alt-data-tracker/">AAOI alt-data tracker</a></h3>
+<p class="pcard__sub">Seven public data series on Applied Optoelectronics and its market, refreshed weekly into tidy files and a model-ready workbook.</p>  <dl class="pcard__facts">
+<div><dt>Refresh</dt><dd>Weekly, append-only</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>Excel</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">About 38M copies by Mar 2027</span><span class="pcard__factlabel">Launch forecast</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Oct 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/gta6-sentiment-model/">GTA VI sentiment model</a></h3>
+<p class="pcard__sub">Google Trends, Reddit and Wikipedia data turned into a launch forecast and a valuation for Take-Two.</p>  <dl class="pcard__facts">
+<div><dt>Value against price</dt><dd>$124 against $195</dd></div>  </dl>
+<ul class="stack"><li>Python</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">About 1,000, each graded A–D</span><span class="pcard__factlabel">Evidence rows</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Oct 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/ftai-alt-data-terminal/">FTAI alternative-data terminal</a></h3>
+<p class="pcard__sub">A re-runnable monitor of the real-world activity under FTAI Aviation’s businesses, built on data FTAI doesn’t control.</p>  <dl class="pcard__facts">
+<div><dt>Backtest</dt><dd>135 lead-lag tests</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>Excel</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">21,027</span><span class="pcard__factlabel">Observations</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Sep 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/celh-alt-data-terminal/">Celsius alternative-data terminal</a></h3>
+<p class="pcard__sub">A local pipeline that tracks consumer-demand signals for Celsius brand by brand, because the consolidated number hides the split.</p>  <dl class="pcard__facts">
+<div><dt>Kept separate</dt><dd>CELSIUS, Alani Nu, Rockstar</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>SQLite</li></ul></article></div>
+  </section>
+  <section class="wrap wrap--md block pgroup" id="risk-credit-and-volatility" aria-labelledby="risk-credit-and-volatility-h">
+    <h2 id="risk-credit-and-volatility-h" class="label label--block">Risk, credit and volatility</h2>
+    <div class="pgrid"><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/contagion-lab/cover.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/contagion-lab/">Six tests of market contagion: no early warning, adaptive models win</a></h3>
+<p class="pcard__sub">A reproducible platform for how shocks spread across US stocks, rates, credit, currencies and commodities, with every claim labelled descriptive, predictive or causal.</p>  <dl class="pcard__facts">
+<div><dt>Connectedness before crises</dt><dd>No reliable rise (placebo p 0.47)</dd></div><div><dt>Stress-day error, EWMA vs static network</dt><dd>−18% (t −3.9)</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>pandas</li><li>statsmodels</li><li>D3.js</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/contagion-lab" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">Beneish, Dechow, Montier, Piotroski, Altman</span><span class="pcard__factlabel">Scores</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Oct 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/forensic-accounting-screen/">Forensic accounting screen</a></h3>
+<p class="pcard__sub">Earnings-manipulation and disclosure-quality models run on AAOI, Coherent and Lumentum straight from SEC data.</p>  <dl class="pcard__facts">
+<div><dt>Text tests</dt><dd>Fog, tone, Lazy Prices, Benford</dd></div>  </dl>
+<ul class="stack"><li>Python</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">45 (2015–2026)</span><span class="pcard__factlabel">Releases studied</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Oct 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/netflix-earnings-volatility/">Netflix earnings-volatility study</a></h3>
+<p class="pcard__sub">Does NFLX really trade flat between earnings? Eleven years of releases, peers and option prices say no.</p>  <dl class="pcard__facts">
+<div><dt>Variance on earnings days</dt><dd>28%</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>Jupyter</li></ul></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">CoreWeave, Nebius, IREN</span><span class="pcard__factlabel">Companies</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Oct 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/neocloud-credit-models/">Debt-versus-equity models for AI neoclouds</a></h3>
+<p class="pcard__sub">Recovery waterfalls built from the filings, priced against bonds, CDS and deep puts for CoreWeave, Nebius and IREN.</p>  <dl class="pcard__facts">
+<div><dt>CoreWeave derived recovery</dt><dd>34% (24–40%)</dd></div>  </dl>
+<ul class="stack"><li>Python</li></ul></article></div>
+  </section>
+  <section class="wrap wrap--md block pgroup" id="tools" aria-labelledby="tools-h">
+    <h2 id="tools-h" class="label label--block">Tools</h2>
+    <div class="pgrid"><article class="pcard has-media">
+<div class="pcard__media"><img src="/media/game-tree-studio/cover.jpg" alt="" loading="lazy" decoding="async"></div>
+  <div class="pcard__top">
+    <span class="pstatus pstatus--done">Done</span>
+<span class="pcard__period">Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/game-tree-studio/">A browser editor for game-theory trees, with LaTeX and image export</a></h3>
+<p class="pcard__sub">Draw extensive-form game trees with chance moves, information sets and payoffs, then export them as PNG, SVG or TikZ. Nothing to install and no account.</p>  <dl class="pcard__facts">
+<div><dt>To install</dt><dd>Nothing: one page, no server, no build step</dd></div><div><dt>Export formats</dt><dd>PNG, SVG, TikZ, GTDraw and JSON</dd></div>  </dl>
+<ul class="stack"><li>JavaScript</li><li>HTML</li><li>CSS</li></ul><div class="pcard__links"><a href="https://rasmuscodes.github.io/game-tree-studio/" target="_blank" rel="noopener">Open the editor<span aria-hidden="true"> ↗</span></a><a href="https://github.com/RasmusCodes/game-tree-studio" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a></div></article></div>
+  </section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

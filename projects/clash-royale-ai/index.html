@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Clash Royale win-probability engine, tested in a synthetic toy world · Rasmus Suonio</title>
+<meta name="description" content="A research codebase for win probabilities, video-to-game-state reconstruction and an offline game-playing bot. No real game data has been used yet; everything runs on fictional cards.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/clash-royale-ai/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A Clash Royale win-probability engine, tested in a synthetic toy world">
+<meta property="og:description" content="A research codebase for win probabilities, video-to-game-state reconstruction and an offline game-playing bot. No real game data has been used yet; everything runs on fictional cards.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/clash-royale-ai/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A Clash Royale win-probability engine, tested in a synthetic toy world</h1>
+<p class="post__sub">A research codebase for win probabilities, video-to-game-state reconstruction and an offline game-playing bot. No real game data has been used yet; everything runs on fictional cards.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-19">19 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/clash-royale-ai/" data-title="A Clash Royale win-probability engine, tested in a synthetic toy world">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/clash-royale-ai/&amp;text=A%20Clash%20Royale%20win-probability%20engine%2C%20tested%20in%20a%20synthetic%20toy%20world" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/clash-royale-ai/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20Clash%20Royale%20win-probability%20engine%2C%20tested%20in%20a%20synthetic%20toy%20world&amp;body=https%3A//rasmuscodes.github.io/projects/clash-royale-ai/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--live">Building</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Real game data used</dt><dd class="is-text">None yet: a synthetic toy world</dd></div><div><dt>Toy world</dt><dd class="is-text">600 fictional players, 12,000 matches</dd></div><div><dt>Pre-match winner picked (toy)</dt><dd class="is-text">66%, against 53% for a baseline</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>LightGBM</li><li>OpenCV</li><li>JavaScript</li></ul></section>
+
+
+  <div class="post__body">
+    <div class="prose">
+<p>Clash Royale is a real-time card game in which two players spend elixir to deploy troops and spells and try to destroy each other’s towers. This project is a research codebase for it: a calibrated win-probability engine, game-state reconstruction from video, an analytics dashboard and a bot that plays offline.</p>
+<p><strong>No real Clash Royale data has been used yet.</strong> There was no API key, no sourced card statistics and no gameplay footage. Every model, metric and video so far comes from a synthetic toy world: 21 fictional cards, a toy simulator and scripted players, built to copy the game’s structure. The numbers below test the pipeline and the design choices in a world with known ground truth. They say nothing about accuracy in the real game.</p>
+<h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
+<ul>
+<li><strong>Data layer.</strong> A client for the official API, a crawler, a database that records where every row came from, and a card database that knows each card’s stats on any date, so balance patches enter as changed numbers. So far it has only run on fictional data.</li>
+<li><strong>Win probability.</strong> A pre-match model for two known decks, a prior that sharpens as the opponent’s cards are revealed one by one, and an in-game model that updates that prior from towers, elixir, the board and the opponent’s likely hand. Predictions are calibrated and explained with SHAP attributions (how much each group of inputs pushed the number).</li>
+<li><strong>Vision.</strong> Frames rendered from simulator states, each watermarked “SYNTHETIC”, are read back into game states (timer, tower HP, elixir, hand, units) and scored against the simulator’s ground truth. This tests the logic, not detectors on real footage.</li>
+<li><strong>Bot.</strong> Rollout-based search (beam search, a flat Monte Carlo search and one-step lookahead), in the toy simulator only. The game’s fair-play policy bans bots in real matches, so the code has no client interaction, screen tapping or network code.</li>
+<li><strong>Dashboard.</strong> A local web app with a matchup analyser, a match replay that charts the win probability and explains its swings, and a model report.</li>
+</ul>
+<h2 id="results-in-the-toy-world">Results in the toy world <a class="header-anchor" href="#results-in-the-toy-world">#</a></h2>
+<p>The world has 600 fictional players and 12,000 matches over 60 simulated days, split by time into training, validation and test windows.</p>
+<ul>
+<li>On 2,000 held-out matches, the pre-match model picks the winner 66% of the time (AUC 0.73, where 0.5 is a coin flip), against 53% for a baseline that only knows card levels and trophies.</li>
+<li>In the first version of the world, in-game accuracy rose from about 62% in the first 30 seconds to 85% in the last 30 seconds of normal time. Tower state carried most of the signal.</li>
+<li>A random train/test split would have overstated pre-match quality (log loss 0.573 against 0.612 on a split by time), so only time-split numbers are reported.</li>
+<li>The largest single gain came from simulation: projecting tower damage eight seconds ahead improved the in-game model at every stage of the match.</li>
+<li>Search-based bots beat the scripted players by a wide margin, with beam search strongest, at 20-100 ms a decision. Tuning a bot’s weights on 16-game evaluations overfit and made it worse in a fresh league.</li>
+</ul>
+<h2 id="what-the-review-caught">What the review caught <a class="header-anchor" href="#what-the-review-caught">#</a></h2>
+<p>A technical review re-ran each idea on identical test rows, with confidence intervals that resample whole matches. It found that 8.1% of matches in the first world were near-idle because the scripted players could stall, and a second version of the world removed them. It also found that the opponent-elixir tracker was confidently wrong when plays were missed: its 95% intervals covered the truth only 20% of the time. Modelling missed detections explicitly raised that to 90%. Several ideas measured no gain and were dropped, including stage-by-stage recalibration and lagged history features.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<p>Real data is the whole gap. The in-game model needs real match timelines, which only screen recordings and trained detectors can supply, and the simulation feature needs a faithful game engine.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>Python throughout: SQLAlchemy and SQLite for the data, LightGBM, XGBoost, CatBoost and scikit-learn for the models, SHAP for explanations, OpenCV for the vision pipeline and FastAPI for the dashboard’s API. The dashboard itself is plain JavaScript with Chart.js.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/machine-learning/">machine learning</a><a class="tag" href="/tags/games/">games</a><a class="tag" href="/tags/simulation/">simulation</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/clash-royale-ai/" data-title="A Clash Royale win-probability engine, tested in a synthetic toy world">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/clash-royale-ai/&amp;text=A%20Clash%20Royale%20win-probability%20engine%2C%20tested%20in%20a%20synthetic%20toy%20world" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/clash-royale-ai/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20Clash%20Royale%20win-probability%20engine%2C%20tested%20in%20a%20synthetic%20toy%20world&amp;body=https%3A//rasmuscodes.github.io/projects/clash-royale-ai/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/contagion-lab/"><span>Previous</span><b>Six tests of market contagion: no early warning, adaptive models win</b></a><a class="pager__item pager__item--next" href="/projects/optical-intel/"><span>Next</span><b>A deal tracker for Coherent and AAOI that quotes every claim verbatim</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

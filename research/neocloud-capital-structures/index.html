@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neocloud capital structures: CoreWeave, Nebius and IREN · Rasmus Suonio</title>
+<meta name="description" content="The CoreWeave test applied to every public neocloud with traded debt: does the debt price more default risk than the equity tail?">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/research/neocloud-capital-structures/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Neocloud capital structures: CoreWeave, Nebius and IREN">
+<meta property="og:description" content="The CoreWeave test applied to every public neocloud with traded debt: does the debt price more default risk than the equity tail?">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/research/neocloud-capital-structures/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-research">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab is-active" href="/research/" aria-current="page">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab" href="/projects/">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post post--toc">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/research/">Research</a><span class="kicker__kind">Sector study</span></div>
+    <h1 class="post__title">Neocloud capital structures: CoreWeave, Nebius and IREN</h1>
+<p class="post__sub">The CoreWeave test applied to every public neocloud with traded debt: does the debt price more default risk than the equity tail?</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-10-24">24 Oct 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>17 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/research/neocloud-capital-structures/" data-title="Neocloud capital structures: CoreWeave, Nebius and IREN">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/research/neocloud-capital-structures/&amp;text=Neocloud%20capital%20structures%3A%20CoreWeave%2C%20Nebius%20and%20IREN" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/research/neocloud-capital-structures/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Neocloud%20capital%20structures%3A%20CoreWeave%2C%20Nebius%20and%20IREN&amp;body=https%3A//rasmuscodes.github.io/research/neocloud-capital-structures/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--none" aria-label="Research summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+<span class="sheet__ticker">CRWV · NBIS · IREN</span>    </div>
+    
+  </div>
+  <dl class="sheet__facts">
+<div><dt>CRWV derived recovery</dt><dd class="is-text">34% (24–40%)</dd></div><div><dt>NBIS derived recovery</dt><dd class="is-text">40% (29–47%)</dd></div><div><dt>IREN derived recovery</dt><dd class="is-text">64% (57–70%)</dd></div>  </dl>
+</section>
+
+
+  <div class="post__body">
+    <nav class="toc" aria-label="Contents">
+      <details class="toc__box" open>
+        <summary>Contents</summary>
+        <ol><li><a href="#bottom-line">Bottom line</a></li><li><a href="#1-universe-and-screen">1. Universe and screen</a></li><li><a href="#2-method-and-what-changed-from-the-coreweave-analysis">2. Method, and what changed from the CoreWeave analysis</a></li><li><a href="#3-iren">3. IREN</a></li><li><a href="#4-nebius">4. Nebius</a></li><li><a href="#5-coreweave">5. CoreWeave</a></li><li><a href="#6-what-the-three-cases-say-together">6. What the three cases say together</a></li><li><a href="#7-sources">7. Sources</a></li></ol>
+      </details>
+    </nav>
+    <div class="prose">
+<p>Prepared 2026-10-24. Market data as of the 2026-10-23 close. All amounts in USD.</p>
+<p>Source labels used throughout:</p>
+<ul>
+<li><strong>[F]</strong> filed with the SEC.</li>
+<li><strong>[M]</strong> market data: FINRA TRACE, Cboe, FINRA short interest or IBorrowDesk.</li>
+<li><strong>[C]</strong> my calculation from [F] or [M].</li>
+<li><strong>[S]</strong> web-search snippet only, not read in full.</li>
+<li><strong>[J]</strong> labelled judgment.</li>
+</ul>
+<h2 id="bottom-line">Bottom line <a class="header-anchor" href="#bottom-line">#</a></h2>
+<p>I applied the CoreWeave test to each public neocloud with traded debt. Recovery is derived bottom-up from each company’s filings, never assumed. The test asks whether the debt prices more default risk than the equity tail does. The cleanest way to state the answer is a <strong>breakeven recovery</strong>: the recovery at which a bond’s implied default probability equals the default probability in the deepest listed puts. If the derived recovery is above the breakeven, the debt is cheap relative to the equity.</p>
+<p>For convertibles there are two breakevens:</p>
+<ul>
+<li><strong>Full model:</strong> a jump-to-default convertible tree calibrated to the listed vol surface.</li>
+<li><strong>Straight-bond bound:</strong> the convert priced as a plain bond, with the conversion option ignored. This one cannot overstate how cheap the credit is.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>CoreWeave</th>
+<th>Nebius</th>
+<th>IREN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Derived recovery, central (range)</td>
+<td>34% (24–40%) on the straight notes</td>
+<td>40% (29–47%)</td>
+<td>64% (57–70%)</td>
+</tr>
+<tr>
+<td>Puts’ default probability</td>
+<td>19–26% to Jan-2029</td>
+<td>at most 12% to Jan-2028</td>
+<td>at most 21% to Jan-2029, 28% at the ask</td>
+</tr>
+<tr>
+<td>Bond tested</td>
+<td>9.75% 2031 notes at 81.23</td>
+<td>0.50% 2030 converts at 83.04</td>
+<td>1.00% 2033 (Dec) converts at 53.62</td>
+</tr>
+<tr>
+<td>Breakeven recovery, full model</td>
+<td>21%</td>
+<td>17%</td>
+<td>10% (14% at the put ask)</td>
+</tr>
+<tr>
+<td>Breakeven recovery, straight-bond bound</td>
+<td>21% (no option)</td>
+<td>51%</td>
+<td>35% (44% at the put ask)</td>
+</tr>
+<tr>
+<td>Verdict</td>
+<td>Cheap against the puts</td>
+<td>Cheap only if the conversion option is worth what listed options imply</td>
+<td>Cheap on both measures</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>IREN is the strongest signal, but its recovery is the least certain number in this work.</strong> Its four out-of-the-money converts trade at 54–66. The full model can only reproduce those prices with recovery of 20–30%, while my bottom-up derivation gives 57–70%. Even with the option ignored and the $5 put taken at the ask, the 1.00% 2033 (Dec) notes price more default than the puts for any recovery above 44%. The trade below needs no puts, because the bond plus the short stock already gains on default at the low recovery. It breaks even on default at about 22% recovery. The derivation leans on a management margin estimate and on owned sites valued at cost, and several known claims are left out (section 3).</li>
+<li><strong>Nebius is a model-dependent signal.</strong> Under the full model its converts price 21–23% default to Jan-2028 against at most 12% in the puts. Ignoring the option, the 0.50% 2030s price only 9% at the derived recovery. That is no more than the puts allow. So the converts are cheap only if the market should pay for the deep out-of-the-money conversion option what listed options imply.</li>
+<li><strong>CoreWeave’s straight notes remain the cleanest expression.</strong> That case is in the <a href="/research/coreweave-capital-structure/">dedicated memo</a>. CoreWeave’s own converts follow the Nebius pattern: breakevens of 12–18% under the full model but 57–69% on the straight-bond bound.</li>
+</ol>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/neocloud-capital-structures/chart_cross_company.png" alt="Breakeven recovery vs derived recovery" /><figcaption>Breakeven recovery vs derived recovery</figcaption></figure>
+<h2 id="1-universe-and-screen">1. Universe and screen <a class="header-anchor" href="#1-universe-and-screen">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Traded debt</th>
+<th>Used?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CoreWeave (CRWV)</td>
+<td>Straight notes and converts</td>
+<td>Yes; the straight notes are covered in the <a href="/research/coreweave-capital-structure/">dedicated memo</a></td>
+</tr>
+<tr>
+<td>Nebius (NBIS)</td>
+<td>8 convertible series</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>IREN</td>
+<td>6 convertible series plus private GPU financings</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>WhiteFiber (WYFI)</td>
+<td>2 converts with stale prints (last trades July and September) and no usable deep puts</td>
+<td>No</td>
+</tr>
+<tr>
+<td>DigitalOcean (DOCN)</td>
+<td>General-purpose cloud with no credit-sensitive converts</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Nscale, Lambda</td>
+<td>No listed equity (IPO pending, or private)</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></div>
+<p>The data-center landlords (APLD, CIFR, WULF, CORZ, HUT, CLSK, GLXY) have secured and unsecured notes, but they lease capacity to neoclouds rather than sell compute. I screened them only.</p>
+<p>Data sources:</p>
+<ul>
+<li><strong>Bonds:</strong> last TRACE prints from FINRA’s public API.</li>
+<li><strong>Options:</strong> Cboe delayed quotes.</li>
+<li><strong>Stock:</strong> Yahoo.</li>
+<li><strong>Short interest:</strong> FINRA.</li>
+<li><strong>Borrow:</strong> IBorrowDesk.</li>
+<li><strong>Debt terms, backlog and balance sheets:</strong> extracted from EDGAR filings, with a source recorded for every field.</li>
+</ul>
+<h2 id="2-method-and-what-changed-from-the-coreweave-analysis">2. Method, and what changed from the CoreWeave analysis <a class="header-anchor" href="#2-method-and-what-changed-from-the-coreweave-analysis">#</a></h2>
+<p><strong>Recovery.</strong> I used the same structure as the CoreWeave model. Value at default is made up of four parts:</p>
+<ul>
+<li>PV of cash EBITDA still to come from the contracted backlog. Prepaid revenue brings no new cash.</li>
+<li>Residual GPU value at the end of the backlog.</li>
+<li>Owned real estate.</li>
+<li>Receivables and restricted cash.</li>
+</ul>
+<p>Secured debt and 5% administrative costs come off the top. What remains is shared by notes, six months’ interest, trade claims and capped lease-rejection claims.</p>
+<p>There are three scenarios: liquidity default, loss of the largest customer, and AI-compute bust. They are weighted 25/50/25 (harsh 10/45/45, mild 40/45/15) and averaged over default dates to the put expiry. The generic code reproduces CoreWeave at 32%, against 34% in the dedicated model. Additions for Nebius and IREN:</p>
+<ul>
+<li>Cash on hand and money raised after the balance-sheet date are assumed spent on capex before any default. They become GPUs and owned sites, valued at the same haircuts. Without this, IREN’s and Nebius’s large cash piles would count as neither assets nor claims.</li>
+<li>Delivery of the backlog is capped by the GPUs actually funded in each scenario, as in the dedicated CoreWeave model.</li>
+<li>Accreting claims for Nebius, whose notes accrete to 110–125% of principal.</li>
+<li>Non-core stakes, valued with scenario haircuts.</li>
+<li>A sensitivity for refund claims by a lost customer that had prepaid.</li>
+</ul>
+<p><strong>Default probability from the converts.</strong> The convertible tree uses jump-to-default, with hazard rising as the stock falls (beta 1.5). The diffusive vol is recalibrated so the tree still reprices the listed Jan-2029 ATM call. “Below model range” means the bond trades below the lowest price the model can produce at that recovery. The model then cannot explain the price, so the bond is cheap at that recovery.</p>
+<p>One feature matters for long-dated, far out-of-the-money converts. In this model a higher hazard also raises the drift of the surviving stock, so the conversion option keeps 15–20 points of value even at high hazard. For example, the Nebius 2034s are worth at least about 81 at 30% recovery. The market evidently pays less for that option, which is why the straight-bond bound is reported alongside.</p>
+<p><strong>Default probability from the puts.</strong> I used the Carr-Wu single-strike estimate. For Nebius and IREN the deepest liquid strikes are 25% and 20% of spot. Those puts also pay on deep declines without default, so their figure is only an upper bound on the equity-implied default probability. The breakeven test uses the highest put-based estimate available, so it is conservative toward “cheap”.</p>
+<p><strong>Trade construction:</strong></p>
+<ul>
+<li>Long $1mm face of the most credit-sensitive liquid convert.</li>
+<li>Short the full model delta.</li>
+<li>Puts at about 20% and 37% of spot, sized so the position neither gains nor loses on default at the low recovery. No puts if it already gains there.</li>
+</ul>
+<h2 id="3-iren">3. IREN <a class="header-anchor" href="#3-iren">#</a></h2>
+<p><strong>Capital structure.</strong></p>
+<ul>
+<li><strong>Converts:</strong> $6,745.7M at 2026-06-30 [F: 10-K Note 23].
+<ul>
+<li>Two small series are deep in the money: the 3.25% 2030 ($212.3M, conversion price $16.81) and the 3.50% 2029 ($233.4M, $13.64).</li>
+<li>Four are out of the money: 0% 2031 ($1,000M, $85.63), 0.25% 2032 ($1,150M, $51.40), 1.00% 2033 (Jun) ($1,150M, $51.40) and 1.00% 2033 (Dec) ($3,000M, $73.07).</li>
+<li>All are senior unsecured obligations of IREN Ltd, an Australian company.</li>
+</ul>
+</li>
+<li><strong>Microsoft financing subsidiary:</strong> non-recourse except for limited parent guarantees.
+<ul>
+<li>Delayed-draw term loan: $413M drawn of $1,545M.</li>
+<li>5.96% notes: $525M issued of $2,100M.</li>
+<li>Due December 2031 [F: 10-K Note 23; 8-K 2026-06-01].</li>
+</ul>
+</li>
+<li><strong>Mackenzie financing:</strong> up to about $2.4bn of 9.0% GPU financing, signed 2026-08-25. IREN Ltd guarantees payment. No draws are disclosed [F: 10-K Note 30].</li>
+<li><strong>Finance leases:</strong> $243.8M [F].</li>
+<li><strong>Cash:</strong> $5,895.6M, plus $1,723.9M of restricted cash held entirely in the Microsoft subsidiary [F: Note 26].</li>
+<li><strong>Committed capex:</strong> $13,810M [F: Note 29], including about $10.9bn of announced Dell GPU orders that IREN Ltd guarantees [F, sum C].</li>
+<li><strong>Backlog:</strong> about $16.6bn [F: Note 4], made up of $5.1bn of ASC 606 obligations and about $11.4bn of lease contract value.
+<ul>
+<li>Microsoft is $9.7bn over five years, 20% prepaid and credited after month 24 [F: 8-K 2025-11-03].</li>
+<li>NVIDIA is $3.4bn [F].</li>
+<li>About $2.8bn of July contracts is not in the total [F: 8-K 2026-07-20].</li>
+</ul>
+</li>
+<li><strong>Sites:</strong> IREN owns all of them, including Childress (750 MW) and Sweetwater (1.4 GW plus 0.6 GW) [F: 10-K Item 2].</li>
+<li><strong>Equity:</strong> stock $24.91 [M], down from $45.73 at 2026-06-30 [F]. There are 404.6M shares [F: proxy], about $10.1bn of market value [C]. Jan-2029 ATM IV is 94% and borrow costs 0.45% with 6.1M shares available [M]. Short interest was 81.7M shares, 2.3 days to cover [M].</li>
+</ul>
+<p><strong>Recovery: 64% central (57–70%).</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Item, default around Q3-2027, $bn</th>
+<th>S1 liquidity</th>
+<th>S2 lose Microsoft-sized customer</th>
+<th>S3 AI bust</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deliverable share of backlog</td>
+<td>100%</td>
+<td>77%</td>
+<td>54%</td>
+</tr>
+<tr>
+<td>PV of contracted cash EBITDA</td>
+<td>6.4</td>
+<td>3.7</td>
+<td>1.9</td>
+</tr>
+<tr>
+<td>Residual GPUs + owned sites</td>
+<td>6.2</td>
+<td>4.2</td>
+<td>2.3</td>
+</tr>
+<tr>
+<td>Secured debt ahead</td>
+<td>5.6</td>
+<td>3.2</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>Unsecured claims</td>
+<td>7.5</td>
+<td>7.5</td>
+<td>7.5</td>
+</tr>
+<tr>
+<td>Recovery at this date</td>
+<td>85%</td>
+<td>58%</td>
+<td>43%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Recovery is high for three reasons:</p>
+<ul>
+<li><strong>High margins.</strong> The contracted backlog earns an 85% estimated project EBITDA margin [F, management estimate: 8-K 2025-11-03 Ex.99.2]. That is consistent with FY2026 AI cloud revenue of $128.8M against $16.9M cost of revenue [F]. I deduct 6% of revenue for cash overhead [C], giving 79%.</li>
+<li><strong>Owned sites.</strong> IREN owns its sites and power. They total about $7.9bn at cost including committed site work [C], haircut to 80/60/40% of cost [J].</li>
+<li><strong>Narrow secured debt.</strong> The secured debt finances GPUs only.</li>
+</ul>
+<p>The judgments that move it most:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Central recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base</td>
+<td>64%</td>
+</tr>
+<tr>
+<td>Margin at the FY2026 group adjusted EBITDA margin (35%)</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>All undrawn GPU facilities drawn and spent in every scenario</td>
+<td>47%</td>
+</tr>
+<tr>
+<td>Half of pre-default cash lost to operating burn</td>
+<td>51%</td>
+</tr>
+<tr>
+<td>Owned sites at 60/40/20% of cost</td>
+<td>52%</td>
+</tr>
+<tr>
+<td>EBITDA margin 10 points lower</td>
+<td>55%</td>
+</tr>
+<tr>
+<td>Microsoft claims back its $1.94bn prepayment in S2</td>
+<td>58%</td>
+</tr>
+<tr>
+<td>No undrawn facility ever drawn</td>
+<td>73%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Claims left out of the base all push recovery down:</p>
+<ul>
+<li>Dell damages on unfunded GPU orders, which IREN Ltd guarantees.</li>
+<li>A Mackenzie guarantee deficiency.</li>
+<li>Structural subordination of parent-level converts to subsidiary trade claims.</li>
+</ul>
+<p>Australian insolvency procedure is not modeled.</p>
+<p><strong>Credit against the equity tail.</strong></p>
+<ul>
+<li><strong>Puts:</strong> the Jan-2029 $5 put is 20% of spot, quoted 0.64/1.28, with open interest of 3,389 [M]. It gives at most 21.2% default to Jan-2029 at the mid, or 28.3% at the ask [C]. The Jan-2028 $5 put (open interest 19,362) gives at most 14.2%.</li>
+<li><strong>Full model:</strong> all four out-of-the-money converts are below model range at the derived recovery. The highest recovery that fits their prices is 20–30% [C].</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Convert</th>
+<th>Price [M]</th>
+<th>Breakeven, full model (mid / ask)</th>
+<th>Breakeven, straight bound (mid / ask)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0% 2031</td>
+<td>55.05</td>
+<td>4% / 15%</td>
+<td>18% / 33%</td>
+</tr>
+<tr>
+<td>1.00% 2033 (Dec)</td>
+<td>53.62</td>
+<td>10% / 14%</td>
+<td>35% / 44%</td>
+</tr>
+<tr>
+<td>0.25% 2032</td>
+<td>65.56</td>
+<td>9% / 16%</td>
+<td>56% / 62%</td>
+</tr>
+<tr>
+<td>1.00% 2033 (Jun)</td>
+<td>66.23</td>
+<td>10% / 15%</td>
+<td>59% / 64%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The 0% 2031 and 1.00% 2033 (Dec) notes are cheap on every measure against the derived 57–70%. Ignoring the option, both trade below what a default would pay at 64% recovery. The 2032 and June 2033 notes are cheap on the straight bound only at the central or high recovery.</p>
+<p><strong>Trade, per $1mm face:</strong></p>
+<ul>
+<li>Buy the 1.00% 2033 (Dec) notes at 53.62 (54.02 with accrued) [M].</li>
+<li>Short 13,040 shares: model delta 1.30 points per $1, calibrated at the 20% recovery the price implies. As a check, the notes went from par at pricing (reference stock $55.15 [F]) to 53.62 at $24.91, about 1.53 points per $1 [C, assuming issue at par].</li>
+<li>No puts.</li>
+<li>Capital about $540k.</li>
+<li>Carry about +$15.9k a year (2.9%), net of 0.45% borrow.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>P&amp;L</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default at 57% / 64% / 70% recovery</td>
+<td>+$351k / +$421k / +$481k</td>
+</tr>
+<tr>
+<td>Default at the 20% recovery the price implies</td>
+<td>−$19k (breakeven about 22%)</td>
+</tr>
+<tr>
+<td>12 months, stock −85% / −50% / flat / +70% / +200%</td>
+<td>+$3k / +$14k / +$16k / +$8k / −$3k</td>
+</tr>
+<tr>
+<td>Instant move, stock −80% / +50% / +100%</td>
+<td>−$7k / −$3k / −$1k</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Risks and what would change the view:</strong></p>
+<ul>
+<li><strong>Recovery:</strong> the derivation is the weakest link; see the sensitivities above.</li>
+<li><strong>Hedge ratio:</strong> if the notes begin trading on a higher recovery, their sensitivity to the stock falls. The short then over-hedges. If the bond moves half as much as the model, a 50% stock rally costs about $80k [C].</li>
+<li><strong>Execution:</strong> busted converts trade in size infrequently, and the 0% 2031s print under two CUSIPs.</li>
+<li><strong>Funding the short:</strong> short interest is about 20% of shares [C], and IREN has a $6bn at-the-market equity program [F].</li>
+<li><strong>Dated checks:</strong>
+<ul>
+<li>The September-quarter 10-Q, due around November 2026, will show Mackenzie and subsidiary draws and any conversions of the 2029/2030 notes.</li>
+<li>Microsoft acceptance of Horizons 2–4 is targeted for Q4 2026, with contractual grace to the start of Q2 2027 [F].</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-nebius">4. Nebius <a class="header-anchor" href="#4-nebius">#</a></h2>
+<p><strong>Capital structure.</strong></p>
+<ul>
+<li><strong>Converts:</strong> eight series, $13,425M of original principal plus a $5.3M legacy remnant [F: 6-K 2026-08-12 Note 12; 6-K 2026-08-24]. All are parent senior unsecured, and principal accretes to 110–125% at maturity.
+<ul>
+<li>In the money: the June-2025 2029 and 2031 series ($87.5M each, conversion price $51.45) and the Sept-2025 1.00% 2030 and 2.75% 2032 ($1,581.25M each, $138.75).</li>
+<li>Out of the money: the March-2026 1.25% 2031 ($2,587.5M, $183.22) and 2.625% 2033 ($1,750M, $180.31), and the August-2026 0.50% 2030 ($3,450M, $313.46) and 4.50% 2034 ($2,300M, $324.65).</li>
+</ul>
+</li>
+<li><strong>Secured ahead of the converts:</strong>
+<ul>
+<li>About $775M MUFG facility at a GPU subsidiary [F: 6-K 2026-07-17].</li>
+<li>$3.5bn Citi 364-day bridge signed 2026-10-17, secured on substantially all assets of the parent and the shares of its two main subsidiaries. Draws are undisclosed [F: 6-K 2026-10-22].</li>
+</ul>
+</li>
+<li><strong>Cash:</strong> $8,042.1M plus $1,056.0M restricted at 2026-06-30 [F]. The August converts added about $5.68bn net [F].</li>
+<li><strong>Backlog:</strong> remaining performance obligations of $37,490.6M [F: Note 4].
+<ul>
+<li>Microsoft is $17,392.9M, of which $6,958.1M is paid upfront [F].</li>
+<li>Meta is $2,880.7M plus up to $27bn: $12bn firm and $15bn as a backstop for unsold capacity [F].</li>
+</ul>
+</li>
+<li><strong>Prepayments:</strong> deferred revenue is $5,975.2M. The Q2 letter says “We expect to receive over $9 billion in customer prepayments in 2026” [F].</li>
+<li><strong>Margin:</strong> AI cloud adjusted EBITDA margin was 49.7% in Q2 2026 [F].</li>
+<li><strong>Lease and power commitments:</strong>
+<ul>
+<li>Leases have $2,175.1M of remaining payments.</li>
+<li>A further $12,054.1M of leases are signed but not commenced.</li>
+<li>Power commitments are $5,324.1M [F].</li>
+</ul>
+</li>
+<li><strong>Non-core stakes:</strong> ClickHouse at $1,517.7M and Toloka at $86.5M [F].</li>
+<li><strong>Equity:</strong> stock $158.74 [M], about $49bn of market value including pre-funded warrants and the August exchange shares [C, approximate]. Jan-2029 ATM IV is 85% and borrow costs 0.31% [M]. Short interest was 44.7M shares, 2.7 days to cover [M].</li>
+</ul>
+<p><strong>Recovery: 40% central (29–47%).</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Item, default around Q3-2027, $bn</th>
+<th>S1</th>
+<th>S2</th>
+<th>S3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PV of contracted cash EBITDA</td>
+<td>3.7</td>
+<td>2.2</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Residual GPUs + owned sites</td>
+<td>8.3</td>
+<td>6.2</td>
+<td>3.3</td>
+</tr>
+<tr>
+<td>ClickHouse/Toloka after haircut</td>
+<td>1.1</td>
+<td>1.1</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>Secured debt ahead (Citi bridge + MUFG)</td>
+<td>4.1</td>
+<td>4.1</td>
+<td>4.1</td>
+</tr>
+<tr>
+<td>Unsecured claims (accreted)</td>
+<td>14.3</td>
+<td>15.2</td>
+<td>16.1</td>
+</tr>
+<tr>
+<td>Recovery at this date</td>
+<td>67%</td>
+<td>41%</td>
+<td>6%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nebius’s contracted cash flow after default is small, for two reasons:</p>
+<ul>
+<li><strong>Prepayments:</strong> customers prepay heavily. I net about $10.4bn: deferred revenue plus about $4.45bn of H2-2026 prepayments implied by the guidance [C].</li>
+<li><strong>Margin:</strong> the 50% segment margin leaves little after that.</li>
+</ul>
+<p>Its value sits instead in the roughly $21bn of cash and new money that becomes GPUs and owned sites before any default [C].</p>
+<p>Owned-site share and haircuts:</p>
+<ul>
+<li>19% of new capex goes to owned sites. The derivation is 25% data-center share × 75% owned [J]. It is consistent with about $11.3M per MW of shell cost [S: JLL via a secondary source] against about $29M per MW of GPUs [F: IREN’s Dell order, $5.8bn for 200 MW].</li>
+<li>The ClickHouse haircut is 29% [S: EquityZen end-2025 average secondary discount], plus a 58.6% software-index drawdown in the bust [S: WisdomTree, BVP Nasdaq Emerging Cloud Index].</li>
+</ul>
+<p>The judgments that move it most:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Central recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base</td>
+<td>40%</td>
+</tr>
+<tr>
+<td>Citi bridge never drawn</td>
+<td>59%</td>
+</tr>
+<tr>
+<td>No H2-2026 prepayments netted (and none spent)</td>
+<td>48%</td>
+</tr>
+<tr>
+<td>Microsoft claims back about $4.9bn of unearned prepayment in S2</td>
+<td>35%</td>
+</tr>
+<tr>
+<td>Microsoft’s 46% backlog share used as the lost customer</td>
+<td>36%</td>
+</tr>
+<tr>
+<td>ClickHouse/Toloka worth nothing</td>
+<td>34%</td>
+</tr>
+<tr>
+<td>Lower GPU residual (15/10/5% of cost)</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>Half of pre-default cash lost to burn</td>
+<td>29%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Credit against the equity tail.</strong></p>
+<ul>
+<li><strong>Puts:</strong> among expiries more than seven months out, the deepest strike with a bid is $40, which is 25% of spot. It has a bid only in the Dec-2027 and Jan-2028 expiries; Jan-2029 has nothing bid at or below 30% of spot. The Jan-2028 $40 put is quoted 4.25/4.50, with open interest of 19,990 [M]. It caps default to Jan-2028 at 11.7% [C].</li>
+<li><strong>Full model,</strong> at 40% recovery, default to Jan-2028 [C]:
+<ul>
+<li>1.25% 2031: 23%.</li>
+<li>2.625% 2033: 22%.</li>
+<li>0.50% 2030: 21%.</li>
+<li>4.50% 2034: below model range.</li>
+</ul>
+</li>
+<li><strong>Straight bound:</strong> the 0.50% 2030s price 9% and the 4.50% 2034s 12%. The March-2026 notes trade above their riskless straight value, so they carry no straight-bond credit signal [C].</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Convert</th>
+<th>Price [M]</th>
+<th>Breakeven, full model</th>
+<th>Breakeven, straight bound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.50% 2030</td>
+<td>83.04</td>
+<td>17%</td>
+<td>51%</td>
+</tr>
+<tr>
+<td>4.50% 2034</td>
+<td>81.16</td>
+<td>17%</td>
+<td>40%</td>
+</tr>
+<tr>
+<td>1.25% 2031</td>
+<td>108.99</td>
+<td>15%</td>
+<td>none</td>
+</tr>
+<tr>
+<td>2.625% 2033</td>
+<td>116.67</td>
+<td>28%</td>
+<td>none</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trade, per $1mm face:</strong></p>
+<ul>
+<li>Buy the 0.50% 2030s at 83.04 [M].</li>
+<li>Short 2,324 shares: model delta 0.23. As a check, the notes went from par at pricing (reference stock $223.90 [F]) to 83.04 at $158.74, about 0.26 points per $1 [C].</li>
+<li>Buy 26 Jan-2028 $40 puts and 17 Jan-2028 $60 puts, for $24.4k premium. The $60 strike is wide at 6.10/9.20, with open interest of 16,236 [M].</li>
+<li>Capital about $856k.</li>
+<li>Carry about +$23.9k a year (2.8%).</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>P&amp;L</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default at 29% / 40% / 47% recovery</td>
+<td>$0 / +$111k / +$181k</td>
+</tr>
+<tr>
+<td>12 months, stock −85% / −50% / flat / +70% / +120%</td>
+<td>+$99k / +$50k / +$24k / −$22k / −$40k</td>
+</tr>
+<tr>
+<td>Instant move, stock −80% / −40% / +50% / +100%</td>
+<td>+$85k / +$31k / −$13k / −$6k</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Risks and what would change the view:</strong></p>
+<ul>
+<li><strong>Option valuation:</strong> the signal depends on how the conversion option is valued; the straight bound says the 0.50% 2030s are roughly fair.</li>
+<li><strong>More secured debt:</strong> Nebius says it is “actively progressing” asset-backed and corporate-level debt [F], which would rank ahead of the converts.</li>
+<li><strong>Short rallies:</strong> the static hedge loses on large rallies.</li>
+<li><strong>Puts are only a bound:</strong> the true equity-implied default probability may be far below 12%, which would make the converts cheaper still.</li>
+<li><strong>Dated check:</strong> Q3 2026 results, expected around mid-November, will show draws on the Citi bridge, prepayments received and any new secured financing.</li>
+</ul>
+<h2 id="5-coreweave">5. CoreWeave <a class="header-anchor" href="#5-coreweave">#</a></h2>
+<p>The dedicated memo is <a href="/research/coreweave-capital-structure/">CoreWeave: own the unsecured notes, buy default insurance in the equity tail</a>. Its key figures:</p>
+<ul>
+<li>Derived recovery 34% (24–40%).</li>
+<li>9.75% 2031 notes at 81.23 price 31% default to Jan-2029, against 19–26% in the puts [M, C].</li>
+<li>Markit 5-year CDS closed at 1,140.6bp on 2026-10-22 [M: LSEG].</li>
+<li>The recommended structure is long notes, puts and a short stock hedge, carrying about 7% a year.</li>
+</ul>
+<p>The same converts test on CoreWeave’s own converts gives a generic recovery of 32% (23–39%):</p>
+<ul>
+<li><strong>Full-model breakevens:</strong> 12–18% against the 26% high end of the puts.</li>
+<li><strong>Straight-bond breakevens:</strong> 57–69%.</li>
+</ul>
+<p>So the converts, like Nebius’s, are cheap only under the full model. The straight notes are the better instrument. A converts version of the trade, at $1mm face, would be long the 1.75% 2032s at 67.87 and short 6,521 shares, with 68 × $10 and 35 × $20 Jan-2029 puts. It carries about 0.9% a year and makes +$90k on default at 32% recovery.</p>
+<h2 id="6-what-the-three-cases-say-together">6. What the three cases say together <a class="header-anchor" href="#6-what-the-three-cases-say-together">#</a></h2>
+<ul>
+<li><strong>The cheapness shows up where the debt is furthest from the money.</strong> The busted converts at IREN and Nebius’s August 2026 notes are where the equity no longer supports the bond. CoreWeave’s straight notes are the other case.</li>
+<li><strong>Recovery drives the answer, and it differs a lot by business model:</strong>
+<ul>
+<li>CoreWeave leases its data centers and would have about $23bn of secured debt ahead of the notes in a 2027 liquidity default, giving 34%.</li>
+<li>Nebius has sold much of its future cash flow through prepayments and is adding secured debt, giving 40%.</li>
+<li>IREN owns its sites and power, giving 64%.</li>
+</ul>
+</li>
+<li><strong>The market does not price that difference.</strong> Each company’s deepest out-of-the-money convert can be fitted by the full model only at recoveries of 20% or less: CoreWeave’s 2033s, Nebius’s 2034s and IREN’s 2033 (Dec). The gap to the derived recovery is largest at IREN.</li>
+</ul>
+<h2 id="7-sources">7. Sources <a class="header-anchor" href="#7-sources">#</a></h2>
+<p><strong>Filed, Nebius:</strong></p>
+<ul>
+<li>Q2 2026 interim statements: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm</a></li>
+<li>Q2 2026 shareholder letter: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm</a></li>
+<li>Citi bridge 6-K: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926117978/tm2628078d1_6k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926117978/tm2628078d1_6k.htm</a></li>
+<li>MUFG facility 6-K: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926084452/tm2620683d1_6k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926084452/tm2620683d1_6k.htm</a></li>
+<li>August 2026 converts, pricing: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926098924/tm2623617d1_ex99-1.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926098924/tm2623617d1_ex99-1.htm</a></li>
+<li>August 2026 converts, closing and exchange: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926100347/tm2623863d1_ex99-1.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926100347/tm2623863d1_ex99-1.htm</a></li>
+<li>March 2026 converts: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926029863/tm268409d3_ex99-1.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926029863/tm268409d3_ex99-1.htm</a></li>
+<li>20-F FY2025: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm</a></li>
+<li>Microsoft agreement 6-K: <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465925088312/tm2525580d1_6k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1513845/000110465925088312/tm2525580d1_6k.htm</a></li>
+</ul>
+<p><strong>Filed, IREN:</strong></p>
+<ul>
+<li>10-K FY2026: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm</a></li>
+<li>Q4 FY2026 release: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000187884826000051/irenreportsfy26results.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000187884826000051/irenreportsfy26results.htm</a></li>
+<li>Microsoft investor update (85% project margin): <a href="https://www.sec.gov/Archives/edgar/data/1878848/000114036125040072/ef20058139_ex99-2.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000114036125040072/ef20058139_ex99-2.htm</a></li>
+<li>GPU financing 8-K: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000114036126023427/ef20075181_8k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000114036126023427/ef20075181_8k.htm</a></li>
+<li>2033 (Dec) converts: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000114036126021285/ef20073507_8k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000114036126021285/ef20073507_8k.htm</a></li>
+<li>2032 and 2033 (Jun) converts: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000114036125044888/ef20060782_8k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000114036125044888/ef20060782_8k.htm</a></li>
+<li>0% 2031 converts: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000114036125038083/ef20056955_8k.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000114036125038083/ef20056955_8k.htm</a></li>
+<li>Proxy with share count: <a href="https://www.sec.gov/Archives/edgar/data/1878848/000114036126039451/ny20078226x1_def14a.htm" target="_blank" rel="noopener">https://www.sec.gov/Archives/edgar/data/1878848/000114036126039451/ny20078226x1_def14a.htm</a></li>
+</ul>
+<p><strong>Market:</strong></p>
+<ul>
+<li>FINRA TRACE corporate bond data (public dynarep API), last trades to 2026-10-23.</li>
+<li>Cboe delayed option quotes.</li>
+<li>Yahoo daily prices.</li>
+<li>FINRA short interest, 2026-09-30.</li>
+<li>IBorrowDesk, 2026-10-23.</li>
+<li>LSEG Workspace CDSOV page for CoreWeave, 23 Oct 2026.</li>
+</ul>
+<p><strong>Search snippets only:</strong></p>
+<ul>
+<li>EquityZen Q1 2026 private-market trends (end-2025 average secondary discount 29%): <a href="https://blog.equityzen.com/private-market-investment-trends-q1-2026-equityzen" target="_blank" rel="noopener">https://blog.equityzen.com/private-market-investment-trends-q1-2026-equityzen</a></li>
+<li>Forge median secondary trade at par to last round in June 2026 (Augment): <a href="https://augment.market/pulse/sambanova-and-forges-at-par-median" target="_blank" rel="noopener">https://augment.market/pulse/sambanova-and-forges-at-par-median</a></li>
+<li>WisdomTree on the 58.6% drawdown of the BVP Nasdaq Emerging Cloud Index, Nov-2021 to May-2022: <a href="https://wisdomtree.com/us/insights/blog/cloud-computing-are-share-prices-heading-toward-zero-or-is-it-an-opportunity-to-buy" target="_blank" rel="noopener">https://wisdomtree.com/us/insights/blog/cloud-computing-are-share-prices-heading-toward-zero-or-is-it-an-opportunity-to-buy</a></li>
+<li>Bisnow on powered-land premiums: <a href="https://www.bisnow.com/national/news/data-center-development/data-center-sites-are-warping-the-market-for-developable-land-134771" target="_blank" rel="noopener">https://www.bisnow.com/national/news/data-center-development/data-center-sites-are-warping-the-market-for-developable-land-134771</a></li>
+<li>DataCenterKnowledge on about $6bn of data-center land buying in H1 2026: <a href="https://datacenterknowledge.com/data-center-construction/ai-data-center-land-buying-hits-6b-as-power-premiums-rise" target="_blank" rel="noopener">https://datacenterknowledge.com/data-center-construction/ai-data-center-land-buying-hits-6b-as-power-premiums-rise</a></li>
+<li>JLL 2026 shell-and-core cost of about $11.3M per MW, via a secondary source (Million Miner). URL not retained.</li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <aside class="disclaimer" aria-label="Disclaimer">This note is research analysis for discussion and education, not personalised investment advice, and I am not a licensed financial adviser. Forecasts are scenario arithmetic on stated assumptions and can be wrong, and short positions can lose more than the amount invested. Prices are as of the dates shown.</aside>
+    <div class="tags"><a class="tag" href="/tags/credit/">credit</a><a class="tag" href="/tags/ai-infrastructure/">ai infrastructure</a><a class="tag" href="/tags/convertibles/">convertibles</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/research/neocloud-capital-structures/" data-title="Neocloud capital structures: CoreWeave, Nebius and IREN">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/research/neocloud-capital-structures/&amp;text=Neocloud%20capital%20structures%3A%20CoreWeave%2C%20Nebius%20and%20IREN" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/research/neocloud-capital-structures/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Neocloud%20capital%20structures%3A%20CoreWeave%2C%20Nebius%20and%20IREN&amp;body=https%3A//rasmuscodes.github.io/research/neocloud-capital-structures/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More research">
+<a class="pager__item" href="/research/coreweave-capital-structure/"><span>Previous</span><b>CoreWeave: own the unsecured notes, buy default insurance in the equity tail</b></a><a class="pager__item pager__item--next" href="/research/netflix-between-earnings/"><span>Next</span><b>Does Netflix trade flat between earnings?</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

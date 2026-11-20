@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A browser editor for game-theory trees, with LaTeX and image export · Rasmus Suonio</title>
+<meta name="description" content="Draw extensive-form game trees with chance moves, information sets and payoffs, then export them as PNG, SVG or TikZ. Nothing to install and no account.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/game-tree-studio/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A browser editor for game-theory trees, with LaTeX and image export">
+<meta property="og:description" content="Draw extensive-form game trees with chance moves, information sets and payoffs, then export them as PNG, SVG or TikZ. Nothing to install and no account.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/game-tree-studio/"><meta property="og:image" content="https://rasmuscodes.github.io/media/game-tree-studio/cover.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A browser editor for game-theory trees, with LaTeX and image export</h1>
+<p class="post__sub">Draw extensive-form game trees with chance moves, information sets and payoffs, then export them as PNG, SVG or TikZ. Nothing to install and no account.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-12">12 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>2 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/game-tree-studio/" data-title="A browser editor for game-theory trees, with LaTeX and image export">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/game-tree-studio/&amp;text=A%20browser%20editor%20for%20game-theory%20trees%2C%20with%20LaTeX%20and%20image%20export" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/game-tree-studio/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20browser%20editor%20for%20game-theory%20trees%2C%20with%20LaTeX%20and%20image%20export&amp;body=https%3A//rasmuscodes.github.io/projects/game-tree-studio/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://rasmuscodes.github.io/game-tree-studio/" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Open the editor</span></a><a class="file" href="https://github.com/RasmusCodes/game-tree-studio" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>To install</dt><dd class="is-text">Nothing: one page, no server, no build step</dd></div><div><dt>Export formats</dt><dd class="is-text">PNG, SVG, TikZ, GTDraw and JSON</dd></div><div><dt>Licence</dt><dd class="is-text">MIT</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>JavaScript</li><li>HTML</li><li>CSS</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/game-tree-studio/cover.jpg" alt="The Game Tree Studio editor showing an example game: Ann moves first, Nature moves after R with probabilities 1/3 and 2/3, and Bob&#39;s two nodes after Nature are joined by a dashed information-set line."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Game Tree Studio is a single-page editor for the trees used in game theory. An extensive-form game is a game drawn as a tree: each branch point is a move by a player or by chance, and the leaves hold the payoffs. It is the standard way to show who moves when and what they know. Drawing one neatly by hand or in LaTeX is slow, so this editor makes it a matter of clicks and keystrokes, then exports the result for papers, slides and course work.</p>
+<h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
+<ul>
+<li><strong>Quick tree building.</strong> Double-click a node to add moves, press 1 to 6 to give it to a player, or N to make it a chance node.</li>
+<li><strong>Information sets</strong> (nodes a player cannot tell apart). Shift-click them and press I. They are drawn as a dashed line, a dotted line or an oval, and the move labels stay in sync across the set.</li>
+<li><strong>Chance moves</strong> with numeric or symbolic probabilities, such as 1/3 or 1 − π. The editor warns when numeric probabilities don’t add up to 1.</li>
+<li><strong>Payoffs as expressions,</strong> with a small LaTeX-like markup for subscripts, superscripts, Greek letters and true minus signs.</li>
+<li><strong>Continua of actions,</strong> drawn as an arc between the extreme choices, with one representative move and a range label.</li>
+<li><strong>Highlighted moves,</strong> a thick line with an arrow, to mark a strategy profile or a path found by backward induction (solving the game from the leaves back to the root).</li>
+<li><strong>Layout and notation options:</strong> top-to-bottom or left-to-right trees, spacing sliders, terminal nodes on one row, three payoff styles, round or square chance nodes, serif or sans-serif text and optional colours by player.</li>
+<li>Undo and redo, copy and paste of subtrees, keyboard navigation, light and dark themes, and a layout that works on phones.</li>
+</ul>
+<h2 id="export">Export <a class="header-anchor" href="#export">#</a></h2>
+<ul>
+<li><strong>PNG</strong> at three times screen resolution, for documents, slides and course submissions.</li>
+<li><strong>SVG</strong> for the web or further editing, or a copy straight to the clipboard.</li>
+<li><strong>TikZ</strong> for LaTeX, with every element at the coordinates shown in the editor and simple fractions typeset as fractions.</li>
+<li><strong>GTDraw <code>.ef</code> files</strong>, for fine-tuning the typesetting in that tool.</li>
+<li><strong>JSON</strong>, the editor’s own format. Dragging a saved file onto the canvas opens the game again.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>One HTML page, one stylesheet and one JavaScript file that holds the tree model, the layout, the SVG rendering and every exporter. There is no build step, no server and no account. The live copy runs on GitHub Pages, and the code is MIT-licensed.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li><strong>It draws games; it doesn’t solve them.</strong> Highlighted paths are marked by hand.</li>
+<li><strong>Storage is per browser and per address.</strong> Games are kept in the browser’s local storage, so a copy on GitHub Pages and a copy opened from disk keep separate libraries, and clearing site data removes them. Saving a game file keeps a copy that opens anywhere.</li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/game-theory/">game theory</a><a class="tag" href="/tags/latex/">latex</a><a class="tag" href="/tags/web-app/">web app</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/game-tree-studio/" data-title="A browser editor for game-theory trees, with LaTeX and image export">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/game-tree-studio/&amp;text=A%20browser%20editor%20for%20game-theory%20trees%2C%20with%20LaTeX%20and%20image%20export" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/game-tree-studio/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20browser%20editor%20for%20game-theory%20trees%2C%20with%20LaTeX%20and%20image%20export&amp;body=https%3A//rasmuscodes.github.io/projects/game-tree-studio/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/aaoi-alt-data-tracker/"><span>Previous</span><b>AAOI alt-data tracker</b></a><a class="pager__item pager__item--next" href="/projects/altalpha/"><span>Next</span><b>A point-in-time lab for free alternative data, and what survived it</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

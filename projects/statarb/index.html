@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistical arbitrage on the S&amp;P 500: what survives costs · Rasmus Suonio</title>
+<meta name="description" content="A point-in-time research platform for pairs trading, momentum and fundamental signals in S&amp;P 500 stocks, with fourteen research notes, most of them pre-registered.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/statarb/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Statistical arbitrage on the S&amp;P 500: what survives costs">
+<meta property="og:description" content="A point-in-time research platform for pairs trading, momentum and fundamental signals in S&amp;P 500 stocks, with fourteen research notes, most of them pre-registered.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/statarb/"><meta property="og:image" content="https://rasmuscodes.github.io/media/statarb/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">Statistical arbitrage on the S&amp;P 500: what survives costs</h1>
+<p class="post__sub">A point-in-time research platform for pairs trading, momentum and fundamental signals in S&amp;P 500 stocks, with fourteen research notes, most of them pre-registered.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-19">19 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/statarb/" data-title="Statistical arbitrage on the S&amp;P 500: what survives costs">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/statarb/&amp;text=Statistical%20arbitrage%20on%20the%20S%26P%20500%3A%20what%20survives%20costs" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/statarb/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Statistical%20arbitrage%20on%20the%20S%26P%20500%3A%20what%20survives%20costs&amp;body=https%3A//rasmuscodes.github.io/projects/statarb/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--live">Building</span>
+<span class="sheet__company">Since Nov 2026</span>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Research notes</dt><dd class="is-text">14, twelve pre-registered</dd></div><div><dt>Cointegration pairs, 2016–26</dt><dd class="is-text">−1.4% a year net</dd></div><div><dt>Capped quality book</dt><dd class="is-text">Alpha +4.3% a year (t 2.4)</dd></div><div><dt>Same book without six mega-caps</dt><dd class="is-text">Alpha t 1.1, like equal weights</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>pandas</li><li>NumPy</li><li>cvxpy</li><li>JavaScript</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/statarb/cover.png" alt="Growth of $1 net of costs for four pairs-selection methods in S&amp;P 500 stocks, 1996–2026; correlation pairs end near 1.2 times, distance and cointegration pairs just below 1."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>statarb is a research library for market-neutral US equity strategies, built in layers so that every strategy family shares the same point-in-time data, cost model and evaluation code. The universe is the S&amp;P 500 as it stood on each date since 1996, rebuilt from free data. Fourteen research notes so far ask which classic ideas survive realistic costs. Twelve are pre-registered: the hypothesis, data and test are fixed in writing before the test is run.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Point-in-time data.</strong> Historical index membership, Yahoo prices, fundamentals parsed from SEC XBRL filings as of their filing dates, and factor returns from Ken French’s library. A security master resolves renamed and recycled tickers, and each manual fix is backed by evidence.</li>
+<li><strong>Costs.</strong> Fees, a half-spread estimated from daily prices, square-root market impact and borrow, with trades executed on the next trading day.</li>
+<li><strong>Engines.</strong> A pairs backtester (correlation, distance and cointegration selection; static and Kalman-filter hedges), cross-sectional signal books, and a cost-aware portfolio optimiser with exposure, factor, sector, turnover and liquidity constraints.</li>
+<li><strong>Statistics.</strong> Newey–West t-statistics, factor regressions and bootstrap Sharpe tests, with results reported net of costs.</li>
+<li><strong>A local dashboard</strong> re-prices 49 books from the saved runs, so its numbers match the notes’.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Idea</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pairs: cointegration vs correlation, 2016–26</td>
+<td>Cointegration pairs lose 1.4% a year net; naive correlation pairs make 0.5% (Sharpe gap 0.85, p = 0.02). The cointegration screen passes pairs at the rate chance would</td>
+</tr>
+<tr>
+<td>Dynamic hedge ratios</td>
+<td>Slow Kalman hedges beat a frozen regression hedge, but never a simple 1:1 dollar-neutral one</td>
+</tr>
+<tr>
+<td>Residual momentum</td>
+<td>Halves momentum’s crashes (2009: −44% against −80%) but adds no alpha; neither version survives costs</td>
+</tr>
+<tr>
+<td>Cost-aware optimisation of momentum</td>
+<td>Cuts turnover from 17× to 5.7×; net Sharpe rises from −0.19 to +0.06, short of significance (p = 0.063)</td>
+</tr>
+<tr>
+<td>Combining weak signals</td>
+<td>Net Sharpe −0.23, against +0.06 for momentum alone</td>
+</tr>
+<tr>
+<td>Quality with capped value weights</td>
+<td>Five-factor alpha +4.3% a year (t = 2.4); +5.4% a year net</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Quality is where the return is, and it is mostly a factor and mega-cap story.</strong> A quality (profitability) book held neutral to style factors and sectors lost 0.5% a year net: the quality books’ returns were factor tilts, not stock selection. The book that passed its pre-registered test is a long-short quality book with value weights, capped at 5% of a leg per company. Its alpha is measured after market, size, value, investment and momentum factors, and it earns a Sharpe ratio of 0.59 after costs. But alpha rises with concentration, from +1.7% a year with equal weights to +5.7% uncapped. Most of it came in 2021–2026 (+9.4% a year), and without Apple, Microsoft, Nvidia, Alphabet, Amazon and Meta the capped book does no better than equal weights (an exploratory check). Fifteen years of data cannot separate a lasting premium from the 2020s’ mega-cap run.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/statarb/capped_quality.png" alt="Cumulative returns of quality books from equal weights to uncapped value weights, 2011–2026, and their five-factor alphas with 95% intervals" /><figcaption>Cumulative returns of quality books from equal weights to uncapped value weights, 2011–2026, and their five-factor alphas with 95% intervals</figcaption></figure>
+<p><strong>A data error, caught.</strong> Share counts in some SEC filings are 1,000 to 1,000,000 times too large (77 stock-months), which made single stocks whole legs of a value-weighted book in a first run. Market caps are now screened before any value weighting, and the first run’s tables are kept for the record.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Free data has a survivorship hole: delisted companies have no Yahoo prices. Coverage of index members runs from 38% in 1996 to 99% in 2026, and measured pair stability is biased upwards.</li>
+<li>SEC XBRL filings start in 2009–2011, so the fundamental tests cover only about fifteen years, too few to resolve small Sharpe differences.</li>
+<li>Industry codes are today’s, a slight look-ahead.</li>
+<li>A CRSP adapter writes the same files, but it is untested until a WRDS connection is available.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package built on pandas, NumPy and cvxpy, with every raw download cached so that reruns are offline, and long runs checkpointed so they can resume. The dashboard is a standard-library server with plain HTML, CSS and its own SVG charts.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/statistical-arbitrage/">statistical arbitrage</a><a class="tag" href="/tags/pairs-trading/">pairs trading</a><a class="tag" href="/tags/factor-investing/">factor investing</a><a class="tag" href="/tags/portfolio-construction/">portfolio construction</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/statarb/" data-title="Statistical arbitrage on the S&amp;P 500: what survives costs">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/statarb/&amp;text=Statistical%20arbitrage%20on%20the%20S%26P%20500%3A%20what%20survives%20costs" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/statarb/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Statistical%20arbitrage%20on%20the%20S%26P%20500%3A%20what%20survives%20costs&amp;body=https%3A//rasmuscodes.github.io/projects/statarb/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/options-lab/"><span>Previous</span><b>An options pricing and volatility lab, validated at every step</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

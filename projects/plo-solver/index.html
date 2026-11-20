@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A game-theory solver for six-handed Pot-Limit Omaha · Rasmus Suonio</title>
+<meta name="description" content="A Rust solver and study app for 6-max PLO, built milestone by milestone, from an exact rules engine to a library of exactly solved flops that grows in the background.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/plo-solver/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A game-theory solver for six-handed Pot-Limit Omaha">
+<meta property="og:description" content="A Rust solver and study app for 6-max PLO, built milestone by milestone, from an exact rules engine to a library of exactly solved flops that grows in the background.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/plo-solver/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A game-theory solver for six-handed Pot-Limit Omaha</h1>
+<p class="post__sub">A Rust solver and study app for 6-max PLO, built milestone by milestone, from an exact rules engine to a library of exactly solved flops that grows in the background.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-19">19 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/plo-solver/" data-title="A game-theory solver for six-handed Pot-Limit Omaha">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/plo-solver/&amp;text=A%20game-theory%20solver%20for%20six-handed%20Pot-Limit%20Omaha" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/plo-solver/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20game-theory%20solver%20for%20six-handed%20Pot-Limit%20Omaha&amp;body=https%3A//rasmuscodes.github.io/projects/plo-solver/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--live">Building</span>
+<span class="sheet__company">Since Nov 2026</span>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Exact library flops</dt><dd class="is-text">Over 2,100 since 15 Nov</dd></div><div><dt>Roadmap</dt><dd class="is-text">M1-M15 done, M16-M17 under way</dd></div><div><dt>Preflop hand classes</dt><dd class="is-text">16,432</dd></div><div><dt>Library spots</dt><dd class="is-text">83</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Rust</li><li>TypeScript</li><li>React</li><li>Python</li></ul></section>
+
+
+  <div class="post__body">
+    <div class="prose">
+<p>Pot-Limit Omaha deals four hole cards instead of hold’em’s two, so the game is far larger: there are 16,432 strategically different starting hands. This project is a 6-max PLO analysis platform, built toward a mathematically sound game-theoretic solver with a modern study interface.</p>
+<h2 id="what-it-does-so-far">What it does so far <a class="header-anchor" href="#what-it-does-so-far">#</a></h2>
+<ul>
+<li><strong>Foundation (M1-M2).</strong> An exact rules engine, a table-driven Omaha hand evaluator, exact and Monte Carlo equity, and the solver: vector-form CFR (counterfactual regret minimisation), CFR+ and Discounted CFR with exact card removal, validated on Kuhn poker and Leduc hold’em, where the answers are known. Each solve reports its exploitability: how much a perfect opponent could win against it.</li>
+<li><strong>Postflop (M3-M4, M7-M8).</strong> Exact heads-up turns, node locking (fixing one player’s play at chosen spots), off-tree bet sizes, abstracted heads-up flops measured in the real game, and multiway river and turn spots.</li>
+<li><strong>Preflop (M5-M6, M14).</strong> Blueprints by Monte Carlo CFR over whole hands, covering all 16,432 preflop hand classes: heads-up, a six-handed blueprint on a restricted tree, and tables of three to five players.</li>
+<li><strong>Hand-history analysis (M7, M9, M14).</strong> PokerStars-style hand histories import into the app. A file of up to 5,000 hands is checked against the blueprints preflop, and every flop the hero played can be solved in a batch, with the EV given up at each decision.</li>
+<li><strong>Tournaments (M12-M13).</strong> The big-blind ante, exact ICM (the Independent Chip Model, which turns chip stacks into prize equity), per-seat stacks, and blueprints and solves with ICM payoffs.</li>
+<li><strong>A pre-solved library (M10-M15).</strong> 83 standard spots, from heads-up and 6-max cash to tournament bubbles and final tables, each solved on a set of representative flops. Library flops are solved exactly (the full game, every turn and river card) to within 0.5% of the pot, and stored at the flop level: about 0.2 MB instead of 500 MB. Any turn you pick is solved again exactly in seconds.</li>
+<li><strong>Speed and scale (M16-M17).</strong> Exact solves are 1.33 times faster after the evaluator work, and Discounted CFR with restarts needs 12-20% fewer iterations to reach 0.5% of the pot. Regrets and strategy sums are now stored in 16 bits, which halves the RAM a deep heads-up flop needs, from 4.66 GB to 2.33 GB, with the same convergence. A background builder adds exact flops one at a time, pausing whenever I solve something myself: over 2,100 since 15 November.</li>
+<li><strong>A second bet menu (M17).</strong> A 33% flop bet beside the pot-sized one. All of the first 20 flops checked reached 0.5% of the pot, and the small bet was worth 0.15% (heads-up) to 0.38% (6-max) of the pot to the raiser on average.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Rust workspace of nine crates, from cards, pot-limit rules and equity through game trees, the CFR and Monte Carlo CFR solvers and a compact solution store, to a command-line tool and a local HTTP server. The server’s JSON API drives a React and TypeScript study interface. An independent Python reference implementation supplies test vectors. Every milestone ends with a report of what was built, measured and tested, and what is still missing.</p>
+<h2 id="honest-limits">Honest limits <a class="header-anchor" href="#honest-limits">#</a></h2>
+<ul>
+<li>With three or more players, CFR carries no Nash guarantee, so multiway results are labelled that way. The distance from equilibrium (NashConv) is measured exactly for two or three players with modest ranges on the river and turn, but not on multiway flops, which bucket later streets.</li>
+<li>Blueprints are approximations of an abstracted game. Their exploitability in the real game can’t be measured here.</li>
+<li>Exact library flops use the blueprint’s ranges, sampled to 1,000 hands per side, and turns and rivers keep a single pot-sized bet. Two sizes there would need 5-12 GB per flop, more than the laptop spares.</li>
+<li>Each spot covers 30 or 100 representative flops, weighted by the share of all 22,100 flops each stands for. There are 1,755 strategically different flops, so coverage is the largest gap.</li>
+</ul>
+<h2 id="next">Next <a class="header-anchor" href="#next">#</a></h2>
+<p>Let the builder finish rolling out the second bet menu, then compare the main lines’ 30 flops the same way. A third flop size (33%, 66% or pot) follows if those flops support it.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/poker/">poker</a><a class="tag" href="/tags/game-theory/">game theory</a><a class="tag" href="/tags/rust/">rust</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/plo-solver/" data-title="A game-theory solver for six-handed Pot-Limit Omaha">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/plo-solver/&amp;text=A%20game-theory%20solver%20for%20six-handed%20Pot-Limit%20Omaha" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/plo-solver/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20game-theory%20solver%20for%20six-handed%20Pot-Limit%20Omaha&amp;body=https%3A//rasmuscodes.github.io/projects/plo-solver/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/figgie-bot/"><span>Previous</span><b>A Figgie bot that counts cards and reads the market</b></a><a class="pager__item pager__item--next" href="/projects/hft-sim/"><span>Next</span><b>A market simulator in Rust, checked order by order against real data</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

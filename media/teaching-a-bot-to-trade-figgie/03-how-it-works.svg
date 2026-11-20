@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<title>How the bot thinks</title>
+<rect width="1200" height="760" fill="#fcfcfb"/>
+<text x="48.0" y="58.0" font-size="28" fill="#0b0b0b" text-anchor="start" font-weight="600" >How the bot thinks</text>
+<text x="48.0" y="90.0" font-size="17" fill="#52514e" text-anchor="start" font-weight="400" >From what a player at the table can see, to an order, many times a second</text>
+<rect x="48.0" y="122" width="144.0" height="36" rx="18" fill="#fcfcfb" stroke="#c3c2b7"/>
+<text x="120.0" y="146.0" font-size="15" fill="#52514e" text-anchor="middle" font-weight="400" >Its own 10 cards</text>
+<rect x="214.0" y="122" width="165.0" height="36" rx="18" fill="#fcfcfb" stroke="#c3c2b7"/>
+<text x="296.5" y="146.0" font-size="15" fill="#52514e" text-anchor="middle" font-weight="400" >Every bid and offer</text>
+<rect x="401.0" y="122" width="130.0" height="36" rx="18" fill="#fcfcfb" stroke="#c3c2b7"/>
+<text x="466.0" y="146.0" font-size="15" fill="#52514e" text-anchor="middle" font-weight="400" >The trade tape</text>
+<rect x="553.0" y="122" width="95.0" height="36" rx="18" fill="#fcfcfb" stroke="#c3c2b7"/>
+<text x="600.5" y="146.0" font-size="15" fill="#52514e" text-anchor="middle" font-weight="400" >The clock</text>
+<path d="M120.0,158 L120.0,177 L600.5,177 L600.5,158" stroke="#898781" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="296.5" y1="158.0" x2="296.5" y2="177.0" stroke="#898781" stroke-width="1.5" />
+<line x1="466.0" y1="158.0" x2="466.0" y2="177.0" stroke="#898781" stroke-width="1.5" />
+<line x1="348.0" y1="177.0" x2="348.0" y2="196.0" stroke="#898781" stroke-width="1.5" />
+<path d="M348.0,196.0 L344.1,186.8 L351.9,186.8 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="48" y="200" width="600" height="120" rx="10" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="66.0" y="232.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >1. Count the cards</text>
+<text x="66.0" y="258.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >Exact Bayesian posterior over the 12 possible decks,</text>
+<text x="66.0" y="279.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >updated on every trade: which suit has 8 or 10 cards,</text>
+<text x="66.0" y="300.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >and so which is the goal.</text>
+<rect x="700" y="200" width="452" height="120" rx="10" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="718.0" y="232.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >Read the other players</text>
+<text x="718.0" y="258.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >Top bids as votes ("smart money"), the suit every</text>
+<text x="718.0" y="279.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >bot bids up, early bids by colour; a bid must stand</text>
+<text x="718.0" y="300.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >a while to count, so spoofs cost the spoofer.</text>
+<line x1="700.0" y1="260.0" x2="652.0" y2="260.0" stroke="#898781" stroke-width="1.5" />
+<path d="M652.0,260.0 L661.2,256.1 L661.2,263.9 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="348.0" y1="324.0" x2="348.0" y2="356.0" stroke="#898781" stroke-width="1.5" />
+<path d="M348.0,356.0 L344.1,346.8 L351.9,346.8 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="48" y="360" width="600" height="120" rx="10" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="66.0" y="392.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >2. Value every card</text>
+<text x="66.0" y="418.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >$10 payout × P(goal), plus the card's effect on the</text>
+<text x="66.0" y="439.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >majority bonus, priced per counterparty; holding is</text>
+<text x="66.0" y="460.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >worth something until the market reveals the goal.</text>
+<rect x="700" y="360" width="452" height="120" rx="10" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="718.0" y="392.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >Learn from this table</text>
+<text x="718.0" y="418.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >Which cheap offers get bid back up (online</text>
+<text x="718.0" y="439.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >logistic regression, with a kill switch), and how far</text>
+<text x="718.0" y="460.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >to trust each way of reading bids here.</text>
+<line x1="700.0" y1="420.0" x2="652.0" y2="420.0" stroke="#898781" stroke-width="1.5" />
+<path d="M652.0,420.0 L661.2,416.1 L661.2,423.9 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="348.0" y1="484.0" x2="348.0" y2="516.0" stroke="#898781" stroke-width="1.5" />
+<path d="M348.0,516.0 L344.1,506.8 L351.9,506.8 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="48" y="520" width="600" height="100" rx="10" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="66.0" y="552.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >3. Trade</text>
+<text x="66.0" y="578.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >Take a mispriced quote the moment it appears, quote</text>
+<text x="66.0" y="599.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >inside value, never dump a card that may yet pay.</text>
+<line x1="348.0" y1="624.0" x2="348.0" y2="650.0" stroke="#898781" stroke-width="1.5" />
+<path d="M348.0,650.0 L344.1,640.8 L351.9,640.8 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="48" y="654" width="1104" height="76" rx="10" fill="#fcfcfb" stroke="#c3c2b7"/>
+<text x="66.0" y="684.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >figgie.com adapter (a userscript)</text>
+<text x="66.0" y="710.0" font-size="15" fill="#52514e" text-anchor="start" font-weight="400" >Finds the game in the page, listens to the socket, sends at most 4 orders a second; starts rounds, opens fresh tables, recovers from the site's hiccups.</text>
+</svg>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A No-Limit Hold’em solver, from heads-up flops to tournament push/fold · Rasmus Suonio</title>
+<meta name="description" content="A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/nlh-solver/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A No-Limit Hold’em solver, from heads-up flops to tournament push/fold">
+<meta property="og:description" content="A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/nlh-solver/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A No-Limit Hold’em solver, from heads-up flops to tournament push/fold</h1>
+<p class="post__sub">A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-19">19 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/nlh-solver/" data-title="A No-Limit Hold’em solver, from heads-up flops to tournament push/fold">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/nlh-solver/&amp;text=A%20No-Limit%20Hold%E2%80%99em%20solver%2C%20from%20heads-up%20flops%20to%20tournament%20push/fold" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/nlh-solver/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20No-Limit%20Hold%E2%80%99em%20solver%2C%20from%20heads-up%20flops%20to%20tournament%20push/fold&amp;body=https%3A//rasmuscodes.github.io/projects/nlh-solver/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--live">Building</span>
+<span class="sheet__company">Since Nov 2026</span>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Players per table</dt><dd class="is-text">2 to 10</dd></div><div><dt>Roadmap</dt><dd class="is-text">Phase 5 of 7 done</dd></div><div><dt>Automated tests</dt><dd class="is-text">249, all passing</dd></div><div><dt>Push/fold vs a dealt simulation</dt><dd class="is-text">Within 0.0062 bb a hand</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Rust</li><li>TypeScript</li><li>React</li><li>Python</li></ul></section>
+
+
+  <div class="post__body">
+    <div class="prose">
+<p>No-Limit Hold’em is the poker most people know: two hole cards each, five shared cards and bets of any size. This project is a solver and study app for it, built for real table set-ups (two to ten players, any stacks, blinds, antes, straddles, rake and tournament payouts) and built to say plainly how good each answer is. It is a companion to my <a href="/projects/plo-solver/">Pot-Limit Omaha solver</a>.</p>
+<h2 id="what-it-does-so-far">What it does so far <a class="header-anchor" href="#what-it-does-so-far">#</a></h2>
+<p>The roadmap has seven phases, and five are done.</p>
+<ol>
+<li><strong>Core engine.</strong> Cards, ranges, four hand evaluators and a no-limit rules engine with side pots, straddles and tiered rake. The evaluators agree on all 133,784,560 seven-card hands, and every test run plays 40,000 random hands against an independent settlement check.</li>
+<li><strong>Solver.</strong> CFR (counterfactual regret minimisation: the strategy plays against itself many times and shifts towards the moves it regrets not making), in its Discounted, CFR+ and Linear forms. It reproduces the known values of two toy poker games and measures exploitability exactly: how much a perfect opponent could win against the strategy, as a share of the pot.</li>
+<li><strong>Browser app.</strong> A local server and a React interface with range, board and bet-size editors, a convergence chart and a strategy explorer. The acceptance test was a 3-bet-pot flop of 2.26 million nodes, solved from the browser to 0.498% of the pot, then explored, saved and reopened.</li>
+<li><strong>Advanced solving.</strong> Node locking (fixing one player’s play at chosen spots and solving the rest against it), exploit reports, preflop all-in charts, three-way turn and river solves, bucketed three-way flops and whole-hand preflop blueprints for two to six players. Its heads-up push/fold charts match a published chart on 162 values to within 0.10 big blinds.</li>
+<li><strong>Tournaments.</strong> ICM (the Independent Chip Model, which turns chip stacks into shares of the prize pool), bubble factors, presets for sit &amp; go, final-table, satellite and Spin formats, a labelled bounty model, and push/fold solves for a whole table of two to ten players.</li>
+</ol>
+<h2 id="checking-the-answers">Checking the answers <a class="header-anchor" href="#checking-the-answers">#</a></h2>
+<p>Every fast path has a slow reference it is tested against, and the reference is checked against an independent Python implementation. ICM equities match 62 reference cases to within one part in a hundred billion.</p>
+<p>Push/fold at a full table was checked against a simulation that deals every hand from one deck. Every player’s value is now within 0.0062 big blinds a hand of the dealt game, on 4 to 10 million simulated hands per table. The first version was off by up to 0.038 big blinds, because it ignored that folded hands are weaker than random.</p>
+<p>Every result also says how it was computed. Heads-up solves report exploitability. With three or more players an equilibrium guarantees nothing, so those results report NashConv (the total that all players could gain by switching to their best responses) under a “multiway CFR approximation” label. Blueprints are marked as approximations of a simplified game, with no exploitability figure. Nothing is called GTO (game-theory optimal) unless the method supports it.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li><strong>Three-way flops are still rough.</strong> Their measured NashConv is about 10% of the pot on a small study flop after 37,632 sampled runouts.</li>
+<li><strong>Push/fold allows at most three players all in</strong>, and folded cards are not yet removed from the deck for the board. That leaves the blinds about 0.005 big blinds a hand off at six to ten players.</li>
+<li><strong>ICM looks at one hand at a time</strong> and covers push/fold only. The raise trees and the postflop solver still count chips.</li>
+<li><strong>Saved full flops are big:</strong> 816 MB for one single-raised-pot flop. Timings come from a busy machine and are pessimistic.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Rust workspace of 11 crates, from cards and rules through the solvers to a command-line tool and a local HTTP server. The only outside Rust dependencies are serde, serde_json and rayon. The browser app is React and TypeScript. All randomness flows from explicit seeds, so results do not depend on thread scheduling, and 249 automated tests pass.</p>
+<p>Next on the roadmap: hand-history import and review, and special games such as bomb pots, double-board pots and the 7-2 game.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/poker/">poker</a><a class="tag" href="/tags/game-theory/">game theory</a><a class="tag" href="/tags/rust/">rust</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/nlh-solver/" data-title="A No-Limit Hold’em solver, from heads-up flops to tournament push/fold">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/nlh-solver/&amp;text=A%20No-Limit%20Hold%E2%80%99em%20solver%2C%20from%20heads-up%20flops%20to%20tournament%20push/fold" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/nlh-solver/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20No-Limit%20Hold%E2%80%99em%20solver%2C%20from%20heads-up%20flops%20to%20tournament%20push/fold&amp;body=https%3A//rasmuscodes.github.io/projects/nlh-solver/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/hft-sim/"><span>Previous</span><b>A market simulator in Rust, checked order by order against real data</b></a><a class="pager__item pager__item--next" href="/projects/options-lab/"><span>Next</span><b>An options pricing and volatility lab, validated at every step</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

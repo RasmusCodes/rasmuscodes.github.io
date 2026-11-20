@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A market simulator in Rust, checked order by order against real data · Rasmus Suonio</title>
+<meta name="description" content="A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/hft-sim/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A market simulator in Rust, checked order by order against real data">
+<meta property="og:description" content="A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/hft-sim/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A market simulator in Rust, checked order by order against real data</h1>
+<p class="post__sub">A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-19">19 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/hft-sim/" data-title="A market simulator in Rust, checked order by order against real data">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/hft-sim/&amp;text=A%20market%20simulator%20in%20Rust%2C%20checked%20order%20by%20order%20against%20real%20data" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/hft-sim/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20market%20simulator%20in%20Rust%2C%20checked%20order%20by%20order%20against%20real%20data&amp;body=https%3A//rasmuscodes.github.io/projects/hft-sim/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--live">Building</span>
+<span class="sheet__company">Since Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/hft-sim" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://rasmuscodes.github.io/hft-sim/" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Project site</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Bitstamp snapshots reproduced</dt><dd class="is-text">1,136 of 1,136</dd></div><div><dt>Real Bitstamp fills recovered</dt><dd class="is-text">292 of 298 (99.6% of volume)</dd></div><div><dt>False fills, 801,154 Nasdaq orders</dt><dd class="is-text">0</dd></div><div><dt>Tests</dt><dd class="is-text">213 Rust, 27 Python</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Rust</li><li>Python</li></ul></section>
+
+
+  <div class="post__body">
+    <div class="prose">
+<p>hft-sim is a research platform for market microstructure: how orders become trades and prices. It has a deterministic exchange, a simulator in which every message takes time to arrive, trading agents and a ladder of market-making strategies. I wanted to know how market makers fare against latency, informed traders and competition, and whether a backtest’s rule for when a resting order fills survives real exchange data.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>The exchange</strong> matches orders by price-time priority: best price first, then first come, first served.</li>
+<li><strong>The simulator</strong> times every hop between a trader and the exchange, so traders see only a delayed copy of the book. Runs are bit-reproducible from one seed.</li>
+<li><strong>A background market</strong> of noise traders, value investors and split-up large orders is calibrated to five statistical regularities of real markets.</li>
+<li><strong>The market makers</strong> form a ten-step ladder, from a fixed spread to the Avellaneda–Stoikov and Guéant–Lehalle–Fernandez-Tapia models, with formulas transcribed from the papers and checked numerically.</li>
+</ul>
+<h2 id="what-the-simulator-showed">What the simulator showed <a class="header-anchor" href="#what-the-simulator-showed">#</a></h2>
+<p>Eight research questions, each on two backgrounds with 8 seeds and 95% intervals, about this simulated market only.</p>
+<ul>
+<li><strong>More inventory aversion paid.</strong> Raising a market maker’s risk aversion from 3.5 to 14 added $9.2 per two-minute window [5.9, 12.5] with less inventory. The gain came from less adverse selection (trading against flow that knows where the price is going), even without informed traders: the background’s split orders are persistent.</li>
+<li><strong>Queue position dominates fills.</strong> A resting order at the front of the queue filled about 90% of the time; behind 500 shares, about 10%.</li>
+<li><strong>Speed mattered little here.</strong> A remote maker sent three times as many cancels too late (8% against 2–3%) but lost little profit: it had no news to race on.</li>
+<li><strong>The maker profited almost everywhere</strong>, even against 60 informed traders. That is a property of the simulator, and it is why nothing here is a profitability claim.</li>
+</ul>
+<h2 id="checking-the-fill-model-on-real-data">Checking the fill model on real data <a class="header-anchor" href="#checking-the-fill-model-on-real-data">#</a></h2>
+<p>Each real order was replayed leave-one-out: treated as hypothetical, run through the stream without itself, and its modelled fills compared with what really happened.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Check</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bitstamp BTC/USD, 19 minutes, 365,180 order events</td>
+<td>Rebuilt book against the exchange’s own snapshots</td>
+<td>1,136 of 1,136 reproduced</td>
+</tr>
+<tr>
+<td>172,862 resting Bitstamp orders</td>
+<td>Fill model, four variants</td>
+<td>No false, early or oversized fill</td>
+</tr>
+<tr>
+<td>The same orders, best variant</td>
+<td>Real fills found at the right millisecond</td>
+<td>292 of 298, 99.6% of volume</td>
+</tr>
+<tr>
+<td>Nasdaq BX ITCH day (30 Dec 2019), 801,154 orders</td>
+<td>Fill model</td>
+<td>No false, early or oversized fill</td>
+</tr>
+</tbody>
+</table></div>
+<p>The best variant uses Bitstamp’s published taker orders (the incoming orders that trade against resting ones) and rebuilds history as if each order had never existed. Without takers, as on Nasdaq’s feed, the conservative rules give a lower bound: a third of Bitstamp’s fills on time, and 93% of BX volume eventually. The BX day’s 29.2 million messages also pass every book-consistency check.</p>
+<p>The checks exposed three optimistic rules in my model, each now fixed. On BX, 0.2% of executions looked like queue jumping; every one was an order the exchange ranks at a better price than it displays (its Price to Comply rule).</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The default background makes one-second returns mean-revert, so every study also runs on a second, zero-intelligence background.</li>
+<li>The real data is one 19-minute crypto window and one day on a small Nasdaq venue. The LOBSTER adapter is tested only on simulated files, because LOBSTER’s samples now need an academic application.</li>
+<li>Replay cannot show how the market would have reacted to an extra order.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Rust workspace whose core crates have no external dependencies and no unsafe code, plus a Python layer for scenario grids with optional PyO3 bindings that export runs to Parquet. The 213 Rust and 27 Python tests include differential fuzzing against a naive reference exchange (about 18 million commands) and mutation testing: of 132 deliberately planted bugs, 130 were caught and the other two provably cannot change any output. The engine handles about 8.6 million messages a second with 1,000 resting orders on a laptop.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/market-microstructure/">market microstructure</a><a class="tag" href="/tags/market-making/">market making</a><a class="tag" href="/tags/simulation/">simulation</a><a class="tag" href="/tags/rust/">rust</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/hft-sim/" data-title="A market simulator in Rust, checked order by order against real data">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/hft-sim/&amp;text=A%20market%20simulator%20in%20Rust%2C%20checked%20order%20by%20order%20against%20real%20data" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/hft-sim/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20market%20simulator%20in%20Rust%2C%20checked%20order%20by%20order%20against%20real%20data&amp;body=https%3A//rasmuscodes.github.io/projects/hft-sim/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/plo-solver/"><span>Previous</span><b>A game-theory solver for six-handed Pot-Limit Omaha</b></a><a class="pager__item pager__item--next" href="/projects/nlh-solver/"><span>Next</span><b>A No-Limit Hold’em solver, from heads-up flops to tournament push/fold</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

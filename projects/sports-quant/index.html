@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do models beat the closing line? Not in the NBA or NFL · Rasmus Suonio</title>
+<meta name="description" content="Elo, state-space and machine-learning models for NBA and NFL games, tested against Kalshi, Polymarket and sportsbook closing prices. The markets win.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/sports-quant/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Do models beat the closing line? Not in the NBA or NFL">
+<meta property="og:description" content="Elo, state-space and machine-learning models for NBA and NFL games, tested against Kalshi, Polymarket and sportsbook closing prices. The markets win.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/sports-quant/"><meta property="og:image" content="https://rasmuscodes.github.io/media/sports-quant/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">Do models beat the closing line? Not in the NBA or NFL</h1>
+<p class="post__sub">Elo, state-space and machine-learning models for NBA and NFL games, tested against Kalshi, Polymarket and sportsbook closing prices. The markets win.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-17">17 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/sports-quant/" data-title="Do models beat the closing line? Not in the NBA or NFL">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/sports-quant/&amp;text=Do%20models%20beat%20the%20closing%20line%3F%20Not%20in%20the%20NBA%20or%20NFL" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/sports-quant/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Do%20models%20beat%20the%20closing%20line%3F%20Not%20in%20the%20NBA%20or%20NFL&amp;body=https%3A//rasmuscodes.github.io/projects/sports-quant/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/sports-quant" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Out-of-sample NBA games</dt><dd class="is-text">14,338</dd></div><div><dt>Best NBA model vs Kalshi close</dt><dd class="is-text">0.016 log loss worse (1,556 games)</dd></div><div><dt>Day-ahead bets vs the close</dt><dd class="is-text">+1.06 points, less than the fee</dd></div><div><dt>Props signal, scored as settled</dt><dd class="is-text">Weight 0.02 (SE 0.05)</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>pandas</li><li>LightGBM</li><li>statsmodels</li><li>SQLite</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/sports-quant/cover.png" alt="Log-loss gap to the Kalshi closing price for fifteen NBA model variants; every one is worse than the market, with its 95% interval above zero."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Sports betting markets are a clean test of market efficiency: every contract settles on an observable result within hours. I built probability models for NBA and NFL games from public data and asked whether they disagree with market prices in ways the outcomes vindicate. The yardstick is out-of-sample forecast accuracy, not backtest returns.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Data.</strong> NBA and NFL results, box scores and official injury reports with publication times, NFL sportsbook closing lines, and order-book price histories from Kalshi and Polymarket. Everything sits in a SQLite odds database with UTC timestamps for every quote and report.</li>
+<li><strong>Models.</strong> Elo with FiveThirtyEight’s settings as the benchmark, Glicko-2, Poisson, a Bayesian state-space model with exact Kalman filtering, player-availability and starting-quarterback adjustments, walk-forward logistic regression and gradient boosting, and an ensemble. Market prices become probabilities with the bookmaker’s margin removed (“devigged”), by five methods.</li>
+<li><strong>Leakage controls.</strong> Ratings use only earlier days’ results, injury reports count only if published before the decision time, and backtests buy the ask available at that time. Tests perturb future results, late injury reports and closing prices, and check that no earlier decision changes.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Comparison</th>
+<th style="text-align:right">Games</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best NBA model (an ensemble) vs Elo</td>
+<td style="text-align:right">14,338</td>
+<td>0.016 lower log loss (95% CI 0.013 to 0.019)</td>
+</tr>
+<tr>
+<td>The same ensemble vs Kalshi’s closing price</td>
+<td style="text-align:right">1,556</td>
+<td>0.016 higher log loss (95% CI 0.008 to 0.023)</td>
+</tr>
+<tr>
+<td>Best NFL model vs devigged sportsbook close</td>
+<td style="text-align:right">3,685</td>
+<td>0.013 higher log loss (95% CI 0.008 to 0.019)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Log loss scores probability forecasts; lower is better. The closing price also encompasses the models: in a regression on both, the ensemble’s weight is −0.10 (SE 0.17). Schedule, fatigue and late injury news matter, and the market prices them. None of 24 tests on the Kalshi and Polymarket closes finds anything left over after a multiple-testing correction.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/sports-quant/information_arrival.png" alt="Log loss of Kalshi and Polymarket prices from listing to tip-off, dropping below the ensemble model's a day before the game" /><figcaption>Log loss of Kalshi and Polymarket prices from listing to tip-off, dropping below the ensemble model's a day before the game</figcaption></figure>
+<p>The one inefficiency comes a day before the game. Bets placed 24 hours out beat the closing price by +1.06 points on average (95% CI +0.72 to +1.40), but Kalshi’s taker fee is larger, and pre-registered quarter-Kelly strategies lose money after costs. A rule that learns how much weight the model deserves next to the price mostly abstains: 122 bets in 1,265 eligible games.</p>
+<p><strong>A replication that passed, then failed.</strong> A player-points model seemed to add information to Kalshi prop prices. I pre-registered a replication before downloading new data, and on 728 held-out games it passed as registered (one-sided p = 0.0005). A post-hoc check then traced the signal in both samples to a scoring error: props on players who sat out were scored as losses, while Kalshi settles them at a pre-game fair price. Scored the way the markets settle, the model’s weight is 0.02 (SE 0.05) and every prop trading rule loses money. Pre-registration guards against selective analysis, not against an error shared by discovery and replication. Outcomes now come from the venue’s own settlement by default.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>NBA exchange prices cover parts of three seasons. The one free NBA sportsbook archive forbids use without consent, so it was left out.</li>
+<li>Polymarket backtests assume no fee and a one-point half-spread.</li>
+<li>Tip-off times, NFL starting quarterbacks and game-time wind are approximations, flagged where they enter.</li>
+<li>The props samples are out of sample in games but not in time: both cover January to November 2026.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python library with modules for data, the odds database, market conversion, models, evaluation (proper scoring rules, calibration, paired tests, encompassing regressions, multiple-testing corrections) and an event-driven bankroll simulator with fees and liquidity caps. Every number in the paper is regenerated from dated raw files, and the registered props code is frozen byte for byte with its hashes. The downloaded data and the dashboard stay out of the public repository, because they would republish the exchanges’ prices.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/sports-betting/">sports betting</a><a class="tag" href="/tags/forecasting/">forecasting</a><a class="tag" href="/tags/market-efficiency/">market efficiency</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/sports-quant/" data-title="Do models beat the closing line? Not in the NBA or NFL">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/sports-quant/&amp;text=Do%20models%20beat%20the%20closing%20line%3F%20Not%20in%20the%20NBA%20or%20NFL" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/sports-quant/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Do%20models%20beat%20the%20closing%20line%3F%20Not%20in%20the%20NBA%20or%20NFL&amp;body=https%3A//rasmuscodes.github.io/projects/sports-quant/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/prediction-markets/"><span>Previous</span><b>A prediction-market lab: fast prices, little edge after fees</b></a><a class="pager__item pager__item--next" href="/projects/earnings-engine/"><span>Next</span><b>Forecasting chipmaker revenue against management’s own guidance</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rasmuscodes.github.io/sitemap.xml

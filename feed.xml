@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rasmus Suonio</title><link>https://rasmuscodes.github.io/</link><description>Company research that states the call, the price and the evidence; the trading bots, simulators and data tools I build; a portfolio shown by weight; and essays.</description><language>en</language><atom:link href="https://rasmuscodes.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>Statistical arbitrage on the S&amp;P 500: what survives costs</title><link>https://rasmuscodes.github.io/projects/statarb/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/statarb/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A point-in-time research platform for pairs trading, momentum and fundamental signals in S&amp;P 500 stocks, with fourteen research notes, most of them pre-registered.</description><category>statistical arbitrage</category><category>pairs trading</category><category>factor investing</category><category>portfolio construction</category><content:encoded><![CDATA[<p>statarb is a research library for market-neutral US equity strategies, built in layers so that every strategy family shares the same point-in-time data, cost model and evaluation code. The universe is the S&amp;P 500 as it stood on each date since 1996, rebuilt from free data. Fourteen research notes so far ask which classic ideas survive realistic costs. Twelve are pre-registered: the hypothesis, data and test are fixed in writing before the test is run.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Point-in-time data.</strong> Historical index membership, Yahoo prices, fundamentals parsed from SEC XBRL filings as of their filing dates, and factor returns from Ken French’s library. A security master resolves renamed and recycled tickers, and each manual fix is backed by evidence.</li>
+<li><strong>Costs.</strong> Fees, a half-spread estimated from daily prices, square-root market impact and borrow, with trades executed on the next trading day.</li>
+<li><strong>Engines.</strong> A pairs backtester (correlation, distance and cointegration selection; static and Kalman-filter hedges), cross-sectional signal books, and a cost-aware portfolio optimiser with exposure, factor, sector, turnover and liquidity constraints.</li>
+<li><strong>Statistics.</strong> Newey–West t-statistics, factor regressions and bootstrap Sharpe tests, with results reported net of costs.</li>
+<li><strong>A local dashboard</strong> re-prices 49 books from the saved runs, so its numbers match the notes’.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Idea</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pairs: cointegration vs correlation, 2016–26</td>
+<td>Cointegration pairs lose 1.4% a year net; naive correlation pairs make 0.5% (Sharpe gap 0.85, p = 0.02). The cointegration screen passes pairs at the rate chance would</td>
+</tr>
+<tr>
+<td>Dynamic hedge ratios</td>
+<td>Slow Kalman hedges beat a frozen regression hedge, but never a simple 1:1 dollar-neutral one</td>
+</tr>
+<tr>
+<td>Residual momentum</td>
+<td>Halves momentum’s crashes (2009: −44% against −80%) but adds no alpha; neither version survives costs</td>
+</tr>
+<tr>
+<td>Cost-aware optimisation of momentum</td>
+<td>Cuts turnover from 17× to 5.7×; net Sharpe rises from −0.19 to +0.06, short of significance (p = 0.063)</td>
+</tr>
+<tr>
+<td>Combining weak signals</td>
+<td>Net Sharpe −0.23, against +0.06 for momentum alone</td>
+</tr>
+<tr>
+<td>Quality with capped value weights</td>
+<td>Five-factor alpha +4.3% a year (t = 2.4); +5.4% a year net</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Quality is where the return is, and it is mostly a factor and mega-cap story.</strong> A quality (profitability) book held neutral to style factors and sectors lost 0.5% a year net: the quality books’ returns were factor tilts, not stock selection. The book that passed its pre-registered test is a long-short quality book with value weights, capped at 5% of a leg per company. Its alpha is measured after market, size, value, investment and momentum factors, and it earns a Sharpe ratio of 0.59 after costs. But alpha rises with concentration, from +1.7% a year with equal weights to +5.7% uncapped. Most of it came in 2021–2026 (+9.4% a year), and without Apple, Microsoft, Nvidia, Alphabet, Amazon and Meta the capped book does no better than equal weights (an exploratory check). Fifteen years of data cannot separate a lasting premium from the 2020s’ mega-cap run.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/statarb/capped_quality.png" alt="Cumulative returns of quality books from equal weights to uncapped value weights, 2011–2026, and their five-factor alphas with 95% intervals" /><figcaption>Cumulative returns of quality books from equal weights to uncapped value weights, 2011–2026, and their five-factor alphas with 95% intervals</figcaption></figure>
+<p><strong>A data error, caught.</strong> Share counts in some SEC filings are 1,000 to 1,000,000 times too large (77 stock-months), which made single stocks whole legs of a value-weighted book in a first run. Market caps are now screened before any value weighting, and the first run’s tables are kept for the record.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Free data has a survivorship hole: delisted companies have no Yahoo prices. Coverage of index members runs from 38% in 1996 to 99% in 2026, and measured pair stability is biased upwards.</li>
+<li>SEC XBRL filings start in 2009–2011, so the fundamental tests cover only about fifteen years, too few to resolve small Sharpe differences.</li>
+<li>Industry codes are today’s, a slight look-ahead.</li>
+<li>A CRSP adapter writes the same files, but it is untested until a WRDS connection is available.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package built on pandas, NumPy and cvxpy, with every raw download cached so that reruns are offline, and long runs checkpointed so they can resume. The dashboard is a standard-library server with plain HTML, CSS and its own SVG charts.</p>
+]]></content:encoded></item><item><title>From −$29 to +$99 a round: teaching a bot to trade Figgie</title><link>https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/</link><guid isPermaLink="true">https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A perfect card counter that lost $29 a round learned to read the market, found an exploit in its opponents’ habits and ended up trading on its own: 15 versions and 142 live rounds of Figgie.</description><category>trading</category><category>game theory</category><category>bots</category><content:encoded><![CDATA[<p>The first version of my Figgie bot knew the exact probability of every possible deck at every moment of the game. It lost $29 a round.</p>
+<p>Its opponents, the bots on <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>, were happy to sell it the suits they knew were worthless and to buy its cheap offers on the one suit that paid. In one round it finished holding ten clubs. The goal suit was diamonds.</p>
+<p>Fifteen versions and 142 live rounds later, the same opponents lose to it. Over its last 41 rounds the bot made $81 a round on average, and the newest version opens its own tables, plays, and moves to a fresh table when its opponents run low on chips. This is how it got there, including the ideas that failed.</p>
+<h2 id="figgie-in-two-minutes">Figgie in two minutes <a class="header-anchor" href="#figgie-in-two-minutes">#</a></h2>
+<p>Figgie is a card game Jane Street designed to feel like trading in an open-outcry pit. Four players each put $50 in the pot and are dealt ten cards from a 40-card deck. The deck is lopsided: one suit has 12 cards, two have 10 and one has 8, and nobody is told which is which. The suit of the same colour as the 12-card suit is the goal suit.</p>
+<p>For four minutes, anyone can bid for or offer any suit, and anyone can take a bid or an offer. At the bell, each goal-suit card pays $10 from the pot, and whoever holds the most goal cards takes the rest: $100, or $120 when the goal suit has eight cards.</p>
+<p><img src="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/02-deck.svg" alt="Diagram of an example Figgie deck: spades 12 cards, clubs 10 cards highlighted as the goal suit, hearts 10 cards, diamonds 8 cards, with the three steps of a round." />
+<em>Figure 2. An example deal. Spades has 12 cards, so the goal is clubs, the other black suit.</em></p>
+<p>So the game is about information. Your hand hints at which suit has 12 cards. Everyone else’s trading hints at what their hands told them. A good player counts cards, reads the market, and trades on the answer before the market has finished giving it away.</p>
+<p>There are only 12 possible decks (four choices for the 12-card suit, then three for the 8-card suit), so a program can track the exact probability of each one. That’s where I started.</p>
+<h2 id="the-setup">The setup <a class="header-anchor" href="#the-setup">#</a></h2>
+<p>The bot plays on <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>, where Figgie runs in the browser, against the site’s own bots set to Hard. I set myself three rules:</p>
+<ul>
+<li><strong>Bots only.</strong> Private tables where every other seat is one of <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots. Never against people, and only for play money.</li>
+<li><strong>Only what a player sees.</strong> Its own hand, the bids and offers, the trades and the clock. Nothing about the other players’ hands, even though the web page holds more.</li>
+<li><strong>Human speed.</strong> At most four orders a second, sent through the same functions the site’s buttons call.</li>
+</ul>
+<p>The strategy lives in about 4,400 lines of Python: a rules-accurate game engine, a simulator with fifteen kinds of opponents, and analysis tools. A 2,900-line userscript carries a line-for-line JavaScript port of the strategy into the page, plus an adapter that finds the game’s state inside <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s app. A test harness checks that the two versions compute the same probabilities and send the same orders.</p>
+<p><img src="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/03-how-it-works.svg" alt="Flow diagram: the bot's inputs (its own cards, every bid and offer, the trade tape, the clock) feed three steps, counting the cards, valuing every card and trading; side boxes for reading the other players and learning from the table feed in; a figgie.com adapter sits underneath." />
+<em>Figure 3. What the bot does with what it sees, many times a second.</em></p>
+<h2 id="version-1-perfect-counting-naive-trading">Version 1: perfect counting, naive trading <a class="header-anchor" href="#version-1-perfect-counting-naive-trading">#</a></h2>
+<p>v1 did the maths right. It updated its probabilities for all 12 decks on every trade, valued each card from them, and made markets around those values, bidding a little below and offering a little above.</p>
+<p>That’s how you lose money to people who know more than you do. When v1’s bid was hit, it was usually because the seller knew the suit was dead. When its offer was lifted, the buyer usually knew it was the goal. Traders call this adverse selection: the trades you get are the ones the other side wanted. v1 ignored what everyone else’s trading said, so its fills were systematically bad, and it often didn’t know the goal even at the bell: in five of nine rounds it put 30% or less on it. It lost $261 over nine rounds.</p>
+<h2 id="listening-to-the-market">Listening to the market <a class="header-anchor" href="#listening-to-the-market">#</a></h2>
+<p>One recorded round showed the way out. Every bid of $10 or more in that round was for the goal suit, while the dead suits changed hands at $1 to $4. The other bots knew, and their bids said so.</p>
+<p>v2 treats the highest price anyone bids or pays for a suit as a vote that it’s the goal, and a low offer as a vote against. It also stopped being eager. Its bids start low and climb a dollar every three seconds, and it takes someone else’s quote only with a 20% edge. v2 made $25 a round.</p>
+<p>v3 fixed the next leak. Early in a round every suit is still a plausible goal, so each card looked cheap and the bot sold into early bids, often to the bots that suspected that suit was the goal. But holding a card is an option. Once the market reveals the goal, a goal card pays $10 and sells to players chasing the bonus for $11 to $19, and a dead card can still be sold for a couple of dollars. v3 never sells a card for less than that option is worth, and the premium fades to nothing by the bell. It was the first version with a statistically clear profit: $42 a round, with eight of ten rounds in profit.</p>
+<p>Then I let the data decide. By v6 the logs held 42 live rounds with the dealt hands, every suit’s top bid and the true goal, enough to fit the signal instead of guessing it. <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots bid $10 to $15 for dead suits all the time, so only bids above about $17 really single out the goal. v7 scores bids that way. It also counts a bid only once it has stood on the book in two different seconds, so a bid flashed and cancelled can’t move it.</p>
+<p>v8 found the strongest signal. Every Hard bot bids the goal suit up at some point in a round, while a dead suit usually draws a big bid from only one of them. So the lowest of the three bots’ top bids for each suit is a near-perfect tell: in ten rounds it was $7 to $10 for the goal and $3 to $6 for every dead suit. One bluffer can’t fake that.</p>
+<p><img src="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/04-belief.svg" alt="Line chart of the bot's probability for each suit over one four-minute round. The lead changes hands between diamonds, clubs and hearts until about 2:30; then diamonds climb past 90% at 3:17 and end at 100%." />
+<em>Figure 4. The bot’s probability for each suit in one live round. The lead changes hands for two and a half minutes before the market settles on diamonds.</em></p>
+<p><img src="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/05-reading.svg" alt="Column chart of the share of rounds in which the bot was at least 90% sure of the goal by the bell: 20% to 60% for v2 to v7, 60% to 100% from v8 on." />
+<em>Figure 5. From v8 on, the bot was at least 90% sure of the right suit by the bell in most rounds.</em></p>
+<p>Then came the surprise. v8 finished every round with the right suit as its favourite, at 97% on average against v7’s 74%, and its profit didn’t move: $33.50 a round, inside the noise of every version since v3. Knowing the answer at the bell is worth very little. The money is made in the first two or three minutes, while the answer is still uncertain. v9 attacked that window from the other side: early in a round, whoever buys from the bot probably knows more than it does, so its offers are priced as if the buyer does.</p>
+<h2 id="good-ideas-that-lost-money">Good ideas that lost money <a class="header-anchor" href="#good-ideas-that-lost-money">#</a></h2>
+<p>Two failures taught me more than most of the successes.</p>
+<p>v5 was about the bonus. With a 10-card goal suit, five cards can only tie for the majority, and six win it. The bot kept stopping at five, and <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots kept collecting the strays: in seven rounds of v3 and v4 the bonus was split 5-5, leaving $350 on the table. So v5 valued the bonus as if a rival would end up with every goal card the bot lacked, which made the sixth card worth chasing. It got there twice. But the same assumption made small holdings look worthless, so in six rounds it sold the goal cards it had been dealt, cheaply. It made $16 a round, its worst result since v1. v6 kept the idea only for when the bot already holds half the goal suit, where the next card decides between a tie and a win, and took the whole bonus in five of ten rounds.</p>
+<p>The second failure was a better model. I built one that learned each opponent’s tells (their top bids, their cheap offers, what they accumulated) and corrected the bot’s probabilities with them, refitting at every bell. As a forecaster it worked: against opponents with tells it put more probability on the true goal. And it lost $2 a round in simulation. Small shifts in belief made the bot commit to the right suit a little less often, and the bonus goes to whoever commits. At one table it won the bonus in 68% of rounds instead of 72%, and that was its whole loss there. A better forecast doesn’t automatically make a better decision.</p>
+<h2 id="an-exploit-hiding-in-the-logs">An exploit hiding in the logs <a class="header-anchor" href="#an-exploit-hiding-in-the-logs">#</a></h2>
+<p>From v9 on, the bot logged every quote and trade. Reading the logs turned up a habit of <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots. When a player offered or sold a card for $1 or $2, another player usually bid the same suit back up to $4 or more, typically 11 to 12 seconds later: after 96% of 166 such cards in one batch of logs, and 76% of 135 in the next. None of those cheap cards was the goal. The bots dump dead cards and then want them back.</p>
+<p>v10 buys those cards and resells them. Being wrong about a pattern like that is the real risk, so most of the code is about stopping. The bot holds only a few unsold cards at a time, counts its own resales double when it judges the pattern, and shuts the exploit off for the round after two net failures or $6 lost. In the simulator I wrote a ring of bots that fakes the pattern to bait it, and the caps hold the damage to about $6.50 a game.</p>
+<p>Live, it worked from the first round. Resale made $73 over v10’s ten rounds, $153 over v11’s, $203 over v12’s and $163 over v13’s, across more than 300 resales, none of them sold at a loss.</p>
+<p>Then I wanted the bot to find the pattern itself. v12 replaces the hand-written rule with a learner. Every offer another player shows at $5 or less is a question the tape answers within seconds: had the bot bought that card, would someone have bid $2 more for the suit within 45 seconds? So every offer at the table is a labelled example, not only the bot’s own trades. An online Bayesian logistic regression learns the answer from generic features such as the price, the time left, recent bids and the seller’s recent offers. Starting from nothing, it rediscovered “$2 or less resells” within its first live round, and that became its strongest feature. At <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> that only matches the rule I’d found by hand. The point is the next table, where the rule is wrong: the learner adjusts and the rule doesn’t.</p>
+<h2 id="opponents-that-fight-back">Opponents that fight back <a class="header-anchor" href="#opponents-that-fight-back">#</a></h2>
+<p>Up to v12 the simulator’s opponents were mostly benchmarks the bot was built to beat. For v13 I wrote opponents built to beat it: a spoofer that flashes big bids on dead suits, rings that fake the resale pattern, a “pump” ring that trades a dead suit among itself at $18 so the tape shows everyone paying up, a sniper, a front-runner, a buyer that never shows a bid, and one that learns what the bot will pay. A test bench, the arena, plays every change in paired sessions at 21 tables, with separate seeds for tuning, choosing and reporting. It scores a change by half its average gain and half its gain over the worst quarter of tables, so a change has to help broadly.</p>
+<p>The pump ring took $63 a round: the bot was 98% sure of the decoy after 30 seconds. So v13 learns at every bell, from the revealed goal, how far to trust each of its market readings at this table, and a signal that lies there fades within a round or two. That fixed the belief but not the money. Three colluders who know the goal still take about $60 a round, because they sell the bot dead cards and buy its goal cards whatever it believes. With its market reading switched off entirely, it loses about as much. Some opponents can’t be beaten, and it helps to know which.</p>
+<p>The arena also said no a lot. An endgame routine, putting quotes back after the book clears, random quote timing and a stricter smart-money rule were all tried and dropped. A seeded search over 18 quoting and holding parameters found nothing that beat the hand-tuned values robustly on held-out tables.</p>
+<h2 id="running-it-live-is-half-the-work">Running it live is half the work <a class="header-anchor" href="#running-it-live-is-half-the-work">#</a></h2>
+<p><a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> is a React Native web app that talks to its server over a socket. There’s no API for bots, so the userscript finds the game’s state by walking React’s internal component tree, listens to the same socket messages the page does, and sends orders through the same functions the buttons call. Keeping that running took as much work as the strategy:</p>
+<ul>
+<li><strong>Hidden tabs.</strong> Browsers starve background tabs. Timers stalled for up to a minute, stale quotes sat on the book, and <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> dropped the connection. The trading clock now runs in a Web Worker, and the script supplies the animation frames a hidden page doesn’t get.</li>
+<li><strong>Crashes.</strong> Moving to a new table crashed the page now and then. <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s game screen crashes if it renders with an empty player list, which can happen while it animates out. The script now sends the screen home, waits for it to unmount, and only then closes the old table.</li>
+<li><strong>Messages without an address.</strong> The site sends an empty “match closed” message that doesn’t say which table it means, and shows some notices with a browser alert that freezes the page until someone clicks OK. The script holds a “match closed” for three seconds and drops it if the round’s clock keeps ticking, logs the alerts instead of freezing on them, and leaves any round whose clock stands still.</li>
+<li><strong>Speed.</strong> The bot used to look for trades every 250 milliseconds, so a $1 offer could wait almost half a second, and <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots, which run on the server, often got there first. It now reacts to each new quote as soon as the page receives it, and most of its takes go out within a few milliseconds.</li>
+</ul>
+<p>Then it learned to run without me. It opens a private table with three Hard bots, starts each round eight seconds after the last bell, and moves to a fresh table once any bot ends a round under $100. Chips carry over at a table and a broke bot can’t bid, so a long session at one table dries up the market; that is exactly what spoiled v13’s last two rounds. In its first long session the bot played 11 rounds at three tables it opened itself, with one page reload when <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> logged the guest out, and made $810.</p>
+<p><img src="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/06-unattended.svg" alt="Column chart of 11 round results at three tables: two small losses and nine wins of up to $157, totalling +$810." />
+<em>Figure 6. The first unattended session, round by round.</em></p>
+<h2 id="results">Results <a class="header-anchor" href="#results">#</a></h2>
+<p><img src="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/07-cumulative.svg" alt="Line chart of cumulative profit over 142 live rounds, dipping to −$261 after v1 and then rising steadily to +$6,958." />
+<em>Figure 7. Cumulative profit over every live round.</em></p>
+<p>Across 142 live rounds the bot made $6,958 in play money. Every live test since v3 has been profitable. Over the last 41 rounds (v11 to v13.3) it averaged $81 a round, ±$18 at 95% confidence, with 34 of 41 rounds in profit.</p>
+<p>Two caveats matter. First, ten rounds is a small sample: each version’s average carries a 95% interval of about ±$32 to ±$45, so most single steps in Figure 1 are noise. v13’s +$98.90, the best result, came from a version that plays almost exactly like v12 at <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>, by design; the extra $19 a round was the deals and the table. The trend across versions is real, and any one step mostly isn’t. That’s why most decisions were made on paired simulations (the same deals for both versions), replays of logged rounds and paper trading on logged order books, with live tests as the final check. Second, these are <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots, not people. They’re predictable in ways people aren’t, and the bot has known weaknesses, which the repository lists.</p>
+<h2 id="what-i-learned">What I learned <a class="header-anchor" href="#what-i-learned">#</a></h2>
+<ol>
+<li><strong>Adverse selection comes first.</strong> Perfect arithmetic on your own information loses to people trading on theirs. Before asking what a card is worth, ask why someone is willing to trade it with you.</li>
+<li><strong>Prices are information.</strong> The biggest gains came from reading other players’ bids, and the cleanest signal came from looking at the bids player by player instead of pooled.</li>
+<li><strong>Optimise the decision, not the forecast.</strong> v8 knew the goal far more often and made no more money, and a better reader of opponents lost money. Measure what you’re paid for.</li>
+<li><strong>Know your noise.</strong> Ten live rounds can’t tell a $10 improvement from luck. Paired simulations, replays of logged rounds and separate tuning, validation and holdout seeds did the deciding; live tests confirmed.</li>
+<li><strong>Write the adversary.</strong> Opponents built to exploit the bot found holes no benchmark showed, and gave an honest answer about which ones it can’t close.</li>
+<li><strong>The plumbing is half the work.</strong> Hidden tabs, page crashes and a message that doesn’t say which table it means have nothing to do with strategy, and every one of them cost money.</li>
+</ol>
+<h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
+<p>The code, every live round and the analysis tools are on GitHub at <a href="https://github.com/RasmusCodes/figgie-bot" target="_blank" rel="noopener">github.com/RasmusCodes/figgie-bot</a>, under the MIT licence. If you run the userscript, keep it to private tables against <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots, and check the site’s terms first.</p>
+<h2 id="appendix-every-version">Appendix: every version <a class="header-anchor" href="#appendix-every-version">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Live rounds</th>
+<th>Per round</th>
+<th>±95%</th>
+<th>What changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td>9</td>
+<td>−$29.0</td>
+<td>±35</td>
+<td>exact card counting, naive market-making</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>7</td>
+<td>+$24.9</td>
+<td>±45</td>
+<td>reads the highest bids; patient quoting</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>10</td>
+<td>+$42.3</td>
+<td>±35</td>
+<td>won’t sell a card before the market reveals the goal</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>5</td>
+<td>+$54.2</td>
+<td>±64</td>
+<td>steadier reactions to a jumpy signal</td>
+</tr>
+<tr>
+<td>v5</td>
+<td>10</td>
+<td>+$15.9</td>
+<td>±44</td>
+<td>chases the sixth goal card</td>
+</tr>
+<tr>
+<td>v6</td>
+<td>10</td>
+<td>+$36.0</td>
+<td>±45</td>
+<td>… but only once it holds half the goal suit</td>
+</tr>
+<tr>
+<td>v7</td>
+<td>10</td>
+<td>+$47.5</td>
+<td>±45</td>
+<td>bid reading fitted to 42 logged rounds; spoof-resistant</td>
+</tr>
+<tr>
+<td>v8</td>
+<td>10</td>
+<td>+$33.5</td>
+<td>±34</td>
+<td>weighs whether every opponent bid a suit up</td>
+</tr>
+<tr>
+<td>v9</td>
+<td>10</td>
+<td>+$53.5</td>
+<td>±41</td>
+<td>early offers priced for who buys them; full round logs</td>
+</tr>
+<tr>
+<td>v9.1</td>
+<td>10</td>
+<td>+$55.1</td>
+<td>±41</td>
+<td>v9 again, out of sample</td>
+</tr>
+<tr>
+<td>v10</td>
+<td>10</td>
+<td>+$60.3</td>
+<td>±34</td>
+<td>cheap resale with a kill switch; early bids read by colour</td>
+</tr>
+<tr>
+<td>v11</td>
+<td>10</td>
+<td>+$73.5</td>
+<td>±44</td>
+<td>lets go of suits it has given up on sooner</td>
+</tr>
+<tr>
+<td>v12</td>
+<td>10</td>
+<td>+$79.9</td>
+<td>±34</td>
+<td>learns which cheap offers resell, from the tape</td>
+</tr>
+<tr>
+<td>v13</td>
+<td>10</td>
+<td>+$98.9</td>
+<td>±32</td>
+<td>learns which market signals to trust at a table</td>
+</tr>
+<tr>
+<td>v13.3</td>
+<td>11</td>
+<td>+$73.6</td>
+<td>±37</td>
+<td>reacts to each quote at once; runs unattended</td>
+</tr>
+</tbody>
+</table></div>
+]]></content:encoded></item><item><title>An options pricing and volatility lab, validated at every step</title><link>https://rasmuscodes.github.io/projects/options-lab/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/options-lab/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>Pricing engines, SPX volatility surfaces and volatility forecasts on free Cboe data, each checked against independent references before the next phase starts.</description><category>options</category><category>volatility</category><category>derivatives pricing</category><category>forecasting</category><content:encoded><![CDATA[<p>options-lab is an options pricing and volatility research lab, built in phases with one rule: each phase is checked against independent references before the next one starts. Its main underlying is the S&amp;P 500 index (SPX), on free Cboe data. So far it covers pricing, implied-volatility surfaces, a historical data store and volatility forecasting. Trading strategies come next.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Pricing.</strong> Black–Scholes with Greeks to third order, an implied-volatility solver, binomial and trinomial trees, a Crank–Nicolson finite-difference solver and Monte Carlo, with American exercise and discrete dividends.</li>
+<li><strong>Volatility surfaces.</strong> SVI, SSVI and extended SSVI under no-arbitrage constraints, SABR, Heston and Dupire local volatility, fitted to SPX. Plus a hybrid surface built by Andreasen–Huge volatility interpolation, which steps the forward equation from one expiry to the next and so cannot contain static arbitrage: option prices that would allow a riskless profit, such as a butterfly spread worth less than nothing.</li>
+<li><strong>History.</strong> A SQLite store with provenance on every row: Cboe daily histories of SPX, the VIX family, VVIX and SKEW, plus a daily archive of SPX and SPY option chains with a fitted surface for each close.</li>
+<li><strong>Forecasting.</strong> Walk-forward forecasts with monthly refits and no look-ahead, scored with QLIKE (a loss suited to variance forecasts), Diebold–Mariano tests and model confidence sets.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<p><strong>The hybrid surface fits more closely than SVI and has no arbitrage anywhere.</strong> On the 12 November 2026 SPX close (53 expiries, 10,735 quotes):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Surface</th>
+<th style="text-align:right">Median error, vol points</th>
+<th>Free of static arbitrage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Andreasen–Huge (hybrid)</td>
+<td style="text-align:right">0.11</td>
+<td>Everywhere, by construction</td>
+</tr>
+<tr>
+<td>SVI</td>
+<td style="text-align:right">0.23</td>
+<td>Only where quotes exist</td>
+</tr>
+<tr>
+<td>Extended SSVI</td>
+<td style="text-align:right">1.13</td>
+<td>On the whole grid</td>
+</tr>
+</tbody>
+</table></div>
+<p>The hybrid surface puts 87% of quotes inside the bid-ask on the median expiry (SVI 22%), predicts held-out expiries better (0.19 against 0.27 vol points) and calibrates in 29 seconds against SVI’s 149. A check of every node probability and calendar spread at 213 maturities found none below zero. Its worst expiries are no better than SVI’s, though: the 90th-percentile slice misses by 0.30 vol points against 0.28.</p>
+<p><strong>Simple forecasting models win.</strong></p>
+<ul>
+<li><strong>Realised volatility.</strong> For daily S&amp;P 500 forecasts from 2000 to 2026, a log-HAR model with the VIX beats every simple baseline at every horizon: its QLIKE is 7%, 25% and 22% below an exponentially weighted average’s at 1, 5 and 22 days. Gradient-boosted trees never make the confidence set. In 2000–09 they did worse than the baseline, because 2008 lay beyond anything in their training data.</li>
+<li><strong>The implied side.</strong> The VIX, its term-structure slope, SKEW and VVIX all beat a random walk through mean reversion alone, and plain AR(1) and HAR models do it (22-day R² against the random walk: 13% for the VIX, 35% for the slope).</li>
+<li><strong>The variance risk premium.</strong> Selling 30-day variance at the level the VIX implies paid off on 83% of days from 2000 to 2026, but no model forecasts the premium reliably better than its average.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/options-lab/qlike_by_model.png" alt="Out-of-sample QLIKE loss of thirteen volatility forecasts relative to EWMA at 1, 5 and 22 days, 2000–2026" /><figcaption>Out-of-sample QLIKE loss of thirteen volatility forecasts relative to EWMA at 1, 5 and 22 days, 2000–2026</figcaption></figure>
+<p><strong>Validation found problems in the references too.</strong> In 7% of random cases, QuantLib’s Leisen–Reimer binomial engine prices American options too low, by up to 0.27, sometimes below its own European price. QuantLib’s own high-precision engine settled every disagreement in this library’s favour. And the VIX, recomputed from archived SPX quotes by Cboe’s published method, matches Cboe’s close to within 0.01 on all three days checked.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The surface results rest on two SPX closes, 12 and 13 November 2026.</li>
+<li>The store runs on free data only. A WRDS OptionMetrics adapter is written and tested on sample files but not connected, so option-chain history covers only the weeks since the daily archive began.</li>
+<li>The forecasts are statistical results, not trading results: no strategy has been backtested yet.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with NumPy, SciPy and pandas at its core. QuantLib, vollib, Let’s Be Rational, computer algebra and published examples serve as independent references in 212 validation tests. A scheduled task archives the SPX and SPY chains after each weekday close.</p>
+]]></content:encoded></item><item><title>A No-Limit Hold’em solver, from heads-up flops to tournament push/fold</title><link>https://rasmuscodes.github.io/projects/nlh-solver/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/nlh-solver/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.</description><category>poker</category><category>game theory</category><category>rust</category><content:encoded><![CDATA[<p>No-Limit Hold’em is the poker most people know: two hole cards each, five shared cards and bets of any size. This project is a solver and study app for it, built for real table set-ups (two to ten players, any stacks, blinds, antes, straddles, rake and tournament payouts) and built to say plainly how good each answer is. It is a companion to my <a href="https://rasmuscodes.github.io/projects/plo-solver/">Pot-Limit Omaha solver</a>.</p>
+<h2 id="what-it-does-so-far">What it does so far <a class="header-anchor" href="#what-it-does-so-far">#</a></h2>
+<p>The roadmap has seven phases, and five are done.</p>
+<ol>
+<li><strong>Core engine.</strong> Cards, ranges, four hand evaluators and a no-limit rules engine with side pots, straddles and tiered rake. The evaluators agree on all 133,784,560 seven-card hands, and every test run plays 40,000 random hands against an independent settlement check.</li>
+<li><strong>Solver.</strong> CFR (counterfactual regret minimisation: the strategy plays against itself many times and shifts towards the moves it regrets not making), in its Discounted, CFR+ and Linear forms. It reproduces the known values of two toy poker games and measures exploitability exactly: how much a perfect opponent could win against the strategy, as a share of the pot.</li>
+<li><strong>Browser app.</strong> A local server and a React interface with range, board and bet-size editors, a convergence chart and a strategy explorer. The acceptance test was a 3-bet-pot flop of 2.26 million nodes, solved from the browser to 0.498% of the pot, then explored, saved and reopened.</li>
+<li><strong>Advanced solving.</strong> Node locking (fixing one player’s play at chosen spots and solving the rest against it), exploit reports, preflop all-in charts, three-way turn and river solves, bucketed three-way flops and whole-hand preflop blueprints for two to six players. Its heads-up push/fold charts match a published chart on 162 values to within 0.10 big blinds.</li>
+<li><strong>Tournaments.</strong> ICM (the Independent Chip Model, which turns chip stacks into shares of the prize pool), bubble factors, presets for sit &amp; go, final-table, satellite and Spin formats, a labelled bounty model, and push/fold solves for a whole table of two to ten players.</li>
+</ol>
+<h2 id="checking-the-answers">Checking the answers <a class="header-anchor" href="#checking-the-answers">#</a></h2>
+<p>Every fast path has a slow reference it is tested against, and the reference is checked against an independent Python implementation. ICM equities match 62 reference cases to within one part in a hundred billion.</p>
+<p>Push/fold at a full table was checked against a simulation that deals every hand from one deck. Every player’s value is now within 0.0062 big blinds a hand of the dealt game, on 4 to 10 million simulated hands per table. The first version was off by up to 0.038 big blinds, because it ignored that folded hands are weaker than random.</p>
+<p>Every result also says how it was computed. Heads-up solves report exploitability. With three or more players an equilibrium guarantees nothing, so those results report NashConv (the total that all players could gain by switching to their best responses) under a “multiway CFR approximation” label. Blueprints are marked as approximations of a simplified game, with no exploitability figure. Nothing is called GTO (game-theory optimal) unless the method supports it.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li><strong>Three-way flops are still rough.</strong> Their measured NashConv is about 10% of the pot on a small study flop after 37,632 sampled runouts.</li>
+<li><strong>Push/fold allows at most three players all in</strong>, and folded cards are not yet removed from the deck for the board. That leaves the blinds about 0.005 big blinds a hand off at six to ten players.</li>
+<li><strong>ICM looks at one hand at a time</strong> and covers push/fold only. The raise trees and the postflop solver still count chips.</li>
+<li><strong>Saved full flops are big:</strong> 816 MB for one single-raised-pot flop. Timings come from a busy machine and are pessimistic.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Rust workspace of 11 crates, from cards and rules through the solvers to a command-line tool and a local HTTP server. The only outside Rust dependencies are serde, serde_json and rayon. The browser app is React and TypeScript. All randomness flows from explicit seeds, so results do not depend on thread scheduling, and 249 automated tests pass.</p>
+<p>Next on the roadmap: hand-history import and review, and special games such as bomb pots, double-board pots and the 7-2 game.</p>
+]]></content:encoded></item><item><title>A market simulator in Rust, checked order by order against real data</title><link>https://rasmuscodes.github.io/projects/hft-sim/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/hft-sim/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.</description><category>market microstructure</category><category>market making</category><category>simulation</category><category>rust</category><content:encoded><![CDATA[<p>hft-sim is a research platform for market microstructure: how orders become trades and prices. It has a deterministic exchange, a simulator in which every message takes time to arrive, trading agents and a ladder of market-making strategies. I wanted to know how market makers fare against latency, informed traders and competition, and whether a backtest’s rule for when a resting order fills survives real exchange data.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>The exchange</strong> matches orders by price-time priority: best price first, then first come, first served.</li>
+<li><strong>The simulator</strong> times every hop between a trader and the exchange, so traders see only a delayed copy of the book. Runs are bit-reproducible from one seed.</li>
+<li><strong>A background market</strong> of noise traders, value investors and split-up large orders is calibrated to five statistical regularities of real markets.</li>
+<li><strong>The market makers</strong> form a ten-step ladder, from a fixed spread to the Avellaneda–Stoikov and Guéant–Lehalle–Fernandez-Tapia models, with formulas transcribed from the papers and checked numerically.</li>
+</ul>
+<h2 id="what-the-simulator-showed">What the simulator showed <a class="header-anchor" href="#what-the-simulator-showed">#</a></h2>
+<p>Eight research questions, each on two backgrounds with 8 seeds and 95% intervals, about this simulated market only.</p>
+<ul>
+<li><strong>More inventory aversion paid.</strong> Raising a market maker’s risk aversion from 3.5 to 14 added $9.2 per two-minute window [5.9, 12.5] with less inventory. The gain came from less adverse selection (trading against flow that knows where the price is going), even without informed traders: the background’s split orders are persistent.</li>
+<li><strong>Queue position dominates fills.</strong> A resting order at the front of the queue filled about 90% of the time; behind 500 shares, about 10%.</li>
+<li><strong>Speed mattered little here.</strong> A remote maker sent three times as many cancels too late (8% against 2–3%) but lost little profit: it had no news to race on.</li>
+<li><strong>The maker profited almost everywhere</strong>, even against 60 informed traders. That is a property of the simulator, and it is why nothing here is a profitability claim.</li>
+</ul>
+<h2 id="checking-the-fill-model-on-real-data">Checking the fill model on real data <a class="header-anchor" href="#checking-the-fill-model-on-real-data">#</a></h2>
+<p>Each real order was replayed leave-one-out: treated as hypothetical, run through the stream without itself, and its modelled fills compared with what really happened.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Check</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bitstamp BTC/USD, 19 minutes, 365,180 order events</td>
+<td>Rebuilt book against the exchange’s own snapshots</td>
+<td>1,136 of 1,136 reproduced</td>
+</tr>
+<tr>
+<td>172,862 resting Bitstamp orders</td>
+<td>Fill model, four variants</td>
+<td>No false, early or oversized fill</td>
+</tr>
+<tr>
+<td>The same orders, best variant</td>
+<td>Real fills found at the right millisecond</td>
+<td>292 of 298, 99.6% of volume</td>
+</tr>
+<tr>
+<td>Nasdaq BX ITCH day (30 Dec 2019), 801,154 orders</td>
+<td>Fill model</td>
+<td>No false, early or oversized fill</td>
+</tr>
+</tbody>
+</table></div>
+<p>The best variant uses Bitstamp’s published taker orders (the incoming orders that trade against resting ones) and rebuilds history as if each order had never existed. Without takers, as on Nasdaq’s feed, the conservative rules give a lower bound: a third of Bitstamp’s fills on time, and 93% of BX volume eventually. The BX day’s 29.2 million messages also pass every book-consistency check.</p>
+<p>The checks exposed three optimistic rules in my model, each now fixed. On BX, 0.2% of executions looked like queue jumping; every one was an order the exchange ranks at a better price than it displays (its Price to Comply rule).</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The default background makes one-second returns mean-revert, so every study also runs on a second, zero-intelligence background.</li>
+<li>The real data is one 19-minute crypto window and one day on a small Nasdaq venue. The LOBSTER adapter is tested only on simulated files, because LOBSTER’s samples now need an academic application.</li>
+<li>Replay cannot show how the market would have reacted to an extra order.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Rust workspace whose core crates have no external dependencies and no unsafe code, plus a Python layer for scenario grids with optional PyO3 bindings that export runs to Parquet. The 213 Rust and 27 Python tests include differential fuzzing against a naive reference exchange (about 18 million commands) and mutation testing: of 132 deliberately planted bugs, 130 were caught and the other two provably cannot change any output. The engine handles about 8.6 million messages a second with 1,000 resting orders on a laptop.</p>
+]]></content:encoded></item><item><title>A game-theory solver for six-handed Pot-Limit Omaha</title><link>https://rasmuscodes.github.io/projects/plo-solver/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/plo-solver/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A Rust solver and study app for 6-max PLO, built milestone by milestone, from an exact rules engine to a library of exactly solved flops that grows in the background.</description><category>poker</category><category>game theory</category><category>rust</category><content:encoded><![CDATA[<p>Pot-Limit Omaha deals four hole cards instead of hold’em’s two, so the game is far larger: there are 16,432 strategically different starting hands. This project is a 6-max PLO analysis platform, built toward a mathematically sound game-theoretic solver with a modern study interface.</p>
+<h2 id="what-it-does-so-far">What it does so far <a class="header-anchor" href="#what-it-does-so-far">#</a></h2>
+<ul>
+<li><strong>Foundation (M1-M2).</strong> An exact rules engine, a table-driven Omaha hand evaluator, exact and Monte Carlo equity, and the solver: vector-form CFR (counterfactual regret minimisation), CFR+ and Discounted CFR with exact card removal, validated on Kuhn poker and Leduc hold’em, where the answers are known. Each solve reports its exploitability: how much a perfect opponent could win against it.</li>
+<li><strong>Postflop (M3-M4, M7-M8).</strong> Exact heads-up turns, node locking (fixing one player’s play at chosen spots), off-tree bet sizes, abstracted heads-up flops measured in the real game, and multiway river and turn spots.</li>
+<li><strong>Preflop (M5-M6, M14).</strong> Blueprints by Monte Carlo CFR over whole hands, covering all 16,432 preflop hand classes: heads-up, a six-handed blueprint on a restricted tree, and tables of three to five players.</li>
+<li><strong>Hand-history analysis (M7, M9, M14).</strong> PokerStars-style hand histories import into the app. A file of up to 5,000 hands is checked against the blueprints preflop, and every flop the hero played can be solved in a batch, with the EV given up at each decision.</li>
+<li><strong>Tournaments (M12-M13).</strong> The big-blind ante, exact ICM (the Independent Chip Model, which turns chip stacks into prize equity), per-seat stacks, and blueprints and solves with ICM payoffs.</li>
+<li><strong>A pre-solved library (M10-M15).</strong> 83 standard spots, from heads-up and 6-max cash to tournament bubbles and final tables, each solved on a set of representative flops. Library flops are solved exactly (the full game, every turn and river card) to within 0.5% of the pot, and stored at the flop level: about 0.2 MB instead of 500 MB. Any turn you pick is solved again exactly in seconds.</li>
+<li><strong>Speed and scale (M16-M17).</strong> Exact solves are 1.33 times faster after the evaluator work, and Discounted CFR with restarts needs 12-20% fewer iterations to reach 0.5% of the pot. Regrets and strategy sums are now stored in 16 bits, which halves the RAM a deep heads-up flop needs, from 4.66 GB to 2.33 GB, with the same convergence. A background builder adds exact flops one at a time, pausing whenever I solve something myself: over 2,100 since 15 November.</li>
+<li><strong>A second bet menu (M17).</strong> A 33% flop bet beside the pot-sized one. All of the first 20 flops checked reached 0.5% of the pot, and the small bet was worth 0.15% (heads-up) to 0.38% (6-max) of the pot to the raiser on average.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Rust workspace of nine crates, from cards, pot-limit rules and equity through game trees, the CFR and Monte Carlo CFR solvers and a compact solution store, to a command-line tool and a local HTTP server. The server’s JSON API drives a React and TypeScript study interface. An independent Python reference implementation supplies test vectors. Every milestone ends with a report of what was built, measured and tested, and what is still missing.</p>
+<h2 id="honest-limits">Honest limits <a class="header-anchor" href="#honest-limits">#</a></h2>
+<ul>
+<li>With three or more players, CFR carries no Nash guarantee, so multiway results are labelled that way. The distance from equilibrium (NashConv) is measured exactly for two or three players with modest ranges on the river and turn, but not on multiway flops, which bucket later streets.</li>
+<li>Blueprints are approximations of an abstracted game. Their exploitability in the real game can’t be measured here.</li>
+<li>Exact library flops use the blueprint’s ranges, sampled to 1,000 hands per side, and turns and rivers keep a single pot-sized bet. Two sizes there would need 5-12 GB per flop, more than the laptop spares.</li>
+<li>Each spot covers 30 or 100 representative flops, weighted by the share of all 22,100 flops each stands for. There are 1,755 strategically different flops, so coverage is the largest gap.</li>
+</ul>
+<h2 id="next">Next <a class="header-anchor" href="#next">#</a></h2>
+<p>Let the builder finish rolling out the second bet menu, then compare the main lines’ 30 flops the same way. A third flop size (33%, 66% or pot) follows if those flops support it.</p>
+]]></content:encoded></item><item><title>A Figgie bot that counts cards and reads the market</title><link>https://rasmuscodes.github.io/projects/figgie-bot/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/figgie-bot/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>An exact Bayesian card counter that trades Jane Street’s card game, live on figgie.com and in a Python simulator.</description><category>trading</category><category>game theory</category><category>bots</category><content:encoded><![CDATA[<p>Figgie is Jane Street’s card-trading game. Four players each get ten cards from a 40-card deck in which one suit is secretly the goal, then trade with each other for four minutes in an open market. Every goal card pays $10 at the bell, and the rest of the pot goes to whoever holds the most of them. This bot plays it, live on <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> against the site’s Hard bots and in a simulator against opponents written to beat it.</p>
+<p>The <a href="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/">full write-up</a> tells the story version by version, including the ideas that lost money.</p>
+<h2 id="how-it-thinks">How it thinks <a class="header-anchor" href="#how-it-thinks">#</a></h2>
+<ol>
+<li><strong>It counts cards exactly.</strong> There are only 12 possible decks, so it keeps the probability of each. Its own hand is the first evidence, and the tape adds hard facts: nobody can sell a card they don’t hold.</li>
+<li><strong>It reads the market.</strong> High bids are votes for a suit. The cleanest tell is player by player: every Hard bot bids the goal suit up at some point, while a dead suit draws a big bid from only one of them. A bid counts only once it has stood on the book in two different seconds, so a flashed bid can’t steer it.</li>
+<li><strong>It prices adverse selection.</strong> Early in a round, whoever buys from it probably knows more, so its offers are priced as if they do, and it never sells a card for less than the option of holding it.</li>
+<li><strong>It values the majority bonus.</strong> Once it holds half the goal suit, the next card decides between a tie and a win, and it pays up for it.</li>
+<li><strong>It learns from the table.</strong> An online Bayesian logistic regression learns which cheap offers resell within seconds, from every offer on the tape, and at each bell it updates how far to trust each market signal at that table.</li>
+</ol>
+<h2 id="results">Results <a class="header-anchor" href="#results">#</a></h2>
+<p>Across 142 live rounds it made $6,958 in play money. Every live test since v3 has been profitable, and over the last 41 rounds (v11 to v13.3) it averaged $81 a round, ±$18 at 95% confidence, with 34 of 41 rounds in profit. The newest version opens its own tables and runs unattended: its first long session made $810 over 11 rounds at three tables.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Version</th>
+<th style="text-align:right">Live rounds</th>
+<th style="text-align:right">Per round</th>
+<th style="text-align:right">±95%</th>
+<th>What changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">−$29.0</td>
+<td style="text-align:right">±35</td>
+<td>Exact card counting, naive market-making</td>
+</tr>
+<tr>
+<td>v3</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$42.3</td>
+<td style="text-align:right">±35</td>
+<td>Won’t sell a card before the market reveals the goal</td>
+</tr>
+<tr>
+<td>v8</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$33.5</td>
+<td style="text-align:right">±34</td>
+<td>Weighs whether every opponent bid a suit up</td>
+</tr>
+<tr>
+<td>v10</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$60.3</td>
+<td style="text-align:right">±34</td>
+<td>Buys cheap dead cards and resells them, with a kill switch</td>
+</tr>
+<tr>
+<td>v12</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$79.9</td>
+<td style="text-align:right">±34</td>
+<td>Learns which cheap offers resell, from the tape</td>
+</tr>
+<tr>
+<td>v13</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">+$98.9</td>
+<td style="text-align:right">±32</td>
+<td>Learns which market signals to trust at a table</td>
+</tr>
+<tr>
+<td>v13.3</td>
+<td style="text-align:right">11</td>
+<td style="text-align:right">+$73.6</td>
+<td style="text-align:right">±37</td>
+<td>Reacts to each quote at once; runs unattended</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ten rounds is a small sample: most single steps between versions are inside the noise, so decisions were made on paired simulations (the same deals for both versions) and replays of logged rounds, with live tests as the final check.</p>
+<h2 id="what-it-still-gets-wrong">What it still gets wrong <a class="header-anchor" href="#what-it-still-gets-wrong">#</a></h2>
+<ul>
+<li><strong>Colluders who know the goal beat it.</strong> Three of them take about $60 a round in the simulator whatever it believes, because they sell it dead cards and buy its goal cards.</li>
+<li><strong>Its opponents are bots, not people.</strong> <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots are predictable in ways people aren’t.</li>
+<li><strong>A better forecast didn’t pay.</strong> A model that read each opponent’s tells put more probability on the true goal and still lost $2 a round in simulation, because the bonus goes to whoever commits.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>The game engine, the probability model, a simulator with fifteen kinds of opponents and the analysis tools are about 4,400 lines of standard-library Python. A test bench, the arena, plays every change in paired sessions at 21 tables with separate seeds for tuning, choosing and reporting. The live bot is a 2,900-line userscript that carries a line-for-line JavaScript port into the page, and a harness checks that both versions compute the same probabilities and send the same orders.</p>
+<p>It only trades at private tables where every other seat is a <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> bot, for play money, uses only what a player can see and places at most four orders a second.</p>
+]]></content:encoded></item><item><title>A deal tracker for Coherent and AAOI that quotes every claim verbatim</title><link>https://rasmuscodes.github.io/projects/optical-intel/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/optical-intel/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A daily pipeline over filings, newsrooms, trade press and Chinese exchange disclosures, with a hand-curated layer of deals re-checked against its sources on every run.</description><category>alternative data</category><category>optical</category><category>text mining</category><category>data engineering</category><content:encoded><![CDATA[<p>This is a commercial-intelligence database for two US makers of optical components for data centres: Coherent and Applied Optoelectronics (AAOI). It collects primary sources about them and their customers, suppliers and competitors, pulls out commercial events such as contracts, design wins and capacity changes, and writes a daily and a weekly report. The question behind it: how much can be established about these companies’ deals from public documents alone, with every claim tied to its evidence?</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Collection.</strong> SEC filings for both companies since 2016 and for 14 peers and DSP-chip vendors since 2021, plus SEC full-text search, XBRL financial data, company newsrooms, trade-press feeds, Texas construction-project filings for new fabs, federal awards, patents and the exchange disclosures of nine Chinese competitors. Every request checks robots.txt and per-host rate limits, and every raw response is stored with a checksum. Sources that block scripts or rule out automated access, such as the big newswires, LinkedIn and paywalled research, are listed with the reason and never requested.</li>
+<li><strong>Extraction.</strong> A gazetteer recognises companies, technologies and products, with date windows and guards: “coherent optics” is not the company, and Finisar folds into Coherent after the merger. Twenty sentence-level rules tag events. Boilerplate and risk-factor lists are filtered out, and a sentence already seen in an earlier document counts for less, so a press release mirrored in an 8-K is not news twice.</li>
+<li><strong>Scoring.</strong> Each event gets a 0–100 materiality score from the source’s tier, the type of event, the named counterparty and any stated dollar value relative to the company’s revenue. It is a ranking, not a forecast.</li>
+<li><strong>Curated layer.</strong> Deals, relationships, facilities, capacity statements, launches and industry developments are written by hand as records with verbatim quotes. Every quote is checked against the stored source text on each run, and any change creates a new version. An undisclosed customer is never named as fact: an identification is a separate record marked “inferred”, with its corroboration and a confidence level.</li>
+<li><strong>Monitoring.</strong> A scheduled job runs every morning. It collects new documents, re-verifies the curated layer, writes the reports and raises alerts for material items first seen since the previous run.</li>
+</ul>
+<h2 id="what-it-found">What it found <a class="header-anchor" href="#what-it-found">#</a></h2>
+<p>The first build, on 12 November 2026, held 13,297 documents from 20 sources and 149 curated records, all of which passed verification. Some of what it documented:</p>
+<ul>
+<li><strong>One customer, two suppliers, one day.</strong> NVIDIA signed near-identical multi-year purchase agreements with Coherent and Lumentum on the same day in March 2026, each with a $2bn investment. Coherent rose 15.4% against a flat S&amp;P 500 that day, so the deal was not expected.</li>
+<li><strong>An undisclosed customer, by arithmetic.</strong> Revenue linked to Amazon’s warrant was 26.4% of AAOI’s revenue in the first nine months of 2026, matching the 26% the 10-Q gives for AAOI’s second-largest customer. That makes Amazon very likely customer number two. It is an inference from matching numbers and is stored as one.</li>
+<li><strong>A disclosure in someone else’s filing.</strong> Coherent’s prepayment for indium-phosphide substrate capacity appears in its supplier AXT’s filing, not in Coherent’s own.</li>
+<li><strong>Filings that disagree with themselves.</strong> Two of AAOI’s 10-Ks each give two different figures for Microsoft’s share of revenue; the 2021 report says both 14.1% and 25.6%. The customer-concentration parser reconciles these sentences across filings and flags the conflict instead of silently picking one.</li>
+</ul>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The rule-based extraction aims for recall, so an event needs reading before it is relied on.</li>
+<li>No consensus estimates are connected. The stock’s reaction around a disclosure stands in for “was it expected”, and that reaction mixes in everything else released that day.</li>
+<li>Coherent does not file its customer or supply agreements as exhibits, so their terms are known only from press releases and 10-K summaries.</li>
+<li>History is uneven. Coherent’s newsroom sitemap starts in December 2020, and most trade press is complete only from the start of collection.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>Python with SQLite, using WAL mode and FTS5 full-text search with BM25 ranking, plus requests, BeautifulSoup and pypdf for retrieval and text extraction. A command-line tool covers search, events, deals, company profiles, customer-concentration history and announcement-day returns, and exports plain CSV and Excel files. Twenty unit tests run without network access.</p>
+]]></content:encoded></item><item><title>A Clash Royale win-probability engine, tested in a synthetic toy world</title><link>https://rasmuscodes.github.io/projects/clash-royale-ai/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/clash-royale-ai/</guid><pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate><description>A research codebase for win probabilities, video-to-game-state reconstruction and an offline game-playing bot. No real game data has been used yet; everything runs on fictional cards.</description><category>machine learning</category><category>games</category><category>simulation</category><content:encoded><![CDATA[<p>Clash Royale is a real-time card game in which two players spend elixir to deploy troops and spells and try to destroy each other’s towers. This project is a research codebase for it: a calibrated win-probability engine, game-state reconstruction from video, an analytics dashboard and a bot that plays offline.</p>
+<p><strong>No real Clash Royale data has been used yet.</strong> There was no API key, no sourced card statistics and no gameplay footage. Every model, metric and video so far comes from a synthetic toy world: 21 fictional cards, a toy simulator and scripted players, built to copy the game’s structure. The numbers below test the pipeline and the design choices in a world with known ground truth. They say nothing about accuracy in the real game.</p>
+<h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
+<ul>
+<li><strong>Data layer.</strong> A client for the official API, a crawler, a database that records where every row came from, and a card database that knows each card’s stats on any date, so balance patches enter as changed numbers. So far it has only run on fictional data.</li>
+<li><strong>Win probability.</strong> A pre-match model for two known decks, a prior that sharpens as the opponent’s cards are revealed one by one, and an in-game model that updates that prior from towers, elixir, the board and the opponent’s likely hand. Predictions are calibrated and explained with SHAP attributions (how much each group of inputs pushed the number).</li>
+<li><strong>Vision.</strong> Frames rendered from simulator states, each watermarked “SYNTHETIC”, are read back into game states (timer, tower HP, elixir, hand, units) and scored against the simulator’s ground truth. This tests the logic, not detectors on real footage.</li>
+<li><strong>Bot.</strong> Rollout-based search (beam search, a flat Monte Carlo search and one-step lookahead), in the toy simulator only. The game’s fair-play policy bans bots in real matches, so the code has no client interaction, screen tapping or network code.</li>
+<li><strong>Dashboard.</strong> A local web app with a matchup analyser, a match replay that charts the win probability and explains its swings, and a model report.</li>
+</ul>
+<h2 id="results-in-the-toy-world">Results in the toy world <a class="header-anchor" href="#results-in-the-toy-world">#</a></h2>
+<p>The world has 600 fictional players and 12,000 matches over 60 simulated days, split by time into training, validation and test windows.</p>
+<ul>
+<li>On 2,000 held-out matches, the pre-match model picks the winner 66% of the time (AUC 0.73, where 0.5 is a coin flip), against 53% for a baseline that only knows card levels and trophies.</li>
+<li>In the first version of the world, in-game accuracy rose from about 62% in the first 30 seconds to 85% in the last 30 seconds of normal time. Tower state carried most of the signal.</li>
+<li>A random train/test split would have overstated pre-match quality (log loss 0.573 against 0.612 on a split by time), so only time-split numbers are reported.</li>
+<li>The largest single gain came from simulation: projecting tower damage eight seconds ahead improved the in-game model at every stage of the match.</li>
+<li>Search-based bots beat the scripted players by a wide margin, with beam search strongest, at 20-100 ms a decision. Tuning a bot’s weights on 16-game evaluations overfit and made it worse in a fresh league.</li>
+</ul>
+<h2 id="what-the-review-caught">What the review caught <a class="header-anchor" href="#what-the-review-caught">#</a></h2>
+<p>A technical review re-ran each idea on identical test rows, with confidence intervals that resample whole matches. It found that 8.1% of matches in the first world were near-idle because the scripted players could stall, and a second version of the world removed them. It also found that the opponent-elixir tracker was confidently wrong when plays were missed: its 95% intervals covered the truth only 20% of the time. Modelling missed detections explicitly raised that to 90%. Several ideas measured no gain and were dropped, including stage-by-stage recalibration and lagged history features.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<p>Real data is the whole gap. The in-game model needs real match timelines, which only screen recordings and trained detectors can supply, and the simulation feature needs a faithful game engine.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>Python throughout: SQLAlchemy and SQLite for the data, LightGBM, XGBoost, CatBoost and scikit-learn for the models, SHAP for explanations, OpenCV for the vision pipeline and FastAPI for the dashboard’s API. The dashboard itself is plain JavaScript with Chart.js.</p>
+]]></content:encoded></item><item><title>Six tests of market contagion: no early warning, adaptive models win</title><link>https://rasmuscodes.github.io/projects/contagion-lab/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/contagion-lab/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A reproducible platform for how shocks spread across US stocks, rates, credit, currencies and commodities, with every claim labelled descriptive, predictive or causal.</description><category>systemic risk</category><category>networks</category><category>regimes</category><category>stress testing</category><content:encoded><![CDATA[<p>Contagion Lab is a research platform for how financial shocks spread across US stocks, sectors, banks, Treasury yields, credit, currencies, commodities and volatility indices. It asks six questions a risk manager would ask, and writes each answer from the computed numbers rather than from a verdict decided in advance.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Data.</strong> 93 daily series from Yahoo Finance, FRED, Cboe and the Federal Reserve, aligned on NYSE trading days. The main cross-asset network has 15 series from April 2003, and the data run to November 2026.</li>
+<li><strong>Timing as data.</strong> Every series carries its closing time. Tokyo closes before New York opens and some prices are stale, so part of what looks like a shock spreading over several days is a series taking in the previous day’s US news late. That lag is measured for each series.</li>
+<li><strong>Clean inputs.</strong> Yahoo’s daily currency bars changed convention around 2011, so FX comes from the Fed’s noon rates; oil and gold futures are spliced into ETF prices to remove roll jumps and the negative oil print of April 2020.</li>
+<li><strong>Models.</strong> Correlation and partial-correlation networks, dynamic factors, Granger and VAR networks, Diebold-Yilmaz connectedness (the share of each asset’s forecast-error variance that comes from the others), tail dependence and CoVaR, copulas, hidden Markov regimes, change-point detection and DCC-GARCH.</li>
+<li><strong>Claim levels.</strong> Every result is labelled descriptive (co-movement only), predictive (lead-lag content, tested out of sample) or identified (causal under stated assumptions), and the report keeps them apart. Every out-of-sample routine sees data up to the previous day only.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Does connectedness rise before crises?</td>
+<td>Not reliably: no consistent build-up before 7 bear-market peaks (placebo p 0.47; smallest corrected q 0.36). It rises during crises and adds nothing out of sample beyond VIX and realised volatility</td>
+</tr>
+<tr>
+<td>Which assets transmit shocks?</td>
+<td>Equities in the standard sense, but about 90% of that is same-day co-movement. Lagged spillovers are 1–3% of connectedness and line up with series that react late</td>
+</tr>
+<tr>
+<td>Which sectors are most rate-sensitive?</td>
+<td>Real estate, homebuilders and utilities on descriptive betas. FOMC days identify the S&amp;P 500’s response, −0.98% per 10bp policy-driven rise in the 2-year yield, but only 3 of 18 sector responses precisely</td>
+</tr>
+<tr>
+<td>Do dynamic networks improve stress tests?</td>
+<td>Yes. An exponentially weighted (EWMA) covariance cuts stress-day prediction error by 18% against a static network (t −3.9). Yet every model’s 90% intervals cover only 62–80% of stress-day moves</td>
+</tr>
+<tr>
+<td>Are tail correlations more informative?</td>
+<td>Tail dependence is real, but correlations measured on past tail days forecast future ones no better than the full history</td>
+</tr>
+<tr>
+<td>Does regime detection improve hedging?</td>
+<td>No. Hedging with Treasuries, gold and the dollar, an adaptive (DCC) hedge cuts S&amp;P 500 variance by 24.7%; hedges built on a hidden Markov regime model cut it by about 6%, no better than a static hedge</td>
+</tr>
+</tbody>
+</table></div>
+<p>The models that win the stress tests all weight recent data heavily, while covariances conditioned on past crises do worse. Crises differ: the stock-bond correlation had opposite signs in 2008–2020 and in 2022.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/contagion-lab/hedge_variance.png" alt="Bar charts of S&amp;P 500 variance reduction by hedging method, with Treasuries, gold and the dollar as hedges and with Treasuries only; DCC and EWMA hedges lead and the regime-model hedges come last" /><figcaption>Bar charts of S&amp;P 500 variance reduction by hedging method, with Treasuries, gold and the dollar as hedges and with Treasuries only; DCC and EWMA hedges lead and the regime-model hedges come last</figcaption></figure>
+<p>The regime model’s value is episodic. In the 2020 crash its hedge lost 22.7% against 33.4% unhedged. In the 2022 rate shock it stayed long Treasuries while stocks and bonds fell together, and lost 40.1% against 24.1% unhedged. That fits a high-volatility state learned from flight-to-quality crises: the model can tell that markets are stressed, but a hedge needs the current correlation, not that of past crises.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Seven crisis onsets is a small sample, so a modest pre-crisis effect could be missed.</li>
+<li>Long credit history relies on Moody’s Baa spread, which updates a day late relative to equities, because the free ICE BofA spreads go back only three years.</li>
+<li>No model is well calibrated: every stress-test interval here is too narrow for real stress days.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with a data pipeline, network and regime libraries, a stress-testing engine with seven covariance views, and portfolio-risk tools (value at risk, expected shortfall, Euler risk decomposition). 33 estimator tests run on simulated data. A report and a six-view D3 dashboard are generated from the same outputs. The public repository holds the code, figures, tables and report, but no market data.</p>
+]]></content:encoded></item><item><title>Reading Axon’s government business from public procurement records</title><link>https://rasmuscodes.github.io/projects/axon-contracts/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/axon-contracts/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A traceable database of federal awards, city payments and council approvals, and an operating model built on it. The data explains demand, not quarterly surprises.</description><category>alternative data</category><category>government contracts</category><category>operating model</category><content:encoded><![CDATA[<p>Axon Enterprise sells TASER devices, body cameras and evidence-management software to police forces and other government agencies. Its customers buy in public, so much of its business leaves a paper trail: federal contract records, city payment ledgers and council agendas. I wanted to know how much of that business those records reveal, and whether they help forecast revenue.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<p>The pipeline collects procurement records naming Axon or its competitors, each traceable to its raw source:</p>
+<ul>
+<li><strong>Federal:</strong> USAspending contract records for FY2008–FY2026 (19,642 awards and 31,143 modifications), plus <a href="http://SAM.gov" target="_blank" rel="noopener">SAM.gov</a> solicitations and sole-source notices.</li>
+<li><strong>State and local:</strong> payments in about 50 open-data checkbooks and New York City’s, co-op purchasing sales in Texas and Washington, and 4,905 council items from 202 city and county councils.</li>
+<li><strong>Context:</strong> the EFF’s Atlas of Surveillance (police technology deployments by vendor) and Axon’s own SEC filings.</li>
+</ul>
+<p>The records hold four kinds of dollar figure, and they are never added together: federal obligations (money legally committed), ceilings on contract vehicles, council-approved values (usually multi-year maximums) and payments. None of them is treated as revenue.</p>
+<p>63 federal awards matched FPDS, the federal system of record, field by field on dates, obligations and competition. Manual samples found reseller attribution right in 38 of 40 cases and 27 of 30 council approvals to be genuine Axon purchases. Each error became a rule with a regression test, from a medical-device brand that shares the Axon name to body-worn antennas that are not body cameras. Council attachments sit on hosts whose robots.txt blocks all crawlers, so terms and renewal dates come from each item’s full text via the Legistar API, with the supporting sentence kept verbatim.</p>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<ul>
+<li><strong>Federal orders are lumpy but rising.</strong> Direct obligations went from $19M in FY2020 to $101M in FY2023, dipped to $73M in FY2025 and reached $149M in FY2026.</li>
+<li><strong>Most federal money is not competed.</strong> 71% of Axon’s federal dollars were awarded without competition, and the median award drew one offer. When the Bureau of Prisons opened its body-camera and evidence contract to competition in 2026, Motorola won the $78M award from four offers.</li>
+<li><strong>Local spending tracks reported revenue.</strong> In the open-checkbook sample, payments to Axon grew 28% a year from 2019 to 2025, against Axon’s reported 31.5% for US revenue. Existing customers spend about 1.2 times as much each year, and 89% of paying governments pay again the next year.</li>
+<li><strong>The contested front is licence-plate readers.</strong> Flock Safety holds 88% of named deployments, and its council approvals rose from 0–6 a year in 2016–21 to 34–38 in 2023–24.</li>
+<li><strong>An expiry calendar</strong> dates 437 contracts and vehicles ending in 2026–2028, each with the basis for its date.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/axon-contracts/council_approvals.png" alt="Line chart of council and board approvals per year naming Axon, Flock Safety and Motorola, 2016 to 2025" /><figcaption>Line chart of council and board approvals per year naming Axon, Flock Safety and Motorola, 2016 to 2025</figcaption></figure>
+<h2 id="the-operating-model">The operating model <a class="header-anchor" href="#the-operating-model">#</a></h2>
+<p>A quarterly model for FY2019–FY2030 forecasts revenue and gross profit by product line, in separate low, base and high cases. The procurement data sets the growth anchor for software and services (the same-customer spend ratio), the run-rates and odds of federal renewals, and range checks on US growth. Base revenue is $6.5B in FY2028 ($5.4B to $7.8B across the cases). The growth paths dominate: the three largest each swing FY2028 revenue by about $0.6B, while any one contract event moves it by about $50M at most.</p>
+<p>Two tests came back negative. An installed-base refresh model could not be calibrated without unit counts and prices, so it was dropped. And in a 23-quarter backtest, no procurement indicator predicted quarterly revenue surprises: the data follows multi-year demand, not the quarter in which revenue lands.</p>
+<p>A formula-driven Excel version, checked cell by cell against the Python engine, adds a discounted cash-flow valuation. Its base case gives about $186 a share, against a market price of $315 on 11 November 2026, and $21 to $632 across the low and high cases.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>State and local coverage is a sample of governments that publish their data, not a national total.</li>
+<li>Seat counts and unit prices sit in those council attachments, which stay unread.</li>
+<li>Reseller sales with generic descriptions such as “cameras” cannot be attributed to any vendor.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>Python and SQLite, with one HTTP client that checks robots.txt, throttles per host and caches every raw response with a timestamp and checksum, so re-runs reproduce the same figures offline.</p>
+]]></content:encoded></item><item><title>Nine reinforcement-learning traders, and none beat buy and hold</title><link>https://rasmuscodes.github.io/projects/rl-trading-lab/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/rl-trading-lab/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A trading environment with realistic costs, nine RL algorithms, a full baseline suite and a holdout evaluated once. The controls work; the agents add nothing.</description><category>reinforcement learning</category><category>backtesting</category><category>machine learning</category><content:encoded><![CDATA[<p>Any reinforcement-learning (RL) agent can be made to produce a good backtest. The question here is whether RL adds anything over simple, well-understood strategies once execution is realistic and the evaluation is honest. On daily data the answer was no: none of nine algorithms beat simple strategies out of sample, and nothing, rule or agent, beat holding SPY on returns.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>The environment.</strong> An agent decides at the close and fills at the next open, paying a tick-size spread, slippage, square-root market impact, commission, a participation cap, financing and short borrow. Every baseline goes through the same environment and pays the same costs.</li>
+<li><strong>Nine algorithms</strong>, all in PyTorch: tabular Q-learning, DQN, Double DQN, A2C, PPO, SAC, TD3, Moody–Saffell recurrent RL and PPO-LSTM. Each was first checked on problems with known answers.</li>
+<li><strong>Controls before conclusions.</strong> Synthetic markets with a planted edge, a pure random walk, and an “oracle” feature that reveals the next day’s return.</li>
+<li><strong>Honest evaluation.</strong> Six walk-forward folds on SPY, a 2019–2026 holdout evaluated once with every access logged, seed ensembles with bootstrap intervals, and deflated Sharpe ratios that count all 72 strategies tried. The Sharpe ratio is annualised excess return over volatility.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<ul>
+<li><strong>The controls pass.</strong> PPO, A2C and recurrent RL find planted edges (test Sharpe 0.64–1.19), no agent beats chance on a random walk, and all nine reach a Sharpe of 12–14 with the oracle, so the implementations work.</li>
+<li><strong>SPY, 2007–2018.</strong> The agents score 0.19–0.53 against buy and hold’s 0.41, with no significant difference, and all trail a 50/200-day moving-average trend filter (0.61). Across all 72 strategies, the best information ratio against buy and hold is −0.03. Higher Sharpe ratios came from holding less risk in 2008, not from earning more.</li>
+<li><strong>Holdout, 2019–2026.</strong> Buy and hold scores 0.77; the RL configurations 0.67 down to −0.52. The development ranking reversed (rank correlation −0.63): the best development agents were among the worst.</li>
+<li><strong>More assets did not help:</strong> on nine ETFs the best agent’s 0.52 trails minimum variance’s 1.09.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/rl-trading-lab/leakage.png" alt="Mean test Sharpe of PPO with one leaky feature added, on a random walk and on SPY" /><figcaption>Mean test Sharpe of PPO with one leaky feature added, on a random walk and on SPY</figcaption></figure>
+<p>The lessons about method travel further than the null result:</p>
+<ul>
+<li><strong>Validation does not predict test.</strong> Across 162 runs, the validation Sharpe of the chosen checkpoint had almost no relation to the next two years’ test Sharpe, and training to the end beat validation-selected checkpoints for six of nine algorithms. A hyperparameter search bought nothing out of sample.</li>
+<li><strong>Leakage beats every algorithm.</strong> One feature built from a centred moving average, which sees ten days ahead, turns a random walk into a Sharpe of 6.9 and fools validation just as much.</li>
+<li><strong>Turnover is the hidden variable.</strong> High-turnover agents lose half their Sharpe by about $20 million of capital, even in SPY.</li>
+<li><strong>Reward hacking appears in mild forms.</strong> Drawdown penalties collapse exposure while the Sharpe ratio survives, and a risk stop without a penalty invites more risk.</li>
+</ul>
+<h2 id="audit-and-limits">Audit and limits <a class="header-anchor" href="#audit-and-limits">#</a></h2>
+<p>An independent audit of the code found no look-ahead, but nine real problems in data, costs and statistics, such as fictitious futures roll jumps and hindsight in a stock list. All were fixed and earlier runs re-scored. Writing the report exposed one more: a policy that never trades had a Sharpe ratio made of rounding noise, which had steered the first hyperparameter search towards doing nothing. The metric was fixed and the search repeated.</p>
+<p>The data is daily bars from a free source, with no intraday or order-book data, and the cost parameters are generic rather than broker quotes. With two or three seeds per configuration and twelve years of test data, differences below about 0.3 Sharpe cannot be resolved.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with a vectorised numpy environment (about 17,000 steps a second per core), PyTorch agents, a baseline suite, Optuna search and a training dashboard. Every run records its config, seed, environment version and code fingerprint. 23 tests cover exact P&amp;L accounting, execution timing, costs, short-sale bans and causality, including a check that catches four deliberately leaky features.</p>
+]]></content:encoded></item><item><title>Forecasting chipmaker revenue against management’s own guidance</title><link>https://rasmuscodes.github.io/projects/earnings-engine/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/earnings-engine/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A point-in-time engine built from SEC filings alone. Its models predict how far 50 chipmakers beat their guidance, but not whether they will.</description><category>earnings</category><category>semiconductors</category><category>forecasting</category><category>point-in-time</category><content:encoded><![CDATA[<p>This engine forecasts next-quarter revenue and gross margin for US-listed semiconductor companies, using only what SEC EDGAR showed at the moment each forecast would have been made. I wanted to know two things: can a model built from public filings beat naive baselines, and can it beat management’s own guidance?</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Point-in-time financials.</strong> Every 10-Q and 10-K is replayed in the order EDGAR accepted it, so each quarterly number carries the timestamp of the filing that first reported it. Restatements become new versions instead of overwriting history, and targets are always the first-reported values.</li>
+<li><strong>Release times.</strong> The time of each earnings release comes from the 8-K filed with it. Each forecast is made at the last market close before that release, when the quarter is over but not yet reported.</li>
+<li><strong>Guidance.</strong> A parser reads management’s revenue and gross-margin outlook from 3,198 earnings press releases, whether it is written as a range, a plus-or-minus figure, a table or a bullet list.</li>
+<li><strong>Universe.</strong> 50 companies, 13 of them since acquired (Xilinx, Mellanox and Maxim among them), so the sample is not just today’s survivors. A company-quarter counts only if the trailing revenue known at the time was at least $500M.</li>
+<li><strong>Validation.</strong> Models are refit each quarter on results that were public before it. Every choice was made on 2013–2020; the 2021–2026 holdout was run once. Significance comes from Diebold-Mariano tests (a standard way to compare two sets of forecast errors) that treat each reporting season as one block of evidence.</li>
+</ul>
+<h2 id="what-the-data-say-before-any-model">What the data say before any model <a class="header-anchor" href="#what-the-data-say-before-any-model">#</a></h2>
+<p>Across 1,777 guided quarters, reported revenue beat the guidance midpoint 82% of the time, with a median beat of +1.7%. 36.5% landed above the top of the range and only 6.3% below the bottom. Beats follow the cycle: 58–62% in the 2011–12 slowdown, 91–95% in 2021 and 2024–26.</p>
+<h2 id="results">Results <a class="header-anchor" href="#results">#</a></h2>
+<p>Mean absolute error, in percent for revenue and percentage points for gross margin, except the hit-rate row:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:right">2013–20</th>
+<th style="text-align:right">2021–26 holdout</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenue, random walk</td>
+<td style="text-align:right">8.36%</td>
+<td style="text-align:right">9.29%</td>
+</tr>
+<tr>
+<td>Revenue, history-only model (XGBoost)</td>
+<td style="text-align:right">7.03%</td>
+<td style="text-align:right">7.37%</td>
+</tr>
+<tr>
+<td>Revenue, guidance midpoint</td>
+<td style="text-align:right">3.59%</td>
+<td style="text-align:right">3.32%</td>
+</tr>
+<tr>
+<td>Revenue, guidance plus modelled beat (random forest)</td>
+<td style="text-align:right">3.08%</td>
+<td style="text-align:right">2.30%</td>
+</tr>
+<tr>
+<td>Beat-or-miss hit rate, model vs “always a beat”</td>
+<td style="text-align:right">76% vs 78%</td>
+<td style="text-align:right">90% vs 90%</td>
+</tr>
+<tr>
+<td>Gross margin, lasso vs random walk</td>
+<td style="text-align:right">2.14 vs 2.27 pp</td>
+<td style="text-align:right">2.05 vs 2.40 pp</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>History-only models beat random walks, historical averages and a linear baseline in both periods, and for 95% of companies in the holdout.</li>
+<li>Guidance is still about twice as accurate as anything built from history.</li>
+<li>The beat model gets closer to the reported number than guidance does (31% less error in the holdout) and ranks which companies will beat by more (rank correlation 0.42). It has no skill at calling whether a company will beat at all.</li>
+<li>The gross-margin gain is narrow: only 53% of companies improve in the holdout, and where a company guides GAAP margin, its own guidance is unbeaten.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/earnings-engine/nvda_beats.png" alt="Line chart of NVIDIA's predicted and realised revenue beat against its guidance midpoint, 2013 to 2026" /><figcaption>Line chart of NVIDIA's predicted and realised revenue beat against its guidance midpoint, 2013 to 2026</figcaption></figure>
+<p>NVIDIA shows both sides. The model learns its habitual beat of a few percent and has tracked it closely since 2023. It does not see the breaks that matter most for a stock: misses of −18% in early 2019 and −17% in mid-2022, or the +23% beat in mid-2023.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>No analyst consensus and no prices yet. Investors already expect chipmakers to beat guidance, so a predicted beat over guidance is not a predicted surprise over consensus, and nothing here is a return signal.</li>
+<li>Guidance covers about 78% of releases. Some companies gave their outlook only on the earnings call.</li>
+<li>The features were chosen in 2026 with knowledge of the AI cycle. The holdout guards against fitting to it, but not against picking features that look obvious only in hindsight.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>Python with pandas, scikit-learn and XGBoost, and SQLite for the parsed guidance. Point-in-time audits check that every forecast precedes its release, every guidance figure precedes its forecast and no version of the target quarter leaks into the features. One audit caught three quarters where a 10-Q had been filed before the earnings 8-K. The first run downloads about 1.1 GB from EDGAR; everything after that runs from cache.</p>
+]]></content:encoded></item><item><title>Do models beat the closing line? Not in the NBA or NFL</title><link>https://rasmuscodes.github.io/projects/sports-quant/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/sports-quant/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>Elo, state-space and machine-learning models for NBA and NFL games, tested against Kalshi, Polymarket and sportsbook closing prices. The markets win.</description><category>sports betting</category><category>forecasting</category><category>market efficiency</category><content:encoded><![CDATA[<p>Sports betting markets are a clean test of market efficiency: every contract settles on an observable result within hours. I built probability models for NBA and NFL games from public data and asked whether they disagree with market prices in ways the outcomes vindicate. The yardstick is out-of-sample forecast accuracy, not backtest returns.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Data.</strong> NBA and NFL results, box scores and official injury reports with publication times, NFL sportsbook closing lines, and order-book price histories from Kalshi and Polymarket. Everything sits in a SQLite odds database with UTC timestamps for every quote and report.</li>
+<li><strong>Models.</strong> Elo with FiveThirtyEight’s settings as the benchmark, Glicko-2, Poisson, a Bayesian state-space model with exact Kalman filtering, player-availability and starting-quarterback adjustments, walk-forward logistic regression and gradient boosting, and an ensemble. Market prices become probabilities with the bookmaker’s margin removed (“devigged”), by five methods.</li>
+<li><strong>Leakage controls.</strong> Ratings use only earlier days’ results, injury reports count only if published before the decision time, and backtests buy the ask available at that time. Tests perturb future results, late injury reports and closing prices, and check that no earlier decision changes.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Comparison</th>
+<th style="text-align:right">Games</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best NBA model (an ensemble) vs Elo</td>
+<td style="text-align:right">14,338</td>
+<td>0.016 lower log loss (95% CI 0.013 to 0.019)</td>
+</tr>
+<tr>
+<td>The same ensemble vs Kalshi’s closing price</td>
+<td style="text-align:right">1,556</td>
+<td>0.016 higher log loss (95% CI 0.008 to 0.023)</td>
+</tr>
+<tr>
+<td>Best NFL model vs devigged sportsbook close</td>
+<td style="text-align:right">3,685</td>
+<td>0.013 higher log loss (95% CI 0.008 to 0.019)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Log loss scores probability forecasts; lower is better. The closing price also encompasses the models: in a regression on both, the ensemble’s weight is −0.10 (SE 0.17). Schedule, fatigue and late injury news matter, and the market prices them. None of 24 tests on the Kalshi and Polymarket closes finds anything left over after a multiple-testing correction.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/sports-quant/information_arrival.png" alt="Log loss of Kalshi and Polymarket prices from listing to tip-off, dropping below the ensemble model's a day before the game" /><figcaption>Log loss of Kalshi and Polymarket prices from listing to tip-off, dropping below the ensemble model's a day before the game</figcaption></figure>
+<p>The one inefficiency comes a day before the game. Bets placed 24 hours out beat the closing price by +1.06 points on average (95% CI +0.72 to +1.40), but Kalshi’s taker fee is larger, and pre-registered quarter-Kelly strategies lose money after costs. A rule that learns how much weight the model deserves next to the price mostly abstains: 122 bets in 1,265 eligible games.</p>
+<p><strong>A replication that passed, then failed.</strong> A player-points model seemed to add information to Kalshi prop prices. I pre-registered a replication before downloading new data, and on 728 held-out games it passed as registered (one-sided p = 0.0005). A post-hoc check then traced the signal in both samples to a scoring error: props on players who sat out were scored as losses, while Kalshi settles them at a pre-game fair price. Scored the way the markets settle, the model’s weight is 0.02 (SE 0.05) and every prop trading rule loses money. Pre-registration guards against selective analysis, not against an error shared by discovery and replication. Outcomes now come from the venue’s own settlement by default.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>NBA exchange prices cover parts of three seasons. The one free NBA sportsbook archive forbids use without consent, so it was left out.</li>
+<li>Polymarket backtests assume no fee and a one-point half-spread.</li>
+<li>Tip-off times, NFL starting quarterbacks and game-time wind are approximations, flagged where they enter.</li>
+<li>The props samples are out of sample in games but not in time: both cover January to November 2026.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python library with modules for data, the odds database, market conversion, models, evaluation (proper scoring rules, calibration, paired tests, encompassing regressions, multiple-testing corrections) and an event-driven bankroll simulator with fees and liquidity caps. Every number in the paper is regenerated from dated raw files, and the registered props code is frozen byte for byte with its hashes. The downloaded data and the dashboard stay out of the public repository, because they would republish the exchanges’ prices.</p>
+]]></content:encoded></item><item><title>A prediction-market lab: fast prices, little edge after fees</title><link>https://rasmuscodes.github.io/projects/prediction-markets/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/prediction-markets/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A simulated exchange, market maker and arbitrage engine, plus a working paper on 29,703 resolved Kalshi and Polymarket markets and a 13.9-hour live capture.</description><category>prediction markets</category><category>market making</category><category>calibration</category><category>simulation</category><content:encoded><![CDATA[<p>Prediction markets trade contracts that pay $1 if an event happens, so their prices read as probabilities. This project asks how good those probabilities are once real costs are counted, using a simulated exchange where the true probability is known and market data from Kalshi and Polymarket. It ends in a working paper on five questions: speed, calibration, short-term predictability, arbitrage and liquidity.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>A simulated exchange</strong> with one-cent ticks, Kalshi’s published fee formula, latency on every order, price-time queue priority and fully collateralised accounts. Each event’s true probability is known exactly, and every experimental arm faces the same information path.</li>
+<li><strong>A market maker</strong> that learns fair value only from public quotes and trades, through a Kalman filter in log-odds, and quotes around it with an Avellaneda–Stoikov rule.</li>
+<li><strong>An arbitrage engine</strong> that solves a linear program across related contracts (outcome sets, strike ladders, conjunctions) for the best worst-case profit after fees.</li>
+<li><strong>Real data, read-only.</strong> 20,000 resolved Kalshi markets, 9,703 resolved Polymarket markets and a 13.9-hour live capture of both venues on 13 November 2026, including 4.73 million Kalshi trades. Only public market-data endpoints were used, under conservative rate limits, and no order was ever placed.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed</td>
+<td>In Kalshi’s 15-minute bitcoin and ether markets, about 65% of a large spot move shows up in the same second and 96% within the minute</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>24 hours before close, Kalshi is mildly compressed towards 50% (slope 1.07, s.e. 0.04) and Polymarket mildly too extreme (0.93, s.e. 0.03)</td>
+</tr>
+<tr>
+<td>Longshots</td>
+<td>Kalshi contracts under 5¢, bought at the ask, lose 72% after fees (95% CI 52% to 88%)</td>
+</tr>
+<tr>
+<td>Predictability</td>
+<td>Order flow predicts the next 30 seconds (out-of-sample R² 1.5%), but the predictable move, 0.9¢, is smaller than the 1.6¢ cost of acting on it</td>
+</tr>
+<tr>
+<td>Arbitrage</td>
+<td>On complete Kalshi outcome sets, after-fee arbitrage appears in under 1% of snapshots and is gone in about 14 seconds</td>
+</tr>
+</tbody>
+</table></div>
+<p>None of this is tradable. Recalibration rules fitted on the earlier half of markets do not profit on the later half, and three strategies replayed through the live capture’s 15-minute crypto markets all lose 5–6¢ a contract.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/prediction-markets/flb_returns.png" alt="Mean return to buying YES by price bucket, 24 hours before close, on Kalshi and Polymarket, with 95% intervals" /><figcaption>Mean return to buying YES by price bucket, 24 hours before close, on Kalshi and Polymarket, with 95% intervals</figcaption></figure>
+<p>The simulator suggests why the real markets look this clean. With nobody arbitraging, executable arbitrage exists in 99% of scans; a single linear-programming arbitrageur cuts that to 70% and the pricing error against the truth by 30%. Removing the automated market makers raises pricing error by 55%. In the model, market makers and arbitrageurs keep prices coherent.</p>
+<p><strong>Market-maker design</strong> (32 paired seeds). The default maker earns $167 per simulated hour (95% CI ±$59; profitable in 27 of 32 seeds). Its fair-value model is what earns it: swapping it for the external mid costs $135 an hour. Inventory skew and spread width change risk, not mean profit. A cross-market portfolio skew cost $245 an hour, so it is off by default.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The tick-level evidence is one 13.9-hour recording, dominated by crypto and sports markets.</li>
+<li>The speed study uses Coinbase spot, polled once a second, as a proxy, so sub-second lead-lag cannot be resolved.</li>
+<li>Simulated agents are stylised, so the experiments speak to mechanisms, not to real-world profit levels. Most use eight seeds: enough for pricing error, not for P&amp;L. At eight seeds the market-maker ablations suggested effects that 32 seeds did not confirm.</li>
+<li>The market maker’s default parameters come from an informal sweep that is not part of the reproducible pipeline.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with an order book, a discrete-event simulator, pricing, strategy, risk and backtest layers, and a local dashboard. Every simulation run is reproducible from its configuration and seed and writes a manifest with a code hash; the 32-seed suite reproduced the earlier suite’s 16 shared runs exactly. 25 tests cover matching, accounting conservation, pricing and replay. The raw data (about 2.8 GB) is not in the repository: the collectors rebuild the resolved-market datasets, but the live capture was a one-time recording.</p>
+]]></content:encoded></item><item><title>A point-in-time lab for free alternative data, and what survived it</title><link>https://rasmuscodes.github.io/projects/altalpha/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/altalpha/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>Insider buying and federal contract awards gave no tradeable edge. Inventory build predicts semiconductor gross margins, but barely moves returns.</description><category>alternative data</category><category>sec filings</category><category>backtesting</category><category>point-in-time</category><content:encoded><![CDATA[<p>AltAlpha is a research platform for testing whether free, public alternative data predicts company fundamentals and stock returns. It turns SEC filings and market data into point-in-time features: every value carries the moment it became public, not the date of the event it describes. I wanted to know which free datasets can be tested honestly, and whether any of them still carries an edge.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<p>It started with a survey of what free data a script can reach. Most of the classic alternative datasets (job postings, web traffic, app downloads, satellite and shipping data) are paid. The free ones with company-level history and clean timestamps are insider filings, federal contract awards, Wikipedia page views and Taiwanese supplier revenue. I ranked five hypotheses by data availability and testability, and have tested three so far.</p>
+<p>Everything hangs off EDGAR, which stamps each filing with its acceptance time to the second. The store holds 3.49 million insider open-market trades since 2006, 440,233 XBRL filings since 2009 (XBRL is the machine-readable tagging in SEC financial statements) and 417,257 earnings-release 8-Ks. A unit test checks that a 10-K accepted five minutes after a cut-off stays invisible until the next month.</p>
+<p>Each study fixes its main tests in code before the first run. Every other variant is logged as a trial and goes into a multiple-testing correction (Holm and Benjamini-Hochberg). Backtests charge spreads, square-root market impact and borrow fees, and are re-run at sizes from $1m to $1bn.</p>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Study</th>
+<th>Question</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insider purchases</td>
+<td>Do unusual buys by officers and directors predict earnings and returns?</td>
+<td>No. All three pre-registered tests fail; 3 of 150 variants survive correction</td>
+</tr>
+<tr>
+<td>Inventory build</td>
+<td>Does inventory growing faster than sales predict margins and returns?</td>
+<td>Margins strongly; returns only weakly</td>
+</tr>
+<tr>
+<td>Federal contracts</td>
+<td>Do contract awards predict contractor revenue and returns?</td>
+<td>No. Nothing beyond the company’s own revenue trend</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Insider buying is priced within a day.</strong> A purchase filing moves the stock +1.2–1.3% on the trading day it becomes public, both in the focus industries (semiconductors, AI infrastructure and defence) and in the broad market. Across the broad market, routine purchases get +0.45% and sales −0.16%. Little is left after that: a month-end portfolio of recent buyers beat its universe by 2.8% a year (t 0.54).</p>
+<p><strong>Inventory build predicts gross margins.</strong> One standard deviation more build means 1.15 percentage points less gross-margin change next quarter (t −3.3), and the highest- and lowest-build fifths end up 6.7 points apart. The test includes firms that later disappeared and replicates in the rest of the market. The return spread, 8.0% a year (t 1.95), falls just short of significance, and the investable version nets a Sharpe ratio of only 0.37.</p>
+<p><strong>Contract awards add nothing.</strong> I attributed $2.76tn of USAspending obligations to 29 listed contractors through the parent entity recorded on each action, because the site’s name search returns today’s names for old contracts. Awards correlate with next-quarter revenue growth, but the effect vanishes once current growth is controlled (t −0.09). Ignoring publication lags would have inflated that correlation from 0.12 to 0.17.</p>
+<h2 id="a-live-margin-screen">A live margin screen <a class="header-anchor" href="#a-live-margin-screen">#</a></h2>
+<p>The inventory result now runs as a live screen of semiconductor and AI-hardware filers, fed by the SEC’s XBRL API within hours of each filing. On 17 November 2026 it scored 107 of 160 companies and listed every exclusion with a reason. Over 52 out-of-sample quarters, the best-forecast fifth beat the worst by 9.5 points of realised margin change (t 10.2). Most of that comes from the margin trend, not from inventory. Build works as a warning, but only where sales are falling or growing by less than 30%.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Free daily prices cover only companies still listed, so every return test is survivorship-biased; the fundamental tests are not. In the insider study, 1,977 of 4,817 purchase events fall in firms with no price data.</li>
+<li>There are no historical analyst estimates, so an earnings surprise is measured against the same quarter a year earlier.</li>
+<li>Without intraday data, the filing-day reaction cannot be tested at the hour level.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>Python, with parquet tables and a DuckDB catalogue as the point-in-time store, statsmodels for the regressions, and scikit-learn and LightGBM for walk-forward models.</p>
+]]></content:encoded></item><item><title>A browser editor for game-theory trees, with LaTeX and image export</title><link>https://rasmuscodes.github.io/projects/game-tree-studio/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/game-tree-studio/</guid><pubDate>Thu, 12 Nov 2026 12:00:00 +0000</pubDate><description>Draw extensive-form game trees with chance moves, information sets and payoffs, then export them as PNG, SVG or TikZ. Nothing to install and no account.</description><category>game theory</category><category>latex</category><category>web app</category><content:encoded><![CDATA[<p>Game Tree Studio is a single-page editor for the trees used in game theory. An extensive-form game is a game drawn as a tree: each branch point is a move by a player or by chance, and the leaves hold the payoffs. It is the standard way to show who moves when and what they know. Drawing one neatly by hand or in LaTeX is slow, so this editor makes it a matter of clicks and keystrokes, then exports the result for papers, slides and course work.</p>
+<h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
+<ul>
+<li><strong>Quick tree building.</strong> Double-click a node to add moves, press 1 to 6 to give it to a player, or N to make it a chance node.</li>
+<li><strong>Information sets</strong> (nodes a player cannot tell apart). Shift-click them and press I. They are drawn as a dashed line, a dotted line or an oval, and the move labels stay in sync across the set.</li>
+<li><strong>Chance moves</strong> with numeric or symbolic probabilities, such as 1/3 or 1 − π. The editor warns when numeric probabilities don’t add up to 1.</li>
+<li><strong>Payoffs as expressions,</strong> with a small LaTeX-like markup for subscripts, superscripts, Greek letters and true minus signs.</li>
+<li><strong>Continua of actions,</strong> drawn as an arc between the extreme choices, with one representative move and a range label.</li>
+<li><strong>Highlighted moves,</strong> a thick line with an arrow, to mark a strategy profile or a path found by backward induction (solving the game from the leaves back to the root).</li>
+<li><strong>Layout and notation options:</strong> top-to-bottom or left-to-right trees, spacing sliders, terminal nodes on one row, three payoff styles, round or square chance nodes, serif or sans-serif text and optional colours by player.</li>
+<li>Undo and redo, copy and paste of subtrees, keyboard navigation, light and dark themes, and a layout that works on phones.</li>
+</ul>
+<h2 id="export">Export <a class="header-anchor" href="#export">#</a></h2>
+<ul>
+<li><strong>PNG</strong> at three times screen resolution, for documents, slides and course submissions.</li>
+<li><strong>SVG</strong> for the web or further editing, or a copy straight to the clipboard.</li>
+<li><strong>TikZ</strong> for LaTeX, with every element at the coordinates shown in the editor and simple fractions typeset as fractions.</li>
+<li><strong>GTDraw <code>.ef</code> files</strong>, for fine-tuning the typesetting in that tool.</li>
+<li><strong>JSON</strong>, the editor’s own format. Dragging a saved file onto the canvas opens the game again.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>One HTML page, one stylesheet and one JavaScript file that holds the tree model, the layout, the SVG rendering and every exporter. There is no build step, no server and no account. The live copy runs on GitHub Pages, and the code is MIT-licensed.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li><strong>It draws games; it doesn’t solve them.</strong> Highlighted paths are marked by hand.</li>
+<li><strong>Storage is per browser and per address.</strong> Games are kept in the browser’s local storage, so a copy on GitHub Pages and a copy opened from disk keep separate libraries, and clearing site data removes them. Saving a game file keeps a copy that opens anywhere.</li>
+</ul>
+]]></content:encoded></item><item><title>AAOI alt-data tracker</title><link>https://rasmuscodes.github.io/projects/aaoi-alt-data-tracker/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/aaoi-alt-data-tracker/</guid><pubDate>Mon, 02 Nov 2026 12:00:00 +0000</pubDate><description>Seven public data series on Applied Optoelectronics and its market, refreshed weekly into tidy files and a model-ready workbook.</description><category>alternative data</category><category>optical</category><category>data engineering</category><content:encoded><![CDATA[<p>One command collects seven public data series on Applied Optoelectronics (AAOI) and the market around it, appends anything new to tidy CSV files and rebuilds an Excel workbook that links straight into a valuation model.</p>
+<p>The sources include SEC filings, US Census trade data, tariff-code lookups, job postings and Texas construction-project filings for the company’s new fabs, plus a few hand-maintained inputs.</p>
+<p>The ground rules are built into the code:</p>
+<ul>
+<li>official APIs first, and every host’s robots.txt checked on every run;</li>
+<li>no logins, paywalls, CAPTCHAs or rate-limit workarounds;</li>
+<li>nothing invented, interpolated or estimated: a missing input leaves a blank and a logged reason;</li>
+<li>every raw response cached with its retrieval time.</li>
+</ul>
+]]></content:encoded></item><item><title>A chess trainer built from my blunders in over 12,000 online games</title><link>https://rasmuscodes.github.io/projects/chess-trainer/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/chess-trainer/</guid><pubDate>Fri, 30 Oct 2026 12:00:00 +0000</pubDate><description>Stockfish checked every move of my online games against my opponents’ moves in the same games, then 1,212 of the positions became a browser trainer with spaced repetition.</description><category>chess</category><category>data analysis</category><category>spaced repetition</category><content:encoded><![CDATA[<p>I have played more than 12,000 online chess games since 2018, and my results match my rating. So the useful question is not whether I make mistakes, but which mistakes I make more often than the players I meet. This project answers that with an engine review of every game, then turns the answers into a trainer.</p>
+<h2 id="how-the-review-works">How the review works <a class="header-anchor" href="#how-the-review-works">#</a></h2>
+<ul>
+<li><strong>Data.</strong> 12,217 games from the <a href="http://chess.com" target="_blank" rel="noopener">chess.com</a> and lichess public APIs, from September 2018 to October 2026. Stockfish 19 checked every move of the 11,907 standard-chess games: 819,411 positions.</li>
+<li><strong>The baseline is my opponents.</strong> Every comparison is me against my opponents in the same games: players at my rating, at the same time controls, in the same kinds of positions. That separates real leaks from noise in a way that comparing with an engine cannot.</li>
+<li><strong>Calibrated engine budgets.</strong> 20,000 to 60,000 nodes a position, depending on the time control, chosen after a 30-game calibration against a one-million-node reference. Blunder flags matched the reference with precision 0.91 and recall 0.85-0.88.</li>
+<li><strong>Checked scoring.</strong> Win% and the blunder threshold (a drop of 15 Win% points) follow lichess’s formulas. On 425 games, my Win% correlates at 0.991 with lichess’s own server analysis.</li>
+<li><strong>A second pass.</strong> All 50,158 blitz and rapid blunders were searched again for full lines and tagged with a tactical motif such as a fork, pin, skewer or back-rank mate. Every example was re-verified at 1.5 million nodes, and 510 of 516 held up.</li>
+</ul>
+<h2 id="what-it-found">What it found <a class="header-anchor" href="#what-it-found">#</a></h2>
+<ul>
+<li><strong>I walk into tactics more often than my opponents,</strong> mostly in level blitz middlegames. Over the last 12 months of blitz (2,054 games), my moves allowed pins 84% more often than theirs, skewers 74% more often and knight forks 39% more often. It isn’t time trouble: in 92% of the blitz games I lost to a single blunder, I still had more than a fifth of my clock.</li>
+<li><strong>I play rapid too fast.</strong> I reach move 40 with two-thirds of my clock left, against my opponents’ half, and 21% of my moves take under a second (theirs: 7%). In blitz the same speed is a weapon: opponents lose on time to me 4.6 times per 100 games, and I lose on time to them 1.6 times.</li>
+<li><strong>Four opening spots cost points,</strong> each confirmed by a deeper engine check.</li>
+<li><strong>Strengths to keep:</strong> converting won positions, endgames, defending bad positions and not tilting after losses.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/chess-trainer/clock_left.png" alt="Median share of the starting clock left by move number. In rapid I reach move 40 with 66% left against my opponents' 51%; in blitz 34% against 30%." /><figcaption>Median share of the starting clock left by move number. In rapid I reach move 40 with 66% left against my opponents' 51%; in blitz 34% against 30%.</figcaption></figure>
+<h2 id="the-trainer">The trainer <a class="header-anchor" href="#the-trainer">#</a></h2>
+<p>A static web page drills 1,212 positions from my own games, weighted towards the patterns the review flagged. The engine graded every legal move in each position, so any move that holds counts as right, not just the engine’s first choice. There are six drills:</p>
+<ul>
+<li><strong>Spot the threat:</strong> play the reply that punishes the move I actually played.</li>
+<li><strong>Find a safe move</strong> in the position before the blunder.</li>
+<li><strong>Safe or blunder?:</strong> a quick judgement of a candidate move.</li>
+<li><strong>Missed shots:</strong> find the punishment for an opponent’s mistake I let go.</li>
+<li><strong>Opening fixes:</strong> repeated opening positions where my usual move scores badly.</li>
+<li><strong>Daily mix</strong> of the above, due reviews first.</li>
+</ul>
+<p>Spaced repetition brings a solved position back after 1, 3, 7, 16, 35 and then 75 days, and a missed one within about ten minutes. An optional clock adds blitz-style time limits, and progress is saved in the browser. The review also produced three study files of my own positions for lichess.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The motif labels are heuristic, modelled on lichess puzzle themes and checked by eye on about 60 positions. Both sides get the same labeller, so the gaps are more reliable than the raw counts.</li>
+<li>Opponents change from game to game, so the comparison is with the average player I meet.</li>
+<li>Patterns such as “fast moves blunder more” are associations, not proof of cause.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A chain of Python scripts fetches the games, normalises them, runs Stockfish on every position, extracts features, re-checks the blunders, tags motifs, computes the metrics and draws the charts, saving every table as CSV. The trainer is plain HTML, CSS and JavaScript with no server.</p>
+]]></content:encoded></item><item><title>GTA VI sentiment model</title><link>https://rasmuscodes.github.io/projects/gta6-sentiment-model/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/gta6-sentiment-model/</guid><pubDate>Wed, 28 Oct 2026 12:00:00 +0000</pubDate><description>Google Trends, Reddit and Wikipedia data turned into a launch forecast and a valuation for Take-Two.</description><category>sentiment</category><category>gaming</category><category>valuation</category><content:encoded><![CDATA[<p>How much can online attention say about the biggest game launch in years, and does it matter for the stock?</p>
+<ul>
+<li><strong>Search:</strong> Google Trends interest, chained across five-year windows, puts GTA VI’s share of searches in the weeks before launch level with GTA V’s before its 2013 release.</li>
+<li><strong>Purchase intent:</strong> Reddit comments classified by whether people say they are buying. The “buying” share rose from 61% at the price reveal to 71% in October.</li>
+<li><strong>Cross-checks:</strong> traffic-adjusted Wikipedia pageviews and reported digital pre-order counts.</li>
+</ul>
+<p>Those feed a sales projection of about 38 million copies by March 2027 (range 28–48 million) and a discounted-cash-flow model of Take-Two. The launch hardly moves intrinsic value: the probability-weighted value is $124 a share against a $195 price, and the swing factor is GTA VI Online, which has not launched yet.</p>
+]]></content:encoded></item></channel></rss>

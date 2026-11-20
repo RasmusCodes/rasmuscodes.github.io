@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<title>One hidden suit pays</title>
+<rect width="1200" height="675" fill="#fcfcfb"/>
+<text x="48.0" y="58.0" font-size="28" fill="#0b0b0b" text-anchor="start" font-weight="600" >One hidden suit pays</text>
+<text x="48.0" y="90.0" font-size="17" fill="#52514e" text-anchor="start" font-weight="400" >Figgie's 40 cards: one suit has 12, two have 10 and one has 8, and nobody is told which. An example deal:</text>
+<text x="48.0" y="653.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >With an 8-card goal suit the majority bonus is $120 instead of $100. Ties split it.</text>
+<text x="64.0" y="166.0" font-size="30" fill="#0b0b0b" text-anchor="middle" font-weight="400" >♠</text>
+<text x="96.0" y="163.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">12 cards</text>
+<rect x="230" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="247.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="272" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="289.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="314" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="331.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="356" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="373.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="398" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="415.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="440" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="457.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="482" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="499.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="524" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="541.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="566" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="583.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="608" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="625.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="650" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="667.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<rect x="692" y="132" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="709.0" y="163.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♠</text>
+<text x="756.0" y="163.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" >the 12-card suit</text>
+<text x="64.0" y="236.0" font-size="30" fill="#0b0b0b" text-anchor="middle" font-weight="400" >♣</text>
+<text x="96.0" y="233.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">10 cards</text>
+<rect x="230" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="247.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="272" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="289.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="314" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="331.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="356" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="373.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="398" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="415.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="440" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="457.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="482" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="499.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="524" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="541.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="566" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="583.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<rect x="608" y="202" width="34" height="48" rx="4" fill="#2a78d6"/>
+<text x="625.0" y="233.0" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="400" >♣</text>
+<text x="756.0" y="224.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="600" >the goal suit</text>
+<text x="756.0" y="246.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" >same colour as the 12-card suit</text>
+<text x="64.0" y="306.0" font-size="30" fill="#e34948" text-anchor="middle" font-weight="400" >♥</text>
+<text x="96.0" y="303.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">10 cards</text>
+<rect x="230" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="247.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="272" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="289.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="314" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="331.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="356" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="373.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="398" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="415.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="440" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="457.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="482" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="499.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="524" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="541.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="566" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="583.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<rect x="608" y="272" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="625.0" y="303.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♥</text>
+<text x="64.0" y="376.0" font-size="30" fill="#e34948" text-anchor="middle" font-weight="400" >♦</text>
+<text x="96.0" y="373.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">8 cards</text>
+<rect x="230" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="247.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="272" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="289.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="314" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="331.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="356" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="373.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="398" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="415.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="440" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="457.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="482" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="499.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<rect x="524" y="342" width="34" height="48" rx="4" fill="#e1e0d9"/>
+<text x="541.0" y="373.0" font-size="17" fill="#898781" text-anchor="middle" font-weight="400" >♦</text>
+<line x1="48.0" y1="432.0" x2="1152.0" y2="432.0" stroke="#e1e0d9" stroke-width="1" />
+<text x="48.0" y="470.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="600" >A round</text>
+<text x="150.0" y="470.0" font-size="16" fill="#898781" text-anchor="start" font-weight="400" >1</text>
+<text x="172.0" y="470.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" >Four players each put $50 in the pot and are dealt 10 cards.</text>
+<text x="150.0" y="502.0" font-size="16" fill="#898781" text-anchor="start" font-weight="400" >2</text>
+<text x="172.0" y="502.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" >For four minutes anyone can bid, offer, buy or sell any suit, in the open.</text>
+<text x="150.0" y="534.0" font-size="16" fill="#898781" text-anchor="start" font-weight="400" >3</text>
+<text x="172.0" y="534.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" >At the bell each goal card pays $10 from the pot, and whoever holds</text>
+<text x="172.0" y="558.0" font-size="16" fill="#52514e" text-anchor="start" font-weight="400" >the most goal cards takes the rest: here $100 of the $200.</text>
+</svg>
