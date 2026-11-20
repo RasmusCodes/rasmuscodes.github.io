@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>From −$29 to +$99 a round: teaching a bot to trade Figgie · Rasmus Suonio</title>
-<meta name="description" content="A perfect card counter that lost $29 a round learned to read the market, found an exploit in its opponents’ habits and ended up trading on its own: 15 versions and 142 live rounds of Figgie.">
+<title>Beating Jane Street at their own game · Rasmus Suonio</title>
+<meta name="description" content="I built a bot for Figgie, Jane Street’s trading game. Fifteen versions and 142 live rounds later it beats figgie.com’s Hard bots: what worked, what didn’t, and how it works.">
 <meta name="author" content="Rasmus Suonio">
 <link rel="canonical" href="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/"><meta property="og:site_name" content="Rasmus Suonio">
-<meta property="og:title" content="From −$29 to +$99 a round: teaching a bot to trade Figgie">
-<meta property="og:description" content="A perfect card counter that lost $29 a round learned to read the market, found an exploit in its opponents’ habits and ended up trading on its own: 15 versions and 142 live rounds of Figgie.">
+<meta property="og:title" content="Beating Jane Street at their own game">
+<meta property="og:description" content="I built a bot for Figgie, Jane Street’s trading game. Fifteen versions and 142 live rounds later it beats figgie.com’s Hard bots: what worked, what didn’t, and how it works.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/"><meta property="og:image" content="https://rasmuscodes.github.io/media/teaching-a-bot-to-trade-figgie/01-climb.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
@@ -50,21 +50,21 @@
   <header class="post__head">
     <div class="kicker">
 <a href="/essays/">Essays</a></div>
-    <h1 class="post__title">From −$29 to +$99 a round: teaching a bot to trade Figgie</h1>
-<p class="post__sub">How a perfect card counter learned to read the market, found a habit in its opponents to exploit, and ended up running on its own. Fifteen versions, 142 live rounds, and the ideas that didn’t work.</p>    <div class="byline">
+    <h1 class="post__title">Beating Jane Street at their own game</h1>
+<p class="post__sub">What I learned building a Figgie bot that beat Jane Street’s Hard bots.</p>    <div class="byline">
       <a class="byline__author" href="/about/">
         <span class="mark " aria-hidden="true">RS</span>
         <span><b>Rasmus Suonio</b><div class="meta">
-  <time datetime="2026-11-19">19 Nov 2026</time>
+  <time datetime="2026-11-20">20 Nov 2026</time>
   <span aria-hidden="true">·</span>
-  <span>13 min read</span>
+  <span>12 min read</span>
 </div></span>
       </a>
-      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" data-title="From −$29 to +$99 a round: teaching a bot to trade Figgie">
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" data-title="Beating Jane Street at their own game">
   <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
-  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/&amp;text=From%20%E2%88%92%2429%20to%20%2B%2499%20a%20round%3A%20teaching%20a%20bot%20to%20trade%20Figgie" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/&amp;text=Beating%20Jane%20Street%20at%20their%20own%20game" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
   <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
-  <a class="share__btn" data-net="email" href="mailto:?subject=From%20%E2%88%92%2429%20to%20%2B%2499%20a%20round%3A%20teaching%20a%20bot%20to%20trade%20Figgie&amp;body=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Beating%20Jane%20Street%20at%20their%20own%20game&amp;body=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
 </div>
     </div>
   </header>
@@ -76,214 +76,88 @@
     <nav class="toc" aria-label="Contents">
       <details class="toc__box" open>
         <summary>Contents</summary>
-        <ol><li><a href="#figgie-in-two-minutes">Figgie in two minutes</a></li><li><a href="#the-setup">The setup</a></li><li><a href="#version-1-perfect-counting-naive-trading">Version 1: perfect counting, naive trading</a></li><li><a href="#listening-to-the-market">Listening to the market</a></li><li><a href="#good-ideas-that-lost-money">Good ideas that lost money</a></li><li><a href="#an-exploit-hiding-in-the-logs">An exploit hiding in the logs</a></li><li><a href="#opponents-that-fight-back">Opponents that fight back</a></li><li><a href="#running-it-live-is-half-the-work">Running it live is half the work</a></li><li><a href="#results">Results</a></li><li><a href="#what-i-learned">What I learned</a></li><li><a href="#try-it">Try it</a></li><li><a href="#appendix-every-version">Appendix: every version</a></li></ol>
+        <ol><li><a href="#introduction">Introduction</a></li><li><a href="#v1-great-at-statistics-horrible-at-trading">v1: great at statistics, horrible at trading</a></li><li><a href="#the-fix-listening-to-the-market">The fix: Listening to the market</a></li><li><a href="#chasing-the-sixth-card">Chasing the sixth card</a></li><li><a href="#an-exploit-hiding-in-the-logs">An exploit hiding in the logs</a></li><li><a href="#fighting-against-overfitting">Fighting against overfitting</a></li><li><a href="#how-it-works-now">How it works now</a></li><li><a href="#what-i-learned">What I learned</a></li><li><a href="#how-i-built-it">How I built it</a></li><li><a href="#see-it-for-yourself">See it for yourself!</a></li></ol>
       </details>
     </nav>
     <div class="prose">
-<p>The first version of my Figgie bot knew the exact probability of every possible deck at every moment of the game. It lost $29 a round.</p>
-<p>Its opponents, the bots on <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>, were happy to sell it the suits they knew were worthless and to buy its cheap offers on the one suit that paid. In one round it finished holding ten clubs. The goal suit was diamonds.</p>
-<p>Fifteen versions and 142 live rounds later, the same opponents lose to it. Over its last 41 rounds the bot made $81 a round on average, and the newest version opens its own tables, plays, and moves to a fresh table when its opponents run low on chips. This is how it got there, including the ideas that failed.</p>
-<h2 id="figgie-in-two-minutes">Figgie in two minutes <a class="header-anchor" href="#figgie-in-two-minutes">#</a></h2>
-<p>Figgie is a card game Jane Street designed to feel like trading in an open-outcry pit. Four players each put $50 in the pot and are dealt ten cards from a 40-card deck. The deck is lopsided: one suit has 12 cards, two have 10 and one has 8, and nobody is told which is which. The suit of the same colour as the 12-card suit is the goal suit.</p>
-<p>For four minutes, anyone can bid for or offer any suit, and anyone can take a bid or an offer. At the bell, each goal-suit card pays $10 from the pot, and whoever holds the most goal cards takes the rest: $100, or $120 when the goal suit has eight cards.</p>
+<h2 id="introduction">Introduction <a class="header-anchor" href="#introduction">#</a></h2>
+<p>Figgie is a trading game by Jane Street. Four players each put $50 in the pot and are dealt ten cards from a 40-card deck. One suit has 12 cards, two have 10 and one has 8, and nobody knows which is which, you have to guess what is the 12-card suit. The suit of the same colour as the 12-card suit is the goal suit. So if there are 12 clubs, there are either 10 or 8 spades, and that’s the goal suit.</p>
+<p>For four minutes, anyone can bid for or offer any suit, and anyone can take a bid or an offer. When the round ends, each goal-suit card pays $10 from the pot, and whoever holds the most goal cards takes the rest: $100, or $120 when the goal suit has eight cards.</p>
+<p>Read more on <a href="https://www.figgie.com/how-to-play" target="_blank" rel="noopener">figgie.com/how-to-play</a>.</p>
 <p><img src="/media/teaching-a-bot-to-trade-figgie/02-deck.svg" alt="Diagram of an example Figgie deck: spades 12 cards, clubs 10 cards highlighted as the goal suit, hearts 10 cards, diamonds 8 cards, with the three steps of a round." />
-<em>Figure 2. An example deal. Spades has 12 cards, so the goal is clubs, the other black suit.</em></p>
-<p>So the game is about information. Your hand hints at which suit has 12 cards. Everyone else’s trading hints at what their hands told them. A good player counts cards, reads the market, and trades on the answer before the market has finished giving it away.</p>
-<p>There are only 12 possible decks (four choices for the 12-card suit, then three for the 8-card suit), so a program can track the exact probability of each one. That’s where I started.</p>
-<h2 id="the-setup">The setup <a class="header-anchor" href="#the-setup">#</a></h2>
-<p>The bot plays on <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>, where Figgie runs in the browser, against the site’s own bots set to Hard. I set myself three rules:</p>
-<ul>
-<li><strong>Bots only.</strong> Private tables where every other seat is one of <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots. Never against people, and only for play money.</li>
-<li><strong>Only what a player sees.</strong> Its own hand, the bids and offers, the trades and the clock. Nothing about the other players’ hands, even though the web page holds more.</li>
-<li><strong>Human speed.</strong> At most four orders a second, sent through the same functions the site’s buttons call.</li>
-</ul>
-<p>The strategy lives in about 4,400 lines of Python: a rules-accurate game engine, a simulator with fifteen kinds of opponents, and analysis tools. A 2,900-line userscript carries a line-for-line JavaScript port of the strategy into the page, plus an adapter that finds the game’s state inside <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s app. A test harness checks that the two versions compute the same probabilities and send the same orders.</p>
-<p><img src="/media/teaching-a-bot-to-trade-figgie/03-how-it-works.svg" alt="Flow diagram: the bot's inputs (its own cards, every bid and offer, the trade tape, the clock) feed three steps, counting the cards, valuing every card and trading; side boxes for reading the other players and learning from the table feed in; a figgie.com adapter sits underneath." />
-<em>Figure 3. What the bot does with what it sees, many times a second.</em></p>
-<h2 id="version-1-perfect-counting-naive-trading">Version 1: perfect counting, naive trading <a class="header-anchor" href="#version-1-perfect-counting-naive-trading">#</a></h2>
-<p>v1 did the maths right. It updated its probabilities for all 12 decks on every trade, valued each card from them, and made markets around those values, bidding a little below and offering a little above.</p>
-<p>That’s how you lose money to people who know more than you do. When v1’s bid was hit, it was usually because the seller knew the suit was dead. When its offer was lifted, the buyer usually knew it was the goal. Traders call this adverse selection: the trades you get are the ones the other side wanted. v1 ignored what everyone else’s trading said, so its fills were systematically bad, and it often didn’t know the goal even at the bell: in five of nine rounds it put 30% or less on it. It lost $261 over nine rounds.</p>
-<h2 id="listening-to-the-market">Listening to the market <a class="header-anchor" href="#listening-to-the-market">#</a></h2>
-<p>One recorded round showed the way out. Every bid of $10 or more in that round was for the goal suit, while the dead suits changed hands at $1 to $4. The other bots knew, and their bids said so.</p>
-<p>v2 treats the highest price anyone bids or pays for a suit as a vote that it’s the goal, and a low offer as a vote against. It also stopped being eager. Its bids start low and climb a dollar every three seconds, and it takes someone else’s quote only with a 20% edge. v2 made $25 a round.</p>
-<p>v3 fixed the next leak. Early in a round every suit is still a plausible goal, so each card looked cheap and the bot sold into early bids, often to the bots that suspected that suit was the goal. But holding a card is an option. Once the market reveals the goal, a goal card pays $10 and sells to players chasing the bonus for $11 to $19, and a dead card can still be sold for a couple of dollars. v3 never sells a card for less than that option is worth, and the premium fades to nothing by the bell. It was the first version with a statistically clear profit: $42 a round, with eight of ten rounds in profit.</p>
-<p>Then I let the data decide. By v6 the logs held 42 live rounds with the dealt hands, every suit’s top bid and the true goal, enough to fit the signal instead of guessing it. <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots bid $10 to $15 for dead suits all the time, so only bids above about $17 really single out the goal. v7 scores bids that way. It also counts a bid only once it has stood on the book in two different seconds, so a bid flashed and cancelled can’t move it.</p>
+<em>Illustration made with Claude</em></p>
+<p>At its core, it’s really just a game of imperfect information, just like the stock market. Your hand may hint at which suit has 12 cards; if you have 1 spade, 5 clubs, 2 hearts and 2 diamonds, based on those cards, it’s more likely that the goal suit is spades.</p>
+<p>You can’t know that for certain, though. It could be that the other players have 5 clubs combined, and the goal suit is actually hearts, for example. That is where the trading comes in; every bid, offer, and trade gives some information away. A good player counts cards, reads the market, and trades on their own conviction faster than others.</p>
+<p>Two weeks ago, I started playing the game, and quickly was able to beat the hard bots for a modest average profit (~$20-30 per round). I had done some coding before, so I figured I could vibe-code a bot that could beat them more efficiently. The strategy is about 4,400 lines of Python, plus a 2,900-line JavaScript version that runs in the browser. It took 15 versions of the bot, where I kept looking for leaks in the bots’ strategies and my own strategy.</p>
+<p>Next I’ll go over the history of developing a winning trading bot and what I learned along the way.</p>
+<h2 id="v1-great-at-statistics-horrible-at-trading">v1: great at statistics, horrible at trading <a class="header-anchor" href="#v1-great-at-statistics-horrible-at-trading">#</a></h2>
+<p>v1 started by doing the maths right. It updated its probabilities for all 12 decks on every trade, valued each card from them, and made markets around those values, bidding a little below and offering a little above.</p>
+<p>Calculating those percentages is only one half of the story, though. It still sucked at trading. When v1’s bid was hit, it was usually because the seller knew the suit was dead. Similarly, when the other bots bought from it, the buyer usually knew it was the goal.</p>
+<p>→ This is what’s known as adverse selection, which is one of the central risks of being a market maker even if you can come up with very accurate bids and asks with the data available to you. The trades you get are the ones the other side wanted. v1 ignored the information that the trades conveyed, so it actually lost money to adverse selection and inventory risk. It lost $261 over nine rounds.</p>
+<h2 id="the-fix-listening-to-the-market">The fix: Listening to the market <a class="header-anchor" href="#the-fix-listening-to-the-market">#</a></h2>
+<p>Realizing this fundamental flaw, I redesigned it to analyze the other players better. v2 treats the highest price anyone bids or pays for a suit as a vote that it’s the goal, and a low offer as a vote against. It also stopped being eager. Its bids start low and climb a dollar every three seconds, and it takes someone else’s quote only with a 20% edge. v2 made $25 a round.</p>
+<p>However, it sold its cards too early, before the market had revealed the goal. v3 was more patient with its trading, realizing that there is time value in holding a card. A spade may seem worthless in the beginning if hearts bid for high amounts, but may in fact be the goal suit. It’s kind of like theta in options. v3 only sold when a bid beat the value of keeping the card, including the option value of waiting for the market to reveal the goal. It was the first version with a statistically clear profit: $42 a round, with eight of ten rounds in profit.</p>
+<p>I kept iterating, learning from the bots’ past mistakes. By v6, I had run enough sample rounds to fit the signal instead of guessing it. Jane Street’s bots bid $10 to $15 for dead suits all the time, so only bids above about $17 really single out the goal. v7 scores bids that way. It also counts a bid only once it has stood on the book in two different seconds, so a bid flashed and cancelled can’t move it. That’s kind of like spoofing in real markets, where some players trick the algorithms by placing large orders they plan to cancel before they fill (highly illegal market manipulation btw), and I wanted to be protected against it (it’s not illegal in a trading game with fictional money :D)</p>
 <p>v8 found the strongest signal. Every Hard bot bids the goal suit up at some point in a round, while a dead suit usually draws a big bid from only one of them. So the lowest of the three bots’ top bids for each suit is a near-perfect tell: in ten rounds it was $7 to $10 for the goal and $3 to $6 for every dead suit. One bluffer can’t fake that.</p>
 <p><img src="/media/teaching-a-bot-to-trade-figgie/04-belief.svg" alt="Line chart of the bot's probability for each suit over one four-minute round. The lead changes hands between diamonds, clubs and hearts until about 2:30; then diamonds climb past 90% at 3:17 and end at 100%." />
-<em>Figure 4. The bot’s probability for each suit in one live round. The lead changes hands for two and a half minutes before the market settles on diamonds.</em></p>
+<em>The probabilities vary vastly in every round, and are constantly updated with every new bid, offer, and trade.</em></p>
 <p><img src="/media/teaching-a-bot-to-trade-figgie/05-reading.svg" alt="Column chart of the share of rounds in which the bot was at least 90% sure of the goal by the bell: 20% to 60% for v2 to v7, 60% to 100% from v8 on." />
-<em>Figure 5. From v8 on, the bot was at least 90% sure of the right suit by the bell in most rounds.</em></p>
+<em>From v8 on, the bot was at least 90% sure of the right suit by the bell in most rounds.</em></p>
 <p>Then came the surprise. v8 finished every round with the right suit as its favourite, at 97% on average against v7’s 74%, and its profit didn’t move: $33.50 a round, inside the noise of every version since v3. Knowing the answer at the bell is worth very little. The money is made in the first two or three minutes, while the answer is still uncertain. v9 attacked that window from the other side: early in a round, whoever buys from the bot probably knows more than it does, so its offers are priced as if the buyer does.</p>
-<h2 id="good-ideas-that-lost-money">Good ideas that lost money <a class="header-anchor" href="#good-ideas-that-lost-money">#</a></h2>
-<p>Two failures taught me more than most of the successes.</p>
-<p>v5 was about the bonus. With a 10-card goal suit, five cards can only tie for the majority, and six win it. The bot kept stopping at five, and <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots kept collecting the strays: in seven rounds of v3 and v4 the bonus was split 5-5, leaving $350 on the table. So v5 valued the bonus as if a rival would end up with every goal card the bot lacked, which made the sixth card worth chasing. It got there twice. But the same assumption made small holdings look worthless, so in six rounds it sold the goal cards it had been dealt, cheaply. It made $16 a round, its worst result since v1. v6 kept the idea only for when the bot already holds half the goal suit, where the next card decides between a tie and a win, and took the whole bonus in five of ten rounds.</p>
-<p>The second failure was a better model. I built one that learned each opponent’s tells (their top bids, their cheap offers, what they accumulated) and corrected the bot’s probabilities with them, refitting at every bell. As a forecaster it worked: against opponents with tells it put more probability on the true goal. And it lost $2 a round in simulation. Small shifts in belief made the bot commit to the right suit a little less often, and the bonus goes to whoever commits. At one table it won the bonus in 68% of rounds instead of 72%, and that was its whole loss there. A better forecast doesn’t automatically make a better decision.</p>
+<h2 id="chasing-the-sixth-card">Chasing the sixth card <a class="header-anchor" href="#chasing-the-sixth-card">#</a></h2>
+<p>With a 10-card goal suit, five cards can only tie for the majority, and six win it. The bot kept stopping at five, and the other bots kept collecting the strays: in seven rounds of v3 and v4 the bonus was split 5-5, leaving $350 on the table. So v5 valued the bonus as if a rival would end up with every goal card the bot lacked, which made the sixth card worth chasing. Think about it: if the goal suit has 10 cards, five cards and a 5-5 split get you $100, while six get you $160. Of course, the goal suit may also have 8 cards, so 5 cards would already be the majority. The bot has to take the probability that the goal suit is 8 cards into consideration, too.</p>
+<p>v5 got the sixth card twice, but the same assumption made small holdings look worthless, so it sold the goal cards it was dealt, cheaply: $16 a round, my worst version since v1. v6 kept the idea only for when the bot already holds half the goal suit, and took the whole bonus in 5 of 10 rounds.</p>
 <h2 id="an-exploit-hiding-in-the-logs">An exploit hiding in the logs <a class="header-anchor" href="#an-exploit-hiding-in-the-logs">#</a></h2>
-<p>From v9 on, the bot logged every quote and trade. Reading the logs turned up a habit of <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots. When a player offered or sold a card for $1 or $2, another player usually bid the same suit back up to $4 or more, typically 11 to 12 seconds later: after 96% of 166 such cards in one batch of logs, and 76% of 135 in the next. None of those cheap cards was the goal. The bots dump dead cards and then want them back.</p>
-<p>v10 buys those cards and resells them. Being wrong about a pattern like that is the real risk, so most of the code is about stopping. The bot holds only a few unsold cards at a time, counts its own resales double when it judges the pattern, and shuts the exploit off for the round after two net failures or $6 lost. In the simulator I wrote a ring of bots that fakes the pattern to bait it, and the caps hold the damage to about $6.50 a game.</p>
-<p>Live, it worked from the first round. Resale made $73 over v10’s ten rounds, $153 over v11’s, $203 over v12’s and $163 over v13’s, across more than 300 resales, none of them sold at a loss.</p>
-<p>Then I wanted the bot to find the pattern itself. v12 replaces the hand-written rule with a learner. Every offer another player shows at $5 or less is a question the tape answers within seconds: had the bot bought that card, would someone have bid $2 more for the suit within 45 seconds? So every offer at the table is a labelled example, not only the bot’s own trades. An online Bayesian logistic regression learns the answer from generic features such as the price, the time left, recent bids and the seller’s recent offers. Starting from nothing, it rediscovered “$2 or less resells” within its first live round, and that became its strongest feature. At <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> that only matches the rule I’d found by hand. The point is the next table, where the rule is wrong: the learner adjusts and the rule doesn’t.</p>
-<h2 id="opponents-that-fight-back">Opponents that fight back <a class="header-anchor" href="#opponents-that-fight-back">#</a></h2>
-<p>Up to v12 the simulator’s opponents were mostly benchmarks the bot was built to beat. For v13 I wrote opponents built to beat it: a spoofer that flashes big bids on dead suits, rings that fake the resale pattern, a “pump” ring that trades a dead suit among itself at $18 so the tape shows everyone paying up, a sniper, a front-runner, a buyer that never shows a bid, and one that learns what the bot will pay. A test bench, the arena, plays every change in paired sessions at 21 tables, with separate seeds for tuning, choosing and reporting. It scores a change by half its average gain and half its gain over the worst quarter of tables, so a change has to help broadly.</p>
+<p>From v9 on, the bot logged every quote and trade. Reading the logs turned up a habit of Jane Street’s bots. When a bot offered or sold a card for $1 or $2, another bot usually bid the same suit back up to $4 or more, typically 11 to 12 seconds later. It made no sense to me, so I added a feature that is quite literally “buy low, sell high.” For whatever reason, the bots sell some ‘dead’ cards for super cheap, but end up buying them back. They should have 0 value, assuming that all the bots have the same opinion of the goal suit (definitely not a given!)</p>
+<p>v10 buys those cards and resells them. Being wrong about a pattern like that is the real risk, but in my test runs, the inventory risk of ending up owning worthless suits when the bell rings was far outweighed by the profits of reselling those for a higher price. The bot holds only a few unsold cards at a time, counts its own resales double when it judges the pattern, and shuts the exploit off for the round after two net failures or $6 lost.</p>
+<p>Live, it worked from the first round. Resale made $73 over v10’s ten rounds, $153 over v11’s, $203 over v12’s and $163 over v13’s, across more than 300 resales, none of them sold at a loss. That is just pure profit made from the bots’ irrationality.</p>
+<p>I wanted the bot to find the pattern itself. v12 replaces the hand-written rule with a learner. Every offer another player shows at $5 or less is a question the tape answers within seconds: had the bot bought that card, would someone have bid $2 more for the suit within 45 seconds? So every offer at the table is a labelled example, not only the bot’s own trades. An online Bayesian logistic regression learns the answer from generic features such as the price, the time left, recent bids and the seller’s recent offers. Starting from nothing, it rediscovered “$2 or less resells” within its first live round, and that became its strongest feature. At <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> that only matches the rule I’d found by hand. The point is the next table, where the rule is wrong: the learner adjusts and the rule doesn’t.</p>
+<h2 id="fighting-against-overfitting">Fighting against overfitting <a class="header-anchor" href="#fighting-against-overfitting">#</a></h2>
+<p>To make sure I’m not just overfitting against these specific bots, I wrote my own bots that tried various patterns to try to exploit my bot. Up to v12 the simulator’s opponents were mostly benchmarks the bot was built to beat. For v13 I wrote opponents built to beat it: a spoofer that flashes big bids on dead suits, rings that fake the resale pattern, a “pump” ring that trades a dead suit among itself at $18 so the tape shows everyone paying up, a sniper, a front-runner, a buyer that never shows a bid, and one that learns what the bot will pay. A test bench, the arena, plays every change in paired sessions at 21 tables, with separate seeds for tuning, choosing and reporting. It scores a change by half its average gain and half its gain over the worst quarter of tables, so a change has to help broadly.</p>
 <p>The pump ring took $63 a round: the bot was 98% sure of the decoy after 30 seconds. So v13 learns at every bell, from the revealed goal, how far to trust each of its market readings at this table, and a signal that lies there fades within a round or two. That fixed the belief but not the money. Three colluders who know the goal still take about $60 a round, because they sell the bot dead cards and buy its goal cards whatever it believes. With its market reading switched off entirely, it loses about as much. Some opponents can’t be beaten, and it helps to know which.</p>
-<p>The arena also said no a lot. An endgame routine, putting quotes back after the book clears, random quote timing and a stricter smart-money rule were all tried and dropped. A seeded search over 18 quoting and holding parameters found nothing that beat the hand-tuned values robustly on held-out tables.</p>
-<h2 id="running-it-live-is-half-the-work">Running it live is half the work <a class="header-anchor" href="#running-it-live-is-half-the-work">#</a></h2>
-<p><a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> is a React Native web app that talks to its server over a socket. There’s no API for bots, so the userscript finds the game’s state by walking React’s internal component tree, listens to the same socket messages the page does, and sends orders through the same functions the buttons call. Keeping that running took as much work as the strategy:</p>
-<ul>
-<li><strong>Hidden tabs.</strong> Browsers starve background tabs. Timers stalled for up to a minute, stale quotes sat on the book, and <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> dropped the connection. The trading clock now runs in a Web Worker, and the script supplies the animation frames a hidden page doesn’t get.</li>
-<li><strong>Crashes.</strong> Moving to a new table crashed the page now and then. <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s game screen crashes if it renders with an empty player list, which can happen while it animates out. The script now sends the screen home, waits for it to unmount, and only then closes the old table.</li>
-<li><strong>Messages without an address.</strong> The site sends an empty “match closed” message that doesn’t say which table it means, and shows some notices with a browser alert that freezes the page until someone clicks OK. The script holds a “match closed” for three seconds and drops it if the round’s clock keeps ticking, logs the alerts instead of freezing on them, and leaves any round whose clock stands still.</li>
-<li><strong>Speed.</strong> The bot used to look for trades every 250 milliseconds, so a $1 offer could wait almost half a second, and <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots, which run on the server, often got there first. It now reacts to each new quote as soon as the page receives it, and most of its takes go out within a few milliseconds.</li>
-</ul>
-<p>Then it learned to run without me. It opens a private table with three Hard bots, starts each round eight seconds after the last bell, and moves to a fresh table once any bot ends a round under $100. Chips carry over at a table and a broke bot can’t bid, so a long session at one table dries up the market; that is exactly what spoiled v13’s last two rounds. In its first long session the bot played 11 rounds at three tables it opened itself, with one page reload when <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a> logged the guest out, and made $810.</p>
-<p><img src="/media/teaching-a-bot-to-trade-figgie/06-unattended.svg" alt="Column chart of 11 round results at three tables: two small losses and nine wins of up to $157, totalling +$810." />
-<em>Figure 6. The first unattended session, round by round.</em></p>
-<h2 id="results">Results <a class="header-anchor" href="#results">#</a></h2>
-<p><img src="/media/teaching-a-bot-to-trade-figgie/07-cumulative.svg" alt="Line chart of cumulative profit over 142 live rounds, dipping to −$261 after v1 and then rising steadily to +$6,958." />
-<em>Figure 7. Cumulative profit over every live round.</em></p>
-<p>Across 142 live rounds the bot made $6,958 in play money. Every live test since v3 has been profitable. Over the last 41 rounds (v11 to v13.3) it averaged $81 a round, ±$18 at 95% confidence, with 34 of 41 rounds in profit.</p>
-<p>Two caveats matter. First, ten rounds is a small sample: each version’s average carries a 95% interval of about ±$32 to ±$45, so most single steps in Figure 1 are noise. v13’s +$98.90, the best result, came from a version that plays almost exactly like v12 at <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>, by design; the extra $19 a round was the deals and the table. The trend across versions is real, and any one step mostly isn’t. That’s why most decisions were made on paired simulations (the same deals for both versions), replays of logged rounds and paper trading on logged order books, with live tests as the final check. Second, these are <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots, not people. They’re predictable in ways people aren’t, and the bot has known weaknesses, which the repository lists.</p>
+<p>In developing the bot, I ran a grand total of 142 live rounds against Jane Street’s bots: +$6,958 in play money, $49 a round on average. Every live test since v3 has been profitable. Over the last 41 rounds (v11 to v13.3) it averaged $81 a round, ±$18 at 95% confidence, with 34 of 41 rounds in profit.</p>
+<h2 id="how-it-works-now">How it works now <a class="header-anchor" href="#how-it-works-now">#</a></h2>
+<p>Under the hood, the bot runs the same loop several times a second. First, it works out which deck it’s playing with. There are only 12 possible decks, so instead of guessing, it keeps the exact probability of each one with Bayes’ rule: how likely its own hand is under that deck, times how likely everything the market has shown is. Hard facts from the tape (nobody can sell a card they don’t hold) can rule decks out entirely, and bids count as evidence: a high top bid, and above all every bot bidding the same suit up, push that suit’s odds up. Adding up the decks by goal suit gives its probability that each suit is the goal.</p>
+<p>Then it values every card: $10 times the chance its suit is the goal, plus what the card does to its share of the majority bonus, given everyone’s likely holdings. And it trades on those values: it takes a bid or offer only when the gain beats $1 plus 20% of the card’s value, and it never sells a card for less than the value of waiting for the market to reveal the goal.</p>
+<p>Two parts learn as it plays, and both are Bayesian. A reading learner checks at every bell whether the signals it relies on (like “the suit everyone bids up is the goal”) were right at this table, and turns down the ones that lie. The resale learner is an online Bayesian logistic regression: every cheap offer on the table is a yes/no example (was the suit bid back up within 45 seconds?), the model updates its weights after each one, and the bot buys only when a cautious, lower-bound estimate still pays. That’s how it found the “$2 or less resells” rule on its own, within its first round.</p>
+<p><img src="/media/teaching-a-bot-to-trade-figgie/how-it-works-moment.svg" alt="Diagram of one real moment, 3:17 into a live round. 1, what it sees: its hand (3 hearts, 7 diamonds), the highest bid on each suit and the lowest of the three bots' top bids (diamonds $8). 2, which deck is it: the chance each suit is the goal from its hand alone (diamonds 49%) and after the market too (diamonds 95%). 3, what a card is worth: a spare diamond about $9.50. 4, what it does: sells a heart into a $4 bid, buys a $2 spade to resell, sells a spare diamond for $16. A reading learner feeds step 2 and a resale learner feeds step 4; the deck step and both learners are marked Bayes." />
+<em>One real moment from a live round, 3:17 in: what the bot saw, what it concluded and what it did in the next three seconds. The parts marked Bayes are the Bayesian ones.</em></p>
 <h2 id="what-i-learned">What I learned <a class="header-anchor" href="#what-i-learned">#</a></h2>
 <ol>
-<li><strong>Adverse selection comes first.</strong> Perfect arithmetic on your own information loses to people trading on theirs. Before asking what a card is worth, ask why someone is willing to trade it with you.</li>
-<li><strong>Prices are information.</strong> The biggest gains came from reading other players’ bids, and the cleanest signal came from looking at the bids player by player instead of pooled.</li>
-<li><strong>Optimise the decision, not the forecast.</strong> v8 knew the goal far more often and made no more money, and a better reader of opponents lost money. Measure what you’re paid for.</li>
-<li><strong>Know your noise.</strong> Ten live rounds can’t tell a $10 improvement from luck. Paired simulations, replays of logged rounds and separate tuning, validation and holdout seeds did the deciding; live tests confirmed.</li>
-<li><strong>Write the adversary.</strong> Opponents built to exploit the bot found holes no benchmark showed, and gave an honest answer about which ones it can’t close.</li>
-<li><strong>The plumbing is half the work.</strong> Hidden tabs, page crashes and a message that doesn’t say which table it means have nothing to do with strategy, and every one of them cost money.</li>
+<li>
+<p>Adverse selection. Always in trading, there is the risk that your counterparty knows something you don’t. Perfect arithmetic on your own information loses to people trading on theirs, if that information is better. Before asking what a card is worth, ask why someone is willing to trade it with you.</p>
+</li>
+<li>
+<p>Bids, offers, and trades are information. The biggest gains came from reading other players’ bids, and the cleanest signal came from looking at the bids player by player instead of pooled. There are different players in the market with their own information, which may be vastly different from your information. Use their trades as information.</p>
+</li>
+<li>
+<p>“Everybody has a plan until they get punched in the mouth” - Mike Tyson. Just running those calculations isn’t the key to making profits; you need to be able to trade on it and adapt quickly if your forecast is wrong.</p>
+</li>
+<li>
+<p>Separating noise from actual results. Ten live rounds can’t tell a $10 improvement from luck. Paired simulations, replays of logged rounds and keeping separate data for tuning and for testing paint a better picture.</p>
+</li>
+<li>
+<p>Trading games are fun! I still really enjoy playing it and even watching my bot play.</p>
+</li>
 </ol>
-<h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
+<h2 id="how-i-built-it">How I built it <a class="header-anchor" href="#how-i-built-it">#</a></h2>
+<p>I have made some smaller programs when I was younger, but with this project I knew that I don’t have the programming skills yet to do anything of this scale.</p>
+<p>I vibe-coded this with Claude Code. It wrote most of the code and ran the simulations and live tests. My involvement was looking at what mistakes the bots were making, how my bot responded to those, and thinking of ways to exploit them. Reselling dead suits and becoming more unexploitable were my ideas, which turned out to be great. Working this way made it fast. Of course, it’d be great to be able to program these things myself, but I think that the whole paradigm of software development is coming closer to a model like this where the human just provides ideas and reasoning to the AI, and the AI implements them.</p>
+<p>Developing it, going back-and-forth, took around one week. The most time-consuming part was coming up with ideas on how to extract more and more value (alpha?) from the bots. Some time went to making sure that the trade execution worked and that the bot could run autonomously.</p>
+<h2 id="see-it-for-yourself">See it for yourself! <a class="header-anchor" href="#see-it-for-yourself">#</a></h2>
 <p>The code, every live round and the analysis tools are on GitHub at <a href="https://github.com/RasmusCodes/figgie-bot" target="_blank" rel="noopener">github.com/RasmusCodes/figgie-bot</a>, under the MIT licence. If you run the userscript, keep it to private tables against <a href="http://figgie.com" target="_blank" rel="noopener">figgie.com</a>’s bots, and check the site’s terms first.</p>
-<h2 id="appendix-every-version">Appendix: every version <a class="header-anchor" href="#appendix-every-version">#</a></h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Version</th>
-<th>Live rounds</th>
-<th>Per round</th>
-<th>±95%</th>
-<th>What changed</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>v1</td>
-<td>9</td>
-<td>−$29.0</td>
-<td>±35</td>
-<td>exact card counting, naive market-making</td>
-</tr>
-<tr>
-<td>v2</td>
-<td>7</td>
-<td>+$24.9</td>
-<td>±45</td>
-<td>reads the highest bids; patient quoting</td>
-</tr>
-<tr>
-<td>v3</td>
-<td>10</td>
-<td>+$42.3</td>
-<td>±35</td>
-<td>won’t sell a card before the market reveals the goal</td>
-</tr>
-<tr>
-<td>v4</td>
-<td>5</td>
-<td>+$54.2</td>
-<td>±64</td>
-<td>steadier reactions to a jumpy signal</td>
-</tr>
-<tr>
-<td>v5</td>
-<td>10</td>
-<td>+$15.9</td>
-<td>±44</td>
-<td>chases the sixth goal card</td>
-</tr>
-<tr>
-<td>v6</td>
-<td>10</td>
-<td>+$36.0</td>
-<td>±45</td>
-<td>… but only once it holds half the goal suit</td>
-</tr>
-<tr>
-<td>v7</td>
-<td>10</td>
-<td>+$47.5</td>
-<td>±45</td>
-<td>bid reading fitted to 42 logged rounds; spoof-resistant</td>
-</tr>
-<tr>
-<td>v8</td>
-<td>10</td>
-<td>+$33.5</td>
-<td>±34</td>
-<td>weighs whether every opponent bid a suit up</td>
-</tr>
-<tr>
-<td>v9</td>
-<td>10</td>
-<td>+$53.5</td>
-<td>±41</td>
-<td>early offers priced for who buys them; full round logs</td>
-</tr>
-<tr>
-<td>v9.1</td>
-<td>10</td>
-<td>+$55.1</td>
-<td>±41</td>
-<td>v9 again, out of sample</td>
-</tr>
-<tr>
-<td>v10</td>
-<td>10</td>
-<td>+$60.3</td>
-<td>±34</td>
-<td>cheap resale with a kill switch; early bids read by colour</td>
-</tr>
-<tr>
-<td>v11</td>
-<td>10</td>
-<td>+$73.5</td>
-<td>±44</td>
-<td>lets go of suits it has given up on sooner</td>
-</tr>
-<tr>
-<td>v12</td>
-<td>10</td>
-<td>+$79.9</td>
-<td>±34</td>
-<td>learns which cheap offers resell, from the tape</td>
-</tr>
-<tr>
-<td>v13</td>
-<td>10</td>
-<td>+$98.9</td>
-<td>±32</td>
-<td>learns which market signals to trust at a table</td>
-</tr>
-<tr>
-<td>v13.3</td>
-<td>11</td>
-<td>+$73.6</td>
-<td>±37</td>
-<td>reacts to each quote at once; runs unattended</td>
-</tr>
-</tbody>
-</table></div>
+<p>I am not affiliated with Jane Street (yet 😒) in any way. I do have a Jane Street T-shirt from one of their info sessions I attended, and I solved their monthly puzzle :D</p>
 
     </div>
   </div>
 
   <footer class="post__foot">
     <div class="tags"><a class="tag" href="/tags/trading/">trading</a><a class="tag" href="/tags/game-theory/">game theory</a><a class="tag" href="/tags/bots/">bots</a></div>
-    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" data-title="From −$29 to +$99 a round: teaching a bot to trade Figgie">
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" data-title="Beating Jane Street at their own game">
   <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
-  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/&amp;text=From%20%E2%88%92%2429%20to%20%2B%2499%20a%20round%3A%20teaching%20a%20bot%20to%20trade%20Figgie" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/&amp;text=Beating%20Jane%20Street%20at%20their%20own%20game" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
   <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
-  <a class="share__btn" data-net="email" href="mailto:?subject=From%20%E2%88%92%2429%20to%20%2B%2499%20a%20round%3A%20teaching%20a%20bot%20to%20trade%20Figgie&amp;body=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Beating%20Jane%20Street%20at%20their%20own%20game&amp;body=https%3A//rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
 </div></div>
 
     <section class="cta">

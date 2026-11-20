@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<title>How the bot works, at one real moment</title>
+<rect width="1200" height="900" fill="#fcfcfb"/>
+<text x="48.0" y="58.0" font-size="28" fill="#0b0b0b" text-anchor="start" font-weight="600" >How the bot works, at one real moment</text>
+<text x="48.0" y="90.0" font-size="17" fill="#52514e" text-anchor="start" font-weight="400" >Live round 4 of v13, 3:17 in: what it saw, what it concluded, and what it did in the next three seconds</text>
+<text x="48.0" y="878.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >Replayed from the round's logged quotes and trades (the goal was diamonds; the bot made +$152). The parts marked Bayes are Bayesian.</text>
+<text x="48.0" y="146.0" font-size="18" fill="#898781" text-anchor="start" font-weight="600" >1</text>
+<text x="66.0" y="146.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >What it sees</text>
+<text x="48.0" y="168.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >public information only</text>
+<rect x="48" y="184" width="246" height="408" rx="10" fill="#fcfcfb" fill-opacity="1" stroke="#c3c2b7"/>
+<line x1="300.0" y1="388.0" x2="328.0" y2="388.0" stroke="#898781" stroke-width="1.5" />
+<path d="M328.0,388.0 L318.8,391.9 L318.8,384.1 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<text x="334.0" y="146.0" font-size="18" fill="#898781" text-anchor="start" font-weight="600" >2</text>
+<text x="352.0" y="146.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >Which deck is it?</text>
+<text x="334.0" y="168.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >Bayes' rule over all 12 decks</text>
+<rect x="334" y="184" width="246" height="408" rx="10" fill="#cde2fb" fill-opacity="0.5" stroke="#c3c2b7"/>
+<rect x="514" y="196" width="54" height="20" rx="10" fill="#2a78d6"/>
+<text x="541.0" y="210.5" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="600" >Bayes</text>
+<line x1="586.0" y1="388.0" x2="614.0" y2="388.0" stroke="#898781" stroke-width="1.5" />
+<path d="M614.0,388.0 L604.8,391.9 L604.8,384.1 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<text x="620.0" y="146.0" font-size="18" fill="#898781" text-anchor="start" font-weight="600" >3</text>
+<text x="638.0" y="146.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >What a card is worth</text>
+<text x="620.0" y="168.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >$10 × P(goal) + bonus share</text>
+<rect x="620" y="184" width="246" height="408" rx="10" fill="#fcfcfb" fill-opacity="1" stroke="#c3c2b7"/>
+<line x1="872.0" y1="388.0" x2="900.0" y2="388.0" stroke="#898781" stroke-width="1.5" />
+<path d="M900.0,388.0 L890.8,391.9 L890.8,384.1 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<text x="906.0" y="146.0" font-size="18" fill="#898781" text-anchor="start" font-weight="600" >4</text>
+<text x="924.0" y="146.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="600" >What it does</text>
+<text x="906.0" y="168.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >the next three seconds, live</text>
+<rect x="906" y="184" width="246" height="408" rx="10" fill="#fcfcfb" fill-opacity="1" stroke="#c3c2b7"/>
+<text x="66.0" y="216.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >Its hand</text>
+<text x="66.0" y="254.0" font-size="28" fill="#e34948" text-anchor="start" font-weight="400" >♥</text>
+<text x="94.0" y="254.0" font-size="28" fill="#0b0b0b" text-anchor="start" font-weight="600" >3</text>
+<text x="152.0" y="254.0" font-size="28" fill="#e34948" text-anchor="start" font-weight="400" >♦</text>
+<text x="180.0" y="254.0" font-size="28" fill="#0b0b0b" text-anchor="start" font-weight="600" >7</text>
+<text x="66.0" y="278.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >(no spades or clubs left)</text>
+<text x="66.0" y="318.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >Highest bid by anyone</text>
+<text x="66.0" y="344.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="400" >♠</text>
+<text x="85.0" y="344.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$6</text>
+<text x="166.0" y="344.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="400" >♣</text>
+<text x="185.0" y="344.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$11</text>
+<text x="66.0" y="369.0" font-size="17" fill="#e34948" text-anchor="start" font-weight="400" >♥</text>
+<text x="85.0" y="369.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$8</text>
+<text x="166.0" y="369.0" font-size="17" fill="#e34948" text-anchor="start" font-weight="400" >♦</text>
+<text x="185.0" y="369.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$9</text>
+<text x="66.0" y="408.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >Consensus: the lowest of</text>
+<text x="66.0" y="425.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >the three bots' top bids</text>
+<text x="66.0" y="451.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="400" >♠</text>
+<text x="85.0" y="451.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$4</text>
+<text x="166.0" y="451.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="400" >♣</text>
+<text x="185.0" y="451.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$6</text>
+<text x="66.0" y="476.0" font-size="17" fill="#e34948" text-anchor="start" font-weight="400" >♥</text>
+<text x="85.0" y="476.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="400" >$4</text>
+<text x="166.0" y="476.0" font-size="17" fill="#e34948" text-anchor="start" font-weight="400" >♦</text>
+<text x="185.0" y="476.0" font-size="16" fill="#0b0b0b" text-anchor="start" font-weight="600" >$8</text>
+<text x="66.0" y="530.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >plus every trade on the</text>
+<text x="66.0" y="548.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >tape, and the clock</text>
+<text x="352.0" y="216.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >P(deck | seen) ∝</text>
+<text x="352.0" y="234.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="400" >P(hand | deck) × P(market | deck)</text>
+<text x="352.0" y="262.0" font-size="12.5" fill="#898781" text-anchor="start" font-weight="400" >chance each suit is the goal</text>
+<text x="360.0" y="295.0" font-size="20" fill="#0b0b0b" text-anchor="middle" font-weight="400" >♠</text>
+<path d="M382.0,278.0 L397.9,278.0 Q400.9,278.0 400.9,281.0 L400.9,285.0 Q400.9,288.0 397.9,288.0 L382.0,288.0 Z" stroke="none" stroke-width="0" fill="#c3c2b7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="406.9" y="287.5" font-size="12" fill="#52514e" text-anchor="start" font-weight="400" >14%</text>
+<path d="M382.0,291.0 L382.8,291.0 Q383.5,291.0 383.5,291.8 L383.5,300.2 Q383.5,301.0 382.8,301.0 L382.0,301.0 Z" stroke="none" stroke-width="0" fill="#2a78d6" stroke-linejoin="round" stroke-linecap="round" />
+<text x="389.5" y="300.5" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600" >&lt;1%</text>
+<text x="360.0" y="345.0" font-size="20" fill="#0b0b0b" text-anchor="middle" font-weight="400" >♣</text>
+<path d="M382.0,328.0 L404.9,328.0 Q407.9,328.0 407.9,331.0 L407.9,335.0 Q407.9,338.0 404.9,338.0 L382.0,338.0 Z" stroke="none" stroke-width="0" fill="#c3c2b7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="413.9" y="337.5" font-size="12" fill="#52514e" text-anchor="start" font-weight="400" >18%</text>
+<path d="M382.0,341.0 L384.9,341.0 Q387.7,341.0 387.7,343.9 L387.7,348.1 Q387.7,351.0 384.9,351.0 L382.0,351.0 Z" stroke="none" stroke-width="0" fill="#2a78d6" stroke-linejoin="round" stroke-linecap="round" />
+<text x="393.7" y="350.5" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600" >4%</text>
+<text x="360.0" y="395.0" font-size="20" fill="#e34948" text-anchor="middle" font-weight="400" >♥</text>
+<path d="M382.0,378.0 L404.9,378.0 Q407.9,378.0 407.9,381.0 L407.9,385.0 Q407.9,388.0 404.9,388.0 L382.0,388.0 Z" stroke="none" stroke-width="0" fill="#c3c2b7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="413.9" y="387.5" font-size="12" fill="#52514e" text-anchor="start" font-weight="400" >18%</text>
+<path d="M382.0,391.0 L382.8,391.0 Q383.5,391.0 383.5,391.8 L383.5,400.2 Q383.5,401.0 382.8,401.0 L382.0,401.0 Z" stroke="none" stroke-width="0" fill="#2a78d6" stroke-linejoin="round" stroke-linecap="round" />
+<text x="389.5" y="400.5" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600" >1%</text>
+<text x="360.0" y="445.0" font-size="20" fill="#e34948" text-anchor="middle" font-weight="400" >♦</text>
+<path d="M382.0,428.0 L448.2,428.0 Q451.2,428.0 451.2,431.0 L451.2,435.0 Q451.2,438.0 448.2,438.0 L382.0,438.0 Z" stroke="none" stroke-width="0" fill="#c3c2b7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="457.2" y="437.5" font-size="12" fill="#52514e" text-anchor="start" font-weight="400" >49%</text>
+<path d="M382.0,441.0 L511.6,441.0 Q514.6,441.0 514.6,444.0 L514.6,448.0 Q514.6,451.0 511.6,451.0 L382.0,451.0 Z" stroke="none" stroke-width="0" fill="#2a78d6" stroke-linejoin="round" stroke-linecap="round" />
+<text x="520.6" y="450.5" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600" >95%</text>
+<path d="M352.0,473.0 L363.0,473.0 Q366.0,473.0 366.0,476.0 L366.0,480.0 Q366.0,483.0 363.0,483.0 L352.0,483.0 Z" stroke="none" stroke-width="0" fill="#c3c2b7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="372.0" y="482.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >its hand alone</text>
+<path d="M352.0,493.0 L363.0,493.0 Q366.0,493.0 366.0,496.0 L366.0,500.0 Q366.0,503.0 363.0,503.0 L352.0,503.0 Z" stroke="none" stroke-width="0" fill="#2a78d6" stroke-linejoin="round" stroke-linecap="round" />
+<text x="372.0" y="502.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >after the market too</text>
+<text x="352.0" y="532.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >Every bot bid ♦ to $8+: that</text>
+<text x="352.0" y="550.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >alone multiplies ♦'s odds by 11</text>
+<text x="766.0" y="216.0" font-size="12" fill="#898781" text-anchor="end" font-weight="400" >buy one</text>
+<text x="843.0" y="216.0" font-size="12" fill="#898781" text-anchor="end" font-weight="400" >sell one</text>
+<text x="638.0" y="250.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="400" >♠</text>
+<text x="766.0" y="250.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="400" style="font-variant-numeric: tabular-nums">$0.00</text>
+<text x="843.0" y="250.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="400" style="font-variant-numeric: tabular-nums">–</text>
+<text x="638.0" y="282.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="400" >♣</text>
+<text x="766.0" y="282.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="400" style="font-variant-numeric: tabular-nums">$0.40</text>
+<text x="843.0" y="282.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="400" style="font-variant-numeric: tabular-nums">–</text>
+<text x="638.0" y="314.0" font-size="18" fill="#e34948" text-anchor="start" font-weight="400" >♥</text>
+<text x="766.0" y="314.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="400" style="font-variant-numeric: tabular-nums">$0.50</text>
+<text x="843.0" y="314.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="400" style="font-variant-numeric: tabular-nums">$0.10</text>
+<text x="638.0" y="346.0" font-size="18" fill="#e34948" text-anchor="start" font-weight="400" >♦</text>
+<text x="766.0" y="346.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="600" style="font-variant-numeric: tabular-nums">$9.50</text>
+<text x="843.0" y="346.0" font-size="15" fill="#0b0b0b" text-anchor="end" font-weight="600" style="font-variant-numeric: tabular-nums">$9.50</text>
+<text x="638.0" y="402.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >= $10 × P(goal)</text>
+<text x="638.0" y="420.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >+ the change in its bonus share</text>
+<text x="638.0" y="474.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >With 7 diamonds the bonus is</text>
+<text x="638.0" y="492.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >safe either way, so a spare ♦</text>
+<text x="638.0" y="510.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >is worth just its payout:</text>
+<text x="638.0" y="528.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >$10 × 95% ≈ $9.50</text>
+<text x="924.0" y="216.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">3:19</text>
+<text x="924.0" y="237.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >Sells a ♥ into a $4 bid</text>
+<text x="924.0" y="256.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >worth $0.10 to it</text>
+<text x="924.0" y="298.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">3:19</text>
+<text x="924.0" y="319.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >Buys a ♠ offered at $2</text>
+<text x="924.0" y="338.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >to resell: it rates a $1 card</text>
+<text x="924.0" y="356.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >80% likely to be bid back up</text>
+<text x="924.0" y="398.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" style="font-variant-numeric: tabular-nums">3:20</text>
+<text x="924.0" y="419.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >Sells a spare ♦ for $16</text>
+<text x="924.0" y="438.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >worth $9.50 to it: a $6.50 gain</text>
+<text x="924.0" y="532.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >It takes a quote only when the</text>
+<text x="924.0" y="550.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="400" >gain beats $1 + 20% of value</text>
+<rect x="48" y="640" width="532" height="156" rx="10" fill="#cde2fb" fill-opacity="0.5" stroke="#c3c2b7"/>
+<rect x="514" y="652" width="54" height="20" rx="10" fill="#2a78d6"/>
+<text x="541.0" y="666.5" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="600" >Bayes</text>
+<text x="66.0" y="672.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >Reading learner</text>
+<text x="66.0" y="692.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >Bayes' rule at every bell, from the revealed goal</text>
+<text x="66.0" y="724.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="400" >After 3 rounds at this table it trusts the consensus 99%</text>
+<text x="66.0" y="744.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="400" >and the colour reading 83%. Each trust level scales how much</text>
+<text x="66.0" y="764.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="400" >that signal counts in step 2.</text>
+<line x1="457.0" y1="636.0" x2="457.0" y2="600.0" stroke="#898781" stroke-width="1.5" />
+<path d="M457.0,600.0 L460.9,609.2 L453.1,609.2 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="620" y="640" width="532" height="156" rx="10" fill="#cde2fb" fill-opacity="0.5" stroke="#c3c2b7"/>
+<rect x="1086" y="652" width="54" height="20" rx="10" fill="#2a78d6"/>
+<text x="1113.0" y="666.5" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="600" >Bayes</text>
+<text x="638.0" y="672.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >Resale learner</text>
+<text x="638.0" y="692.0" font-size="13" fill="#898781" text-anchor="start" font-weight="400" >online Bayesian logistic regression</text>
+<text x="638.0" y="724.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="400" >Every cheap offer is a yes/no example: did someone bid the suit</text>
+<text x="638.0" y="744.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="400" >$2 higher within 45 seconds? Its weights carry over from round</text>
+<text x="638.0" y="764.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="400" >to round, and it buys only when a cautious estimate pays (step 4).</text>
+<line x1="1029.0" y1="636.0" x2="1029.0" y2="600.0" stroke="#898781" stroke-width="1.5" />
+<path d="M1029.0,600.0 L1032.9,609.2 L1025.1,609.2 Z" stroke="none" stroke-width="0" fill="#898781" stroke-linejoin="round" stroke-linecap="round" />
+</svg>
