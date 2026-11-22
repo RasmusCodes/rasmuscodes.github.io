@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart order router demo</title>
+<meta name="description" content="A latency-aware simulation of five trading venues and eleven order routers, running in your browser.">
+<meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="standalone.css">
+<link rel="stylesheet" href="sor-demo.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<main class="page">
+  <div class="page__top">
+    <a href="https://rasmuscodes.github.io/projects/">← All projects</a>
+    <a href="https://rasmuscodes.github.io/projects/smart-router/">About this project</a>
+  </div>
+  <h1>Does smart order routing pay?</h1>
+  <p class="page__lede">A simulated market with four exchanges and a dark pool, each with its own fees, queues and distance from the router. The Python simulator runs in your browser: pick a market, an order and the routers to compare.</p>
+  <p class="page__links">
+    <a href="https://rasmuscodes.github.io/projects/smart-router/">Write-up and findings</a>
+    <a href="https://github.com/RasmusCodes/multi-venue-smart-router">Code on GitHub</a>
+    <a href="https://github.com/RasmusCodes/multi-venue-smart-router/blob/main/reports/RESULTS.md">Pre-registered results</a>
+  </p>
+  <div id="sor-demo" data-base="./"><p>The demo needs JavaScript.</p></div>
+  <p class="page__foot">Simulation only: fictional venues and agents, nothing here describes live trading. The engine is the repository's Python package, run by Pyodide (CPython compiled to WebAssembly).</p>
+</main>
+<script src="sor-demo.js" defer></script>
+</body>
+</html>

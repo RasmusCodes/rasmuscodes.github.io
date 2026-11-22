@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does smart order routing pay? A simulated market and eleven routers · Rasmus Suonio</title>
+<meta name="description" content="A latency-aware simulation of five trading venues, routers from naive to optimised, and pre-registered experiments on what actually saves money. The simulator runs in your browser below.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/smart-router/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Does smart order routing pay? A simulated market and eleven routers">
+<meta property="og:description" content="A latency-aware simulation of five trading venues, routers from naive to optimised, and pre-registered experiments on what actually saves money. The simulator runs in your browser below.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/smart-router/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">Does smart order routing pay? A simulated market and eleven routers</h1>
+<p class="post__sub">A latency-aware simulation of five trading venues, routers from naive to optimised, and pre-registered experiments on what actually saves money. The simulator runs in your browser below.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-21">21 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>5 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/smart-router/" data-title="Does smart order routing pay? A simulated market and eleven routers">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/smart-router/&amp;text=Does%20smart%20order%20routing%20pay%3F%20A%20simulated%20market%20and%20eleven%20routers" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/smart-router/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Does%20smart%20order%20routing%20pay%3F%20A%20simulated%20market%20and%20eleven%20routers&amp;body=https%3A//rasmuscodes.github.io/projects/smart-router/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/multi-venue-smart-router" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://github.com/RasmusCodes/multi-venue-smart-router/blob/main/reports/RESULTS.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Full results</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Saved by synchronised sweeps</dt><dd class="is-text">0.69 bps, on 99% of seeds</dd></div><div><dt>Smart router vs naive posting</dt><dd class="is-text">0.31 bps (patient orders)</dd></div><div><dt>Optimal split across venues</dt><dd class="is-text">No significant gain</dd></div><div><dt>Pre-registered tests</dt><dd class="is-text">9 primary, 300 seeds each</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>Pyodide</li><li>JavaScript</li></ul></section>
+
+
+  <div class="post__body">
+    <div class="prose">
+<p>A US stock trades on more than a dozen exchanges and dozens of dark pools, each with its own fees, rebates, queue lengths and distance from your servers. A smart order router decides where every child order of a large trade goes. Vendors sell that as a source of savings; the obvious objection is that displayed prices are equal across venues most of the time, and what differs (fees, queues, the odds that a quote is still there when your order arrives, who you end up trading with) is hard to see.</p>
+<p>So I built a market where all of that is explicit, and asked a narrow question: <strong>once fees, rebates, queue position, latency, fill probability, adverse selection and market impact are all counted, does intelligent routing still save money, and which part of it does?</strong> I wrote the hypotheses, the metric and the decision rules down before running the evaluation.</p>
+<h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
+<p>The box below runs the actual research code: the Python simulator, compiled to WebAssembly by Pyodide, in a background thread of your browser. Pick a market, an order and the routers to compare. Every router faces the same seed, so the differences are the routers’ doing. Seeds 1 to 300 are the experiment’s evaluation seeds, and a 20,000-share order on the default settings reproduces the report’s numbers exactly.</p>
+<div id="sor-demo" data-base="/apps/smart-router/"><p>Loading the demo needs JavaScript. The full results are in the <a href="https://github.com/RasmusCodes/multi-venue-smart-router/blob/main/reports/RESULTS.md" target="_blank" rel="noopener">report on GitHub</a>.</p></div>
+<link rel="stylesheet" href="/apps/smart-router/sor-demo.css">
+<script src="/apps/smart-router/sor-demo.js" defer></script>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<p>Nine pre-registered comparisons, each over 300 seeds paired by seed, with Holm-corrected p-values. I called a saving <em>material</em> if it was at least 0.25 bps (about $6 million a year for a desk trading $1 billion a day) and significant.</p>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/smart-router/routing_effects.svg" alt="Paired differences in shortfall for each pre-registered comparison, with 95% intervals; the shaded band marks the 0.25 bps materiality bar." /><figcaption>Paired differences in shortfall for each pre-registered comparison, with 95% intervals; the shaded band marks the 0.25 bps materiality bar.</figcaption></figure>
+<ul>
+<li><strong>For orders that cross the spread, routing pays, and the reason is latency.</strong> A naive router sends child orders to every venue showing the best price at once. Its first fill, on the nearest venue, makes fast market makers pull their quotes elsewhere within microseconds, so 19% of the liquidity it saw is gone when its slower orders arrive. Timing the sends so that every order lands at the same moment cut that to 2% and saved <strong>0.69 bps</strong> [0.66, 0.72], cheaper on 99% of seeds. Ranking venues by fees alone saved 0.11 bps, because the cheapest venues are the slowest and their quotes fade first.</li>
+<li><strong>For resting orders, routing pays less, and rebates are a trap.</strong> The full smart router beat posting on the primary exchange by <strong>0.31 bps</strong> [0.23, 0.39] on a patient schedule. Choosing the venue by expected cost (queue ahead, fees, fill odds, the cost of crossing later) saved 0.23 bps, just under my bar. Chasing the biggest maker rebate <em>cost</em> 0.06 bps: orders there filled mostly when the price was about to move through them.</li>
+<li><strong>What did not pay.</strong> Splitting each slice across venues with the Cont–Kukanov optimal-placement model did not beat resting on the single best venue (−0.08 bps, not significant). On an urgent schedule the smart router’s edge over naive posting (−0.19 bps) was not significant. Learning venue quality from scratch within one order, by Thompson sampling, did not help either.</li>
+<li><strong>The checks held.</strong> The smart router’s gain survived four other markets (access fees capped at $0.0010, faster quote fading, double the volatility, triple the latency gaps: 0.30 to 0.52 bps), and disappeared with four identical venues, where it was 0.12 bps <em>worse</em>: extra machinery only costs when there is nothing to route around.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/smart-router/fades.svg" alt="Share of displayed liquidity gone when an order arrived, by sweep design." /><figcaption>Share of displayed liquidity gone when an order arrived, by sweep design.</figcaption></figure>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/smart-router/markouts_by_venue.svg" alt="Ten-second markout of passive fills by venue." /><figcaption>Ten-second markout of passive fills by venue.</figcaption></figure>
+<p>Where a resting order fills matters as much as whether it fills. Fills on the high-rebate venue were followed by the price moving against them; fills on the inverted venue and on the speed-bump venue, which withdraws stale resting orders before latency arbitrageurs arrive, were followed by favourable moves. That is the pattern Battalio, Corwin and Jennings (2016) document on US exchanges.</p>
+<p>The biggest lever was not the venue at all: resting first instead of crossing the spread saved about 3.8 bps, twelve times what venue choice added. In this model resting orders carry no permanent price impact, so that number is an upper bound, and I treat the venue comparisons at a fixed tactic as the result.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>The market.</strong> Four lit venues and a dark pool, modelled on US market structure but fictional: a maker-taker primary exchange, a high-rebate exchange, an inverted exchange that pays takers, a low-fee exchange with a 350-microsecond speed bump, and a dark midpoint pool that prices off a stale quote. Every venue matches by price-time priority. A hidden fair value moves with news and with order flow.</li>
+<li><strong>The other traders.</strong> Market makers quote where their edge after fees allows, so the high-rebate venue gets long queues and the inverted one short ones, and they react to news and to trades on other venues within tens of microseconds. Uninformed traders route by fees or by displayed size. Latency arbitrageurs race the market makers for quotes that news has made stale, and win about a fifth of all volume, close to what Aquilina, Budish and O’Neill (2022) measured on the London Stock Exchange.</li>
+<li><strong>The router’s view.</strong> A router sees each venue’s book as it was one network delay ago, and its orders and cancels take 150 to 380 microseconds to arrive.</li>
+<li><strong>The routers.</strong> Eleven configurations of one executor with a shared schedule: naive, fee-aware, synchronised and model-based sweeps for crossing the spread; primary, rebate, queue-aware and Thompson-sampling venue choice for resting; the Cont–Kukanov split; and a smart router that combines them. The model-based ones learn only from separate training seeds.</li>
+<li><strong>The test.</strong> Every router runs on the same seeds with common random numbers: the same news and the same background orders, until its own orders change the market. That makes a router’s difference from another 30 times less noisy than its raw cost.</li>
+</ul>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>One stylised stock and five stylised venues. The parameters reproduce qualitative facts from the empirical literature (one-tick spreads, longer queues where rebates are higher, a fifth of volume in latency races, quote fading), not one stock’s data, so the magnitudes belong to this market.</li>
+<li>Market makers follow fixed rules and never learn about the router, and resting orders have no permanent impact.</li>
+<li>Every router uses the same time schedule; scheduling itself is not optimised.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A pure-Python package with no dependencies for the simulator and routers, so the same code runs in the browser. Runs are bit-identical across platforms: the simulation uses only basic floating-point arithmetic (logarithms included) and platform-stable random streams, and fingerprints of reference runs are locked in tests, which also show that the browser demo reproduces them. The 49 tests include a differential test of the order book against a naive reference over 12,000 random operations and a check of the Cont–Kukanov solver against brute force. The experiments, about 9,400 simulated parent orders, run in 20 minutes on a laptop.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/market-microstructure/">market microstructure</a><a class="tag" href="/tags/order-routing/">order routing</a><a class="tag" href="/tags/simulation/">simulation</a><a class="tag" href="/tags/python/">python</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/smart-router/" data-title="Does smart order routing pay? A simulated market and eleven routers">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/smart-router/&amp;text=Does%20smart%20order%20routing%20pay%3F%20A%20simulated%20market%20and%20eleven%20routers" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/smart-router/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Does%20smart%20order%20routing%20pay%3F%20A%20simulated%20market%20and%20eleven%20routers&amp;body=https%3A//rasmuscodes.github.io/projects/smart-router/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/statarb/"><span>Previous</span><b>Statistical arbitrage on the S&amp;P 500: what survives costs</b></a><a class="pager__item pager__item--next" href="/projects/alpha-combination/"><span>Next</span><b>Combining sixteen equity signals: does complexity pay?</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

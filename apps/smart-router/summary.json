@@ -1,0 +1,279 @@
+{
+ "generated": "2026-11-21",
+ "material_bps": 0.25,
+ "primary": [
+  {
+   "id": "P1",
+   "experiment": "E1",
+   "run": "baseline",
+   "strategy": "sync",
+   "baseline": "nbbo",
+   "text": "Synchronised fee-aware sweep vs naive NBBO sweep (taking)",
+   "mean": -0.6897178941352714,
+   "lo": -0.7170132271328814,
+   "hi": -0.6624225611376614,
+   "p_holm": 1.027710619101011e-145,
+   "win_rate": 0.9933333333333333,
+   "verdict": "Supported, material",
+   "n": 300
+  },
+  {
+   "id": "P2",
+   "experiment": "E1",
+   "run": "baseline",
+   "strategy": "fee",
+   "baseline": "nbbo",
+   "text": "Fee-aware sweep sent at once vs naive NBBO sweep (taking)",
+   "mean": -0.11288343894675493,
+   "lo": -0.1345795805324541,
+   "hi": -0.09118729736105573,
+   "p_holm": 1.643406556782219e-20,
+   "win_rate": 0.7633333333333333,
+   "verdict": "Supported, below the 0.25 bps bar",
+   "n": 300
+  },
+  {
+   "id": "P3",
+   "experiment": "E1",
+   "run": "baseline",
+   "strategy": "model",
+   "baseline": "sync",
+   "text": "Model-based sweep vs synchronised sweep (taking)",
+   "mean": -0.09265263861485643,
+   "lo": -0.12184253747980428,
+   "hi": -0.06346273974990857,
+   "p_holm": 4.3204180272148866e-09,
+   "win_rate": 0.6333333333333333,
+   "verdict": "Supported, below the 0.25 bps bar",
+   "n": 300
+  },
+  {
+   "id": "P4",
+   "experiment": "E2",
+   "run": "baseline",
+   "strategy": "post_queue",
+   "baseline": "post_primary",
+   "text": "Queue-aware post vs post on primary (posting)",
+   "mean": -0.23427666263104954,
+   "lo": -0.2806565524474518,
+   "hi": -0.18789677281464728,
+   "p_holm": 1.3230604669590936e-19,
+   "win_rate": 0.7233333333333334,
+   "verdict": "Supported, below the 0.25 bps bar",
+   "n": 300
+  },
+  {
+   "id": "P5",
+   "experiment": "E3",
+   "run": "baseline",
+   "strategy": "ck",
+   "baseline": "post_queue",
+   "text": "Cont-Kukanov split vs queue-aware post",
+   "mean": -0.07727211906791413,
+   "lo": -0.1559282683546682,
+   "hi": 0.0013840302188399267,
+   "p_holm": 0.10828576169580305,
+   "win_rate": 0.5333333333333333,
+   "verdict": "Not supported",
+   "n": 300
+  },
+  {
+   "id": "P6",
+   "experiment": "E4",
+   "run": "patient",
+   "strategy": "smart",
+   "baseline": "post_primary",
+   "text": "Smart router vs post on primary, patient schedule",
+   "mean": -0.30834983797152676,
+   "lo": -0.3894037118225409,
+   "hi": -0.22729596412051262,
+   "p_holm": 3.1932391727498213e-12,
+   "win_rate": 0.6566666666666666,
+   "verdict": "Supported, material",
+   "n": 300
+  },
+  {
+   "id": "P7",
+   "experiment": "E4",
+   "run": "urgent",
+   "strategy": "smart",
+   "baseline": "post_primary",
+   "text": "Smart router vs post on primary, urgent schedule",
+   "mean": -0.18931143160568964,
+   "lo": -0.46337159160215224,
+   "hi": 0.08474872839077296,
+   "p_holm": 0.17505090419285654,
+   "win_rate": 0.54,
+   "verdict": "Not supported",
+   "n": 300
+  },
+  {
+   "id": "P8",
+   "experiment": "E4",
+   "run": "patient",
+   "strategy": "smart",
+   "baseline": "nbbo",
+   "text": "Smart router vs naive NBBO sweep, patient schedule",
+   "mean": -3.7613863061117505,
+   "lo": -3.8372110503478276,
+   "hi": -3.6855615618756734,
+   "p_holm": 7.199669345839866e-228,
+   "win_rate": 1.0,
+   "verdict": "Supported, material",
+   "n": 300
+  },
+  {
+   "id": "P9",
+   "experiment": "E4",
+   "run": "urgent",
+   "strategy": "smart",
+   "baseline": "nbbo",
+   "text": "Smart router vs naive NBBO sweep, urgent schedule",
+   "mean": -3.684322067817953,
+   "lo": -3.950855803913094,
+   "hi": -3.4177883317228117,
+   "p_holm": 5.139933550917627e-82,
+   "win_rate": 0.9366666666666666,
+   "verdict": "Supported, material",
+   "n": 300
+  }
+ ],
+ "headline": {
+  "patient": [
+   {
+    "scenario": "baseline",
+    "baseline": "nbbo",
+    "mean": -3.7613863061117505,
+    "lo": -3.8372110503478276,
+    "hi": -3.6855615618756734,
+    "n": 300
+   },
+   {
+    "scenario": "baseline",
+    "baseline": "post_primary",
+    "mean": -0.30834983797152676,
+    "lo": -0.3894037118225409,
+    "hi": -0.22729596412051262,
+    "n": 300
+   },
+   {
+    "scenario": "fee_cap_10",
+    "baseline": "post_primary",
+    "mean": -0.5200577300790579,
+    "lo": -0.6249934160413066,
+    "hi": -0.4151220441168091,
+    "n": 200
+   },
+   {
+    "scenario": "fee_cap_10",
+    "baseline": "nbbo",
+    "mean": -3.6444976607104502,
+    "lo": -3.7328991970938254,
+    "hi": -3.556096124327075,
+    "n": 200
+   },
+   {
+    "scenario": "fast_fade",
+    "baseline": "post_primary",
+    "mean": -0.3467267100789407,
+    "lo": -0.4734584309082901,
+    "hi": -0.2199949892495913,
+    "n": 200
+   },
+   {
+    "scenario": "fast_fade",
+    "baseline": "nbbo",
+    "mean": -5.542748631264444,
+    "lo": -5.650684300421354,
+    "hi": -5.434812962107534,
+    "n": 200
+   },
+   {
+    "scenario": "high_vol",
+    "baseline": "post_primary",
+    "mean": -0.3202808859865428,
+    "lo": -0.4546626655062148,
+    "hi": -0.18589910646687077,
+    "n": 200
+   },
+   {
+    "scenario": "high_vol",
+    "baseline": "nbbo",
+    "mean": -3.789034078290029,
+    "lo": -3.914820310668045,
+    "hi": -3.6632478459120135,
+    "n": 200
+   },
+   {
+    "scenario": "wide_latency",
+    "baseline": "post_primary",
+    "mean": -0.30342421467899977,
+    "lo": -0.40341156830699076,
+    "hi": -0.2034368610510088,
+    "n": 200
+   },
+   {
+    "scenario": "wide_latency",
+    "baseline": "nbbo",
+    "mean": -3.788212947339098,
+    "lo": -3.8821154765637376,
+    "hi": -3.6943104181144584,
+    "n": 200
+   },
+   {
+    "scenario": "homogeneous",
+    "baseline": "post_primary",
+    "mean": 0.11761068573319446,
+    "lo": 0.028236268781505314,
+    "hi": 0.2069851026848836,
+    "n": 200
+   },
+   {
+    "scenario": "homogeneous",
+    "baseline": "nbbo",
+    "mean": -3.9605613021385313,
+    "lo": -4.057549153007442,
+    "hi": -3.8635734512696205,
+    "n": 200
+   }
+  ],
+  "urgent": [
+   {
+    "scenario": "baseline",
+    "baseline": "nbbo",
+    "mean": -3.684322067817953,
+    "lo": -3.950855803913094,
+    "hi": -3.4177883317228117,
+    "n": 300
+   },
+   {
+    "scenario": "baseline",
+    "baseline": "post_primary",
+    "mean": -0.18931143160568964,
+    "lo": -0.46337159160215224,
+    "hi": 0.08474872839077296,
+    "n": 300
+   }
+  ]
+ },
+ "fades": {
+  "primary": 1.658374792703151e-05,
+  "nbbo": 0.19306536146883896,
+  "fee": 0.2767861477514542,
+  "sync": 0.021829977850940874,
+  "model": 0.02414831712047211
+ },
+ "markouts": {
+  "ALPHA": -0.3850073550138227,
+  "BRAVO": -0.4626293889268332,
+  "CHARLIE": 0.24313541095164182,
+  "DELTA": 0.7089186756308007
+ },
+ "e1": {
+  "primary": 5.050296755097833,
+  "nbbo": 4.378051003171194,
+  "fee": 4.265167564224439,
+  "sync": 3.688333109035922,
+  "model": 3.5956804704210663
+ }
+}
