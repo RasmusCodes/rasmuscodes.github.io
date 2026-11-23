@@ -1,8 +1,8 @@
 // Credit & capital-structure lab: interactive demo. Mounts into <div id="credit-lab" class="clab">.
-import * as E from "./lab-engine.js?v=ac94d8162e";
+import * as E from "./lab-engine.js?v=cca88c6e59";
 
 const root = document.getElementById("credit-lab");
-const DATA_URL = new URL("./data/cases.json?v=ac94d8162e", import.meta.url);
+const DATA_URL = new URL("./data/cases.json?v=cca88c6e59", import.meta.url);
 const REPO = "https://github.com/RasmusCodes/credit-capital-structure-lab";
 const GROUP_VAR = { Priority: "--t-priority", Secured: "--t-secured", "Senior unsecured": "--t-senior",
   Subordinated: "--t-sub", Preferred: "--t-pref", Equity: "--t-equity", Other: "--t-sub" };
@@ -56,6 +56,8 @@ function barrierFor(S) {
 
 function survivalFn(S, V0, sigma, H0, r, q) {
   if (H0) return (t) => 1 - E.firstPassageProb(V0, r - q, sigma, t, H0, 0);
+  // Merton is a one-period model: each horizon t assumes all debt falls due at t, so 1 - P(V_t < D) is not a
+  // cumulative survival curve (it can rise with t when the firm starts below its debt). Labelled as such.
   const DP = E.totalDebt(S);
   return (t) => {
     if (t <= 0) return 1;
@@ -365,7 +367,15 @@ function buildMain() {
 
 // ---------------------------------------------------------------- render
 let pending = false;
-function schedule() { if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; render(); }); } }
+function schedule() {
+  // coalesce slider events into one render per frame; the timer covers pages where animation frames are paused
+  // (background tabs, hidden previews), so a change is never left unrendered
+  if (pending) return;
+  pending = true;
+  const run = () => { if (!pending) return; pending = false; render(); };
+  requestAnimationFrame(run);
+  setTimeout(run, 60);
+}
 
 function render() {
   const R = compute();
@@ -445,7 +455,7 @@ function renderKpis(R) {
   const tiles = [
     ["Asset value", money(R.V0), `vol ${pct(R.sigma)}${c.calibration.model === "observed" ? " (observed)" : ""}`],
     ["Claims / assets", `${(R.totalClaims / R.V0).toFixed(2)}x`, `claims ${money(R.totalClaims)}`],
-    ["PD 1 year", pct(R.pd1, 1), R.H0 ? "first passage" : "Merton"],
+    ["PD 1 year", pct(R.pd1, 1), R.H0 ? "first passage" : "Merton: debt due in 1y"],
     ["PD 5 years", pct(R.pd5, 1), `to horizon ${pct(R.pr.pd, 1)}`],
     ["Distance to default", R.dd.toFixed(2), "standard deviations"],
   ];
@@ -465,12 +475,14 @@ function renderPd(R) {
     rows += `<tr><td>${esc(p.label)}</td><td>${T.toFixed(1)}y</td><td>${pct(v, 1)}</td></tr>`;
     if (!/Black-Cox|CreditGrades|Observed/.test(p.label)) markers.push({ x: T, y: v, color: slot[markers.length % 4], label: p.label });
   });
-  const series = [{ name: R.H0 ? "Black-Cox (this model)" : "Merton (this model)", color: "var(--s1)", pts, labelAt: 0.5 }];
+  const series = [{ name: R.H0 ? "Black-Cox (this model)" : "Merton: debt due at t", color: "var(--s1)", pts, labelAt: 0.5 }];
   lineChart(root.querySelector("#cl-pd"), { series, xMax: 10, yMax: 1, yTicks: [0, 0.25, 0.5, 0.75, 1], xFmt: (v) => `${v}y`,
-    xFmtLong: (v) => `${v.toFixed(2)} years`, yFmt: (v) => pct(v, 1), xLabel: "Years", yLabel: "Cumulative default probability", markers,
-    aria: "Cumulative default probability term structure", height: 240 });
+    xFmtLong: (v) => `${v.toFixed(2)} years`, yFmt: (v) => pct(v, 1), xLabel: "Years",
+    yLabel: R.H0 ? "Cumulative default probability" : "Probability assets are below debt at t", markers,
+    aria: "Default probability term structure", height: 240 });
   const key = markers.map((m) => `<span style="--k:${m.color}">${esc(m.label)}</span>`).join("");
-  root.querySelector("#cl-pd").insertAdjacentHTML("beforeend", `<div class="keyrow"><span style="--k:var(--s1)">${R.H0 ? "Black-Cox" : "Merton"} (sliders)</span>${key}</div>
+  const mertonNote = R.H0 ? "" : `<p class="note">Merton is a one-period model: each point assumes all debt falls due on that date, so the curve can fall with time when assets start below the debt. Black-Cox gives a true cumulative curve.</p>`;
+  root.querySelector("#cl-pd").insertAdjacentHTML("beforeend", `${mertonNote}<div class="keyrow"><span style="--k:var(--s1)">${R.H0 ? "Black-Cox" : "Merton"} (sliders)</span>${key}</div>
     <details class="data"><summary>Market-implied sources (case analysis)</summary><table class="tbl"><thead><tr><th>Source</th><th>Horizon</th><th>PD</th></tr></thead><tbody>${rows}</tbody></table></details>`);
 }
 
