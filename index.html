@@ -195,10 +195,10 @@
     <section class="card">
       <div class="card__head"><h2 class="label">Building now</h2></div>
       <ul class="mini-coverage">
+        <li><a href="/projects/credit-lab/"><span class="mc-name">A credit and capital-structure lab</span><span class="mc-title">Reading a company’s default risk off every security it has issued, with an interactive bankruptcy waterfall built from the filings.</span></a></li>
         <li><a href="/projects/statarb/"><span class="mc-name">Statistical arbitrage on the S&amp;P 500: what survives costs</span><span class="mc-title">A point-in-time research platform for pairs trading, momentum and fundamental signals in S&amp;P 500 stocks, with fourteen research notes, most of them pre-registered.</span></a></li>
         <li><a href="/projects/options-lab/"><span class="mc-name">An options pricing and volatility lab, validated at every step</span><span class="mc-title">Pricing engines, SPX volatility surfaces and volatility forecasts on free Cboe data, each checked against independent references before the next phase starts.</span></a></li>
         <li><a href="/projects/nlh-solver/"><span class="mc-name">A No-Limit Hold’em solver, from heads-up flops to tournament push/fold</span><span class="mc-title">A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.</span></a></li>
-        <li><a href="/projects/hft-sim/"><span class="mc-name">A market simulator in Rust, checked order by order against real data</span><span class="mc-title">A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.</span></a></li>
       </ul>
       <a class="more" href="/projects/">All projects <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
     </section>
@@ -248,7 +248,7 @@
 <section class="wrap home-projects" aria-labelledby="projects-h">
   <div class="feed__head">
     <h2 id="projects-h" class="label">Recent projects</h2>
-    <a class="more" href="/projects/">All 26 projects <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+    <a class="more" href="/projects/">All 27 projects <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
   </div>
   <div class="pgrid pgrid--home"><article class="pcard has-media">
 <div class="pcard__media"><img src="/media/alpha-combination/cover.png" alt="" loading="lazy" decoding="async"></div>
@@ -265,7 +265,14 @@
   <h3 class="pcard__title"><a href="/projects/smart-router/">Does smart order routing pay? A simulated market and eleven routers</a></h3>
 <p class="pcard__sub">A latency-aware simulation of five trading venues, routers from naive to optimised, and pre-registered experiments on what actually saves money. The simulator runs in your browser below.</p>  <dl class="pcard__facts">
 <div><dt>Smart router vs naive posting</dt><dd>0.31 bps (patient orders)</dd></div><div><dt>Optimal split across venues</dt><dd>No significant gain</dd></div>  </dl>
-<ul class="stack"><li>Python</li><li>Pyodide</li><li>JavaScript</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/multi-venue-smart-router" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a><a href="https://github.com/RasmusCodes/multi-venue-smart-router/blob/main/reports/RESULTS.md" target="_blank" rel="noopener">Full results<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard has-media">
+<ul class="stack"><li>Python</li><li>Pyodide</li><li>JavaScript</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/multi-venue-smart-router" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a><a href="https://github.com/RasmusCodes/multi-venue-smart-router/blob/main/reports/RESULTS.md" target="_blank" rel="noopener">Full results<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard">
+<div class="pcard__media pcard__media--fact"><span class="pcard__fact">CoreWeave, Strategy, Nebius, IREN, Wolfspeed</span><span class="pcard__factlabel">Case studies</span></div>  <div class="pcard__top">
+    <span class="pstatus pstatus--live">Building</span>
+<span class="pcard__period">Since Nov 2026</span>  </div>
+  <h3 class="pcard__title"><a href="/projects/credit-lab/">A credit and capital-structure lab</a></h3>
+<p class="pcard__sub">Reading a company’s default risk off every security it has issued, with an interactive bankruptcy waterfall built from the filings.</p>  <dl class="pcard__facts">
+<div><dt>Court-filed liquidation analysis</dt><dd>Reproduced exactly</dd></div><div><dt>Browser engine vs Python</dt><dd>206 of 206 checks</dd></div>  </dl>
+<ul class="stack"><li>Python</li><li>JavaScript</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/credit-capital-structure-lab" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a><a href="https://github.com/RasmusCodes/credit-capital-structure-lab/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener">Methodology<span aria-hidden="true"> ↗</span></a></div></article><article class="pcard has-media">
 <div class="pcard__media"><img src="/media/statarb/cover.png" alt="" loading="lazy" decoding="async"></div>
   <div class="pcard__top">
     <span class="pstatus pstatus--live">Building</span>
@@ -288,14 +295,7 @@
   <h3 class="pcard__title"><a href="/projects/nlh-solver/">A No-Limit Hold’em solver, from heads-up flops to tournament push/fold</a></h3>
 <p class="pcard__sub">A Rust solver and browser study app for No-Limit Hold’em, for two to ten players, that labels how each answer was computed and how far it is from equilibrium.</p>  <dl class="pcard__facts">
 <div><dt>Roadmap</dt><dd>Phase 5 of 7 done</dd></div><div><dt>Automated tests</dt><dd>249, all passing</dd></div>  </dl>
-<ul class="stack"><li>Rust</li><li>TypeScript</li><li>React</li><li>Python</li></ul></article><article class="pcard">
-<div class="pcard__media pcard__media--fact"><span class="pcard__fact">1,136 of 1,136</span><span class="pcard__factlabel">Bitstamp snapshots reproduced</span></div>  <div class="pcard__top">
-    <span class="pstatus pstatus--live">Building</span>
-<span class="pcard__period">Since Nov 2026</span>  </div>
-  <h3 class="pcard__title"><a href="/projects/hft-sim/">A market simulator in Rust, checked order by order against real data</a></h3>
-<p class="pcard__sub">A deterministic exchange, a latency-aware simulator and a market-making ladder, with a fill model tested on real Bitstamp and Nasdaq order data.</p>  <dl class="pcard__facts">
-<div><dt>Real Bitstamp fills recovered</dt><dd>292 of 298 (99.6% of volume)</dd></div><div><dt>False fills, 801,154 Nasdaq orders</dt><dd>0</dd></div>  </dl>
-<ul class="stack"><li>Rust</li><li>Python</li></ul><div class="pcard__links"><a href="https://github.com/RasmusCodes/hft-sim" target="_blank" rel="noopener">Code on GitHub<span aria-hidden="true"> ↗</span></a><a href="https://rasmuscodes.github.io/hft-sim/" target="_blank" rel="noopener">Project site<span aria-hidden="true"> ↗</span></a></div></article></div>
+<ul class="stack"><li>Rust</li><li>TypeScript</li><li>React</li><li>Python</li></ul></article></div>
 </section>
 </main>
 <footer class="site-footer">

@@ -94,6 +94,29 @@
 </ul>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>A pure-Python package with no dependencies for the simulator and routers, so the same code runs in the browser. Runs are bit-identical across platforms: the simulation uses only basic floating-point arithmetic (logarithms included) and platform-stable random streams, and fingerprints of reference runs are locked in tests, which also show that the browser demo reproduces them. The 49 tests include a differential test of the order book against a naive reference over 12,000 random operations and a check of the Cont–Kukanov solver against brute force. The experiments, about 9,400 simulated parent orders, run in 20 minutes on a laptop.</p>
+]]></content:encoded></item><item><title>A credit and capital-structure lab</title><link>https://rasmuscodes.github.io/projects/credit-lab/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/credit-lab/</guid><pubDate>Sat, 21 Nov 2026 12:00:00 +0000</pubDate><description>Reading a company’s default risk off every security it has issued, with an interactive bankruptcy waterfall built from the filings.</description><category>credit</category><category>capital structure</category><category>distressed debt</category><category>convertibles</category><content:encoded><![CDATA[<p>A company’s loans, bonds, convertibles, preferred stock, equity, CDS and options are all claims on the same assets. If the markets for them price the company’s default risk differently, one of them is wrong, or the difference pays for something else. This lab models the capital structure from the filings, prices every security on one asset process, and compares the result with what each market implies.</p>
+<p>Pick a company below, move the value it is worth in a default, and watch who gets paid. The sliders change leverage, maturities, the asset value and volatility, bankruptcy costs and departures from absolute priority; the simulation runs 2,000 default scenarios through the waterfall.</p>
+<link rel="stylesheet" href="https://rasmuscodes.github.io/apps/credit-lab/lab.css?v=ac94d8162e">
+<div id="credit-lab" class="clab"></div>
+<script type="module" src="https://rasmuscodes.github.io/apps/credit-lab/lab-app.js?v=ac94d8162e"></script>
+<h2 id="what-the-case-studies-found">What the case studies found <a class="header-anchor" href="#what-the-case-studies-found">#</a></h2>
+<p>Market data from the close of 20 November 2026; balance sheets from the latest 10-Q or interim statements.</p>
+<ul>
+<li><strong>CoreWeave.</strong> The senior notes recover 35% in the central default scenario (21-50% across the range) after the SPV term loans take their GPU collateral and the notes share the operating subsidiaries with trade and lease claims. At that recovery the notes imply a 60% chance of default within five years; a structural model calibrated to the equity says 65% and prices the notes 5-8 points below where they trade. The Jan-2029 $5 puts cap the risk-neutral default probability by then at 16%, against 32-34% implied by the notes.</li>
+<li><strong>Strategy.</strong> Its assets are mostly bitcoin, so the asset value the models usually have to guess can be measured. Priced off the observed assets and their volatility, the model values the equity within 1.5% of the market. Calibrated the usual way, from the equity, it gets assets 22-35% too low and asset volatility twice too high.</li>
+<li><strong>Wolfspeed’s 2025 bankruptcy.</strong> The engine reproduces the court-filed liquidation analysis exactly. The confirmed plan then gave unsecured creditors 25-30%, where strict priority at the plan’s own valuation gave about 1%: make-wholes, a rights offering, trade claims paid in full and a 5% gift to old shareholders are what negotiation adds.</li>
+<li><strong>Nebius and IREN.</strong> Their convertibles imply at most 26-51% five-year default probabilities; equity-calibrated structural models say 73-75%.</li>
+</ul>
+<p>None of these gaps is an arbitrage. Each signal in the lab’s scanner lists what can keep it open: stale or thin bond prices, recovery uncertainty, the cost of shorting bonds, illiquid options, and answers that depend on the model.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>The waterfall</strong> splits value across legal entities, lets collateral pay its secured lenders, gives recourse lenders deficiency claims, handles guarantees, subordination with turnover, lease-rejection caps and bankruptcy costs, and can carve out a gift to equity.</li>
+<li><strong>Structural models</strong>: Merton, Black-Cox and CreditGrades, plus a pricer that values every claim of a real waterfall on one asset process, exact to quadrature.</li>
+<li><strong>Reduced-form models</strong>: hazard curves from bonds, an ISDA-style CDS converter that matches Markit’s CoreWeave quote to 0.02 points, convertibles with jump to default, and model-free default bounds from deep puts.</li>
+<li><strong>History</strong>: rating-transition matrices and default rates from S&amp;P’s regulatory filing, compared with what the markets imply.</li>
+</ul>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<p>Structural models need an asset value nobody observes, and assume lognormal assets and a static debt stack; real bankruptcies are negotiated. Bond prices are last trades, the CDS curve is one documented point, and recoveries move most with a judgment input, the value at default. The documentation sets out where each of these bites.</p>
 ]]></content:encoded></item><item><title>Beating Jane Street at their own game</title><link>https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/</link><guid isPermaLink="true">https://rasmuscodes.github.io/essays/teaching-a-bot-to-trade-figgie/</guid><pubDate>Fri, 20 Nov 2026 12:00:00 +0000</pubDate><description>I built a bot for Figgie, Jane Street’s trading game. Fifteen versions and 142 live rounds later it beats figgie.com’s Hard bots: what worked, what didn’t, and how it works.</description><category>trading</category><category>game theory</category><category>bots</category><content:encoded><![CDATA[<h2 id="introduction">Introduction <a class="header-anchor" href="#introduction">#</a></h2>
 <p>Figgie is a trading game by Jane Street. Four players each put $50 in the pot and are dealt ten cards from a 40-card deck. One suit has 12 cards, two have 10 and one has 8, and nobody knows which is which, you have to guess what is the 12-card suit. The suit of the same colour as the 12-card suit is the goal suit. So if there are 12 clubs, there are either 10 or 8 spades, and that’s the goal suit.</p>
 <p>For four minutes, anyone can bid for or offer any suit, and anyone can take a bid or an offer. When the round ends, each goal-suit card pays $10 from the pot, and whoever holds the most goal cards takes the rest: $100, or $120 when the goal suit has eight cards.</p>
@@ -869,14 +892,5 @@
 <ul>
 <li><strong>It draws games; it doesn’t solve them.</strong> Highlighted paths are marked by hand.</li>
 <li><strong>Storage is per browser and per address.</strong> Games are kept in the browser’s local storage, so a copy on GitHub Pages and a copy opened from disk keep separate libraries, and clearing site data removes them. Saving a game file keeps a copy that opens anywhere.</li>
-</ul>
-]]></content:encoded></item><item><title>AAOI alt-data tracker</title><link>https://rasmuscodes.github.io/projects/aaoi-alt-data-tracker/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/aaoi-alt-data-tracker/</guid><pubDate>Mon, 02 Nov 2026 12:00:00 +0000</pubDate><description>Seven public data series on Applied Optoelectronics and its market, refreshed weekly into tidy files and a model-ready workbook.</description><category>alternative data</category><category>optical</category><category>data engineering</category><content:encoded><![CDATA[<p>One command collects seven public data series on Applied Optoelectronics (AAOI) and the market around it, appends anything new to tidy CSV files and rebuilds an Excel workbook that links straight into a valuation model.</p>
-<p>The sources include SEC filings, US Census trade data, tariff-code lookups, job postings and Texas construction-project filings for the company’s new fabs, plus a few hand-maintained inputs.</p>
-<p>The ground rules are built into the code:</p>
-<ul>
-<li>official APIs first, and every host’s robots.txt checked on every run;</li>
-<li>no logins, paywalls, CAPTCHAs or rate-limit workarounds;</li>
-<li>nothing invented, interpolated or estimated: a missing input leaves a blank and a logged reason;</li>
-<li>every raw response cached with its retrieval time.</li>
 </ul>
 ]]></content:encoded></item></channel></rss>
