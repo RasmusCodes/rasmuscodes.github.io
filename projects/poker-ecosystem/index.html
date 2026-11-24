@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A poker research lab, from exact equity to exploiting an opponent model · Rasmus Suonio</title>
+<meta name="description" content="Solvers that measure their own error, a Bayesian model of how opponents play, the strategy that exploits it, hand-history analysis, and an interactive lab that runs in the browser.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/poker-ecosystem/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A poker research lab, from exact equity to exploiting an opponent model">
+<meta property="og:description" content="Solvers that measure their own error, a Bayesian model of how opponents play, the strategy that exploits it, hand-history analysis, and an interactive lab that runs in the browser.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/poker-ecosystem/"><meta property="og:image" content="https://rasmuscodes.github.io/media/poker-ecosystem/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A poker research lab, from exact equity to exploiting an opponent model</h1>
+<p class="post__sub">Solvers that measure their own error, a Bayesian model of how opponents play, the strategy that exploits it, hand-history analysis, and an interactive lab that runs in the browser.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-23">23 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>4 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/poker-ecosystem/" data-title="A poker research lab, from exact equity to exploiting an opponent model">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/poker-ecosystem/&amp;text=A%20poker%20research%20lab%2C%20from%20exact%20equity%20to%20exploiting%20an%20opponent%20model" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/poker-ecosystem/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20poker%20research%20lab%2C%20from%20exact%20equity%20to%20exploiting%20an%20opponent%20model&amp;body=https%3A//rasmuscodes.github.io/projects/poker-ecosystem/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="/apps/poker-ecosystem/"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Open the lab</span></a><a class="file" href="https://github.com/RasmusCodes/poker-ecosystem" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://github.com/RasmusCodes/poker-ecosystem/tree/main/research/reports" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Research reports</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>River solves</dt><dd class="is-text">0.1% of the pot in about 150 iterations</dd></div><div><dt>Browser engine vs Rust engine</dt><dd class="is-text">6,344 parity checks, all equal</dd></div><div><dt>Opponent-model error</dt><dd class="is-text">0.077 at 50 hands, 0.019 at 2,500</dd></div><div><dt>Automated tests</dt><dd class="is-text">67 Rust, 107 Python</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Rust</li><li>Python</li><li>JavaScript</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/poker-ecosystem/cover.png" alt="Two 13 by 13 grids of the big blind&#39;s river strategy on Q-8-5-3-2. At equilibrium every hand checks; against a button that folds 70% of the time to bets, the exploiting strategy bets 81% of its range."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Most poker tools answer one question: what is the equilibrium play? This project asks the next one as well. How far is a given answer from equilibrium, and what should change when you know how an opponent actually plays? It brings together exact hand evaluation and equity, a family of game-theory solvers that report their own error, a Bayesian model of opponents, exploitative strategies built on that model, and hand-history analysis, in one codebase with one test suite.</p>
+<h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
+<p>The lab below is the real engine running in your browser. Pick a spot and press <em>Solve</em>: the convergence chart shows how far the strategy is from equilibrium after each batch of iterations, and the grid shows what every hand does. Then describe how an opponent plays (say, the button folds 70% of the time to river bets), press <em>Compare GTO and exploit</em>, and watch the strategy change and what that change costs in safety. <a href="/apps/poker-ecosystem/">Open it full screen</a> for more room.</p>
+<iframe src="/apps/poker-ecosystem/?embed#solver" title="Poker research lab" loading="lazy" style="width:100%;height:1250px;border:1px solid var(--rule);border-radius:12px;background:var(--bg)"></iframe>
+<h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
+<ul>
+<li><strong>Exact evaluation and equity.</strong> Hold’em, Short Deck (both rule sets), Omaha, Five-Card Omaha and Omaha Hi-Lo. Equity by full enumeration for any number of players, on one or two boards, or by Monte Carlo with standard errors. Running it twice is computed exactly: it never changes equity, but it cuts the variance by more than half, because the second run is dealt from what the first left.</li>
+<li><strong>The CFR family.</strong> CFR (counterfactual regret minimisation: the strategy plays against itself and shifts towards the moves it regrets not making), CFR+, Linear, Discounted and Predictive CFR, and two Monte Carlo versions, compared on games with known answers.</li>
+<li><strong>Range-against-range solving</strong> on the river and turn for Hold’em, Omaha and Short Deck, with exact card removal (who can hold which cards given what everyone else holds), double boards, rake and the 7-2 game’s bounty. It also solves three- and four-way rivers.</li>
+<li><strong>Opponent modelling.</strong> Statistics such as how often a player folds to a river bet, estimated with a hierarchical Bayesian model: small samples lean on the player population and every estimate comes with a 90% credible interval. Players are then clustered into types.</li>
+<li><strong>Exploitation.</strong> A best response to the model (the most it can win) and restricted Nash responses, which trust the model only partly and so trade some of the gain for safety against being wrong.</li>
+<li><strong>Hand histories.</strong> A PokerStars parser that rebuilds every pot, including side pots and rake, works out all-in equity and the luck in each hand, and feeds a searchable database.</li>
+</ul>
+<h2 id="what-is-exact-and-what-is-not">What is exact, and what is not <a class="header-anchor" href="#what-is-exact-and-what-is-not">#</a></h2>
+<p>Every result says what it is. Hand values and enumerated equities are exact. A heads-up solve is an approximate equilibrium of the game with the listed bet sizes, and how far it is from equilibrium in that game is computed exactly, as a share of the pot. With three or more players, CFR has no guarantee of reaching an equilibrium at all; those results report NashConv (the total that all players could gain by switching to their best responses) and are labelled as approximations. The opponent model is checked against simulated players whose true habits are known, which real players are not.</p>
+<h2 id="what-i-measured">What I measured <a class="header-anchor" href="#what-i-measured">#</a></h2>
+<ul>
+<li><strong>Known answers.</strong> Kuhn poker’s value comes out at −1/18 to within 5 × 10⁻¹², Leduc hold’em’s at −0.0856, and a river with a closed-form solution (the nuts or air against bluff-catchers) matches the theory’s bluffing and calling frequencies to four decimal places.</li>
+<li><strong>Algorithms.</strong> On Leduc, after 1,000 iterations, plain CFR is 0.012 chips a hand from equilibrium and Discounted CFR 0.0002. On real river spots Discounted CFR reaches 0.1% of the pot in about 150 iterations, including an Omaha river with 32,352 against 41,844 four-card hands.</li>
+<li><strong>Abstraction.</strong> Grouping river hands into strength buckets costs 16% of the pot with 2 buckets and 0.16% with 40, against 0.003% for the exact solve.</li>
+<li><strong>More players.</strong> Exact three- and four-way rivers cost about twelve times more per added player. NashConv still fell to about 0.03% of the pot, an observation rather than a guarantee.</li>
+<li><strong>Exploitation.</strong> Against a button that folds 70% of the time to river bets, a restricted Nash response wins 37% of the pot more than equilibrium play and stays exploitable for 20% of the pot. The pure best response wins 42% more but is exploitable for 45%.</li>
+<li><strong>Opponent model.</strong> Across 24 simulated players, the average error of the estimates falls from 0.077 after 50 hands each to 0.019 after 2,500, about half the error of raw frequencies. The 90% intervals contain the truth 88-93% of the time, and the clustering recovers all six playing styles.</li>
+</ul>
+<p>The full reports, with method, tables and figures, are <a href="https://github.com/RasmusCodes/poker-ecosystem/tree/main/research/reports" target="_blank" rel="noopener">on GitHub</a>.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>The engine is a Rust workspace of seven crates: cards and ranges, evaluators, equity, the CFR family, the range solver, hand histories, and a command-line tool whose JSON output everything else reads. Its only outside dependencies are serde, serde_json and rayon. The research layer is Python with nothing beyond the standard library: statistics, the opponent model, clustering, a SQLite hand database and the charts. The lab is a JavaScript port of the engine with no build step. The JavaScript and Rust engines are tied together by 6,344 automatic checks, so the browser shows exactly what the Rust code computes.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li><strong>It starts on the turn or river</strong> with ranges you give it; there is no preflop or flop solver here. My <a href="/projects/nlh-solver/">No-Limit Hold’em</a> and <a href="/projects/plo-solver/">Pot-Limit Omaha</a> solvers cover full flops and preflop.</li>
+<li><strong>Bet sizes are an abstraction.</strong> A solution is an equilibrium of the game with the listed sizes; an opponent using other sizes is outside it.</li>
+<li><strong>Multiway solving is exact only for small ranges</strong>, and carries no equilibrium guarantee.</li>
+<li><strong>The opponent data is simulated.</strong> Real players adapt and are less tidy than the bots, so read the model’s accuracy as a best case.</li>
+</ul>
+<p>It sits next to my <a href="/projects/nlh-solver/">No-Limit Hold’em solver</a>, my <a href="/projects/plo-solver/">Pot-Limit Omaha solver</a>, the <a href="/projects/figgie-bot/">Figgie trading bot</a> and <a href="/projects/game-tree-studio/">Game Tree Studio</a>.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/poker/">poker</a><a class="tag" href="/tags/game-theory/">game theory</a><a class="tag" href="/tags/rust/">rust</a><a class="tag" href="/tags/bayesian-statistics/">bayesian statistics</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/poker-ecosystem/" data-title="A poker research lab, from exact equity to exploiting an opponent model">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/poker-ecosystem/&amp;text=A%20poker%20research%20lab%2C%20from%20exact%20equity%20to%20exploiting%20an%20opponent%20model" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/poker-ecosystem/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20poker%20research%20lab%2C%20from%20exact%20equity%20to%20exploiting%20an%20opponent%20model&amp;body=https%3A//rasmuscodes.github.io/projects/poker-ecosystem/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/alpha-combination/"><span>Previous</span><b>Combining sixteen equity signals: does complexity pay?</b></a><a class="pager__item pager__item--next" href="/projects/portfolio-manager/"><span>Next</span><b>A portfolio manager that explains itself, and what optimization is worth</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

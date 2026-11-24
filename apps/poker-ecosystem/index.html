@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poker Ecosystem</title>
+<meta name="description" content="A poker research lab in the browser: range-vs-range solving with exact exploitability, GTO versus exploitative play against an opponent model, exact equity, Bayesian opponent profiles and hand-history analysis.">
+<link rel="stylesheet" href="/static/fonts/fonts.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/projects/poker-ecosystem/"><span class="mark">RS</span><b>Poker Ecosystem</b><span>interactive lab</span></a>
+    <nav class="mast-links">
+      <a href="/projects/poker-ecosystem/">Write-up</a>
+      <a class="hide-sm" href="https://github.com/RasmusCodes/poker-ecosystem">Code</a>
+      <button class="icon-btn" type="button" id="theme" aria-label="Switch light or dark mode" title="Light or dark">◐</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <h1>Poker research lab</h1>
+    <p>Solve a river or turn spot range against range, measure exactly how far the answer is from equilibrium, then tell the solver how an opponent really plays and compare the equilibrium strategy with exploitative ones. Everything runs in your browser on a JavaScript port of the Rust engine, checked against it to the last digit.</p>
+    <div class="badges">
+      <span class="badge ok">Heads-up: exploitability measured exactly</span>
+      <span class="badge warn">Bet sizes are an abstraction</span>
+      <span class="badge">Opponent data: synthetic corpus</span>
+    </div>
+  </section>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" data-tab="solver" aria-selected="true">Spot solver</button>
+    <button class="tab" role="tab" data-tab="equity" aria-selected="false">Equity</button>
+    <button class="tab" role="tab" data-tab="opponents" aria-selected="false">Opponents</button>
+    <button class="tab" role="tab" data-tab="hands" aria-selected="false">Hand histories</button>
+    <button class="tab" role="tab" data-tab="research" aria-selected="false">Research</button>
+  </nav>
+
+  <!-- SOLVER -->
+  <section id="tab-solver" role="tabpanel">
+    <div class="grid-2">
+      <div>
+        <div class="card stack">
+          <h2>Spot <span class="sub">heads-up, river or turn</span></h2>
+          <label>Preset <select id="preset"></select></label>
+          <div class="row">
+            <label>Game <select id="game">
+              <option value="NLH">No-Limit Hold'em</option><option value="PLO">Pot-Limit Omaha</option><option value="SD">Short Deck (Triton)</option><option value="SDC">Short Deck (classic)</option><option value="O8">Omaha Hi-Lo</option>
+            </select></label>
+            <label>Algorithm <select id="algo"><option>DCFR</option><option>CFR+</option><option>PCFR+</option><option>LCFR</option><option>CFR</option></select></label>
+          </div>
+          <div class="row">
+            <label>Board <input id="board" spellcheck="false"></label>
+            <label>Second board <input id="board2" placeholder="double board" spellcheck="false"></label>
+          </div>
+          <label>Out of position (acts first) <textarea id="r0" rows="3" spellcheck="false"></textarea></label>
+          <label>In position <textarea id="r1" rows="3" spellcheck="false"></textarea></label>
+          <div class="row">
+            <label>Pot <input id="pot" type="number" step="any" min="0"></label>
+            <label>Stack behind <input id="stack" type="number" step="any" min="0"></label>
+          </div>
+          <div class="row">
+            <label>Bets, % of pot <input id="bets" spellcheck="false"></label>
+            <label>Raises, % of pot <input id="raises" spellcheck="false"></label>
+            <label>Max bets a street <input id="maxr" type="number" min="1" max="5"></label>
+          </div>
+          <div class="row">
+            <label>Rake % <input id="rake" type="number" step="any" min="0" value="0"></label>
+            <label>Rake cap <input id="rakecap" type="number" step="any" min="0" value="0"></label>
+            <label>7-2 bounty <input id="bounty" type="number" step="any" min="0" value="0"></label>
+          </div>
+          <div class="row">
+            <label>Iterations <input id="iters" type="number" min="10" max="20000" value="800"></label>
+            <label>Stop at (% of pot) <input id="target" type="number" step="any" min="0" value="0.1"></label>
+          </div>
+          <div class="row"><button class="btn primary" id="solve" type="button">Solve</button><span class="status" id="solve-status"></span></div>
+          <p class="note" id="preset-note"></p>
+        </div>
+        <div class="card stack" id="exploit-card">
+          <h2>Opponent model <span class="sub">exploit a known tendency</span></h2>
+          <label>Model the <select id="mp"><option value="1">in-position player</option><option value="0">out-of-position player</option></select></label>
+          <label>Folds to a river bet <output id="o-fold"></output><input id="fold" type="range" min="0" max="1" step="0.01" value="0.7"></label>
+          <label>Raises a river bet <output id="o-raise"></output><input id="raise" type="range" min="0" max="0.5" step="0.01" value="0.03"></label>
+          <label>Bets when checked to <output id="o-stab"></output><input id="stab" type="range" min="0" max="1" step="0.01" value="0.5"></label>
+          <label>Share of its bets that are bluffs <output id="o-bluff"></output><input id="bluff" type="range" min="0" max="1" step="0.01" value="0.33"></label>
+          <label>Leads into the aggressor <output id="o-lead"></output><input id="lead" type="range" min="0" max="1" step="0.01" value="0"></label>
+          <div class="row">
+            <label class="check"><input type="checkbox" id="use-stab" checked>use bet-when-checked-to</label>
+            <label class="check"><input type="checkbox" id="use-lead">use lead</label>
+          </div>
+          <label>Trust in the model, p (restricted Nash response) <output id="o-p"></output><input id="p" type="range" min="0" max="1" step="0.05" value="0.5"></label>
+          <div class="row"><button class="btn primary" id="exploit" type="button">Compare GTO and exploit</button><button class="btn" id="frontier" type="button">Trace the frontier</button></div>
+          <div class="status" id="exploit-status"></div>
+          <p class="note">The model starts from the equilibrium and replaces the covered decisions with threshold play on the range reaching them: raise the strongest share, fold the weakest, bet value from the top and bluffs from the bottom. p = 0 is the equilibrium, p = 1 the best response to the model.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card stack">
+          <h2>Convergence <span id="solve-label" class="label-chip">not solved yet</span></h2>
+          <div class="kpis" id="kpis"></div>
+          <div id="conv-chart"></div>
+        </div>
+        <div class="card stack">
+          <h2>Strategy explorer</h2>
+          <div class="row" style="align-items:center">
+            <div class="crumbs" id="crumbs"></div>
+            <label style="max-width:240px">Show <select id="view"><option value="gto">Equilibrium (GTO)</option><option value="rnr">Exploit: restricted Nash response</option><option value="br">Exploit: best response</option></select></label>
+          </div>
+          <div id="node-head"></div>
+          <div class="freqbar" id="freqbar"></div>
+          <div class="legend" id="legend"></div>
+          <div class="explorer-body">
+            <div><div class="rgrid" id="rgrid"></div><p class="small muted" id="grid-note"></p></div>
+            <div>
+              <h3 id="sel-title">Pick a hand class</h3>
+              <div id="ev-chart"></div>
+              <div class="table-wrap" style="max-height:340px;overflow:auto"><table id="hand-table"></table></div>
+            </div>
+          </div>
+        </div>
+        <div class="card stack" id="compare-card" hidden>
+          <h2>Equilibrium versus exploitation</h2>
+          <div class="kpis" id="exploit-kpis"></div>
+          <div id="frontier-chart"></div>
+          <p class="note" id="frontier-note">Each point is a full solve: how much more the exploiter wins against the model (vertical) against how much a perfect opponent could win from it (horizontal).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUITY -->
+  <section id="tab-equity" role="tabpanel" hidden>
+    <div class="grid-2">
+      <div class="card stack">
+        <h2>Equity calculator</h2>
+        <div class="row">
+          <label>Game <select id="eq-game"><option value="NLH">No-Limit Hold'em</option><option value="PLO">Omaha (4 cards)</option><option value="PLO5">Omaha (5 cards)</option><option value="SD">Short Deck (Triton)</option><option value="O8">Omaha Hi-Lo</option><option value="BIGO">Big O</option></select></label>
+          <label>Enter <select id="eq-mode"><option value="hands">hands</option><option value="ranges">ranges</option></select></label>
+        </div>
+        <div id="eq-entries" class="stack"></div>
+        <div class="row"><button class="btn sm" id="eq-add" type="button">Add player</button><button class="btn sm" id="eq-remove" type="button">Remove player</button></div>
+        <div class="row"><label>Board <input id="eq-board" spellcheck="false"></label><label>Second board <input id="eq-board2" placeholder="double board" spellcheck="false"></label></div>
+        <label>Dead cards <input id="eq-dead" spellcheck="false"></label>
+        <div class="row"><button class="btn primary" id="eq-go" type="button">Compute</button><span class="status" id="eq-status"></span></div>
+        <p class="note">Exact enumeration when the number of runouts is small enough, otherwise Monte Carlo with a standard error. Ranges always use Monte Carlo with exact card removal.</p>
+      </div>
+      <div>
+        <div class="card stack"><h2>Result <span id="eq-label" class="label-chip"></span></h2><div id="eq-chart"></div><div class="small muted" id="eq-meta"></div></div>
+        <div class="card stack" id="rit-card" hidden><h2>Running it twice</h2><div id="rit-body"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPPONENTS -->
+  <section id="tab-opponents" role="tabpanel" hidden>
+    <div class="card stack">
+      <h2>Opponent population <span class="sub" id="opp-source"></span></h2>
+      <div class="table-wrap"><table id="opp-table"></table></div>
+      <p class="note">Posterior means with 90% credible intervals from the hierarchical Beta-Binomial model; small samples are pulled toward the population. The bots are simulated, so each one's true frequency is known (◆ in the detail chart).</p>
+    </div>
+    <div class="grid-2" style="margin-top:16px">
+      <div class="card stack">
+        <h2>Bayesian updater</h2>
+        <label>Statistic <select id="bu-stat"></select></label>
+        <div class="row"><label>Successes <input id="bu-k" type="number" min="0" value="7"></label><label>Opportunities <input id="bu-n" type="number" min="0" value="20"></label></div>
+        <div id="bu-chart"></div>
+        <div class="small" id="bu-text"></div>
+      </div>
+      <div class="card stack" id="opp-detail">
+        <h2 id="opp-title">Pick a player</h2>
+        <div id="opp-chart"></div>
+        <div class="row"><button class="btn primary" id="opp-exploit" type="button" disabled>Exploit this player in the solver</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HANDS -->
+  <section id="tab-hands" role="tabpanel" hidden>
+    <div class="grid-2">
+      <div class="card stack">
+        <h2>Hand histories</h2>
+        <label>PokerStars text <textarea id="hh-text" rows="9" spellcheck="false"></textarea></label>
+        <div class="row"><button class="btn primary" id="hh-parse" type="button">Parse</button><button class="btn" id="hh-synth" type="button">Load 250 simulated hands</button></div>
+        <div class="status" id="hh-status"></div>
+        <div class="row">
+          <label>Player <input id="f-player" placeholder="any"></label>
+          <label>Position <select id="f-pos"><option value="">any</option><option>BTN</option><option>SB</option><option>BB</option><option>UTG</option><option>HJ</option><option>CO</option></select></label>
+        </div>
+        <div class="row">
+          <label>Min pot (bb) <input id="f-pot" type="number" min="0" value="0"></label>
+          <label>Street reached <select id="f-street"><option value="">any</option><option value="flop">flop</option><option value="turn">turn</option><option value="river">river</option></select></label>
+        </div>
+        <div class="row"><label class="check"><input type="checkbox" id="f-sd">showdown</label><label class="check"><input type="checkbox" id="f-ai">all-in</label><label class="check"><input type="checkbox" id="f-special">bomb pot, double board or run twice</label></div>
+      </div>
+      <div class="card stack">
+        <h2>Hands <span class="sub" id="hh-count"></span></h2>
+        <div class="table-wrap" style="max-height:300px;overflow:auto"><table id="hh-table"></table></div>
+        <div id="hh-summary" class="small"></div>
+      </div>
+    </div>
+    <div class="card stack" style="margin-top:16px" id="replay-card" hidden><h2 id="replay-title"></h2><div id="replay"></div></div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="tab-research" role="tabpanel" hidden>
+    <div id="research"></div>
+  </section>
+
+  <footer class="app-foot">
+    Heads-up solves are equilibrium approximations of the game defined by the bet sizes shown, with exploitability computed exactly in that game. Multiway results in the research reports are CFR approximations without an equilibrium guarantee. The opponent population is simulated. Built by Rasmus Suonio; <a href="https://github.com/RasmusCodes/poker-ecosystem">source code</a>.
+  </footer>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+PokerStars Hand #300000000001:  Hold'em No Limit ($0.50/$1.00 USD) - 2026/11/01 20:00:00 ET
+Table 'Andromeda' 6-max Seat #4 is the button
+Seat 1: Alice ($100.00 in chips)
+Seat 2: Bob ($100.00 in chips)
+Seat 3: Carol ($100.00 in chips)
+Seat 4: Dave ($100.00 in chips)
+Seat 5: Erin ($100.00 in chips)
+Seat 6: Hero ($100.00 in chips)
+Erin: posts small blind $0.50
+Hero: posts big blind $1.00
+*** HOLE CARDS ***
+Dealt to Hero [Ah Qh]
+Alice: folds
+Bob: folds
+Carol: raises $1.50 to $2.50
+Dave: folds
+Erin: folds
+Hero: raises $7.50 to $10.00
+Carol: calls $7.50
+*** FLOP *** [Qd 7s 2c]
+Hero: bets $7.00
+Carol: folds
+Uncalled bet ($7.00) returned to Hero
+Hero collected $19.50 from pot
+Hero: doesn't show hand
+*** SUMMARY ***
+Total pot $20.50 | Rake $1.00
+Board [Qd 7s 2c]
+Seat 1: Alice folded before Flop (didn't bet)
+Seat 2: Bob folded before Flop (didn't bet)
+Seat 3: Carol folded on the Flop
+Seat 4: Dave (button) folded before Flop (didn't bet)
+Seat 5: Erin (small blind) folded before Flop
+Seat 6: Hero (big blind) collected ($19.50)
+
+PokerStars Hand #300000000002:  Hold'em No Limit ($0.50/$1.00 USD) - 2026/11/01 20:02:00 ET
+Table 'Andromeda' 6-max Seat #5 is the button
+Seat 1: Alice ($100.00 in chips)
+Seat 2: Bob ($100.00 in chips)
+Seat 3: Carol ($110.00 in chips)
+Seat 4: Dave ($100.00 in chips)
+Seat 5: Erin ($99.50 in chips)
+Seat 6: Hero ($90.00 in chips)
+Hero: posts small blind $0.50
+Alice: posts big blind $1.00
+*** HOLE CARDS ***
+Dealt to Hero [9c 8c]
+Bob: folds
+Carol: folds
+Dave: raises $1.50 to $2.50
+Erin: folds
+Hero: calls $2.00
+Alice: folds
+*** FLOP *** [Tc 7d 2c]
+Hero: checks
+Dave: bets $3.00
+Hero: raises $8.00 to $11.00
+Dave: calls $8.00
+*** TURN *** [Tc 7d 2c] [Kh]
+Hero: bets $15.00
+Dave: calls $15.00
+*** RIVER *** [Tc 7d 2c Kh] [6s]
+Hero: bets $30.00
+Dave: calls $30.00
+*** SHOW DOWN ***
+Hero: shows [9c 8c] (a straight, Six to Ten)
+Dave: shows [Kd Ks] (three of a kind, Kings)
+Hero collected $115.00 from pot
+*** SUMMARY ***
+Total pot $118.00 | Rake $3.00
+Board [Tc 7d 2c Kh 6s]
+Seat 4: Dave showed [Kd Ks] and lost with three of a kind, Kings
+Seat 6: Hero (small blind) showed [9c 8c] and won ($115.00) with a straight, Six to Ten
+
+PokerStars Hand #300000000003:  Hold'em No Limit ($1/$2 USD) - 2026/11/01 20:05:00 ET
+Table 'Bootes' 6-max Seat #1 is the button
+Seat 1: Frank ($50 in chips)
+Seat 2: Grace ($120 in chips)
+Seat 3: Hero ($200 in chips)
+Seat 4: Ivan ($200 in chips)
+Grace: posts small blind $1
+Hero: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [Qs Qd]
+Ivan: raises $4 to $6
+Frank: raises $44 to $50 and is all-in
+Grace: raises $70 to $120 and is all-in
+Hero: raises $80 to $200 and is all-in
+Ivan: folds
+Uncalled bet ($80) returned to Hero
+*** FLOP *** [Kc 8d 4s]
+*** TURN *** [Kc 8d 4s] [2h]
+*** RIVER *** [Kc 8d 4s 2h] [Jd]
+*** SHOW DOWN ***
+Frank: shows [Ah Kh] (a pair of Kings)
+Grace: shows [Jc Js] (three of a kind, Jacks)
+Hero: shows [Qs Qd] (a pair of Queens)
+Grace collected $140 from side pot
+Grace collected $153 from main pot
+*** SUMMARY ***
+Total pot $296 Main pot $153. Side pot $140. | Rake $3
+Board [Kc 8d 4s 2h Jd]
+Seat 1: Frank (button) showed [Ah Kh] and lost with a pair of Kings
+Seat 2: Grace (small blind) showed [Jc Js] and won ($293) with three of a kind, Jacks
+Seat 3: Hero (big blind) showed [Qs Qd] and lost with a pair of Queens
+Seat 4: Ivan folded before Flop
+
+PokerStars Hand #300000000004:  Hold'em No Limit ($0.50/$1.00 USD) - 2026/11/01 20:08:00 ET
+Table 'Andromeda' 6-max Seat #6 is the button
+Seat 1: Alice ($100.00 in chips)
+Seat 2: Bob ($100.00 in chips)
+Seat 3: Carol ($100.00 in chips)
+Seat 6: Hero ($100.00 in chips)
+Alice: posts small blind $0.50
+Bob: posts big blind $1.00
+*** HOLE CARDS ***
+Dealt to Hero [Ac Jd]
+Carol: folds
+Hero: raises $1.50 to $2.50
+Alice: folds
+Bob: calls $1.50
+*** FLOP *** [Ts Js Qs]
+Bob: checks
+Hero: bets $2.00
+Bob: calls $2.00
+*** TURN *** [Ts Js Qs] [Ks]
+Bob: checks
+Hero: checks
+*** RIVER *** [Ts Js Qs Ks] [As]
+Bob: checks
+Hero: checks
+*** SHOW DOWN ***
+Bob: shows [9h 9d] (a Royal Flush)
+Hero: shows [Ac Jd] (a Royal Flush)
+Bob collected $4.55 from pot
+Hero collected $4.55 from pot
+*** SUMMARY ***
+Total pot $9.50 | Rake $0.40
+Board [Ts Js Qs Ks As]
+
+PokerStars Hand #300000000005:  Hold'em No Limit ($1/$2 USD) - 2026/11/01 20:10:00 ET
+Table 'Cetus' 2-max Seat #1 is the button
+Seat 1: Hero ($200 in chips)
+Seat 2: Judy ($200 in chips)
+Hero: posts small blind $1
+Judy: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [5h 4h]
+Hero: raises $3 to $5
+Judy: calls $3
+*** FLOP *** [Kd 9c 2s]
+Judy: checks
+Hero: bets $3
+Judy: calls $3
+*** TURN *** [Kd 9c 2s] [8h]
+Judy: checks
+Hero: bets $12
+Judy: calls $12
+*** RIVER *** [Kd 9c 2s 8h] [Jc]
+Judy: checks
+Hero: bets $40
+Judy: calls $40
+*** SHOW DOWN ***
+Hero: shows [5h 4h] (high card King)
+Judy: shows [Ks 7s] (a pair of Kings)
+Judy collected $117 from pot
+*** SUMMARY ***
+Total pot $120 | Rake $3
+Board [Kd 9c 2s 8h Jc]
+
+PokerStars Hand #300000000006: Tournament #4000000001, $10+$1 USD Hold'em No Limit - Level V (100/200) - 2026/11/02 18:00:00 ET
+Table '4000000001 3' 9-max Seat #2 is the button
+Seat 1: Kim (5400 in chips)
+Seat 2: Leo (8000 in chips)
+Seat 3: Mia (3000 in chips)
+Seat 4: Hero (7600 in chips)
+Kim: posts the ante 25
+Leo: posts the ante 25
+Mia: posts the ante 25
+Hero: posts the ante 25
+Mia: posts small blind 100
+Hero: posts big blind 200
+*** HOLE CARDS ***
+Dealt to Hero [Ad Kc]
+Kim: folds
+Leo: raises 300 to 500
+Mia: raises 2475 to 2975 and is all-in
+Hero: raises 4600 to 7575 and is all-in
+Leo: folds
+Uncalled bet (4600) returned to Hero
+*** FLOP *** [Ac 9d 4h]
+*** TURN *** [Ac 9d 4h] [3c]
+*** RIVER *** [Ac 9d 4h 3c] [Jh]
+*** SHOW DOWN ***
+Mia: shows [8s 8h] (a pair of Eights)
+Hero: shows [Ad Kc] (a pair of Aces)
+Hero collected 6550 from pot
+*** SUMMARY ***
+Total pot 6550 | Rake 0
+Board [Ac 9d 4h 3c Jh]
+
+PokerStars Hand #300000000007:  Hold'em No Limit ($1/$2 USD) - 2026/11/02 21:00:00 ET
+Table 'Draco' 6-max Seat #3 is the button
+Seat 1: Nina ($300 in chips)
+Seat 2: Oscar ($250 in chips)
+Seat 3: Pia ($200 in chips)
+Seat 4: Quinn ($200 in chips)
+Seat 5: Ravi ($200 in chips)
+Seat 6: Hero ($400 in chips)
+Quinn: posts small blind $1
+Ravi: posts big blind $2
+Hero: posts straddle $4
+*** HOLE CARDS ***
+Dealt to Hero [7c 7d]
+Nina: raises $8 to $12
+Oscar: folds
+Pia: folds
+Quinn: folds
+Ravi: folds
+Hero: calls $8
+*** FLOP *** [7s Kc 3d]
+Hero: checks
+Nina: bets $15
+Hero: raises $35 to $50
+Nina: folds
+Uncalled bet ($35) returned to Hero
+Hero collected $55 from pot
+*** SUMMARY ***
+Total pot $57 | Rake $2
+Board [7s Kc 3d]
+
+PokerStars Hand #300000000008:  Omaha Pot Limit ($0.50/$1.00 USD) - 2026/11/03 19:00:00 ET
+Table 'Eridanus' 6-max Seat #2 is the button
+Seat 1: Sam ($100 in chips)
+Seat 2: Tara ($100 in chips)
+Seat 4: Hero ($100 in chips)
+Seat 5: Uma ($100 in chips)
+Hero: posts small blind $0.50
+Uma: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [Ah Kh Qd Jd]
+Sam: folds
+Tara: raises $2.50 to $3.50
+Hero: calls $3
+Uma: folds
+*** FLOP *** [Th 9h 2c]
+Hero: checks
+Tara: bets $4
+Hero: raises $16 to $20
+Tara: calls $16
+*** TURN *** [Th 9h 2c] [3s]
+Hero: bets $30
+Tara: folds
+Uncalled bet ($30) returned to Hero
+Hero collected $45.60 from pot
+*** SUMMARY ***
+Total pot $48 | Rake $2.40
+Board [Th 9h 2c 3s]
+
+PokerStars Hand #300000000009:  Hold'em No Limit ($1/$2 USD) - 2026/11/03 22:00:00 ET
+Table 'Fornax' 6-max Seat #1 is the button
+Seat 1: Hero ($200 in chips)
+Seat 2: Vic ($200 in chips)
+Seat 3: Wes ($180 in chips)
+Vic: posts small blind $1
+Wes: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [Jh Th]
+Hero: raises $4 to $6
+Vic: folds
+Wes: calls $4
+*** FLOP *** [9h 8c 2h]
+Wes: bets $8
+Hero: raises $24 to $32
+Wes: raises $142 to $174 and is all-in
+Hero: calls $142
+*** FIRST TURN *** [9h 8c 2h] [3d]
+*** FIRST RIVER *** [9h 8c 2h 3d] [Qh]
+*** SECOND TURN *** [9h 8c 2h] [Ks]
+*** SECOND RIVER *** [9h 8c 2h Ks] [5c]
+*** FIRST SHOW DOWN ***
+Wes: shows [9d 9s] (three of a kind, Nines)
+Hero: shows [Jh Th] (a flush, Queen high)
+Hero collected $179 from pot
+*** SECOND SHOW DOWN ***
+Wes: shows [9d 9s] (three of a kind, Nines)
+Hero: shows [Jh Th] (high card King)
+Wes collected $179 from pot
+*** SUMMARY ***
+Total pot $361 | Rake $3
+Hand was run twice
+FIRST Board [9h 8c 2h 3d Qh]
+SECOND Board [9h 8c 2h Ks 5c]
+
+PokerStars Hand #300000000010:  Hold'em No Limit ($1/$2 USD) [Bomb Pot] [Double Board] - 2026/11/04 20:00:00 ET
+Table 'Gemini' 6-max Seat #2 is the button
+Seat 1: Xia ($200 in chips)
+Seat 2: Yuri ($200 in chips)
+Seat 3: Hero ($200 in chips)
+Xia: posts bomb pot ante $5
+Yuri: posts bomb pot ante $5
+Hero: posts bomb pot ante $5
+*** HOLE CARDS ***
+Dealt to Hero [As Kd]
+*** FLOP *** [Ah 7c 2d]
+*** FLOP 2 *** [Kh Ks 9c]
+Hero: bets $10
+Xia: calls $10
+Yuri: folds
+*** TURN *** [Ah 7c 2d] [4s]
+*** TURN 2 *** [Kh Ks 9c] [3h]
+Hero: checks
+Xia: checks
+*** RIVER *** [Ah 7c 2d 4s] [Td]
+*** RIVER 2 *** [Kh Ks 9c 3h] [Qd]
+Hero: bets $20
+Xia: calls $20
+*** FIRST SHOW DOWN ***
+Hero: shows [As Kd] (a pair of Aces)
+Xia: shows [Qs Qc] (a pair of Queens)
+Hero collected $36 from pot
+*** SECOND SHOW DOWN ***
+Xia collected $36 from pot
+*** SUMMARY ***
+Total pot $75 | Rake $3
+Board [Ah 7c 2d 4s Td]
+Board 2 [Kh Ks 9c 3h Qd]
+
+PokerStars Hand #300000000011:  Hold'em No Limit ($0.50/$1.00 USD) - 2026/11/04 21:00:00 ET
+Table 'Andromeda' 6-max Seat #1 is the button
+Seat 1: Alice ($100.00 in chips)
+Seat 2: Bob ($100.00 in chips)
+Seat 3: Carol ($100.00 in chips)
+Seat 6: Hero ($100.00 in chips)
+Bob: posts small blind $0.50
+Carol: posts big blind $1.00
+*** HOLE CARDS ***
+Dealt to Hero [6s 5s]
+Hero: calls $1.00
+Alice: calls $1.00
+Bob: calls $0.50
+Carol: checks
+*** FLOP *** [Jd 8c 3s]
+Bob: checks
+Carol: checks
+Hero: checks
+Alice: bets $2.00
+Bob: folds
+Carol: folds
+Hero: folds
+Uncalled bet ($2.00) returned to Alice
+Alice collected $3.80 from pot
+*** SUMMARY ***
+Total pot $4.00 | Rake $0.20
+Board [Jd 8c 3s]
