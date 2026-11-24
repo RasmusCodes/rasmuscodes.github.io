@@ -1,5 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rasmus Suonio</title><link>https://rasmuscodes.github.io/</link><description>Company research that states the call, the price and the evidence; the trading bots, simulators and data tools I build; a portfolio shown by weight; and essays.</description><language>en</language><atom:link href="https://rasmuscodes.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>Combining sixteen equity signals: does complexity pay?</title><link>https://rasmuscodes.github.io/projects/alpha-combination/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/alpha-combination/</guid><pubDate>Sun, 22 Nov 2026 12:00:00 +0000</pubDate><description>A pre-registered test of seventeen ways to combine noisy, correlated return signals in the S&amp;P 500 from 1980 to 2024, with an interactive lab that runs the same methods in the browser.</description><category>signal combination</category><category>machine learning</category><category>factor investing</category><category>portfolio construction</category><content:encoded><![CDATA[<p>A portfolio manager with many imperfect signals has to decide how to combine them. Machine learning promises to find the right weights, interactions and regimes; equal weighting promises nothing and is hard to beat. I tested seventeen combination methods against equal weights on sixteen published US-equity signals (momentum, reversal, value, quality, investment, low risk and seasonality) in the S&amp;P 500, strictly out of sample and after trading costs. The protocol, hypotheses and decision rule were committed to git before any result existed.</p>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rasmus Suonio</title><link>https://rasmuscodes.github.io/</link><description>Company research that states the call, the price and the evidence; the trading bots, simulators and data tools I build; a portfolio shown by weight; and essays.</description><language>en</language><atom:link href="https://rasmuscodes.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>A portfolio manager that explains itself, and what optimization is worth</title><link>https://rasmuscodes.github.io/projects/portfolio-manager/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/portfolio-manager/</guid><pubDate>Mon, 23 Nov 2026 12:00:00 +0000</pubDate><description>A portfolio construction and risk engine that turns research signals into positions, explains every weight, stress-tests and backtests the result, with a pre-registered test of fourteen methods on 55 years of public data and a live demo that runs the engine in your browser.</description><category>portfolio construction</category><category>risk management</category><category>optimization</category><category>signal combination</category><content:encoded><![CDATA[<p>A portfolio manager has to turn many imperfect signals into one set of positions without letting any one input, or the optimizer itself, take over. I built the engine that does that: it reads signals from independent research systems through one point-in-time interface, builds portfolios with fourteen construction methods under realistic constraints, explains why each position is the size it is, measures the risk, stress-tests it and backtests it walk-forward with trading costs. Then I asked the question every optimizer has to answer: does it beat simply holding everything in equal weights?</p>
+<p>The demo below runs the same engine in your browser on monthly data for 12 US industries and two Treasury maturities since 1962, or on nine factor “strategy sleeves”. Pick a method, change the inputs or the constraints, and read the explanation under the weights.</p>
+<div class="qpm-wrap"><iframe id="qpm-demo" src="https://rasmuscodes.github.io/apps/portfolio-manager/" title="Portfolio manager demo: build, explain, stress and backtest portfolios in the browser" loading="lazy"></iframe></div>
+<script>
+(function () {
+  var frame = document.getElementById("qpm-demo");
+  if (!frame) return;
+  window.addEventListener("message", function (ev) {
+    if (ev.origin !== window.location.origin || ev.source !== frame.contentWindow) return;
+    var d = ev.data || {};
+    if (d.type === "qpm-demo-height" && d.height > 400) frame.style.height = Math.ceil(d.height) + "px";
+  });
+})();
+</script>
+<style>
+.qpm-wrap { width: min(1240px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); margin: 28px 0 36px; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.qpm-wrap iframe { display: block; width: 100%; height: 1900px; border: 0; background: transparent; }
+@media (max-width: 640px) { .qpm-wrap { width: calc(100vw - 24px); } }
+</style>
+<h2 id="what-the-demo-does">What the demo does <a class="header-anchor" href="#what-the-demo-does">#</a></h2>
+<ul>
+<li><strong>Construct.</strong> Thirteen methods, from equal weights to mean-variance, maximum Sharpe, risk parity, equal risk contribution, hierarchical risk parity, Black-Litterman, Kelly and a market-neutral book, under position, sector, gross-exposure and volatility limits. You can edit any asset’s expected return or volatility, or add an asset of your own.</li>
+<li><strong>Why each position.</strong> For optimizer-based methods every weight is decomposed exactly: the asset’s expected return, what the binding constraints cost (their shadow prices act like changes to expected returns), the part of the return the other assets already deliver, and the risk they cannot hedge away.</li>
+<li><strong>Signals.</strong> Research signals arrive with their family, horizon, provenance, model version and a track record measured month by month. You can switch them on and off, combine them five ways, add your own, and use the result as expected returns.</li>
+<li><strong>Risk and stress tests.</strong> Value at risk five ways, factor exposures, backfilled drawdowns, liquidity at different fund sizes, correlations in calm and turbulent markets, and nine scenarios (2008, 2020, 2022, the 1987 crash, the dot-com bust, an AI-capex reversal, a volatility spike, a bond sell-off, a credit crisis) that you can edit or extend.</li>
+<li><strong>Estimation error lab.</strong> It treats the current inputs as the truth, simulates histories from them, re-estimates and re-optimizes, and shows how much less the portfolios deliver than they promise.</li>
+<li><strong>Backtests.</strong> Walk-forward backtests with costs since 1972, recomputed in the browser, next to the pre-registered results.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<p>I fixed the hypotheses, methods and tests in writing before running anything. The main test pits thirteen methods against equal weights on the industries-and-Treasuries universe from 1972 to 2026, rebalancing monthly with a ten-year estimation window and trading costs of 10 basis points (2 for Treasuries).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Does any optimizer beat equal weights?</td>
+<td>No. The best (Black-Litterman with momentum views) leads by 0.06 of Sharpe, interval −0.03 to +0.15; maximum Sharpe on historical means trails by 0.13. Nothing is significant after correcting for thirteen tests</td>
+</tr>
+<tr>
+<td>Do risk-based methods help?</td>
+<td>They deliver the same Sharpe with far less risk: minimum variance runs at 7.7% volatility with an 18% worst drawdown, against 13.1% and 43%</td>
+</tr>
+<tr>
+<td>Where does optimization go wrong?</td>
+<td>In the expected returns. With known parameters, errors in the means cost 0.066 of Sharpe and errors in the covariance 0.011; optimizers promised a Sharpe of 0.79 and delivered 0.51</td>
+</tr>
+<tr>
+<td>Does learning how to weight signals beat equal weights?</td>
+<td>Yes, against my pre-registered expectation, but only because one signal (industry-level short-term reversal) had a reliably wrong sign. Fixing that sign by hand made equal weights as good as learning</td>
+</tr>
+<tr>
+<td>Does Kelly sizing pay?</td>
+<td>It grew wealth fastest and fell 78-86% from peak</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/portfolio-manager/estimation-error.png" alt="Promised and delivered Sharpe ratios under estimation error" /><figcaption>Promised and delivered Sharpe ratios under estimation error</figcaption></figure>
+<p><strong>Optimization did not create alpha.</strong> Where a method did better, the improvement came from better inputs, such as Black-Litterman’s anchoring to market weights or a correctly signed signal, or from simply taking less risk. Shrinking the inputs and capping positions made optimizers less harmful rather than better. Risk models had their own lessons: on daily data every unconditional value-at-risk model breached too often or in clusters, and stock-bond correlations, which turned negative in the 2000s and 2010s, are positive again in the 2020s.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>A solver I can explain.</strong> Portfolios come from a quadratic-program solver I wrote (the ADMM algorithm behind OSQP, with an exact final step). It matches the Clarabel interior-point solver to eight decimal places, and the browser runs a line-by-line port of it, checked against the Python version on 54 test cases.</li>
+<li><strong>Point-in-time signals.</strong> Every research system hands over the same record. The engine only ever reads signals known at the decision date, and tests rewrite the future to prove that no past decision changes.</li>
+<li><strong>Realistic backtests.</strong> Trades are charged spread, commissions and square-root market impact, cash earns the T-bill rate and shorts pay a borrow fee. Execution goes through a two-message interface, and the same orders can be routed through <a href="https://rasmuscodes.github.io/projects/smart-router/">my smart order router</a>, a separate project, for a simulated multi-venue execution.</li>
+<li><strong>Statistics.</strong> Paired bootstrap and Jobson-Korkie tests on Sharpe differences, Holm corrections across methods, and a synthetic laboratory where the true signal quality is known.</li>
+</ul>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Industry portfolios are not instruments; sector funds and futures only cover recent decades, so the cost assumptions are assumptions.</li>
+<li>One fourteen-asset universe carries the main result; with hundreds of assets or genuinely strong signals the trade-off between estimation error and opportunity changes.</li>
+<li>The built-in signals are simple public ones. The engine is designed to take signals from my other research systems, but those use licensed or private data and are not part of the public study.</li>
+<li>Sharpe differences of a few hundredths cannot be detected even in 55 years of monthly data, so several results are absences of evidence rather than proof of equality.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package (NumPy, pandas, SciPy) with 109 tests, a script that rebuilds every experiment from public data (Ken French’s industry and factor returns and Federal Reserve Treasury yields), and a static browser demo in plain JavaScript with its own SVG charts and no external requests. Data: Kenneth R. French Data Library and FRED.</p>
+]]></content:encoded></item><item><title>Combining sixteen equity signals: does complexity pay?</title><link>https://rasmuscodes.github.io/projects/alpha-combination/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/alpha-combination/</guid><pubDate>Sun, 22 Nov 2026 12:00:00 +0000</pubDate><description>A pre-registered test of seventeen ways to combine noisy, correlated return signals in the S&amp;P 500 from 1980 to 2024, with an interactive lab that runs the same methods in the browser.</description><category>signal combination</category><category>machine learning</category><category>factor investing</category><category>portfolio construction</category><content:encoded><![CDATA[<p>A portfolio manager with many imperfect signals has to decide how to combine them. Machine learning promises to find the right weights, interactions and regimes; equal weighting promises nothing and is hard to beat. I tested seventeen combination methods against equal weights on sixteen published US-equity signals (momentum, reversal, value, quality, investment, low risk and seasonality) in the S&amp;P 500, strictly out of sample and after trading costs. The protocol, hypotheses and decision rule were committed to git before any result existed.</p>
 <p>The lab below has three parts. The first shows why ten highly correlated signals are not ten sources of alpha. The second builds a world where you know the truth (pick the signals, their strength and correlations, add non-linearity, regime switches or decay) and runs a full walk-forward comparison of the methods in your browser. The third shows the S&amp;P 500 results.</p>
 <link rel="stylesheet" href="https://rasmuscodes.github.io/apps/alpha-combination/lab.css?v=20261121a">
 <div data-acl-lab data-wide></div>
@@ -866,31 +944,4 @@
 </ul>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>Python, with parquet tables and a DuckDB catalogue as the point-in-time store, statsmodels for the regressions, and scikit-learn and LightGBM for walk-forward models.</p>
-]]></content:encoded></item><item><title>A browser editor for game-theory trees, with LaTeX and image export</title><link>https://rasmuscodes.github.io/projects/game-tree-studio/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/game-tree-studio/</guid><pubDate>Thu, 12 Nov 2026 12:00:00 +0000</pubDate><description>Draw extensive-form game trees with chance moves, information sets and payoffs, then export them as PNG, SVG or TikZ. Nothing to install and no account.</description><category>game theory</category><category>latex</category><category>web app</category><content:encoded><![CDATA[<p>Game Tree Studio is a single-page editor for the trees used in game theory. An extensive-form game is a game drawn as a tree: each branch point is a move by a player or by chance, and the leaves hold the payoffs. It is the standard way to show who moves when and what they know. Drawing one neatly by hand or in LaTeX is slow, so this editor makes it a matter of clicks and keystrokes, then exports the result for papers, slides and course work.</p>
-<h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
-<ul>
-<li><strong>Quick tree building.</strong> Double-click a node to add moves, press 1 to 6 to give it to a player, or N to make it a chance node.</li>
-<li><strong>Information sets</strong> (nodes a player cannot tell apart). Shift-click them and press I. They are drawn as a dashed line, a dotted line or an oval, and the move labels stay in sync across the set.</li>
-<li><strong>Chance moves</strong> with numeric or symbolic probabilities, such as 1/3 or 1 − π. The editor warns when numeric probabilities don’t add up to 1.</li>
-<li><strong>Payoffs as expressions,</strong> with a small LaTeX-like markup for subscripts, superscripts, Greek letters and true minus signs.</li>
-<li><strong>Continua of actions,</strong> drawn as an arc between the extreme choices, with one representative move and a range label.</li>
-<li><strong>Highlighted moves,</strong> a thick line with an arrow, to mark a strategy profile or a path found by backward induction (solving the game from the leaves back to the root).</li>
-<li><strong>Layout and notation options:</strong> top-to-bottom or left-to-right trees, spacing sliders, terminal nodes on one row, three payoff styles, round or square chance nodes, serif or sans-serif text and optional colours by player.</li>
-<li>Undo and redo, copy and paste of subtrees, keyboard navigation, light and dark themes, and a layout that works on phones.</li>
-</ul>
-<h2 id="export">Export <a class="header-anchor" href="#export">#</a></h2>
-<ul>
-<li><strong>PNG</strong> at three times screen resolution, for documents, slides and course submissions.</li>
-<li><strong>SVG</strong> for the web or further editing, or a copy straight to the clipboard.</li>
-<li><strong>TikZ</strong> for LaTeX, with every element at the coordinates shown in the editor and simple fractions typeset as fractions.</li>
-<li><strong>GTDraw <code>.ef</code> files</strong>, for fine-tuning the typesetting in that tool.</li>
-<li><strong>JSON</strong>, the editor’s own format. Dragging a saved file onto the canvas opens the game again.</li>
-</ul>
-<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
-<p>One HTML page, one stylesheet and one JavaScript file that holds the tree model, the layout, the SVG rendering and every exporter. There is no build step, no server and no account. The live copy runs on GitHub Pages, and the code is MIT-licensed.</p>
-<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
-<ul>
-<li><strong>It draws games; it doesn’t solve them.</strong> Highlighted paths are marked by hand.</li>
-<li><strong>Storage is per browser and per address.</strong> Games are kept in the browser’s local storage, so a copy on GitHub Pages and a copy opened from disk keep separate libraries, and clearing site data removes them. Saving a game file keeps a copy that opens anywhere.</li>
-</ul>
 ]]></content:encoded></item></channel></rss>

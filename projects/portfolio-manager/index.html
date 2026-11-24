@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A portfolio manager that explains itself, and what optimization is worth · Rasmus Suonio</title>
+<meta name="description" content="A portfolio construction and risk engine that turns research signals into positions, explains every weight, stress-tests and backtests the result, with a pre-registered test of fourteen methods on 55 years of public data and a live demo that runs the engine in your browser.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/portfolio-manager/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A portfolio manager that explains itself, and what optimization is worth">
+<meta property="og:description" content="A portfolio construction and risk engine that turns research signals into positions, explains every weight, stress-tests and backtests the result, with a pre-registered test of fourteen methods on 55 years of public data and a live demo that runs the engine in your browser.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/portfolio-manager/"><meta property="og:image" content="https://rasmuscodes.github.io/media/portfolio-manager/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A portfolio manager that explains itself, and what optimization is worth</h1>
+<p class="post__sub">A portfolio construction and risk engine that turns research signals into positions, explains every weight, stress-tests and backtests the result, with a pre-registered test of fourteen methods on 55 years of public data and a live demo that runs the engine in your browser.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-23">23 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>5 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/portfolio-manager/" data-title="A portfolio manager that explains itself, and what optimization is worth">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/portfolio-manager/&amp;text=A%20portfolio%20manager%20that%20explains%20itself%2C%20and%20what%20optimization%20is%20worth" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/portfolio-manager/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20portfolio%20manager%20that%20explains%20itself%2C%20and%20what%20optimization%20is%20worth&amp;body=https%3A//rasmuscodes.github.io/projects/portfolio-manager/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/quant-portfolio-manager" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://github.com/RasmusCodes/quant-portfolio-manager/blob/main/reports/REPORT.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Research report</span></a><a class="file" href="https://github.com/RasmusCodes/quant-portfolio-manager/blob/main/reports/PREREGISTRATION.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Pre-registration</span></a><a class="file" href="/apps/portfolio-manager/"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Demo, full screen</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Optimizers beating equal weights after costs</dt><dd class="is-text">0 of 13 (Holm-corrected)</dd></div><div><dt>Minimum variance vs equal weights</dt><dd class="is-text">Same Sharpe at 7.7% vs 13.1% volatility</dd></div><div><dt>Cost of errors in means vs covariance</dt><dd class="is-text">0.066 vs 0.011 of Sharpe</dd></div><div><dt>Learned signal weights vs equal weights</dt><dd class="is-text">Won only by catching a wrong sign</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>NumPy</li><li>pandas</li><li>SciPy</li><li>JavaScript</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/portfolio-manager/cover.png" alt="Net Sharpe ratio of thirteen portfolio construction methods minus that of equal weights, 1972-2026, with 95% bootstrap intervals; every interval but one crosses zero."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>A portfolio manager has to turn many imperfect signals into one set of positions without letting any one input, or the optimizer itself, take over. I built the engine that does that: it reads signals from independent research systems through one point-in-time interface, builds portfolios with fourteen construction methods under realistic constraints, explains why each position is the size it is, measures the risk, stress-tests it and backtests it walk-forward with trading costs. Then I asked the question every optimizer has to answer: does it beat simply holding everything in equal weights?</p>
+<p>The demo below runs the same engine in your browser on monthly data for 12 US industries and two Treasury maturities since 1962, or on nine factor “strategy sleeves”. Pick a method, change the inputs or the constraints, and read the explanation under the weights.</p>
+<div class="qpm-wrap"><iframe id="qpm-demo" src="/apps/portfolio-manager/" title="Portfolio manager demo: build, explain, stress and backtest portfolios in the browser" loading="lazy"></iframe></div>
+<script>
+(function () {
+  var frame = document.getElementById("qpm-demo");
+  if (!frame) return;
+  window.addEventListener("message", function (ev) {
+    if (ev.origin !== window.location.origin || ev.source !== frame.contentWindow) return;
+    var d = ev.data || {};
+    if (d.type === "qpm-demo-height" && d.height > 400) frame.style.height = Math.ceil(d.height) + "px";
+  });
+})();
+</script>
+<style>
+.qpm-wrap { width: min(1240px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); margin: 28px 0 36px; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.qpm-wrap iframe { display: block; width: 100%; height: 1900px; border: 0; background: transparent; }
+@media (max-width: 640px) { .qpm-wrap { width: calc(100vw - 24px); } }
+</style>
+<h2 id="what-the-demo-does">What the demo does <a class="header-anchor" href="#what-the-demo-does">#</a></h2>
+<ul>
+<li><strong>Construct.</strong> Thirteen methods, from equal weights to mean-variance, maximum Sharpe, risk parity, equal risk contribution, hierarchical risk parity, Black-Litterman, Kelly and a market-neutral book, under position, sector, gross-exposure and volatility limits. You can edit any asset’s expected return or volatility, or add an asset of your own.</li>
+<li><strong>Why each position.</strong> For optimizer-based methods every weight is decomposed exactly: the asset’s expected return, what the binding constraints cost (their shadow prices act like changes to expected returns), the part of the return the other assets already deliver, and the risk they cannot hedge away.</li>
+<li><strong>Signals.</strong> Research signals arrive with their family, horizon, provenance, model version and a track record measured month by month. You can switch them on and off, combine them five ways, add your own, and use the result as expected returns.</li>
+<li><strong>Risk and stress tests.</strong> Value at risk five ways, factor exposures, backfilled drawdowns, liquidity at different fund sizes, correlations in calm and turbulent markets, and nine scenarios (2008, 2020, 2022, the 1987 crash, the dot-com bust, an AI-capex reversal, a volatility spike, a bond sell-off, a credit crisis) that you can edit or extend.</li>
+<li><strong>Estimation error lab.</strong> It treats the current inputs as the truth, simulates histories from them, re-estimates and re-optimizes, and shows how much less the portfolios deliver than they promise.</li>
+<li><strong>Backtests.</strong> Walk-forward backtests with costs since 1972, recomputed in the browser, next to the pre-registered results.</li>
+</ul>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<p>I fixed the hypotheses, methods and tests in writing before running anything. The main test pits thirteen methods against equal weights on the industries-and-Treasuries universe from 1972 to 2026, rebalancing monthly with a ten-year estimation window and trading costs of 10 basis points (2 for Treasuries).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Does any optimizer beat equal weights?</td>
+<td>No. The best (Black-Litterman with momentum views) leads by 0.06 of Sharpe, interval −0.03 to +0.15; maximum Sharpe on historical means trails by 0.13. Nothing is significant after correcting for thirteen tests</td>
+</tr>
+<tr>
+<td>Do risk-based methods help?</td>
+<td>They deliver the same Sharpe with far less risk: minimum variance runs at 7.7% volatility with an 18% worst drawdown, against 13.1% and 43%</td>
+</tr>
+<tr>
+<td>Where does optimization go wrong?</td>
+<td>In the expected returns. With known parameters, errors in the means cost 0.066 of Sharpe and errors in the covariance 0.011; optimizers promised a Sharpe of 0.79 and delivered 0.51</td>
+</tr>
+<tr>
+<td>Does learning how to weight signals beat equal weights?</td>
+<td>Yes, against my pre-registered expectation, but only because one signal (industry-level short-term reversal) had a reliably wrong sign. Fixing that sign by hand made equal weights as good as learning</td>
+</tr>
+<tr>
+<td>Does Kelly sizing pay?</td>
+<td>It grew wealth fastest and fell 78-86% from peak</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="figure"><img loading="lazy" decoding="async" src="/media/portfolio-manager/estimation-error.png" alt="Promised and delivered Sharpe ratios under estimation error" /><figcaption>Promised and delivered Sharpe ratios under estimation error</figcaption></figure>
+<p><strong>Optimization did not create alpha.</strong> Where a method did better, the improvement came from better inputs, such as Black-Litterman’s anchoring to market weights or a correctly signed signal, or from simply taking less risk. Shrinking the inputs and capping positions made optimizers less harmful rather than better. Risk models had their own lessons: on daily data every unconditional value-at-risk model breached too often or in clusters, and stock-bond correlations, which turned negative in the 2000s and 2010s, are positive again in the 2020s.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>A solver I can explain.</strong> Portfolios come from a quadratic-program solver I wrote (the ADMM algorithm behind OSQP, with an exact final step). It matches the Clarabel interior-point solver to eight decimal places, and the browser runs a line-by-line port of it, checked against the Python version on 54 test cases.</li>
+<li><strong>Point-in-time signals.</strong> Every research system hands over the same record. The engine only ever reads signals known at the decision date, and tests rewrite the future to prove that no past decision changes.</li>
+<li><strong>Realistic backtests.</strong> Trades are charged spread, commissions and square-root market impact, cash earns the T-bill rate and shorts pay a borrow fee. Execution goes through a two-message interface, and the same orders can be routed through <a href="/projects/smart-router/">my smart order router</a>, a separate project, for a simulated multi-venue execution.</li>
+<li><strong>Statistics.</strong> Paired bootstrap and Jobson-Korkie tests on Sharpe differences, Holm corrections across methods, and a synthetic laboratory where the true signal quality is known.</li>
+</ul>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Industry portfolios are not instruments; sector funds and futures only cover recent decades, so the cost assumptions are assumptions.</li>
+<li>One fourteen-asset universe carries the main result; with hundreds of assets or genuinely strong signals the trade-off between estimation error and opportunity changes.</li>
+<li>The built-in signals are simple public ones. The engine is designed to take signals from my other research systems, but those use licensed or private data and are not part of the public study.</li>
+<li>Sharpe differences of a few hundredths cannot be detected even in 55 years of monthly data, so several results are absences of evidence rather than proof of equality.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package (NumPy, pandas, SciPy) with 109 tests, a script that rebuilds every experiment from public data (Ken French’s industry and factor returns and Federal Reserve Treasury yields), and a static browser demo in plain JavaScript with its own SVG charts and no external requests. Data: Kenneth R. French Data Library and FRED.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/portfolio-construction/">portfolio construction</a><a class="tag" href="/tags/risk-management/">risk management</a><a class="tag" href="/tags/optimization/">optimization</a><a class="tag" href="/tags/signal-combination/">signal combination</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/portfolio-manager/" data-title="A portfolio manager that explains itself, and what optimization is worth">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/portfolio-manager/&amp;text=A%20portfolio%20manager%20that%20explains%20itself%2C%20and%20what%20optimization%20is%20worth" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/portfolio-manager/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20portfolio%20manager%20that%20explains%20itself%2C%20and%20what%20optimization%20is%20worth&amp;body=https%3A//rasmuscodes.github.io/projects/portfolio-manager/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/alpha-combination/"><span>Previous</span><b>Combining sixteen equity signals: does complexity pay?</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

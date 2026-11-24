@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio manager demo</title>
+<meta name="description" content="Interactive portfolio construction, signal combination, risk and backtesting on public data. Runs entirely in your browser.">
+<link rel="stylesheet" href="style.css?v=29f58df351">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="top__title">
+      <h1>Portfolio manager</h1>
+      <p class="sub">Build a portfolio from research signals, see why the optimizer chose each position, then stress it and backtest it. Everything runs in your browser on public monthly data.</p>
+    </div>
+    <div class="top__controls">
+      <label class="field">Universe
+        <select id="universe">
+          <option value="multi_asset">12 US industries + Treasuries</option>
+          <option value="sleeves">Strategy sleeves (factor returns)</option>
+        </select>
+      </label>
+      <span class="asof" id="asof"></span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="construct" aria-selected="true">Construct</button>
+    <button role="tab" data-tab="signals">Signals</button>
+    <button role="tab" data-tab="risk">Risk</button>
+    <button role="tab" data-tab="stress">Stress tests</button>
+    <button role="tab" data-tab="frontier">Frontier &amp; estimation error</button>
+    <button role="tab" data-tab="backtest">Backtest</button>
+    <button role="tab" data-tab="study">Study results</button>
+  </nav>
+
+  <!-- CONSTRUCT -->
+  <section class="panel" id="tab-construct" role="tabpanel">
+    <div class="layout">
+      <aside class="controls" aria-label="Inputs">
+        <h2>Method</h2>
+        <label class="field">Construction method <select id="method"></select></label>
+        <label class="field">Compare with <select id="compare"></select></label>
+        <label class="field" id="ra-field">Risk aversion <span class="val" id="ra-val"></span>
+          <input type="range" id="risk-aversion" min="0.5" max="20" step="0.5" value="4"></label>
+        <p class="hint" id="method-hint"></p>
+
+        <h2>Inputs</h2>
+        <label class="field">Expected returns
+          <select id="mean-source">
+            <option value="historical">Historical average (window)</option>
+            <option value="bayes_stein">Bayes-Stein shrinkage</option>
+            <option value="equilibrium">Equilibrium (reverse-optimized market)</option>
+            <option value="signals">Equilibrium + signals</option>
+          </select></label>
+        <label class="field">Covariance
+          <select id="cov-method">
+            <option value="lw_cc">Ledoit-Wolf shrinkage</option>
+            <option value="sample">Sample</option>
+            <option value="ewma">Exponentially weighted (36m half-life)</option>
+          </select></label>
+        <label class="field">Estimation window
+          <select id="window"><option value="60">5 years</option><option value="120" selected>10 years</option><option value="240">20 years</option></select></label>
+
+        <h2>Constraints</h2>
+        <label class="check"><input type="checkbox" id="long-short"> Allow short positions</label>
+        <div class="row2">
+          <label class="field">Min weight <input type="number" id="min-w" value="0" step="5" min="-100" max="100"><span class="unit">%</span></label>
+          <label class="field">Max weight <input type="number" id="max-w" value="25" step="5" min="0" max="100"><span class="unit">%</span></label>
+        </div>
+        <label class="field" id="gross-field">Gross exposure limit <input type="number" id="gross" value="150" step="10" min="100" max="400"><span class="unit">%</span></label>
+        <div id="group-caps"></div>
+        <label class="field">Volatility cap <input type="number" id="max-vol" value="" placeholder="none" step="1" min="1" max="50"><span class="unit">%</span></label>
+        <label class="check"><input type="checkbox" id="beta-neutral"> Market-neutral (zero equity beta; long-short)</label>
+        <p class="hint">Turnover and trading-cost limits live in the Backtest tab, where there is a previous portfolio to trade from.</p>
+
+        <h2>Assets</h2>
+        <p class="hint">Untick to exclude. Edit an expected return or volatility to override the estimate (blank resets).</p>
+        <div class="asset-table-wrap"><table class="asset-table" id="asset-table"></table></div>
+        <details class="add-asset">
+          <summary>Add an asset</summary>
+          <div class="form">
+            <label class="field">Name <input id="new-name" placeholder="e.g. Gold" maxlength="24"></label>
+            <div class="row2">
+              <label class="field">Expected excess return <input type="number" id="new-mu" value="3" step="0.5"><span class="unit">%</span></label>
+              <label class="field">Volatility <input type="number" id="new-vol" value="15" step="1" min="1"><span class="unit">%</span></label>
+            </div>
+            <label class="field">Correlation with the equity market <input type="number" id="new-rho" value="0.1" step="0.1" min="-0.9" max="0.9"></label>
+            <button class="btn" id="add-asset">Add asset</button>
+          </div>
+        </details>
+      </aside>
+
+      <div class="results">
+        <div class="messages" id="messages" role="status"></div>
+        <div class="tiles" id="tiles"></div>
+        <div class="card">
+          <div class="card__head"><h3>Weights</h3><div class="legend" id="weights-legend"></div></div>
+          <div id="weights-chart" class="chart"></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><h3>Share of portfolio risk</h3><span class="note">Euler decomposition of volatility; contributions add to 100%</span></div>
+          <div id="risk-chart" class="chart"></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><h3>Why the optimizer chose each position</h3></div>
+          <div id="why-intro" class="why-intro"></div>
+          <div id="why" class="why"></div>
+          <details class="why-table"><summary>Show the full decomposition table</summary><div id="why-table"></div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNALS -->
+  <section class="panel" id="tab-signals" role="tabpanel" hidden>
+    <div class="card">
+      <div class="card__head"><h3>Research signals</h3><span class="note" id="sig-asof"></span></div>
+      <p class="hint">Each research system hands over the same record: instrument, score, confidence, horizon, provenance, model version and track record. Built-in signals are computed from public data, with track records measured month by month on information available at the time. Illustrative rows show the other research families and are off by default.</p>
+      <div class="table-wrap"><table class="sig-table" id="sig-table"></table></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card__head"><h3>Combination</h3></div>
+        <label class="field">Method
+          <select id="combo-method">
+            <option value="equal">Equal weights</option>
+            <option value="ic_weighted">Dynamic confidence (recent IC)</option>
+            <option value="shrunk">Shrinkage (empirical Bayes)</option>
+            <option value="mean_var">Mean-variance on ICs</option>
+            <option value="confidence">Producer confidence</option>
+          </select></label>
+        <label class="field">IC assumed for the combined score <span class="val" id="ic-val"></span>
+          <input type="range" id="combo-ic" min="0.01" max="0.10" step="0.005" value="0.04"></label>
+        <p class="hint">Expected excess return = equilibrium return + IC × volatility × combined z-score (Grinold). Bayesian model averaging and the ridge ensemble need the full signal history and run in the Python engine; their results are in Study results.</p>
+        <div id="combo-weights" class="chart"></div>
+        <button class="btn btn--accent" id="use-signals">Use these as expected returns</button>
+      </div>
+      <div class="card">
+        <div class="card__head"><h3>Combined view per asset</h3></div>
+        <div id="combo-chart" class="chart"></div>
+      </div>
+    </div>
+    <div class="card">
+      <details>
+        <summary>Add your own signal</summary>
+        <div class="form form--inline">
+          <label class="field">Source <input id="us-source" value="my.model" maxlength="32"></label>
+          <label class="field">Family <select id="us-family"></select></label>
+          <label class="field">Instrument <select id="us-instrument"></select></label>
+          <label class="field">Score (z) <input type="number" id="us-value" value="1" step="0.25" min="-3" max="3"></label>
+          <label class="field">Confidence <input type="number" id="us-conf" value="0.5" step="0.1" min="0" max="1"></label>
+          <button class="btn" id="us-add">Add signal</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- RISK -->
+  <section class="panel" id="tab-risk" role="tabpanel" hidden>
+    <p class="hint" id="risk-intro"></p>
+    <div class="tiles" id="risk-tiles"></div>
+    <div class="grid2">
+      <div class="card"><div class="card__head"><h3>Value at risk, one month</h3>
+        <label class="field field--inline">Confidence <select id="var-level"><option value="0.95">95%</option><option value="0.99" selected>99%</option></select></label></div>
+        <div id="var-table"></div><p class="hint" id="var-note"></p></div>
+      <div class="card"><div class="card__head"><h3>Factor exposures</h3><span class="note">betas over the estimation window</span></div><div id="factor-chart" class="chart"></div><p class="hint" id="factor-note"></p></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="card__head"><h3>Backfilled drawdowns</h3><span class="note">today's weights held over history</span></div><div id="dd-chart" class="chart"></div></div>
+      <div class="card"><div class="card__head"><h3>Liquidity</h3>
+        <label class="field field--inline">Capital <select id="aum"><option value="1e8">$100m</option><option value="1e9" selected>$1bn</option><option value="1e10">$10bn</option><option value="1e11">$100bn</option></select></label></div>
+        <div id="liq"></div></div>
+    </div>
+    <div class="card"><div class="card__head"><h3>Correlation breakdown</h3><span class="note" id="corr-note"></span></div><div id="corr-chart" class="chart"></div></div>
+  </section>
+
+  <!-- STRESS -->
+  <section class="panel" id="tab-stress" role="tabpanel" hidden>
+    <p class="hint">Scenarios are plain data. Historical ones replay the assets' actual returns with today's weights held fixed; hypothetical ones shock factors (mapped to assets through betas estimated over the window) and, where named, individual assets.</p>
+    <div class="grid2">
+      <div class="card"><div class="card__head"><h3>Scenario P&amp;L</h3><div class="legend" id="stress-legend"></div></div><div id="stress-chart" class="chart"></div></div>
+      <div class="card"><div class="card__head"><h3 id="stress-detail-title">Scenario detail</h3></div><p class="hint" id="stress-desc"></p><div id="stress-detail" class="chart"></div></div>
+    </div>
+    <div class="card">
+      <details><summary>Edit or add a scenario (JSON)</summary>
+        <p class="hint">Kinds: historical (start, end), factor (factor_shocks over Mkt-RF, SMB, HML, RMW, CMA, Mom, Rates; asset_shocks), volatility (vol_multiplier, correlation_target, correlation_weight). Shocks are simple returns over the scenario.</p>
+        <textarea id="scenario-json" rows="10" spellcheck="false"></textarea>
+        <div class="btns"><button class="btn" id="scenario-apply">Save scenario</button><span class="hint" id="scenario-msg"></span></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- FRONTIER -->
+  <section class="panel" id="tab-frontier" role="tabpanel" hidden>
+    <div class="card"><div class="card__head"><h3>Efficient frontier under your constraints</h3><div class="legend" id="frontier-legend"></div></div>
+      <div id="frontier-chart" class="chart chart--tall"></div><p class="hint" id="frontier-note"></p></div>
+    <div class="card">
+      <div class="card__head"><h3>Estimation error lab</h3></div>
+      <p class="hint">Treat the current inputs as the truth, simulate return histories of the chosen length from them, re-estimate, re-optimize, and score each portfolio with the TRUE inputs. The gap between promised and delivered Sharpe ratios is what estimation error costs.</p>
+      <div class="form form--inline">
+        <label class="field">History length <select id="ee-T"><option value="60">5 years</option><option value="120" selected>10 years</option><option value="240">20 years</option></select></label>
+        <label class="field">Simulations <select id="ee-n"><option value="50">50</option><option value="100" selected>100</option><option value="200">200</option></select></label>
+        <button class="btn btn--accent" id="ee-run">Run</button><span class="hint" id="ee-status"></span>
+      </div>
+      <div class="grid2">
+        <div><h4>Promised vs delivered Sharpe ratio</h4><div id="ee-sharpe" class="chart"></div></div>
+        <div><h4>How much the weights move</h4><div id="ee-weights" class="chart"></div></div>
+      </div>
+      <p class="hint" id="ee-note"></p>
+    </div>
+  </section>
+
+  <!-- BACKTEST -->
+  <section class="panel" id="tab-backtest" role="tabpanel" hidden>
+    <div class="card">
+      <div class="card__head"><h3>Walk-forward backtest</h3></div>
+      <p class="hint">At each rebalance the method sees only the trailing window, trades at month end paying costs on the weight traded, then earns the next month's returns. Constraints come from the Construct tab.</p>
+      <div class="form form--inline">
+        <fieldset class="methods" id="bt-methods"><legend>Methods (up to 4)</legend></fieldset>
+        <label class="field">Rebalance <select id="bt-every"><option value="1">Monthly</option><option value="3">Quarterly</option><option value="12">Annually</option></select></label>
+        <label class="field">Start <select id="bt-start"></select></label>
+        <label class="field">Cost, risky assets <input type="number" id="bt-cost" value="10" step="5" min="0" max="200"><span class="unit">bp</span></label>
+        <label class="field">Cost, Treasuries <input type="number" id="bt-cost-b" value="2" step="1" min="0" max="50"><span class="unit">bp</span></label>
+        <button class="btn btn--accent" id="bt-run">Run backtest</button>
+      </div>
+      <div class="progress" id="bt-progress" hidden><div></div></div>
+      <div id="bt-out" hidden>
+        <div class="card__head"><h4>Growth of $1 (log scale)</h4><div class="legend" id="bt-legend"></div></div>
+        <div id="bt-growth" class="chart chart--tall"></div>
+        <h4>Drawdown</h4>
+        <div id="bt-dd" class="chart"></div>
+        <div id="bt-table"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDY -->
+  <section class="panel" id="tab-study" role="tabpanel" hidden>
+    <div id="study"></div>
+  </section>
+
+  <footer class="foot">
+    <p>Data: Kenneth R. French Data Library (industry portfolios, factors, T-bill rate; © Eugene F. Fama and Kenneth R. French), FRED / Federal Reserve H.15 Treasury yields rebuilt into total returns. Monthly through <span id="last-month"></span>. For research and teaching; not investment advice. <span id="engine-note"></span></p>
+  </footer>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+<script src="data/bundle.js?v=a54bd47ca1"></script>
+<script src="engine.js?v=35401121bf"></script>
+<script src="charts.js?v=ef7a4d95b2"></script>
+<script src="app.js?v=c1488c4fc6"></script>
+</body>
+</html>
