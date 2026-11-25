@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cross-Asset RV Scanner</title>
+<meta name="description" content="Interactive cross-asset relative-value scanner: arbitrage relationships vs statistical signals, with costs, carry, risk and backtests.">
+<link rel="stylesheet" href="style.css?v=20261123">
+<script>
+  // Follow the site's light/dark choice (same localStorage key as rasmuscodes.github.io).
+  try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="app">
+  <header class="app-head">
+    <div>
+      <h1>Cross-asset relative-value scanner</h1>
+      <p>Pricing relationships across ETFs, futures, ADRs and dual listings, FX, sovereign and corporate bonds, commodities and funding markets. Each one is labelled as an enforceable <b>arbitrage</b>, an <b>economic link</b>, or a purely <b>statistical</b> relationship, and every signal is checked for timing, costs, borrow and liquidity before it is called executable.</p>
+    </div>
+    <div class="asof">Data to <b id="asof">…</b> · <a href="https://github.com/RasmusCodes/cross-asset-rv-scanner" target="_blank" rel="noopener">Code and report on GitHub</a></div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" data-tab="scan" aria-selected="true">Scanner</button>
+    <button role="tab" data-tab="build" aria-selected="false">Build a pair (open data)</button>
+    <button role="tab" data-tab="research" aria-selected="false">What the research found</button>
+    <button role="tab" data-tab="about" aria-selected="false">How it works</button>
+  </nav>
+
+  <section id="tab-scan">
+    <div class="scan-layout">
+      <aside class="filters" aria-label="Filters">
+        <h3>Search instruments</h3>
+        <input type="search" id="q" placeholder="e.g. TSM, Bund, WTI, SPY">
+        <h3>Asset classes</h3>
+        <div id="f-classes"></div>
+        <h3>Relationship strength</h3>
+        <div id="f-tiers"></div>
+        <h3>Opportunity types</h3>
+        <div id="f-types"></div>
+        <h3>Signal rule</h3>
+        <div class="slider"><span>Entry |z|</span><b id="v-entry" class="mono">2.0</b><input type="range" id="p-entry" min="1" max="4" step="0.25" value="2"></div>
+        <div class="slider"><span>Exit |z|</span><b id="v-exit" class="mono">0.5</b><input type="range" id="p-exit" min="0" max="1.5" step="0.25" value="0.5"></div>
+        <div class="slider"><span>Cost multiplier</span><b id="v-cost" class="mono">1.0×</b><input type="range" id="p-cost" min="0" max="3" step="0.25" value="1"></div>
+        <label><input type="checkbox" id="p-only-exec"> Only executable</label>
+        <p class="small muted">The table re-scans as you move the sliders: verdicts are recomputed from each relationship's current z-score, half-life, costs, band, borrow and timing.</p>
+      </aside>
+      <div>
+        <div class="legend-box">
+          <div><span class="badge tier-arbitrage">Arbitrage</span> a contract or creation/redemption mechanism can force convergence, net of costs.</div>
+          <div><span class="badge tier-quasi">Economic link</span> a convergence mechanism exists but cannot be forced on any timetable.</div>
+          <div><span class="badge tier-statistical">Statistical</span> co-movement without a mechanism: any signal is a bet, never an arbitrage.</div>
+        </div>
+        <div class="counts" id="counts"></div>
+        <div class="table-wrap"><table class="grid" id="tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="small muted" id="tbl-note"></p>
+      </div>
+    </div>
+    <div id="detail" class="detail" hidden></div>
+  </section>
+
+  <section id="tab-build" hidden></section>
+  <section id="tab-research" hidden></section>
+
+  <section id="tab-about" hidden>
+    <div class="prose">
+      <h2>How the scanner works</h2>
+      <h3>Three kinds of relationship</h3>
+      <p><b>Arbitrage</b> relationships have a mechanism that a trader can use to force prices together: ETF creation and redemption, cash-and-carry for index futures, depositary conversion of ADRs, cross-border settlement of interlisted shares, Berkshire's class A to class B conversion. <b>Economic links</b> (share classes without conversion, dual-listed companies, ADRs with conversion limits such as Taiwan's, calendar and crack spreads, same-index funds) have a reason to converge but nothing that forces it. <b>Statistical</b> relationships (sector and stock pairs, index pairs, curve and cross-market bond spreads, carry) are co-movements; the scanner never calls them arbitrage, however good their test statistics look.</p>
+      <h3>From a deviation to an executable opportunity</h3>
+      <p>A signal starts when the spread's z-score passes the entry level. It is only called <b>executable</b> when every check passes:</p>
+      <ul>
+        <li>the legs' closing prices are within an hour of each other (Tokyo, Taipei and Hong Kong closes are 13–16 hours before New York, so their apparent ADR "premiums" are partly the market move in between);</li>
+        <li>for arbitrage relationships, the deviation lies outside the no-arbitrage band (conversion fees, stamp duties and transaction taxes, half-spreads, FX conversion);</li>
+        <li>the expected convergence over the next half-lives covers round-trip costs after carry, funding and borrow;</li>
+        <li>the short leg can be borrowed (Indian ordinary shares cannot be shorted by foreign investors, for example);</li>
+        <li>the spread shows mean reversion in its recent history (Dickey-Fuller test, not a normal t-test) and its half-life is longer than a day;</li>
+        <li>the data are current.</li>
+      </ul>
+      <h3>Timing and costs</h3>
+      <p>Backtests trade at the close <b>after</b> the signal (next-close execution), pay stress-scaled half-spreads, commissions, transaction taxes and FX conversion on every leg, plus funding, borrow and hedge-rebalancing costs. The research tab shows why the next-close rule matters: with same-close fills, <b data-r="same_close_gt1">…</b> relationships look like Sharpe-above-1 arbitrages; with next-close fills, <b data-r="base_gt1">…</b> do.</p>
+      <h3>Models</h3>
+      <p>Engle-Granger and Johansen cointegration tests (MacKinnon p-values), augmented Dickey-Fuller, Kalman-filter and rolling hedge ratios, Ornstein-Uhlenbeck half-lives, a two-state Markov-switching model of the spread, and a Bayesian comparison of mean reversion against a random walk with posterior-predictive forecasts. Relationship stability is tracked with rolling tests and CUSUM. Multiple testing is controlled with Benjamini-Hochberg, Bonferroni, deflated Sharpe ratios and White's reality check.</p>
+      <h3>Data policy</h3>
+      <p>Rates, FX fixings, sovereign yields, money-market rates and EIA energy prices come from public-domain or open sources (US Treasury, Federal Reserve, New York Fed, ECB, Bundesbank, Japan's Ministry of Finance, Bank of Canada, Reserve Bank of Australia, Bank of England, EIA, OECD); those series are fully interactive in <i>Build a pair</i>. Relationships that use vendor prices (ETFs, ADRs and home listings, index futures, issuer NAVs, Moody's and ICE yields) are shown as derived analytics only: the spread, the hedged position's P&amp;L, costs and backtests, never the instruments' own prices.</p>
+      <p class="muted small">Nothing here is investment advice. Results describe historical data under stated assumptions.</p>
+    </div>
+  </section>
+</div>
+<script src="js/stats.js?v=20261123"></script>
+<script src="js/chart.js?v=20261123"></script>
+<script src="js/app.js?v=20261123"></script>
+</body>
+</html>
