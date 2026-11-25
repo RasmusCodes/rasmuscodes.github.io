@@ -48,11 +48,19 @@
     window.addEventListener("storage", (e) => { if (e.key === "theme") { applyTheme(e.newValue); } });
     try { if (window.parent !== window) { const t = window.parent.document.documentElement.getAttribute("data-theme"); if (t) applyTheme(t); } } catch (e) { /* cross-origin */ }
     resizeParent();
-    new ResizeObserver(resizeParent).observe(document.body);
+    new ResizeObserver(resizeParent).observe(document.querySelector(".app"));
   }
   function applyTheme(t) { if (t) document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme"); redrawCharts(); }
   function resizeParent() {
-    try { if (window.frameElement) window.frameElement.style.height = Math.max(900, document.documentElement.scrollHeight + 8) + "px"; } catch (e) { /* cross-origin */ }
+    // Size the embedding iframe to the app's CONTENT height. documentElement.scrollHeight can't be used: inside an
+    // iframe it is never smaller than the iframe itself, so the height could only ever grow.
+    try {
+      if (!window.frameElement) return;
+      const app = document.querySelector(".app");
+      const h = Math.max(600, Math.ceil(app.getBoundingClientRect().height) + 24);
+      const cur = parseInt(window.frameElement.style.height || "0", 10);
+      if (Math.abs(cur - h) > 4) window.frameElement.style.height = h + "px";
+    } catch (e) { /* cross-origin */ }
   }
   const charts = new Set();
   function chart(el, opts) { const c = new C.LineChart(el, opts); charts.add(c); return c; }

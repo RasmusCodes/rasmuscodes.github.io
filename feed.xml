@@ -135,7 +135,7 @@
 <p>A signal is called executable only if the legs’ closing prices are synchronous, the deviation clears the no-arbitrage band (fees, stamp duties, transaction taxes, half-spreads, FX), the expected convergence pays for costs, carry, funding and borrow, the short leg can be borrowed, and the spread actually mean-reverts.</p>
 <p>Try it below. Filter by asset class or relationship strength, move the entry threshold, and open any relationship to see its spread, hedge ratio, past convergence, costs and risk, or run a hypothetical trade. <em>Build a pair</em> runs the cointegration tests and a backtest in your browser on open government and central-bank data.</p>
 <div style="width: min(1240px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); margin: 28px 0 36px;">
-<iframe src="https://rasmuscodes.github.io/apps/cross-asset-rv/?v=20261123" title="Cross-asset relative-value scanner" loading="lazy" style="display: block; width: 100%; height: 1150px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg);"></iframe>
+<iframe src="https://rasmuscodes.github.io/apps/cross-asset-rv/?v=20261125" title="Cross-asset relative-value scanner" style="display: block; width: 100%; height: 1150px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg);"></iframe>
 </div>
 <h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
 <p>Data runs to 20 November 2026. The same rule, fixed in advance, applies to every relationship: enter at a z-score of 2, exit at 0.5, stop at 4, trade at the next close, conservative costs.</p>
