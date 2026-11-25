@@ -81,13 +81,13 @@
 <div><dt>River solves</dt><dd class="is-text">0.1% of the pot in about 150 iterations</dd></div><div><dt>Browser engine vs Rust engine</dt><dd class="is-text">6,344 parity checks, all equal</dd></div><div><dt>Opponent-model error</dt><dd class="is-text">0.077 at 50 hands, 0.019 at 2,500</dd></div><div><dt>Automated tests</dt><dd class="is-text">67 Rust, 107 Python</dd></div>  </dl>
 <ul class="stack stack--sheet"><li>Rust</li><li>Python</li><li>JavaScript</li></ul></section>
 
-  <figure class="post__cover"><img src="/media/poker-ecosystem/cover.png" alt="Two 13 by 13 grids of the big blind&#39;s river strategy on Q-8-5-3-2. At equilibrium every hand checks; against a button that folds 70% of the time to bets, the exploiting strategy bets 81% of its range."></figure>
+  <figure class="post__cover"><img src="/media/poker-ecosystem/cover.png" alt="Two 13 by 13 grids of the big blind&#39;s river strategy on Q-8-5-3-2. At equilibrium every hand checks; against a button that folds 70% of the time to bets, the exploiting strategy bets 94% of its range."></figure>
 
   <div class="post__body">
     <div class="prose">
 <p>Most poker tools answer one question: what is the equilibrium play? This project asks the next one as well. How far is a given answer from equilibrium, and what should change when you know how an opponent actually plays? It brings together exact hand evaluation and equity, a family of game-theory solvers that report their own error, a Bayesian model of opponents, exploitative strategies built on that model, and hand-history analysis, in one codebase with one test suite.</p>
 <h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
-<p>The lab below is the real engine running in your browser. Pick a spot and press <em>Solve</em>: the convergence chart shows how far the strategy is from equilibrium after each batch of iterations, and the grid shows what every hand does. Then describe how an opponent plays (say, the button folds 70% of the time to river bets), press <em>Compare GTO and exploit</em>, and watch the strategy change and what that change costs in safety. <a href="/apps/poker-ecosystem/">Open it full screen</a> for more room.</p>
+<p>The lab below is the real engine running in your browser. Pick a spot and press <em>Solve</em>: the convergence chart shows how far the strategy is from equilibrium after each batch of iterations, and the grid shows what every hand does. Then describe how an opponent plays (say, the button folds 70% of the time to river bets), press <em>Compare GTO and exploit</em>, and watch the strategy change and what that change costs in safety. The default spot and opponent are the ones behind the exploitation results below, so the lab reproduces those numbers. <a href="/apps/poker-ecosystem/">Open it full screen</a> for more room.</p>
 <iframe src="/apps/poker-ecosystem/?embed#solver" title="Poker research lab" loading="lazy" style="width:100%;height:1250px;border:1px solid var(--rule);border-radius:12px;background:var(--bg)"></iframe>
 <h2 id="what-it-does">What it does <a class="header-anchor" href="#what-it-does">#</a></h2>
 <ul>

@@ -46,14 +46,16 @@ function bestResponseReport(node) {
   return report(gto, node, { vsModel: true, strategy: sigma });
 }
 
-function solveFresh(config, algo, iterations, onProgress) {
+/**
+ * A restricted Nash response solved from scratch, as in the Rust benchmarks. Starting it
+ * from the equilibrium solve would leave the equilibrium's strategy sums in the average
+ * strategy and understate the exploit (32% of the pot instead of 37% on the benchmark spot).
+ */
+function solveRnr(config, algo, modelPlayer, strategy, p) {
   const s = new HuSolver(prepareSpot(config), { algo });
-  const every = Math.max(10, Math.round(iterations / 25));
-  while (s.iterations < iterations) {
-    const next = Math.min(s.iterations + every, iterations);
-    while (s.iterations < next) s.iterate();
-    if (onProgress) onProgress(s);
-  }
+  s.setModel(modelPlayer, strategy, p);
+  const iterations = Math.max(2 * lastIterations, 300);
+  while (s.iterations < iterations) s.iterate();
   return s;
 }
 
@@ -99,9 +101,7 @@ self.onmessage = (ev) => {
       gto.setModel(mp, strategy, 0);
       const gv = gto.valuesVsModel(exploiter);
       const ge = gto.exploitability();
-      rnr = solveFresh(gto.spot.config, gto.algoName, lastIterations, null);
-      rnr.setModel(mp, strategy, m.p);
-      while (rnr.iterations < 2 * lastIterations) rnr.iterate();
+      rnr = solveRnr(gto.spot.config, gto.algoName, mp, strategy, m.p);
       const rv = rnr.valuesVsModel(exploiter);
       const loss = exploiterLoss(rnr, mp);
       rnr.setModel(mp, strategy, m.p);
@@ -117,9 +117,7 @@ self.onmessage = (ev) => {
       if (!gto || !model) throw new Error('run an exploit analysis first');
       const mp = model.player, exploiter = 1 - mp, points = [];
       for (const p of m.ps) {
-        const s = solveFresh(gto.spot.config, gto.algoName, lastIterations, null);
-        s.setModel(mp, model.strategy, p);
-        while (s.iterations < 2 * lastIterations) s.iterate();
+        const s = solveRnr(gto.spot.config, gto.algoName, mp, model.strategy, p);
         const v = s.valuesVsModel(exploiter);
         const loss = exploiterLoss(s, mp);
         points.push({ p, evVsModel: v.ev, exploitabilityPct: loss });

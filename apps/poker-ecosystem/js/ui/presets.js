@@ -4,10 +4,12 @@ const menu = (bets, raises = [1], max = 2, allin = 0.67) => ({ bets, raises, max
 export const PRESETS = [
   {
     name: 'NLH single-raised pot river: BB vs BTN on Q♠8♥5♦3♣2♠',
-    note: 'A 6.5 bb single-raised pot on the river. The big blind defends wide; the button\'s range here is strong (sets and overpairs), so at equilibrium the big blind checks everything. Tell the solver the button folds too often and watch the big blind start betting.',
+    note: 'A 6 bb single-raised pot on the river: the benchmark spot behind the convergence, abstraction and exploitation results in the Research tab. The big blind defends wide; the button\'s range here is strong (sets and overpairs), so at equilibrium the big blind checks everything. Tell the solver the button folds too often and watch the big blind start betting.',
     iters: 800,
-    profile: { mp: 1, fold: 0.7, raise: 0.03, stab: 0.5, bluff: 0.33 },
-    config: { game: 'NLH', board: 'Qs8h5d3c2s', ranges: ['22-JJ,A2s-AJs,K9s-KJs,Q8s+,J8s+,T8s+,97s+,86s+,75s+,64s+,54s,A8o-AJo,KTo+,QTo+,JTo', 'TT+,AQs+,AKo,KQs,QJs,JTs,T9s,98s,A5s,A4s,Q8s,88,55,33,22,KQo,QJo'], pot: 6.5, stacks: [97], menu: menu([0.33, 0.75]) },
+    // the benchmark's over-folder: folds 70% to bets, raises 3%, equilibrium play elsewhere
+    profile: { mp: 1, fold: 0.7, raise: 0.03, bluff: 0.33 },
+    // identical to standard_spots()[0] in crates/pe-cli/src/bench.rs, so the lab reproduces the reported numbers
+    config: { game: 'NLH', board: 'Qs8h5d3c2s', ranges: ['22+,A2s+,K5s+,Q8s+,J8s+,T8s+,97s+,86s+,75s+,64s+,54s,A8o+,KTo+,QTo+,JTo', 'TT+,AQs+,AKo,KQs,QJs,JTs,T9s,98s,A5s,A4s,Q8s,88,55,33,22,KQo'], pot: 6, stacks: [97], menu: menu([0.33, 0.75]) },
   },
   {
     name: 'NLH 3-bet pot river: A♥9♦4♣4♠2♥',

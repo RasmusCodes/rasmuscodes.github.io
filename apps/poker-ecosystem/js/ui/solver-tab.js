@@ -36,14 +36,18 @@ function loadPreset(i) {
   $('#preset-note').textContent = p.note;
   $('#preset').dataset.allin = c.menu.allin_threshold;
   const pr = p.profile;
-  setProfile({ mp: pr.mp, fold_to_bet: pr.fold, raise_vs_bet: pr.raise, bet_when_checked_to: pr.stab, bluff_share: pr.bluff });
+  setProfile({ mp: pr.mp, fold_to_bet: pr.fold, raise_vs_bet: pr.raise, bet_when_checked_to: pr.stab ?? null, bluff_share: pr.bluff });
 }
 
+/** bet_when_checked_to: a frequency turns that part of the model on, null turns it off. */
 function setProfile(pr) {
   if (pr.mp !== undefined) $('#mp').value = String(pr.mp);
   if (pr.fold_to_bet !== undefined) $('#fold').value = pr.fold_to_bet;
   if (pr.raise_vs_bet !== undefined) $('#raise').value = pr.raise_vs_bet;
-  if (pr.bet_when_checked_to !== undefined) $('#stab').value = pr.bet_when_checked_to;
+  if (pr.bet_when_checked_to !== undefined) {
+    $('#use-stab').checked = pr.bet_when_checked_to !== null;
+    if (pr.bet_when_checked_to !== null) $('#stab').value = pr.bet_when_checked_to;
+  }
   if (pr.bluff_share !== undefined) $('#bluff').value = pr.bluff_share;
   syncOutputs();
 }
