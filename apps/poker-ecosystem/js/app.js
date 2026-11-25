@@ -38,12 +38,13 @@ export const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&
 
 const solverEngine = new Engine();
 const equityEngine = new Engine();
+let handsEngine = null;
 const started = new Set();
 const inits = {
   solver: () => initSolver(solverEngine),
   equity: () => initEquity(equityEngine),
   opponents: () => initOpponents(),
-  hands: () => initHands(),
+  hands: () => { handsEngine = handsEngine || new Engine(); return initHands(handsEngine); },
   research: () => initResearch(),
 };
 

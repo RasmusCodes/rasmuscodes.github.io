@@ -22,15 +22,40 @@ export function positionLabels(n) {
   if (n === 2) return ['BTN', 'BB'];
   return ['BTN', 'SB', 'BB', ...(POS[n - 3] || POS[7])];
 }
-function assignPositions(hand) {
-  const seats = hand.players.filter((p) => !p.sitting_out).map((p) => p.seat).sort((a, b) => a - b);
-  if (!seats.length) return;
+/** Dealt seats clockwise from the button (a dead button counts as the last dealt seat before it). */
+export function clockwiseFromButton(hand) {
+  const seats = [...new Set(hand.players.filter((p) => !p.sitting_out).map((p) => p.seat))].sort((a, b) => a - b);
+  if (!seats.length) return seats;
   const btn = seats.filter((s) => s <= hand.button).pop() ?? seats[seats.length - 1];
   const i = seats.indexOf(btn);
-  const order = [...seats.slice(i), ...seats.slice(0, i)];
+  return [...seats.slice(i), ...seats.slice(0, i)];
+}
+/** Seat -> position label. */
+export function seatPositions(hand) {
+  const order = clockwiseFromButton(hand);
   const labels = positionLabels(order.length);
-  const map = new Map(order.map((s, k) => [s, labels[k]]));
+  return new Map(order.map((s, k) => [s, labels[k]]));
+}
+function assignPositions(hand) {
+  const map = seatPositions(hand);
   for (const p of hand.players) p.position = p.sitting_out ? null : map.get(p.seat);
+}
+/**
+ * Straddles are written alike; the seat decides. The seat after the previous live blind (big blind,
+ * then under the gun for a re-straddle) posts an ordinary straddle, any other seat (usually the
+ * button) a Mississippi straddle, which acts last before the flop.
+ */
+export function classifyStraddles(hand) {
+  const order = clockwiseFromButton(hand);
+  const bb = hand.posts.find((p) => p.kind === 'bb');
+  if (!bb || !order.length) return;
+  let prev = order.indexOf(bb.seat);
+  if (prev < 0) return;
+  for (const p of hand.posts) {
+    if (p.kind !== 'straddle' && p.kind !== 'mississippi') continue;
+    const next = (prev + 1) % order.length;
+    if (order[next] === p.seat) { p.kind = 'straddle'; prev = next; } else p.kind = 'mississippi';
+  }
 }
 
 function brackets(line) {
@@ -210,6 +235,7 @@ function parseBlock(lines, warnings) {
     if (board) for (const s of hand.shown) { const c = parseCards(s.cards.join('')); if (c.length === game.hole) s.description = describe(evalHand(game, c, board), game.rules); }
   } catch (e) { /* descriptions are cosmetic */ }
   assignPositions(hand);
+  classifyStraddles(hand);
   return hand;
 }
 

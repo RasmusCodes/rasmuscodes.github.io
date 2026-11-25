@@ -74,6 +74,26 @@ export async function initResearch() {
       { name: 'raw frequency', points: o.sizes.map((s) => [s.hands, s.raw_mae]), color: 'var(--series-2)' },
     ], { logX: true, xLabel: 'hands per player', yLabel: 'mean absolute error', yFormat: (v) => v.toFixed(2), height: 220 }));
   }
+  if (d.ranges) {
+    const g = d.ranges;
+    const pct = (x) => `${(100 * x).toFixed(0)}%`;
+    const row = (label, m) => [label, m.n.toLocaleString(), m.mean_bits.toFixed(2), pct(m.coverage_50), pct(m.coverage_80), pct(m.coverage_90), pct(m.mean_effective_share)];
+    const snaps = g.held_out.by_snapshot.map((s) => row(`start of the ${s.snapshot}`.replace('start of the end', 'end of the hand'), s.metrics));
+    const abl = g.ablations;
+    parts.push(card('Street-by-street ranges on simulated hands', '<div id="r-ranges"></div>' + table(['Held-out snapshot', 'Players', 'Bits about the hand', '50% region', '80% region', '90% region', 'Range kept'], [
+      ...snaps, row('all, with population frequencies only', abl.population_frequencies_only.all), row('all, without noise', abl.no_noise.all),
+    ]), `Every player's hidden hand is known in the simulated corpus, so the reconstructed ranges can be scored. Bits: log2 of how much more likely the true hand is under the range than under a uniform one (0 = no information). Regions: how often the true hand lies inside the 50%, 80% and 90% most likely part of the range (calibrated when equal to the level). The noise level (${g.chosen_noise}) is the share of actions treated as carrying no information about the cards; it was fitted on ${(g.corpus.evaluated_hands / 2).toFixed(0)} hands and scored on the other half. Without it the model is badly over-confident.`, 'research/reports/hand-histories.md'));
+    requestAnimationFrame(() => lineChart($('#r-ranges'), [
+      { name: 'mean bits about the true hand', points: g.grid.map((x) => [x.noise, x.tuning_half.mean_bits]), color: 'var(--series-1)' },
+    ], { xLabel: 'noise (share of uninformative actions)', yLabel: 'bits', yFormat: (v) => v.toFixed(1), height: 200 }));
+  }
+  if (d.review) {
+    const rv = d.review;
+    const p0 = (x) => `${(100 * x).toFixed(0)}%`;
+    const styles = rv.by_style.filter((s) => s.style).map(({ style, stats: s }) => [escapeHtml(style.replace('_', '-')), s.decisions.n.toLocaleString(), p0(s.share_on_path), s.on_path.mean_loss_bb.toFixed(2), s.on_path.median_loss_bb.toFixed(2), p0(s.on_path.share_over_1bb), p0(s.share_rarely_played), s.decisions.mean_loss_bb.toFixed(2)]);
+    parts.push(card('River review of simulated players', table(['Style', 'Decisions', 'On the eq. path', 'Mean cost on path (bb)', 'Median', 'Cost > 1 bb', 'Rarely played at eq.', 'Mean cost, all (bb)'], styles),
+      `${rv.reviewed_hands.toLocaleString()} heads-up rivers from ${rv.hands.toLocaleString()} simulated hands, each solved to ${rv.mean_exploitability_pct.toFixed(2)}% of the pot on average. Cost: the value of the best action minus the value of the action taken, against an opponent playing the equilibrium of the river with the reconstructed ranges. On the path: the equilibrium reaches the decision with the hand's own line at least 5% of the time and with the opponent's range at least 2%; elsewhere the solver explores little and its values are rough. "Rarely played": on-path decisions the equilibrium takes less than 5% of the time. These are costs in a model, not the bots' true losses.`, 'research/reports/hand-histories.md'));
+  }
   if (d.eval) parts.push(card('Evaluator speed', table(['Evaluator', 'ns per hand', 'Hands timed'], d.eval.map((r) => [escapeHtml(r.evaluator), r.ns_per_eval.toFixed(1), r.evals.toLocaleString()])), 'One thread, CPU time. Correctness is checked exhaustively: all 133,784,560 seven-card hands give the published category counts.'));
   root.innerHTML = parts.join('');
 }

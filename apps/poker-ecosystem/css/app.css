@@ -136,6 +136,14 @@ tr.active td { background: var(--accent-soft); }
 /* hand replay */
 .street { border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 8px; }
 .street h4 { margin: 0 0 4px; font-size: 13px; }
+.street h3 { margin: 4px 0; font-size: 15px; }
+/* street-by-street ranges */
+.range-seats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-top: 8px; }
+.range-seat h4 { margin: 0 0 2px; font-size: 14px; }
+.range-seat p { margin: 4px 0; }
+.rgrid.mini { max-width: 320px; font-size: 8px; gap: 1px; }
+.seg { flex-wrap: wrap; gap: 6px; }
+.seg .btn { padding: 4px 10px; font-size: 12px; }
 .cards { font-family: var(--mono); font-weight: 600; letter-spacing: .02em; }
 .suit-h, .suit-d { color: #c0392b; }
 :root[data-theme="dark"] .suit-h, :root[data-theme="dark"] .suit-d { color: #f47b6e; }

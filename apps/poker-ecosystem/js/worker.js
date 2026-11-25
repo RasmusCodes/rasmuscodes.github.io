@@ -4,7 +4,16 @@ import { HuSolver } from './engine/solver.js';
 import { buildModel } from './engine/profile.js';
 import { gameOf, parseCards, parseHandList, cardsStr } from './engine/cards.js';
 import { equityAuto, rangeEquityMonteCarlo, runItTwice, runoutCount } from './engine/equity.js';
+import { FrequencyTable, reconstructRanges, streetStrengths, isHoldem, DEFAULT_RANGE_OPTIONS } from './engine/ranges.js';
+import { reviewRiver, DEFAULT_REVIEW_OPTIONS } from './engine/review.js';
 
+let hhHands = new Map(); // loaded hand histories by id
+let hhTable = null;      // their decision frequencies
+let hhStrengths = new Map(); // board strengths by hand id (the flop needs every runout, so they are kept)
+const strengthsOf = (h) => {
+  if (!hhStrengths.has(h.id)) hhStrengths.set(h.id, streetStrengths(h));
+  return hhStrengths.get(h.id);
+};
 let gto = null;        // the equilibrium solve
 let rnr = null;        // the latest restricted Nash response
 let model = null;      // { player, strategy } of the opponent model
@@ -124,6 +133,33 @@ self.onmessage = (ev) => {
         post({ type: 'frontier-point', id: m.id, point: points[points.length - 1] });
       }
       post({ type: 'frontier', id: m.id, points });
+    } else if (m.cmd === 'hh-load') {
+      hhHands = new Map(m.hands.map((h) => [h.id, h]));
+      hhTable = FrequencyTable.fromHands(m.hands);
+      hhStrengths = new Map();
+      post({ type: 'hh-loaded', id: m.id, hands: hhTable.hands });
+    } else if (m.cmd === 'hh-ranges') {
+      const h = hhHands.get(m.hand);
+      if (!h || !hhTable) throw new Error('load the hands first');
+      const t0 = performance.now();
+      const result = reconstructRanges(h, hhTable, m.options || DEFAULT_RANGE_OPTIONS, isHoldem(h) ? strengthsOf(h) : null);
+      post({ type: 'hh-ranges', id: m.id, result, seconds: (performance.now() - t0) / 1000 });
+    } else if (m.cmd === 'hh-review') {
+      const h = hhHands.get(m.hand);
+      if (!h || !hhTable) throw new Error('load the hands first');
+      const t0 = performance.now();
+      const result = reviewRiver(h, hhTable, DEFAULT_RANGE_OPTIONS, DEFAULT_REVIEW_OPTIONS, (pt) => post({ type: 'progress', id: m.id, iteration: pt.iteration, pctPot: pt.pctPot }), isHoldem(h) ? strengthsOf(h) : null);
+      post({ type: 'hh-review', id: m.id, result, seconds: (performance.now() - t0) / 1000 });
+    } else if (m.cmd === 'hh-review-all') {
+      if (!hhTable) throw new Error('load the hands first');
+      const t0 = performance.now();
+      const all = [...hhHands.values()];
+      const reviews = [], failed = [];
+      all.forEach((h, i) => {
+        try { const r = reviewRiver(h, hhTable, DEFAULT_RANGE_OPTIONS, DEFAULT_REVIEW_OPTIONS, null, isHoldem(h) ? strengthsOf(h) : null); if (r) reviews.push(r); } catch (e) { failed.push([h.id, e.message]); }
+        post({ type: 'progress', id: m.id, done: i + 1, total: all.length, reviewed: reviews.length });
+      });
+      post({ type: 'hh-review-all', id: m.id, reviews, failed, seconds: (performance.now() - t0) / 1000 });
     } else if (m.cmd === 'equity') {
       const game = gameOf(m.game);
       const boards = m.boards.filter((b, i) => i === 0 || b.trim()).map((b) => parseCards(b));

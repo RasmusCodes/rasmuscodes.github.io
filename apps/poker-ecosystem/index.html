@@ -193,15 +193,27 @@
           <label>Min pot (bb) <input id="f-pot" type="number" min="0" value="0"></label>
           <label>Street reached <select id="f-street"><option value="">any</option><option value="flop">flop</option><option value="turn">turn</option><option value="river">river</option></select></label>
         </div>
-        <div class="row"><label class="check"><input type="checkbox" id="f-sd">showdown</label><label class="check"><input type="checkbox" id="f-ai">all-in</label><label class="check"><input type="checkbox" id="f-special">bomb pot, double board or run twice</label></div>
+        <div class="row"><label class="check"><input type="checkbox" id="f-sd">showdown</label><label class="check"><input type="checkbox" id="f-ai">all-in</label><label class="check"><input type="checkbox" id="f-special">bomb pot, double board, run twice or straddle</label></div>
       </div>
       <div class="card stack">
         <h2>Hands <span class="sub" id="hh-count"></span></h2>
         <div class="table-wrap" style="max-height:300px;overflow:auto"><table id="hh-table"></table></div>
         <div id="hh-summary" class="small"></div>
+        <div class="row"><button class="btn" id="rv-all" type="button">Review every heads-up river</button><span class="status" id="rv-all-status"></span></div>
+        <div id="rv-all-out" class="small"></div>
       </div>
     </div>
-    <div class="card stack" style="margin-top:16px" id="replay-card" hidden><h2 id="replay-title"></h2><div id="replay"></div></div>
+    <div class="card stack" style="margin-top:16px" id="replay-card" hidden>
+      <h2 id="replay-title"></h2>
+      <div id="replay"></div>
+      <div class="street">
+        <h3>Ranges, street by street <span class="label-chip approx">model-based estimate</span></h3>
+        <p class="small muted">What the public actions say about each player's cards. Every action is evidence: a model built from the player's frequencies in this database (shrunk towards the population) says which part of their range takes it, with noise for slow-plays and floats. Shared cards are removed as they are dealt.</p>
+        <div class="row"><button class="btn primary" id="rg-run" type="button">Reconstruct ranges</button><button class="btn" id="rv-run" type="button">Review the river</button><span class="status" id="rg-status"></span></div>
+        <div id="rg-out"></div>
+        <div id="rv-out"></div>
+      </div>
+    </div>
   </section>
 
   <!-- RESEARCH -->

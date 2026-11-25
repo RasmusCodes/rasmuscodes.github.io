@@ -6,8 +6,12 @@ const EPS = 1e-9;
 
 export const DEFAULT_MENU = { bets: [0.33, 0.75], raises: [1.0], max_raises: 2, allin_threshold: 0.67, add_allin: false };
 
-/** Validates a spot configuration (same JSON as the Rust SpotConfig) and prepares it. */
-export function prepareSpot(cfg) {
+/**
+ * Validates a spot configuration (same JSON as the Rust SpotConfig) and prepares it. With
+ * `lists` ([{ hands, weights }] per player), the ranges are given as weighted hand lists
+ * (Spot::from_lists) and `cfg.ranges` only describes them.
+ */
+export function prepareSpot(cfg, lists = null) {
   const game = gameOf(cfg.game);
   const board = parseCards(cfg.board);
   if (board.length < 3 || board.length > 5) throw new Error('the board needs 3 to 5 cards');
@@ -21,14 +25,22 @@ export function prepareSpot(cfg) {
     if (!deck.has(c)) throw new Error(`a board card is not in the ${game.code} deck`);
     if (dead.has(c)) throw new Error('a dead card is on the board');
   }
-  const n = cfg.ranges.length;
+  const n = lists ? lists.length : cfg.ranges.length;
   if (n < 2 || n > 6) throw new Error('2 to 6 players');
   const deadAll = new Set([...used, ...dead]);
-  const ranges = cfg.ranges.map((r, i) => {
-    const l = parseHandList(game, r, deadAll);
-    if (!l.hands.length) throw new Error(`range ${i + 1} is empty on this board`);
-    return l;
-  });
+  const deckSet = new Set(deckCards(game));
+  const ranges = lists
+    ? lists.map((l, i) => {
+      if (!l.hands.length) throw new Error(`range ${i + 1} is empty`);
+      if (l.hands.some((h) => h.length !== game.hole || h.some((c) => deadAll.has(c) || !deckSet.has(c)))) throw new Error(`range ${i + 1} holds a hand that touches the board or is not a ${game.code} hand`);
+      if ([...l.weights].some((w) => !(w >= 0) || !Number.isFinite(w))) throw new Error(`range ${i + 1} has an invalid weight`);
+      return { hands: l.hands, weights: Float64Array.from(l.weights) };
+    })
+    : cfg.ranges.map((r, i) => {
+      const l = parseHandList(game, r, deadAll);
+      if (!l.hands.length) throw new Error(`range ${i + 1} is empty on this board`);
+      return l;
+    });
   const stacks = cfg.stacks.length === 1 ? new Array(n).fill(cfg.stacks[0]) : cfg.stacks.slice();
   if (stacks.length !== n) throw new Error('give one stack or one per player');
   if (!(cfg.pot > 0)) throw new Error('the pot must be positive');

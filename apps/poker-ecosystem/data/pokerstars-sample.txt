@@ -353,3 +353,41 @@ Alice collected $3.80 from pot
 *** SUMMARY ***
 Total pot $4.00 | Rake $0.20
 Board [Jd 8c 3s]
+
+PokerStars Hand #300000000012:  Hold'em No Limit ($1/$2 USD) - 2026/11/05 22:00:00 ET
+Table 'Eridanus' 6-max Seat #4 is the button
+Seat 1: Uma ($250 in chips)
+Seat 2: Vera ($300 in chips)
+Seat 3: Hero ($200 in chips)
+Seat 4: Dana ($220 in chips)
+Seat 5: Eli ($180 in chips)
+Seat 6: Fay ($240 in chips)
+Eli: posts small blind $1
+Fay: posts big blind $2
+Dana: posts straddle $4
+*** HOLE CARDS ***
+Dealt to Hero [Ad 9d]
+Uma: folds
+Vera: folds
+Hero: raises $8 to $12
+Eli: folds
+Fay: folds
+Dana: calls $8
+*** FLOP *** [9s 6d 2c]
+Hero: bets $14
+Dana: calls $14
+*** TURN *** [9s 6d 2c] [Kh]
+Hero: checks
+Dana: checks
+*** RIVER *** [9s 6d 2c Kh] [4s]
+Hero: bets $30
+Dana: calls $30
+*** SHOW DOWN ***
+Hero: shows [Ad 9d] (a pair of Nines)
+Dana: shows [Ks Qs] (a pair of Kings)
+Dana collected $112 from pot
+*** SUMMARY ***
+Total pot $115 | Rake $3
+Board [9s 6d 2c Kh 4s]
+Seat 3: Hero showed [Ad 9d] and lost with a pair of Nines
+Seat 4: Dana (button) showed [Ks Qs] and won ($112) with a pair of Kings
