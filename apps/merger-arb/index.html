@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merger Arbitrage Lab</title>
+<meta name="description" content="Marvell / Lumentum merger arbitrage: verified deal terms, spread, break-price model, probabilities, scenarios, margin and Monte Carlo. Research only; no trading.">
+<link rel="stylesheet" href="style.css?v=1">
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+</head>
+<body>
+<div class="viz-root">
+<header class="top">
+  <div>
+    <h1>Marvell / Lumentum merger arbitrage</h1>
+    <p class="sub" id="asof"></p>
+  </div>
+  <div class="verdict" id="verdict"></div>
+</header>
+
+<section class="note" id="datanote"></section>
+
+<div class="layout">
+<aside class="panel" id="inputs" aria-label="assumptions">
+  <h2>Assumptions</h2>
+  <label>Exchange ratio <span class="hint">contract 4.50</span><input id="ratio" type="number" step="0.01"></label>
+  <label>LITE price<input id="L0" type="number" step="0.5"></label>
+  <label>MRVL price<input id="M0" type="number" step="0.1"></label>
+  <label>Expected closing date<input id="close" type="date"></label>
+  <label>Account equity (USD)<input id="equity" type="number" step="1000"></label>
+  <label>Lots (2 LITE / 9 MRVL each)<input id="lots" type="number" step="1" min="0"></label>
+  <label>MRVL borrow fee (%/yr)<input id="fee" type="number" step="0.05"></label>
+  <h3>Completion probability</h3>
+  <label>MRVL vote passes <output id="o_pa"></output><input id="pa" type="range" min="0.5" max="1" step="0.01"></label>
+  <label>LITE vote passes <output id="o_pt"></output><input id="pt" type="range" min="0.5" max="1" step="0.01"></label>
+  <label>Regulatory approvals in time <output id="o_pr"></output><input id="pr" type="range" min="0.3" max="1" step="0.01"></label>
+  <label>No other termination <output id="o_po"></output><input id="po" type="range" min="0.8" max="1" step="0.01"></label>
+  <p class="pc">P(complete) <strong id="pc"></strong></p>
+  <h3>If the deal breaks</h3>
+  <label>LITE price on a break <span class="hint" id="shint"></span><input id="S" type="number" step="5"></label>
+  <label>Share of MRVL's deal discount that reverses <output id="o_k"></output><input id="kappa" type="range" min="0" max="1" step="0.05"></label>
+  <label>Hurdle: excess return /yr <output id="o_h"></output><input id="hurdle" type="range" min="0" max="0.2" step="0.01"></label>
+  <button id="reset" type="button">Reset to report defaults</button>
+</aside>
+
+<main>
+  <section class="tiles" id="tiles"></section>
+  <section class="card"><h2>Signal</h2><ul id="reasons"></ul><p class="muted small">The signal is a transparent rule set that recomputes from these inputs. It never sends orders: execution exists only in the local, manually approved tool in the repository.</p></section>
+  <section class="card"><div id="ch_spread" class="chart"></div></section>
+  <section class="grid2">
+    <div class="card"><div id="ch_ev" class="chart"></div></div>
+    <div class="card"><div id="ch_heat" class="chart"></div></div>
+  </section>
+  <section class="card">
+    <h2>Scenarios <span class="muted small">path-simulated day by day through an IBKR-style margin account</span></h2>
+    <div class="tablewrap"><table id="scen"></table></div>
+  </section>
+  <section class="grid2">
+    <div class="card"><div id="ch_pnl" class="chart"></div></div>
+    <div class="card"><div id="ch_margin" class="chart"></div></div>
+  </section>
+  <section class="card">
+    <h2>Position sizing <span class="muted small">survival first</span></h2>
+    <p id="sizing"></p>
+  </section>
+  <section class="card">
+    <h2>Monte Carlo <span class="muted small">browser version of the repository model</span></h2>
+    <p><label class="inline">Paths <select id="paths"><option>2000</option><option selected>5000</option><option>10000</option></select></label>
+       <button id="runmc" type="button">Run</button> <span id="mcstatus" class="muted small"></span></p>
+    <div id="mcout"></div>
+    <div id="ch_mc" class="chart"></div>
+    <div class="tablewrap"><table id="hedges"></table></div>
+  </section>
+  <section class="card">
+    <h2>Comparable deals <span class="muted small">gross spread 16 trading days after announcement (CRSP-derived statistics)</span></h2>
+    <div class="tablewrap"><table id="comps"></table></div>
+  </section>
+  <footer class="muted small" id="foot"></footer>
+</main>
+</div>
+</div>
+<script type="module" src="app.js?v=2"></script>
+</body>
+</html>

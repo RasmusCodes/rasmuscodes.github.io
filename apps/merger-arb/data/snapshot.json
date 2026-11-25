@@ -1,0 +1,471 @@
+{
+ "as_of": "2026-11-24",
+ "built_utc": "2026-11-25T02:27:04+00:00",
+ "deal": {
+  "id": "MRVL-LITE-2026",
+  "name": "Marvell Technology / Lumentum Holdings",
+  "target": "LITE",
+  "acquirer": "MRVL",
+  "ratio": 4.5,
+  "cash": 0.0,
+  "announced": "2026-11-02",
+  "unaffected_date": "2026-10-28",
+  "expected_close": "2028-03-31",
+  "expected_close_text": "first half of calendar year 2028",
+  "outside_date": "2027-11-01",
+  "final_outside_date": "2028-08-01",
+  "unaffected_target": 913.95,
+  "unaffected_acquirer": 251.65,
+  "acq_dividend": {
+   "amount": 0.06,
+   "freq": 4,
+   "last_ex_dates": [
+    "2026-01-09",
+    "2026-04-10",
+    "2026-07-10",
+    "2026-10-09"
+   ]
+  },
+  "regulatory_fee_per_share": 33.21718184474235,
+  "sources": {
+   "merger_agreement": "https://www.sec.gov/Archives/edgar/data/1835632/000119312526442717/d352474dex21.htm",
+   "marvell_8k_item_1_01": "https://www.sec.gov/Archives/edgar/data/1835632/000119312526442717/d352474d8k.htm",
+   "press_release": "https://www.sec.gov/Archives/edgar/data/1835632/000119312526442714/d81187dex991.htm",
+   "lumentum_8k_merger": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169d8k.htm",
+   "lumentum_8k_annual_meeting": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026075535/lite-20261118.htm",
+   "marvell_8k_new_directors": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000026/mrvl-20261111.htm"
+  }
+ },
+ "quotes": {
+  "LITE": {
+   "last": 487.12,
+   "time_utc": "2026-11-24T21:00:01+00:00",
+   "label": "closing print",
+   "source": "yahoo:Nasdaq Real Time Price"
+  },
+  "MRVL": {
+   "last": 131.57,
+   "time_utc": "2026-11-24T21:00:01+00:00",
+   "label": "closing print",
+   "source": "yahoo:Nasdaq Real Time Price"
+  }
+ },
+ "L0": 487.12,
+ "M0": 131.57,
+ "spread_history": [
+  {
+   "date": "2026-10-29",
+   "gross_spread": 0.068513
+  },
+  {
+   "date": "2026-10-30",
+   "gross_spread": 0.051267
+  },
+  {
+   "date": "2026-11-02",
+   "gross_spread": 0.127038
+  },
+  {
+   "date": "2026-11-03",
+   "gross_spread": 0.137769
+  },
+  {
+   "date": "2026-11-04",
+   "gross_spread": 0.147347
+  },
+  {
+   "date": "2026-11-05",
+   "gross_spread": 0.179076
+  },
+  {
+   "date": "2026-11-06",
+   "gross_spread": 0.179747
+  },
+  {
+   "date": "2026-11-09",
+   "gross_spread": 0.166969
+  },
+  {
+   "date": "2026-11-10",
+   "gross_spread": 0.186459
+  },
+  {
+   "date": "2026-11-11",
+   "gross_spread": 0.172114
+  },
+  {
+   "date": "2026-11-12",
+   "gross_spread": 0.184703
+  },
+  {
+   "date": "2026-11-13",
+   "gross_spread": 0.182361
+  },
+  {
+   "date": "2026-11-16",
+   "gross_spread": 0.198022
+  },
+  {
+   "date": "2026-11-17",
+   "gross_spread": 0.195296
+  },
+  {
+   "date": "2026-11-18",
+   "gross_spread": 0.18847
+  },
+  {
+   "date": "2026-11-19",
+   "gross_spread": 0.164374
+  },
+  {
+   "date": "2026-11-20",
+   "gross_spread": 0.194815
+  },
+  {
+   "date": "2026-11-23",
+   "gross_spread": 0.196462
+  },
+  {
+   "date": "2026-11-24",
+   "gross_spread": 0.21544
+  }
+ ],
+ "standalone": {
+  "factor_model": 612.9505017107267,
+  "stress": 426.85088152446843,
+  "stress_peer": "AAOI",
+  "blend": 511.50607228662386,
+  "acquirer_counterfactual": 167.0703447147502,
+  "deal_discount": 0.21248740927279586,
+  "target_estimates": [
+   {
+    "method": "beta to SMH",
+    "estimate": 599.4773404350816,
+    "low": 482.93631695966656,
+    "high": 744.1417617079572
+   },
+   {
+    "method": "beta to optical peers (EW)",
+    "estimate": 613.0977142086567,
+    "low": 528.2333692477391,
+    "high": 711.5961032586519
+   },
+   {
+    "method": "two-factor: SMH + optical peers",
+    "estimate": 612.9505017107267,
+    "low": 527.9487512063279,
+    "high": 711.6378563051111
+   },
+   {
+    "method": "beta to MRVL (uses the deal-affected MRVL path: biased low)",
+    "estimate": 618.1316086433925,
+    "low": 487.316992440195,
+    "high": 784.061897145848
+   },
+   {
+    "method": "peer ratio (COHR, AAOI, FN, CIEN)",
+    "estimate": 624.8544949933148,
+    "low": 426.8508872256359,
+    "high": 748.5853046325351
+   },
+   {
+    "method": "peer ratio (SMH)",
+    "estimate": 687.068507145426,
+    "low": 687.068507145426,
+    "high": 687.068507145426
+   }
+  ]
+ },
+ "calibration": {
+  "acq_vol": 0.7088194401550294,
+  "acq_vol_expiry": "2028-03-17",
+  "standalone_vol": 0.846615832252667,
+  "standalone_vol_1y": 0.9848081593543057,
+  "standalone_vol_5y": 0.6547431407169662,
+  "rho": 0.5469489601260797,
+  "spread_vol": 0.21507383112590261,
+  "spread_vol_obs": 16,
+  "curve_date": "2026-11-24"
+ },
+ "curve": {
+  "0.08333333333333333": 0.0421,
+  "0.16666666666666666": 0.042800000000000005,
+  "0.25": 0.0436,
+  "0.3333333333333333": 0.0436,
+  "0.5": 0.0446,
+  "1.0": 0.045899999999999996,
+  "2.0": 0.0463,
+  "3.0": 0.0467,
+  "5.0": 0.046900000000000004,
+  "7.0": 0.0479,
+  "10.0": 0.049100000000000005
+ },
+ "curve_date": "2026-11-24",
+ "bottom_up": [
+  {
+   "component": "Marvell stockholders approve share issuance + charter amendment",
+   "low": 0.8,
+   "base": 0.9,
+   "high": 0.95,
+   "rationale": "Votes-cast standard (low bar) and both boards unanimous, but MRVL fell ~20% abnormally on the news and holders cite dilution (33% to LITE holders). No organised opposition or proxy-adviser view found as of 2026-11-24."
+  },
+  {
+   "component": "Lumentum stockholders adopt the agreement",
+   "low": 0.8,
+   "base": 0.9,
+   "high": 0.96,
+   "rationale": "Majority-of-OUTSTANDING standard (abstentions count as no). The offer is now worth less than LITE's pre-talks price and below factor-model standalone estimates; CEO says shareholders are 'not happy'. Votes expected after the S-4 is effective (mid-2027, assumption)."
+  },
+  {
+   "component": "Required regulatory approvals (HSR, China SAMR, others) before the final outside date",
+   "low": 0.65,
+   "base": 0.8,
+   "high": 0.9,
+   "rationale": "Commentators (Breakingviews, Bloomberg Intelligence) name SAMR as the key risk. SAMR cleared Marvell-Cavium, Marvell-Inphi, AMD-Xilinx, II-VI-Coherent and Lumentum-NeoPhotonics (several with long delays/conditions), but let Qualcomm-NXP, Applied-Kokusai and Intel-Tower lapse. Remedies are capped at 'material to the combined company' (Burdensome Condition), so Marvell can walk from heavy remedies (paying USD 3.2bn)."
+  },
+  {
+   "component": "No other termination (MAE, superior proposal, renegotiation failure, litigation)",
+   "low": 0.93,
+   "base": 0.97,
+   "high": 0.99,
+   "rationale": "Standard MAE carve-outs exclude industry-wide and stock-price changes; reciprocal no-shops and large fees."
+  },
+  {
+   "component": "P(complete) = product",
+   "low": 0.3868800000000001,
+   "base": 0.6285600000000001,
+   "high": 0.812592,
+   "rationale": "assumes independence (sequential conditions)"
+  }
+ ],
+ "signal": {
+  "decision": "WATCH",
+  "reasons": [
+   "expected excess return 1.1%/yr is below the 5% hurdle",
+   "expected P&L is negative under the stress break case (stress: break-even p 69%)"
+  ],
+  "metrics": {
+   "gross_spread": 0.2154397273772375,
+   "spread_usd": 104.94499999999994,
+   "implied_value": 592.0649999999999,
+   "years_to_close": 1.3497604380561259,
+   "annualized_if_complete": 0.1498632834430158,
+   "completion_pnl_unit": 101.0377330759753,
+   "break_pnl_unit_base": -57.57574320657439,
+   "break_pnl_unit_stress": -222.1067095769178,
+   "breakeven_p_base": 0.3629940188941483,
+   "breakeven_p_stress": 0.6873295042721642,
+   "expected_pnl_unit": 42.12234344558506,
+   "expected_pnl_unit_stress": -18.991038703015278,
+   "regt_capital_unit": 539.5925,
+   "expected_return_on_capital": 0.0780632485543907,
+   "expected_annualized": 0.05726830020888207,
+   "expected_excess_annual": 0.011228396033659625,
+   "expected_annualized_stress": -0.026195803389660877,
+   "required_spread_for_hurdle": 0.28728173129749046,
+   "max_borrow_fee_for_hurdle": 0.0,
+   "edge": 0.26556598110585183
+  }
+ },
+ "comparables": [
+  {
+   "acquirer": "AMD",
+   "target": "XLNX",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 10.2,
+   "median_spread": 11.61,
+   "max_spread": 41.53,
+   "calendar_days": 472.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "ADI",
+   "target": "MXIM",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 6.71,
+   "median_spread": 5.5,
+   "max_spread": 10.17,
+   "calendar_days": 408.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "CMCSA",
+   "target": "TWC",
+   "consideration": "stock",
+   "outcome": "failed",
+   "spread_d16": 5.89,
+   "median_spread": 6.74,
+   "max_spread": 14.47,
+   "calendar_days": 435.0,
+   "validation": "FAILED_NA"
+  },
+  {
+   "acquirer": "XOM",
+   "target": "PXD",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 3.12,
+   "median_spread": 3.28,
+   "max_spread": 4.52,
+   "calendar_days": 204.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "CVX",
+   "target": "HES",
+   "consideration": "stock",
+   "outcome": "partial",
+   "spread_d16": 3.42,
+   "median_spread": 7.64,
+   "max_spread": 14.33,
+   "calendar_days": 435.0,
+   "validation": "PARTIAL_NO_VALIDATION"
+  },
+  {
+   "acquirer": "COP",
+   "target": "MRO",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 2.28,
+   "median_spread": 1.09,
+   "max_spread": 2.67,
+   "calendar_days": 176.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "COF",
+   "target": "DFS",
+   "consideration": "stock",
+   "outcome": "partial",
+   "spread_d16": 13.77,
+   "median_spread": 9.2,
+   "max_spread": 18.47,
+   "calendar_days": 315.0,
+   "validation": "PARTIAL_NO_VALIDATION"
+  },
+  {
+   "acquirer": "BBT",
+   "target": "STI",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 1.36,
+   "median_spread": 0.55,
+   "max_spread": 1.78,
+   "calendar_days": 302.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "GPN",
+   "target": "TSS",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 1.17,
+   "median_spread": 0.54,
+   "max_spread": 1.48,
+   "calendar_days": 112.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "SPGI",
+   "target": "INFO",
+   "consideration": "stock",
+   "outcome": "closed",
+   "spread_d16": 4.19,
+   "median_spread": 3.01,
+   "max_spread": 6.89,
+   "calendar_days": 452.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "PFE",
+   "target": "AGN",
+   "consideration": "stock",
+   "outcome": "failed",
+   "spread_d16": 12.77,
+   "median_spread": 12.02,
+   "max_spread": 43.94,
+   "calendar_days": 135.0,
+   "validation": "FAILED_NA"
+  },
+  {
+   "acquirer": "LRCX",
+   "target": "KLAC",
+   "consideration": "cash+stock",
+   "outcome": "failed",
+   "spread_d16": 5.86,
+   "median_spread": 1.54,
+   "max_spread": 16.97,
+   "calendar_days": 350.0,
+   "validation": "FAILED_NA"
+  },
+  {
+   "acquirer": "ADI",
+   "target": "LLTC",
+   "consideration": "cash+stock",
+   "outcome": "closed",
+   "spread_d16": 3.91,
+   "median_spread": 1.23,
+   "max_spread": 3.97,
+   "calendar_days": 227.0,
+   "validation": "OK"
+  },
+  {
+   "acquirer": "SNPS",
+   "target": "ANSS",
+   "consideration": "cash+stock",
+   "outcome": "partial",
+   "spread_d16": 15.22,
+   "median_spread": 16.7,
+   "max_spread": 26.41,
+   "calendar_days": 350.0,
+   "validation": "PARTIAL_NO_VALIDATION"
+  },
+  {
+   "acquirer": "HAL",
+   "target": "BHI",
+   "consideration": "cash+stock",
+   "outcome": "failed",
+   "spread_d16": 11.48,
+   "median_spread": 13.16,
+   "max_spread": 49.9,
+   "calendar_days": 532.0,
+   "validation": "FAILED_NA"
+  },
+  {
+   "acquirer": "ANTM",
+   "target": "CI",
+   "consideration": "cash+stock",
+   "outcome": "failed",
+   "spread_d16": 23.92,
+   "median_spread": 28.38,
+   "max_spread": 41.51,
+   "calendar_days": 571.0,
+   "validation": "FAILED_NA"
+  },
+  {
+   "acquirer": "AET",
+   "target": "HUM",
+   "consideration": "cash+stock",
+   "outcome": "failed",
+   "spread_d16": 18.72,
+   "median_spread": 22.51,
+   "max_spread": 44.49,
+   "calendar_days": 589.0,
+   "validation": "FAILED_NA"
+  },
+  {
+   "acquirer": "MSFT",
+   "target": "ATVI",
+   "consideration": "cash",
+   "outcome": "closed",
+   "spread_d16": 16.56,
+   "median_spread": 20.41,
+   "max_spread": 33.61,
+   "calendar_days": 632.0,
+   "validation": "OK"
+  }
+ ],
+ "borrow_fee": 0.0032
+}

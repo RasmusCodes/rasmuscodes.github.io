@@ -1,0 +1,377 @@
+[
+ {
+  "inputs": {
+   "lots": 2,
+   "L0": 487.12,
+   "M0": 131.57,
+   "p": 0.6286,
+   "S": 511.50607228662386,
+   "kappa": 0.5,
+   "fee": 0.0032,
+   "delta": 0.21248740927279586,
+   "rf": 0.04603990417522245,
+   "equity": 10000.0
+  },
+  "signal": {
+   "gross_spread": 0.2154397273772375,
+   "spread_usd": 104.94499999999994,
+   "implied_value": 592.0649999999999,
+   "years_to_close": 1.3497604380561259,
+   "annualized_if_complete": 0.1498632834430158,
+   "completion_pnl_unit": 101.0377330759753,
+   "break_pnl_unit_base": -57.57574320657439,
+   "break_pnl_unit_stress": -222.1067095769178,
+   "breakeven_p_base": 0.3629940188941483,
+   "breakeven_p_stress": 0.6873295042721642,
+   "expected_pnl_unit": 42.12868798463636,
+   "expected_pnl_unit_stress": -18.97811292530919,
+   "regt_capital_unit": 539.5925,
+   "expected_return_on_capital": 0.07807500657373177,
+   "expected_annualized": 0.05727684335494976,
+   "expected_excess_annual": 0.01123693917972731,
+   "expected_annualized_stress": -0.02617789053302655,
+   "required_spread_for_hurdle": 0.28726507175558935,
+   "max_borrow_fee_for_hurdle": 0.0,
+   "edge": 0.26560598110585176
+  },
+  "decision": "WATCH",
+  "scenarios": {
+   "1_on_schedule": {
+    "net_pnl": 397.8271860931505,
+    "liquidated": false,
+    "dividends_paid": 5.4,
+    "borrow_cost": 10.236073906849276,
+    "min_excess_liquidity": 8796.08526
+   },
+   "2_delay_3m": {
+    "net_pnl": 394.8577687999998,
+    "liquidated": false,
+    "dividends_paid": 6.48,
+    "borrow_cost": 12.125491199999917,
+    "min_excess_liquidity": 8796.08526
+   },
+   "3_delay_6m": {
+    "net_pnl": 391.8883515068492,
+    "liquidated": false,
+    "dividends_paid": 7.5600000000000005,
+    "borrow_cost": 14.014908493150559,
+    "min_excess_liquidity": 8796.08526
+   },
+   "4_break_unaffected": {
+    "net_pnl": -469.12303637260266,
+    "liquidated": false,
+    "dividends_paid": 2.16,
+    "borrow_cost": 4.526296372602748,
+    "min_excess_liquidity": 8694.342809781243
+   },
+   "4b_break_model": {
+    "net_pnl": 168.81586803755215,
+    "liquidated": false,
+    "dividends_paid": 2.16,
+    "borrow_cost": 4.526296372602748,
+    "min_excess_liquidity": 8694.342809781243
+   },
+   "4c_break_stress": {
+    "net_pnl": -895.0857151402328,
+    "liquidated": false,
+    "dividends_paid": 2.16,
+    "borrow_cost": 4.526296372602748,
+    "min_excess_liquidity": 8694.342809781243
+   },
+   "4d_break_regulatory": {
+    "net_pnl": -775.8805930653729,
+    "liquidated": false,
+    "dividends_paid": 7.5600000000000005,
+    "borrow_cost": 12.789901676712232,
+    "min_excess_liquidity": 8680.679204477135
+   },
+   "5_mrvl_down40": {
+    "net_pnl": 401.154003715787,
+    "liquidated": false,
+    "dividends_paid": 5.4,
+    "borrow_cost": 6.909256284212915,
+    "min_excess_liquidity": 8796.08526
+   },
+   "6_mrvl_up60_lite_lags": {
+    "net_pnl": 392.2701056134363,
+    "liquidated": false,
+    "dividends_paid": 5.4,
+    "borrow_cost": 15.793154386563499,
+    "min_excess_liquidity": 7589.050735671519
+   },
+   "7_both_down40": {
+    "net_pnl": 401.154003715787,
+    "liquidated": false,
+    "dividends_paid": 5.4,
+    "borrow_cost": 6.909256284212915,
+    "min_excess_liquidity": 8796.08526
+   },
+   "8_borrow_5pct": {
+    "net_pnl": 259.3598901808211,
+    "liquidated": false,
+    "dividends_paid": 5.4,
+    "borrow_cost": 148.7033698191787,
+    "min_excess_liquidity": 8796.08526
+   },
+   "9_htb_recall": {
+    "net_pnl": -328.27891420526896,
+    "liquidated": false,
+    "dividends_paid": 2.16,
+    "borrow_cost": 186.8706372821917,
+    "min_excess_liquidity": 8511.998468871654
+   }
+  },
+  "max_units": 2,
+  "binding": "loss budget (worst plausible stress)"
+ },
+ {
+  "inputs": {
+   "lots": 1,
+   "L0": 480.0,
+   "M0": 135.0,
+   "p": 0.5,
+   "S": 600.0,
+   "kappa": 1.0,
+   "fee": 0.01,
+   "delta": 0.1919571349990684,
+   "rf": 0.04603990417522245,
+   "equity": 10000.0
+  },
+  "signal": {
+   "gross_spread": 0.265625,
+   "spread_usd": 127.5,
+   "implied_value": 607.5,
+   "years_to_close": 1.3497604380561259,
+   "annualized_if_complete": 0.1767841989139758,
+   "completion_pnl_unit": 117.95020533880904,
+   "break_pnl_unit_base": -29.218132325205467,
+   "break_pnl_unit_stress": -202.36725080073703,
+   "breakeven_p_base": 0.19853545123211555,
+   "breakeven_p_stress": 0.63177091014539,
+   "expected_pnl_unit": 44.36603650680179,
+   "expected_pnl_unit_stress": -42.20852273096399,
+   "regt_capital_unit": 543.75,
+   "expected_return_on_capital": 0.08159271081710674,
+   "expected_annualized": 0.059831655548625795,
+   "expected_excess_annual": 0.013791751373403348,
+   "expected_annualized_stress": -0.05810822428363771,
+   "required_spread_for_hurdle": 0.3369120980106908,
+   "max_borrow_fee_for_hurdle": 0.0,
+   "edge": 0.3014645487678844
+  },
+  "decision": "WATCH",
+  "scenarios": {
+   "1_on_schedule": {
+    "net_pnl": 231.71417808219172,
+    "liquidated": false,
+    "dividends_paid": 2.7,
+    "borrow_cost": 16.41082191780828,
+    "min_excess_liquidity": 9391.325
+   },
+   "2_delay_3m": {
+    "net_pnl": 228.1449999999999,
+    "liquidated": false,
+    "dividends_paid": 3.24,
+    "borrow_cost": 19.44000000000008,
+    "min_excess_liquidity": 9391.325
+   },
+   "3_delay_6m": {
+    "net_pnl": 224.5758219178081,
+    "liquidated": false,
+    "dividends_paid": 3.7800000000000002,
+    "borrow_cost": 22.469178082191878,
+    "min_excess_liquidity": 9391.325
+   },
+   "4_break_unaffected": {
+    "net_pnl": -196.4617123287672,
+    "liquidated": false,
+    "dividends_paid": 1.08,
+    "borrow_cost": 7.256712328767136,
+    "min_excess_liquidity": 9363.949826132774
+   },
+   "4b_break_model": {
+    "net_pnl": -37.24381134006528,
+    "liquidated": false,
+    "dividends_paid": 1.08,
+    "borrow_cost": 7.256712328767136,
+    "min_excess_liquidity": 9363.949826132774
+   },
+   "4c_break_stress": {
+    "net_pnl": -409.44305171258185,
+    "liquidated": false,
+    "dividends_paid": 1.08,
+    "borrow_cost": 7.256712328767136,
+    "min_excess_liquidity": 9363.949826132774
+   },
+   "4d_break_regulatory": {
+    "net_pnl": -358.9571811737821,
+    "liquidated": false,
+    "dividends_paid": 3.7800000000000002,
+    "borrow_cost": 20.50520547945214,
+    "min_excess_liquidity": 9348.001332982087
+   },
+   "5_mrvl_down40": {
+    "net_pnl": 237.04784527284983,
+    "liquidated": false,
+    "dividends_paid": 2.7,
+    "borrow_cost": 11.077154727150182,
+    "min_excess_liquidity": 9391.325
+   },
+   "6_mrvl_up60_lite_lags": {
+    "net_pnl": 222.80487760571748,
+    "liquidated": false,
+    "dividends_paid": 2.7,
+    "borrow_cost": 25.320122394282514,
+    "min_excess_liquidity": 8799.122247468731
+   },
+   "7_both_down40": {
+    "net_pnl": 237.04784527284983,
+    "liquidated": false,
+    "dividends_paid": 2.7,
+    "borrow_cost": 11.077154727150182,
+    "min_excess_liquidity": 9391.325
+   },
+   "8_borrow_5pct": {
+    "net_pnl": 170.99746575342476,
+    "liquidated": false,
+    "dividends_paid": 2.7,
+    "borrow_cost": 77.12753424657522,
+    "min_excess_liquidity": 9391.325
+   },
+   "9_htb_recall": {
+    "net_pnl": -132.78813487882002,
+    "liquidated": false,
+    "dividends_paid": 1.08,
+    "borrow_cost": 97.99890410958915,
+    "min_excess_liquidity": 9273.207634351951
+   }
+  },
+  "max_units": 2,
+  "binding": "loss budget (worst plausible stress)"
+ },
+ {
+  "inputs": {
+   "lots": 3,
+   "L0": 500.0,
+   "M0": 120.0,
+   "p": 0.8,
+   "S": 430.0,
+   "kappa": 0.0,
+   "fee": 0.0032,
+   "delta": 0.28173967555472745,
+   "rf": 0.04603990417522245,
+   "equity": 10000.0
+  },
+  "signal": {
+   "gross_spread": 0.08000000000000007,
+   "spread_usd": 40.0,
+   "implied_value": 540.0,
+   "years_to_close": 1.3497604380561259,
+   "annualized_if_complete": 0.05332182312972589,
+   "completion_pnl_unit": 36.317613963039015,
+   "break_pnl_unit_base": -71.97382751540042,
+   "break_pnl_unit_stress": -286.93949720730785,
+   "breakeven_p_base": 0.6646308012229225,
+   "breakeven_p_stress": 0.8876509975865597,
+   "expected_pnl_unit": 14.659325667351133,
+   "expected_pnl_unit_stress": -28.333808271030342,
+   "regt_capital_unit": 520.0,
+   "expected_return_on_capital": 0.02819101089875218,
+   "expected_annualized": 0.020810538427482816,
+   "expected_excess_annual": -0.02522936574773963,
+   "expected_annualized_stress": -0.04066042986429008,
+   "required_spread_for_hurdle": 0.20141290881529827,
+   "max_borrow_fee_for_hurdle": 0.0,
+   "edge": 0.13536919877707754
+  },
+  "decision": "NO TRADE",
+  "scenarios": {
+   "1_on_schedule": {
+    "net_pnl": 209.656098630137,
+    "liquidated": false,
+    "dividends_paid": 8.1,
+    "borrow_cost": 14.003901369862993,
+    "min_excess_liquidity": 8269.76
+   },
+   "2_delay_3m": {
+    "net_pnl": 205.45120000000003,
+    "liquidated": false,
+    "dividends_paid": 9.719999999999999,
+    "borrow_cost": 16.588799999999953,
+    "min_excess_liquidity": 8269.76
+   },
+   "3_delay_6m": {
+    "net_pnl": 201.2463013698631,
+    "liquidated": false,
+    "dividends_paid": 11.339999999999998,
+    "borrow_cost": 19.173698630136894,
+    "min_excess_liquidity": 8269.76
+   },
+   "4_break_unaffected": {
+    "net_pnl": -1090.5223945205478,
+    "liquidated": false,
+    "dividends_paid": 3.2399999999999998,
+    "borrow_cost": 6.1923945205479605,
+    "min_excess_liquidity": 7879.558374710222
+   },
+   "4b_break_model": {
+    "net_pnl": 658.0306157438123,
+    "liquidated": false,
+    "dividends_paid": 3.2399999999999998,
+    "borrow_cost": 6.1923945205479605,
+    "min_excess_liquidity": 7879.558374710222
+   },
+   "4c_break_stress": {
+    "net_pnl": -1729.4664126719929,
+    "liquidated": false,
+    "dividends_paid": 3.2399999999999998,
+    "borrow_cost": 6.1923945205479605,
+    "min_excess_liquidity": 7879.558374710222
+   },
+   "4d_break_regulatory": {
+    "net_pnl": -1549.5687024254564,
+    "liquidated": false,
+    "dividends_paid": 11.339999999999998,
+    "borrow_cost": 17.49777534246569,
+    "min_excess_liquidity": 7860.152993888302
+   },
+   "5_mrvl_down40": {
+    "net_pnl": 214.20749463283178,
+    "liquidated": false,
+    "dividends_paid": 8.1,
+    "borrow_cost": 9.452505367168218,
+    "min_excess_liquidity": 8269.76
+   },
+   "6_mrvl_up60_lite_lags": {
+    "net_pnl": 202.05349555687917,
+    "liquidated": false,
+    "dividends_paid": 8.1,
+    "borrow_cost": 21.606504443120837,
+    "min_excess_liquidity": 6367.558451173317
+   },
+   "7_both_down40": {
+    "net_pnl": 214.20749463283178,
+    "liquidated": false,
+    "dividends_paid": 8.1,
+    "borrow_cost": 9.452505367168218,
+    "min_excess_liquidity": 8269.76
+   },
+   "8_borrow_5pct": {
+    "net_pnl": 20.219956164384747,
+    "liquidated": false,
+    "dividends_paid": 8.1,
+    "borrow_cost": 203.44004383561526,
+    "min_excess_liquidity": 8238.219956164385
+   },
+   "9_htb_recall": {
+    "net_pnl": -782.5610318229714,
+    "liquidated": false,
+    "dividends_paid": 3.2399999999999998,
+    "borrow_cost": 255.65641643835576,
+    "min_excess_liquidity": 7630.094352792413
+   }
+  },
+  "max_units": 2,
+  "binding": "loss budget (worst plausible stress)"
+ }
+]
