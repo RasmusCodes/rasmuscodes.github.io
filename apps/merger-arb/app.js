@@ -5,11 +5,11 @@ const pct = (x, d = 1) => (Number.isFinite(x) ? `${(100 * x).toFixed(d)}%` : "n/
 const usd = (x, d = 0) => (Number.isFinite(x) ? `${x < 0 ? "-" : ""}$${Math.abs(x).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d })}` : "n/a");
 const css = (v) => getComputedStyle(document.querySelector(".viz-root")).getPropertyValue(v).trim();
 
-const snap = await (await fetch("data/snapshot.json?v=1")).json();
+const snap = await (await fetch("data/snapshot.json?v=3")).json();
 const deal = snap.deal;
 const T = deal.target, A = deal.acquirer;
 const defaults = { ratio: deal.ratio, L0: snap.L0, M0: snap.M0, close: deal.expected_close, equity: 10000, lots: 1,
-  fee: 100 * snap.borrow_fee, pa: 0.90, pt: 0.90, pr: 0.80, po: 0.97, S: Math.round(snap.standalone.blend * 100) / 100,
+  fee: 100 * snap.borrow_fee, pa: 0.90, pt: 0.90, pr: 0.61, po: 0.97, S: Math.round(snap.standalone.blend * 100) / 100,
   kappa: 0.5, hurdle: 0.05 };
 
 function setInputs(v) { for (const [k, val] of Object.entries(v)) { const el = $(k); if (el) el.value = val; } }
@@ -43,8 +43,8 @@ $("datanote").innerHTML = `This research page recomputes the model in your brows
 
 function verdictHTML(sig) {
   const cls = sig.decision === "TRADE" ? "b-trade" : sig.decision === "WATCH" ? "b-watch" : "b-no";
-  return `<span class="badge ${cls}">${sig.decision}</span> <strong>Report verdict (defaults): unattractive at today's spread.</strong>
-  <div class="small muted">A 21.5% spread is fair pay for roughly even odds over a long, China-exposed timetable. The expected excess return is about +1% a year at base assumptions and negative under stress.</div>`;
+  return `<span class="badge ${cls}">${sig.decision}</span> <strong>Report verdict (defaults): unattractive at today's spread: no trade.</strong>
+  <div class="small muted">Gate by gate, completion is about 48% (China's SAMR is the weak link), about the market's own ~50%. At a 21.5% spread the expected return is about 2 points a year below Treasuries. The trade needs a ~35% spread, or conviction that LITE would hold ~$600 on its own.</div>`;
 }
 
 // ---------------------------------------------------------------- render
@@ -169,7 +169,21 @@ function comps() {
     rows.map((r) => `<tr><td>${r.acquirer} / ${r.target}</td><td>${r.consideration}</td><td>${r.outcome === "partial" ? "closed 2025 (data to 2024)" : r.outcome}</td><td>${r.spread_d16.toFixed(1)}%</td><td>${r.median_spread.toFixed(1)}%</td><td>${r.max_spread.toFixed(1)}%</td><td>${r.calendar_days}</td></tr>`).join("") + "</tbody>";
 }
 
-$("foot").innerHTML = `Sources: merger agreement (<a href="${deal.sources.merger_agreement}">Ex. 2.1</a>), <a href="${deal.sources.marvell_8k_item_1_01}">Marvell 8-K</a>, <a href="${deal.sources.press_release}">press release</a>; IBKR published margin, interest and commission schedules (2026-11-24); iBorrowDesk; FINRA short interest; US Treasury curve; CRSP (derived statistics only). Full report, model code, tests and the local execution tool: <a href="https://github.com/RasmusCodes/merger-arb-lab">github.com/RasmusCodes/merger-arb-lab</a>.`;
+function antitrust() {
+  const a = snap.antitrust;
+  if (!a) return;
+  $("gap").textContent = usd(a.gap_at_q50);
+  $("gates").innerHTML = `<thead><tr><th>Gate</th><th>P(success)</th></tr></thead><tbody>` +
+    a.gates.map((g) => `<tr><td>${g.gate}</td><td>${pct(g.p_success, 1)}</td></tr>`).join("") + "</tbody>";
+  const rows = $("rev").value === "full" ? a.impact_full : a.impact_half;
+  const keep = ["HSR second request issued", "EU opens phase 2", "SAMR acceptance delayed / pull-and-refile", "US agency sues to block",
+    "Court blocks the merger", "Both stockholder votes pass", "SAMR approves (conditional)"];
+  $("headlines").innerHTML = `<thead><tr><th>Headline</th><th>Odds after</th><th>${T}</th><th>${A}</th><th>Spread</th><th>P&L / ${T} sh</th></tr></thead><tbody>` +
+    rows.filter((r) => keep.includes(r.headline)).map((r) => `<tr><td>${r.headline}</td><td>${pct(r.market_q_after, 0)}</td><td>${pct(r.tgt_move)}</td><td>${pct(r.acq_move)}</td><td>${(100 * r.spread_pts >= 0 ? "+" : "") + (100 * r.spread_pts).toFixed(1)} pts</td><td>${usd(r.arb_pnl_unit)}</td></tr>`).join("") + "</tbody>";
+}
+$("rev").addEventListener("change", antitrust);
+
+$("foot").innerHTML =`Sources: merger agreement (<a href="${deal.sources.merger_agreement}">Ex. 2.1</a>), <a href="${deal.sources.marvell_8k_item_1_01}">Marvell 8-K</a>, <a href="${deal.sources.press_release}">press release</a>; IBKR published margin, interest and commission schedules (2026-11-24); iBorrowDesk; FINRA short interest; US Treasury curve; CRSP (derived statistics only). Full report, model code, tests and the local execution tool: <a href="https://github.com/RasmusCodes/merger-arb-lab">github.com/RasmusCodes/merger-arb-lab</a>.`;
 
 setInputs(defaults);
 document.querySelectorAll("#inputs input").forEach((el) => el.addEventListener("input", render));
@@ -178,4 +192,5 @@ $("runmc").addEventListener("click", runMC);
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
 render();
 comps();
+antitrust();
 window.__mergerarb = { E, snap };

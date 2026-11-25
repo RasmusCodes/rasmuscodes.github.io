@@ -52,6 +52,15 @@
     <div class="card"><div id="ch_heat" class="chart"></div></div>
   </section>
   <section class="card">
+    <h2>Antitrust: what each regulatory headline does <span class="muted small">market odds 50%; Bayesian updates from the gate tree</span></h2>
+    <p class="small muted">Each stock is a mix of its deal and no-deal value, weighted by the market's completion odds. A headline moves the odds, and the hedged trade loses or gains the change in odds times G = spread / (1 &minus; odds). That is <strong id="gap"></strong> per LITE share for the full 100 points, about a tenth of it per 10-point move. How the move splits between LITE and MRVL depends on how much of MRVL's ~21% deal discount would reverse on a break:
+      <label class="inline"><select id="rev"><option value="half" selected>half reverses</option><option value="full">all reverses</option></select></label></p>
+    <div class="grid2">
+      <div class="tablewrap"><table id="gates"></table></div>
+      <div class="tablewrap"><table id="headlines"></table></div>
+    </div>
+  </section>
+  <section class="card">
     <h2>Scenarios <span class="muted small">path-simulated day by day through an IBKR-style margin account</span></h2>
     <div class="tablewrap"><table id="scen"></table></div>
   </section>
@@ -79,6 +88,6 @@
 </main>
 </div>
 </div>
-<script type="module" src="app.js?v=2"></script>
+<script type="module" src="app.js?v=3"></script>
 </body>
 </html>

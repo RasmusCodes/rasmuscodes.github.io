@@ -1,6 +1,6 @@
 {
  "as_of": "2026-11-24",
- "built_utc": "2026-11-25T02:27:04+00:00",
+ "built_utc": "2026-11-25T13:56:29+00:00",
  "deal": {
   "id": "MRVL-LITE-2026",
   "name": "Marvell Technology / Lumentum Holdings",
@@ -218,10 +218,10 @@
   },
   {
    "component": "Required regulatory approvals (HSR, China SAMR, others) before the final outside date",
-   "low": 0.65,
-   "base": 0.8,
-   "high": 0.9,
-   "rationale": "Commentators (Breakingviews, Bloomberg Intelligence) name SAMR as the key risk. SAMR cleared Marvell-Cavium, Marvell-Inphi, AMD-Xilinx, II-VI-Coherent and Lumentum-NeoPhotonics (several with long delays/conditions), but let Qualcomm-NXP, Applied-Kokusai and Intel-Tower lapse. Remedies are capped at 'material to the combined company' (Burdensome Condition), so Marvell can walk from heavy remedies (paying USD 3.2bn)."
+   "low": 0.46,
+   "base": 0.61,
+   "high": 0.74,
+   "rationale": "Gate by gate (analytics/antitrust.py RegTree): US 0.93 (second request likely; a lawsuit ~11%, parties win ~40% in court), EU 0.94, China SAMR 0.69 = the 2016-2025 base rate for notable US chip/tech deals (8 of 12 decided cases approved, the big chip deals with behavioural conditions; all 4 failures were timeouts in high-tension periods). The combined firm would be the dominant merchant PAM4 DSP supplier (Accelink prospectus: Broadcom + Marvell ~90% of module DSPs, Marvell 60-70% of 50-100G/lane) AND a module/laser rival of its Chinese DSP customers - the vertical-foreclosure profile SAMR conditioned in Nvidia-Mellanox and AMD-Xilinx. Nov-2026 climate tilts negative (new US chip controls 16 Nov, tariff plans, truce only to 10 Jan 2027). Remedies are capped at 'material to the combined company', so Marvell can walk from heavy remedies."
   },
   {
    "component": "No other termination (MAE, superior proposal, renegotiation failure, litigation)",
@@ -232,16 +232,16 @@
   },
   {
    "component": "P(complete) = product",
-   "low": 0.3868800000000001,
-   "base": 0.6285600000000001,
-   "high": 0.812592,
+   "low": 0.27379200000000004,
+   "base": 0.479277,
+   "high": 0.6681311999999999,
    "rationale": "assumes independence (sequential conditions)"
   }
  ],
  "signal": {
-  "decision": "WATCH",
+  "decision": "NO TRADE",
   "reasons": [
-   "expected excess return 1.1%/yr is below the 5% hurdle",
+   "expected excess return -2.1%/yr is negative at p=48%",
    "expected P&L is negative under the stress break case (stress: break-even p 69%)"
   ],
   "metrics": {
@@ -255,16 +255,16 @@
    "break_pnl_unit_stress": -222.1067095769178,
    "breakeven_p_base": 0.3629940188941483,
    "breakeven_p_stress": 0.6873295042721642,
-   "expected_pnl_unit": 42.12234344558506,
-   "expected_pnl_unit_stress": -18.991038703015278,
+   "expected_pnl_unit": 18.444047865697172,
+   "expected_pnl_unit_stress": -67.23101053556718,
    "regt_capital_unit": 539.5925,
-   "expected_return_on_capital": 0.0780632485543907,
-   "expected_annualized": 0.05726830020888207,
-   "expected_excess_annual": 0.011228396033659625,
-   "expected_annualized_stress": -0.026195803389660877,
-   "required_spread_for_hurdle": 0.28728173129749046,
+   "expected_return_on_capital": 0.03418143852202759,
+   "expected_annualized": 0.025213504266926368,
+   "expected_excess_annual": -0.02082639990829608,
+   "expected_annualized_stress": -0.09388370203907959,
+   "required_spread_for_hurdle": 0.3526126676797159,
    "max_borrow_fee_for_hurdle": 0.0,
-   "edge": 0.26556598110585183
+   "edge": 0.11628298110585172
   }
  },
  "comparables": [
@@ -467,5 +467,430 @@
    "validation": "OK"
   }
  ],
- "borrow_fee": 0.0032
+ "borrow_fee": 0.0032,
+ "antitrust": {
+  "gates": [
+   {
+    "gate": "US (HSR, second request, consent or litigation)",
+    "p_success": 0.9324999999999999
+   },
+   {
+    "gate": "Stockholder votes (both)",
+    "p_success": 0.81
+   },
+   {
+    "gate": "EU",
+    "p_success": 0.94
+   },
+   {
+    "gate": "China SAMR",
+    "p_success": 0.69
+   },
+   {
+    "gate": "No other termination",
+    "p_success": 0.97
+   },
+   {
+    "gate": "P(complete)",
+    "p_success": 0.47520668114999987
+   }
+  ],
+  "impact_half": [
+   {
+    "headline": "HSR expires, no second request",
+    "jurisdiction": "US",
+    "p_event": 0.25,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.50960502,
+    "dq": 0.0343983388500001,
+    "market_q_after": 0.5361930294906168,
+    "tgt_move": 0.003717412420631172,
+    "acq_move": -0.009772117962466575,
+    "spread_pts": -0.01633498724679705,
+    "gross_spread_after": 0.19910474013044044,
+    "arb_pnl_unit": 7.596554959785546
+   },
+   {
+    "headline": "HSR second request issued",
+    "jurisdiction": "US",
+    "p_event": 0.75,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.4637405681999999,
+    "dq": -0.01146611294999994,
+    "market_q_after": 0.4879356568364612,
+    "tgt_move": -0.00123913747354365,
+    "acq_move": 0.003257372654155377,
+    "spread_pts": 0.005472017625855807,
+    "gross_spread_after": 0.2209117450030933,
+    "arb_pnl_unit": -2.532184986595163
+   },
+   {
+    "headline": "US clears after second request (with or without consent decree)",
+    "jurisdiction": "US",
+    "p_event": 0.6375,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.50960502,
+    "dq": 0.0343983388500001,
+    "market_q_after": 0.5361930294906168,
+    "tgt_move": 0.003717412420631172,
+    "acq_move": -0.009772117962466575,
+    "spread_pts": -0.01633498724679705,
+    "gross_spread_after": 0.19910474013044044,
+    "arb_pnl_unit": 7.596554959785546
+   },
+   {
+    "headline": "US agency sues to block",
+    "jurisdiction": "US",
+    "p_event": 0.11249999999999999,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.203842008,
+    "dq": -0.2713646731499999,
+    "market_q_after": 0.21447721179624668,
+    "tgt_move": -0.029326253540533753,
+    "acq_move": 0.07709115281501333,
+    "spread_pts": 0.13325171700662675,
+    "gross_spread_after": 0.34869144438386424,
+    "arb_pnl_unit": -59.928378016085745
+   },
+   {
+    "headline": "Court rules for the merger",
+    "jurisdiction": "US",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.50960502,
+    "dq": 0.0343983388500001,
+    "market_q_after": 0.5361930294906168,
+    "tgt_move": 0.003717412420631172,
+    "acq_move": -0.009772117962466575,
+    "spread_pts": -0.01633498724679705,
+    "gross_spread_after": 0.19910474013044044,
+    "arb_pnl_unit": 7.596554959785546
+   },
+   {
+    "headline": "Court blocks the merger",
+    "jurisdiction": "US",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.0,
+    "dq": -0.47520668114999987,
+    "market_q_after": 0.0,
+    "tgt_move": -0.05135536418131037,
+    "acq_move": 0.135,
+    "spread_pts": 0.23876560777718736,
+    "gross_spread_after": 0.45420533515442485,
+    "arb_pnl_unit": -104.94499999999994
+   },
+   {
+    "headline": "EU clears in phase 1",
+    "jurisdiction": "EU",
+    "p_event": 0.6,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.5055390224999999,
+    "dq": 0.03033234135000007,
+    "market_q_after": 0.5319148936170214,
+    "tgt_move": 0.003278001969019728,
+    "acq_move": -0.008617021276595804,
+    "spread_pts": -0.014410446339322203,
+    "gross_spread_after": 0.2010292810379153,
+    "arb_pnl_unit": 6.698617021276613
+   },
+   {
+    "headline": "EU opens phase 2",
+    "jurisdiction": "EU",
+    "p_event": 0.4,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.42970816912499993,
+    "dq": -0.04549851202499994,
+    "market_q_after": 0.45212765957446815,
+    "tgt_move": -0.004917002953529703,
+    "acq_move": 0.01292553191489354,
+    "spread_pts": 0.021793685331337853,
+    "gross_spread_after": 0.23723341270857534,
+    "arb_pnl_unit": -10.047925531914872
+   },
+   {
+    "headline": "SAMR accepts filing on time",
+    "jurisdiction": "China",
+    "p_event": 0.95,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.48209373449999987,
+    "dq": 0.006887053350000005,
+    "market_q_after": 0.5072463768115942,
+    "tgt_move": 0.0007442806403088476,
+    "acq_move": -0.0019565217391304124,
+    "spread_pts": -0.003280221102702763,
+    "gross_spread_after": 0.21215950627453473,
+    "arb_pnl_unit": 1.5209420289855131
+   },
+   {
+    "headline": "SAMR acceptance delayed / pull-and-refile",
+    "jurisdiction": "China",
+    "p_event": 0.050000000000000044,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.34435266749999993,
+    "dq": -0.13085401364999993,
+    "market_q_after": 0.3623188405797102,
+    "tgt_move": -0.014141332165868103,
+    "acq_move": 0.03717391304347828,
+    "spread_pts": 0.06326524245566367,
+    "gross_spread_after": 0.27870496983290116,
+    "arb_pnl_unit": -28.89789855072461
+   },
+   {
+    "headline": "SAMR approves (conditional)",
+    "jurisdiction": "China",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.6887053349999999,
+    "dq": 0.21349865385,
+    "market_q_after": 0.7246376811594204,
+    "tgt_move": 0.023072699849574274,
+    "acq_move": -0.06065217391304356,
+    "spread_pts": -0.09946755275132668,
+    "gross_spread_after": 0.1159721746259108,
+    "arb_pnl_unit": 47.14920289855072
+   },
+   {
+    "headline": "SAMR no decision by outside date -> termination",
+    "jurisdiction": "China",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.0,
+    "dq": -0.47520668114999987,
+    "market_q_after": 0.0,
+    "tgt_move": -0.05135536418131037,
+    "acq_move": 0.135,
+    "spread_pts": 0.23876560777718736,
+    "gross_spread_after": 0.45420533515442485,
+    "arb_pnl_unit": -104.94499999999994
+   },
+   {
+    "headline": "Both stockholder votes pass",
+    "jurisdiction": "Votes",
+    "p_event": 0.81,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.5866749149999998,
+    "dq": 0.11146823384999993,
+    "market_q_after": 0.6172839506172839,
+    "tgt_move": 0.01204631999314687,
+    "acq_move": -0.03166666666666662,
+    "spread_pts": -0.052498091776084,
+    "gross_spread_after": 0.1629416356011535,
+    "arb_pnl_unit": 24.616728395061706
+   },
+   {
+    "headline": "A stockholder vote fails",
+    "jurisdiction": "Votes",
+    "p_event": 0.18999999999999995,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.0,
+    "dq": -0.47520668114999987,
+    "market_q_after": 0.0,
+    "tgt_move": -0.05135536418131037,
+    "acq_move": 0.135,
+    "spread_pts": 0.23876560777718736,
+    "gross_spread_after": 0.45420533515442485,
+    "arb_pnl_unit": -104.94499999999994
+   }
+  ],
+  "impact_full": [
+   {
+    "headline": "HSR expires, no second request",
+    "jurisdiction": "US",
+    "p_event": 0.25,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.50960502,
+    "dq": 0.0343983388500001,
+    "market_q_after": 0.5361930294906168,
+    "tgt_move": -0.008160007971567462,
+    "acq_move": -0.01954423592493293,
+    "spread_pts": -0.013950680584819741,
+    "gross_spread_after": 0.20148904679241775,
+    "arb_pnl_unit": 7.596554959785546
+   },
+   {
+    "headline": "HSR second request issued",
+    "jurisdiction": "US",
+    "p_event": 0.75,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.4637405681999999,
+    "dq": -0.01146611294999994,
+    "market_q_after": 0.4879356568364612,
+    "tgt_move": 0.002720002657189191,
+    "acq_move": 0.006514745308310976,
+    "spread_pts": 0.004599769587845248,
+    "gross_spread_after": 0.22003949696508274,
+    "arb_pnl_unit": -2.532184986595163
+   },
+   {
+    "headline": "US clears after second request (with or without consent decree)",
+    "jurisdiction": "US",
+    "p_event": 0.6375,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.50960502,
+    "dq": 0.0343983388500001,
+    "market_q_after": 0.5361930294906168,
+    "tgt_move": -0.008160007971567462,
+    "acq_move": -0.01954423592493293,
+    "spread_pts": -0.013950680584819741,
+    "gross_spread_after": 0.20148904679241775,
+    "arb_pnl_unit": 7.596554959785546
+   },
+   {
+    "headline": "US agency sues to block",
+    "jurisdiction": "US",
+    "p_event": 0.11249999999999999,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.203842008,
+    "dq": -0.2713646731499999,
+    "market_q_after": 0.21447721179624668,
+    "tgt_move": 0.06437339622014315,
+    "acq_move": 0.15418230563002688,
+    "spread_pts": 0.10255547231529949,
+    "gross_spread_after": 0.317995199692537,
+    "arb_pnl_unit": -59.928378016085745
+   },
+   {
+    "headline": "Court rules for the merger",
+    "jurisdiction": "US",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.50960502,
+    "dq": 0.0343983388500001,
+    "market_q_after": 0.5361930294906168,
+    "tgt_move": -0.008160007971567462,
+    "acq_move": -0.01954423592493293,
+    "spread_pts": -0.013950680584819741,
+    "gross_spread_after": 0.20148904679241775,
+    "arb_pnl_unit": 7.596554959785546
+   },
+   {
+    "headline": "Court blocks the merger",
+    "jurisdiction": "US",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.0,
+    "dq": -0.47520668114999987,
+    "market_q_after": 0.0,
+    "tgt_move": 0.11272899901461675,
+    "acq_move": 0.27,
+    "spread_pts": 0.1717879400386766,
+    "gross_spread_after": 0.3872276674159141,
+    "arb_pnl_unit": -104.94499999999994
+   },
+   {
+    "headline": "EU clears in phase 1",
+    "jurisdiction": "EU",
+    "p_event": 0.6,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.5055390224999999,
+    "dq": 0.03033234135000007,
+    "market_q_after": 0.5319148936170214,
+    "tgt_move": -0.007195468022209606,
+    "acq_move": -0.01723404255319161,
+    "spread_pts": -0.012289712524666152,
+    "gross_spread_after": 0.20315001485257134,
+    "arb_pnl_unit": 6.698617021276613
+   },
+   {
+    "headline": "EU opens phase 2",
+    "jurisdiction": "EU",
+    "p_event": 0.4,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.42970816912499993,
+    "dq": -0.04549851202499994,
+    "market_q_after": 0.45212765957446815,
+    "tgt_move": 0.010793202033314353,
+    "acq_move": 0.025851063829787302,
+    "spread_pts": 0.018106496363423208,
+    "gross_spread_after": 0.2335462237406607,
+    "arb_pnl_unit": -10.047925531914872
+   },
+   {
+    "headline": "SAMR accepts filing on time",
+    "jurisdiction": "China",
+    "p_event": 0.95,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.48209373449999987,
+    "dq": 0.006887053350000005,
+    "market_q_after": 0.5072463768115942,
+    "tgt_move": -0.0016337536089074955,
+    "acq_move": -0.003913043478260825,
+    "spread_pts": -0.002774872916061266,
+    "gross_spread_after": 0.21266485446117622,
+    "arb_pnl_unit": 1.5209420289855131
+   },
+   {
+    "headline": "SAMR acceptance delayed / pull-and-refile",
+    "jurisdiction": "China",
+    "p_event": 0.050000000000000044,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.34435266749999993,
+    "dq": -0.13085401364999993,
+    "market_q_after": 0.3623188405797102,
+    "tgt_move": 0.031041318569242193,
+    "acq_move": 0.07434782608695656,
+    "spread_pts": 0.05105173647554073,
+    "gross_spread_after": 0.2664914638527782,
+    "arb_pnl_unit": -28.89789855072461
+   },
+   {
+    "headline": "SAMR approves (conditional)",
+    "jurisdiction": "China",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.6887053349999999,
+    "dq": 0.21349865385,
+    "market_q_after": 0.7246376811594204,
+    "tgt_move": -0.05064636187613214,
+    "acq_move": -0.12130434782608701,
+    "spread_pts": -0.09046209940244876,
+    "gross_spread_after": 0.12497762797478873,
+    "arb_pnl_unit": 47.14920289855072
+   },
+   {
+    "headline": "SAMR no decision by outside date -> termination",
+    "jurisdiction": "China",
+    "p_event": -1.0,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.0,
+    "dq": -0.47520668114999987,
+    "market_q_after": 0.0,
+    "tgt_move": 0.11272899901461675,
+    "acq_move": 0.27,
+    "spread_pts": 0.1717879400386766,
+    "gross_spread_after": 0.3872276674159141,
+    "arb_pnl_unit": -104.94499999999994
+   },
+   {
+    "headline": "Both stockholder votes pass",
+    "jurisdiction": "Votes",
+    "p_event": 0.81,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.5866749149999998,
+    "dq": 0.11146823384999993,
+    "market_q_after": 0.6172839506172839,
+    "tgt_move": -0.026442604707132333,
+    "acq_move": -0.06333333333333324,
+    "spread_pts": -0.04605630583360609,
+    "gross_spread_after": 0.1693834215436314,
+    "arb_pnl_unit": 24.616728395061706
+   },
+   {
+    "headline": "A stockholder vote fails",
+    "jurisdiction": "Votes",
+    "p_event": 0.18999999999999995,
+    "q_before": 0.47520668114999987,
+    "q_after": 0.0,
+    "dq": -0.47520668114999987,
+    "market_q_after": 0.0,
+    "tgt_move": 0.11272899901461675,
+    "acq_move": 0.27,
+    "spread_pts": 0.1717879400386766,
+    "gross_spread_after": 0.3872276674159141,
+    "arb_pnl_unit": -104.94499999999994
+   }
+  ],
+  "gap_at_q50": 209.88999999999987
+ }
 }
