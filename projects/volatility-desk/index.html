@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A cross-asset volatility desk on thirty years of option data · Rasmus Suonio</title>
+<meta name="description" content="Five surface models compared on 371 dates, seventeen option strategies backtested day by day, walk-forward forecasts and dispersion trades, with a working volatility terminal below.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/volatility-desk/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A cross-asset volatility desk on thirty years of option data">
+<meta property="og:description" content="Five surface models compared on 371 dates, seventeen option strategies backtested day by day, walk-forward forecasts and dispersion trades, with a working volatility terminal below.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/volatility-desk/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A cross-asset volatility desk on thirty years of option data</h1>
+<p class="post__sub">Five surface models compared on 371 dates, seventeen option strategies backtested day by day, walk-forward forecasts and dispersion trades, with a working volatility terminal below.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-25">25 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>3 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/volatility-desk/" data-title="A cross-asset volatility desk on thirty years of option data">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/volatility-desk/&amp;text=A%20cross-asset%20volatility%20desk%20on%20thirty%20years%20of%20option%20data" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/volatility-desk/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20cross-asset%20volatility%20desk%20on%20thirty%20years%20of%20option%20data&amp;body=https%3A//rasmuscodes.github.io/projects/volatility-desk/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/cross-asset-volatility-desk" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://github.com/RasmusCodes/cross-asset-volatility-desk/blob/main/reports/02_surface_models.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Model comparison report</span></a><a class="file" href="https://github.com/RasmusCodes/cross-asset-volatility-desk/blob/main/reports/03_strategies.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Strategy backtests</span></a><a class="file" href="/apps/volatility-desk/"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Terminal, full screen</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Option rows analysed</dt><dd class="is-text">99.5 million, 1996–2026</dd></div><div><dt>Surface models compared</dt><dd class="is-text">5 models on 371 SPX dates</dd></div><div><dt>Strategies backtested</dt><dd class="is-text">17, marked daily, 3 cost models</dd></div><div><dt>Browser math vs Python</dt><dd class="is-text">Agrees to 1e-9 or better</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>NumPy</li><li>SciPy</li><li>pandas</li><li>JavaScript</li></ul></section>
+
+
+  <div class="post__body">
+    <div class="prose">
+<p>A research platform for equity-index volatility, built on OptionMetrics and Cboe option data through WRDS: every S&amp;P 500 option quote from 1996 to November 2026, chains for SPY, QQQ and IWM, standardized surfaces for the fifty largest index members, and VIX futures. It fits volatility surfaces, backtests option structures with Greek P&amp;L attribution, forecasts volatility and correlation out of sample, and tests whether the forecasts make money after costs.</p>
+<p>The terminal below runs entirely in your browser. Pick an underlying and a date (calm days and crisis days from 2000 to 2026), turn the implied-volatility surface in 3D and compare the five models, build an option strategy, then move spot, volatility and time and see where the P&amp;L comes from. The Scenarios tab replays fifteen historical stress episodes on your position; Backtests shows thirty years of results for seventeen strategies.</p>
+<div id="voldesk-app"></div>
+<link rel="stylesheet" href="/apps/volatility-desk/app/voldesk.css?v=20261125a">
+<script type="module" src="/apps/volatility-desk/app/voldesk.js?v=20261125a"></script>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<p><strong>The closest fit is not the safest surface.</strong> On 371 S&amp;P 500 month-ends, SVI misses the market by a median 0.24 volatility points and puts 89% of quotes inside the bid-ask, but its extrapolated wings carry calendar arbitrage. Extended SSVI is free of static arbitrage on every date at twice the error; Heston fits worst at 0.97 points.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align:right">Median error, vol points</th>
+<th style="text-align:right">Quotes inside the bid-ask</th>
+<th>Static arbitrage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SVI</td>
+<td style="text-align:right">0.24</td>
+<td style="text-align:right">89%</td>
+<td>In 8% of extrapolated grid points</td>
+</tr>
+<tr>
+<td>SABR</td>
+<td style="text-align:right">0.37</td>
+<td style="text-align:right">70%</td>
+<td>In 3% of extrapolated grid points</td>
+</tr>
+<tr>
+<td>Extended SSVI</td>
+<td style="text-align:right">0.52</td>
+<td style="text-align:right">63%</td>
+<td>None, by construction</td>
+</tr>
+<tr>
+<td>SSVI</td>
+<td style="text-align:right">0.78</td>
+<td style="text-align:right">41%</td>
+<td>None, by construction</td>
+</tr>
+<tr>
+<td>Heston</td>
+<td style="text-align:right">0.97</td>
+<td style="text-align:right">26%</td>
+<td>None (a consistent model)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Selling index volatility paid before costs; costs decide most of the rest.</strong> A short at-the-money straddle rolled monthly earned 5.3% of notional a year before costs and 4.0% after, paid for with crash losses (−10.5% of notional on the worst day). Delta-hedged every day, the same straddle earned 3.5% a year before costs, 1.8% after realistic costs, and nothing after stressed costs. Calendars, diagonals, butterflies and risk reversals made almost nothing before costs and lost money after. The delta-hedged short 25-delta put and call had the best risk-adjusted results.</p>
+<p><strong>Forecasts are good; timing with them is not.</strong> A log-HAR model with the VIX forecasts S&amp;P 500 realized variance 7.5% and 26% better than an exponentially weighted average at one and five days, and implied plus realized correlation predicts next month’s correlation best (out-of-sample R² 36.5%). But no forecast-driven rule for timing the variance premium beat a constant allocation after costs; volatility targeting cut the index’s drawdown from −84% to −65% and nudged its Sharpe ratio up.</p>
+<p><strong>There is a correlation premium.</strong> Implied correlation between the fifty largest S&amp;P 500 members exceeded next month’s realized correlation by 0.04 on average (t = 5.1), with severe losses when correlations spike.</p>
+<h2 id="data-and-its-limits">Data and its limits <a class="header-anchor" href="#data-and-its-limits">#</a></h2>
+<p>Option data are licensed (OptionMetrics, Cboe, Datastream and CRSP through WRDS) and are never published: the terminal ships fitted model parameters, aggregate statistics and backtest results only, so it draws the models’ surfaces and the quoted range rather than the quotes themselves. The two vendors’ quotes differ on stressed days; the history switches from OptionMetrics to Cboe in September 2025. Single stocks have standardized surfaces but no chains here, so dispersion trades are variance-based. Backtests are historical simulations with estimated costs, not evidence of a tradable edge.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package (pricing, data, surfaces, strategies, backtest, forecasting, dispersion) with 35 tests that run in CI on synthetic option chains, five research reports, and a vanilla-JavaScript terminal that reprices everything in the browser, including Heston by the COS method, and checks itself against values computed in Python.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/options/">options</a><a class="tag" href="/tags/volatility/">volatility</a><a class="tag" href="/tags/derivatives-pricing/">derivatives pricing</a><a class="tag" href="/tags/forecasting/">forecasting</a><a class="tag" href="/tags/backtesting/">backtesting</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/volatility-desk/" data-title="A cross-asset volatility desk on thirty years of option data">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/volatility-desk/&amp;text=A%20cross-asset%20volatility%20desk%20on%20thirty%20years%20of%20option%20data" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/volatility-desk/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20cross-asset%20volatility%20desk%20on%20thirty%20years%20of%20option%20data&amp;body=https%3A//rasmuscodes.github.io/projects/volatility-desk/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/fixed-income/"><span>Previous</span><b>Government bond relative value across six markets</b></a><a class="pager__item pager__item--next" href="/projects/merger-arb/"><span>Next</span><b>A merger-arbitrage lab</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

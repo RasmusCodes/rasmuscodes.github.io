@@ -15,6 +15,62 @@
 <li><strong>Risk:</strong> IBKR’s published margin, interest and borrow rules. At full Reg T leverage, a Marvell rally while Lumentum lags triggers a margin call even in a scenario where the deal later closes.</li>
 </ul>
 <p>Market data from the close of 24 November 2026. Research only, not investment advice.</p>
+]]></content:encoded></item><item><title>A cross-asset volatility desk on thirty years of option data</title><link>https://rasmuscodes.github.io/projects/volatility-desk/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/volatility-desk/</guid><pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate><description>Five surface models compared on 371 dates, seventeen option strategies backtested day by day, walk-forward forecasts and dispersion trades, with a working volatility terminal below.</description><category>options</category><category>volatility</category><category>derivatives pricing</category><category>forecasting</category><category>backtesting</category><content:encoded><![CDATA[<p>A research platform for equity-index volatility, built on OptionMetrics and Cboe option data through WRDS: every S&amp;P 500 option quote from 1996 to November 2026, chains for SPY, QQQ and IWM, standardized surfaces for the fifty largest index members, and VIX futures. It fits volatility surfaces, backtests option structures with Greek P&amp;L attribution, forecasts volatility and correlation out of sample, and tests whether the forecasts make money after costs.</p>
+<p>The terminal below runs entirely in your browser. Pick an underlying and a date (calm days and crisis days from 2000 to 2026), turn the implied-volatility surface in 3D and compare the five models, build an option strategy, then move spot, volatility and time and see where the P&amp;L comes from. The Scenarios tab replays fifteen historical stress episodes on your position; Backtests shows thirty years of results for seventeen strategies.</p>
+<div id="voldesk-app"></div>
+<link rel="stylesheet" href="https://rasmuscodes.github.io/apps/volatility-desk/app/voldesk.css?v=20261125a">
+<script type="module" src="https://rasmuscodes.github.io/apps/volatility-desk/app/voldesk.js?v=20261125a"></script>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<p><strong>The closest fit is not the safest surface.</strong> On 371 S&amp;P 500 month-ends, SVI misses the market by a median 0.24 volatility points and puts 89% of quotes inside the bid-ask, but its extrapolated wings carry calendar arbitrage. Extended SSVI is free of static arbitrage on every date at twice the error; Heston fits worst at 0.97 points.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align:right">Median error, vol points</th>
+<th style="text-align:right">Quotes inside the bid-ask</th>
+<th>Static arbitrage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SVI</td>
+<td style="text-align:right">0.24</td>
+<td style="text-align:right">89%</td>
+<td>In 8% of extrapolated grid points</td>
+</tr>
+<tr>
+<td>SABR</td>
+<td style="text-align:right">0.37</td>
+<td style="text-align:right">70%</td>
+<td>In 3% of extrapolated grid points</td>
+</tr>
+<tr>
+<td>Extended SSVI</td>
+<td style="text-align:right">0.52</td>
+<td style="text-align:right">63%</td>
+<td>None, by construction</td>
+</tr>
+<tr>
+<td>SSVI</td>
+<td style="text-align:right">0.78</td>
+<td style="text-align:right">41%</td>
+<td>None, by construction</td>
+</tr>
+<tr>
+<td>Heston</td>
+<td style="text-align:right">0.97</td>
+<td style="text-align:right">26%</td>
+<td>None (a consistent model)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Selling index volatility paid before costs; costs decide most of the rest.</strong> A short at-the-money straddle rolled monthly earned 5.3% of notional a year before costs and 4.0% after, paid for with crash losses (−10.5% of notional on the worst day). Delta-hedged every day, the same straddle earned 3.5% a year before costs, 1.8% after realistic costs, and nothing after stressed costs. Calendars, diagonals, butterflies and risk reversals made almost nothing before costs and lost money after. The delta-hedged short 25-delta put and call had the best risk-adjusted results.</p>
+<p><strong>Forecasts are good; timing with them is not.</strong> A log-HAR model with the VIX forecasts S&amp;P 500 realized variance 7.5% and 26% better than an exponentially weighted average at one and five days, and implied plus realized correlation predicts next month’s correlation best (out-of-sample R² 36.5%). But no forecast-driven rule for timing the variance premium beat a constant allocation after costs; volatility targeting cut the index’s drawdown from −84% to −65% and nudged its Sharpe ratio up.</p>
+<p><strong>There is a correlation premium.</strong> Implied correlation between the fifty largest S&amp;P 500 members exceeded next month’s realized correlation by 0.04 on average (t = 5.1), with severe losses when correlations spike.</p>
+<h2 id="data-and-its-limits">Data and its limits <a class="header-anchor" href="#data-and-its-limits">#</a></h2>
+<p>Option data are licensed (OptionMetrics, Cboe, Datastream and CRSP through WRDS) and are never published: the terminal ships fitted model parameters, aggregate statistics and backtest results only, so it draws the models’ surfaces and the quoted range rather than the quotes themselves. The two vendors’ quotes differ on stressed days; the history switches from OptionMetrics to Cboe in September 2025. Single stocks have standardized surfaces but no chains here, so dispersion trades are variance-based. Backtests are historical simulations with estimated costs, not evidence of a tradable edge.</p>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package (pricing, data, surfaces, strategies, backtest, forecasting, dispersion) with 35 tests that run in CI on synthetic option chains, five research reports, and a vanilla-JavaScript terminal that reprices everything in the browser, including Heston by the COS method, and checks itself against values computed in Python.</p>
 ]]></content:encoded></item><item><title>Government bond relative value across six markets</title><link>https://rasmuscodes.github.io/projects/fixed-income/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/fixed-income/</guid><pubDate>Tue, 24 Nov 2026 12:00:00 +0000</pubDate><description>A research engine and live terminal for US, German, French, UK, Japanese and Polish yield curves - curve fitting, DV01-neutral trades, carry, roll-down and scenarios - with backtests that report what did not work.</description><category>fixed income</category><category>yield curves</category><category>relative value</category><category>rates</category><category>backtesting</category><content:encoded><![CDATA[<p>Relative-value traders in government bonds look for points on a curve, or spreads between curves, that are cheap or rich once risk is accounted for. I built the tools for that - curve models, risk, trade construction, a scanner and a backtester - for six markets, and tested which of the classic signals would have made money after costs and out of sample.</p>
 <p>The terminal below runs the same engine in your browser. Pick a market and a week, fit the curve with five models, compare it with any earlier week, then build a steepener, flattener, butterfly or cross-country spread at a target DV01 and see its carry, roll-down, key-rate risk and profit or loss under hypothetical, statistical and historical shocks. Every number is computed live from weekly official data; nothing is a static illustration.</p>
 <link rel="stylesheet" href="https://rasmuscodes.github.io/apps/fixed-income/terminal.css?v=20261124a">
@@ -846,32 +902,4 @@
 </ul>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>Python and SQLite, with one HTTP client that checks robots.txt, throttles per host and caches every raw response with a timestamp and checksum, so re-runs reproduce the same figures offline.</p>
-]]></content:encoded></item><item><title>Nine reinforcement-learning traders, and none beat buy and hold</title><link>https://rasmuscodes.github.io/projects/rl-trading-lab/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/rl-trading-lab/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A trading environment with realistic costs, nine RL algorithms, a full baseline suite and a holdout evaluated once. The controls work; the agents add nothing.</description><category>reinforcement learning</category><category>backtesting</category><category>machine learning</category><content:encoded><![CDATA[<p>Any reinforcement-learning (RL) agent can be made to produce a good backtest. The question here is whether RL adds anything over simple, well-understood strategies once execution is realistic and the evaluation is honest. On daily data the answer was no: none of nine algorithms beat simple strategies out of sample, and nothing, rule or agent, beat holding SPY on returns.</p>
-<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
-<ul>
-<li><strong>The environment.</strong> An agent decides at the close and fills at the next open, paying a tick-size spread, slippage, square-root market impact, commission, a participation cap, financing and short borrow. Every baseline goes through the same environment and pays the same costs.</li>
-<li><strong>Nine algorithms</strong>, all in PyTorch: tabular Q-learning, DQN, Double DQN, A2C, PPO, SAC, TD3, Moody–Saffell recurrent RL and PPO-LSTM. Each was first checked on problems with known answers.</li>
-<li><strong>Controls before conclusions.</strong> Synthetic markets with a planted edge, a pure random walk, and an “oracle” feature that reveals the next day’s return.</li>
-<li><strong>Honest evaluation.</strong> Six walk-forward folds on SPY, a 2019–2026 holdout evaluated once with every access logged, seed ensembles with bootstrap intervals, and deflated Sharpe ratios that count all 72 strategies tried. The Sharpe ratio is annualised excess return over volatility.</li>
-</ul>
-<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
-<ul>
-<li><strong>The controls pass.</strong> PPO, A2C and recurrent RL find planted edges (test Sharpe 0.64–1.19), no agent beats chance on a random walk, and all nine reach a Sharpe of 12–14 with the oracle, so the implementations work.</li>
-<li><strong>SPY, 2007–2018.</strong> The agents score 0.19–0.53 against buy and hold’s 0.41, with no significant difference, and all trail a 50/200-day moving-average trend filter (0.61). Across all 72 strategies, the best information ratio against buy and hold is −0.03. Higher Sharpe ratios came from holding less risk in 2008, not from earning more.</li>
-<li><strong>Holdout, 2019–2026.</strong> Buy and hold scores 0.77; the RL configurations 0.67 down to −0.52. The development ranking reversed (rank correlation −0.63): the best development agents were among the worst.</li>
-<li><strong>More assets did not help:</strong> on nine ETFs the best agent’s 0.52 trails minimum variance’s 1.09.</li>
-</ul>
-<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/rl-trading-lab/leakage.png" alt="Mean test Sharpe of PPO with one leaky feature added, on a random walk and on SPY" /><figcaption>Mean test Sharpe of PPO with one leaky feature added, on a random walk and on SPY</figcaption></figure>
-<p>The lessons about method travel further than the null result:</p>
-<ul>
-<li><strong>Validation does not predict test.</strong> Across 162 runs, the validation Sharpe of the chosen checkpoint had almost no relation to the next two years’ test Sharpe, and training to the end beat validation-selected checkpoints for six of nine algorithms. A hyperparameter search bought nothing out of sample.</li>
-<li><strong>Leakage beats every algorithm.</strong> One feature built from a centred moving average, which sees ten days ahead, turns a random walk into a Sharpe of 6.9 and fools validation just as much.</li>
-<li><strong>Turnover is the hidden variable.</strong> High-turnover agents lose half their Sharpe by about $20 million of capital, even in SPY.</li>
-<li><strong>Reward hacking appears in mild forms.</strong> Drawdown penalties collapse exposure while the Sharpe ratio survives, and a risk stop without a penalty invites more risk.</li>
-</ul>
-<h2 id="audit-and-limits">Audit and limits <a class="header-anchor" href="#audit-and-limits">#</a></h2>
-<p>An independent audit of the code found no look-ahead, but nine real problems in data, costs and statistics, such as fictitious futures roll jumps and hindsight in a stock list. All were fixed and earlier runs re-scored. Writing the report exposed one more: a policy that never trades had a Sharpe ratio made of rounding noise, which had steered the first hyperparameter search towards doing nothing. The metric was fixed and the search repeated.</p>
-<p>The data is daily bars from a free source, with no intraday or order-book data, and the cost parameters are generic rather than broker quotes. With two or three seeds per configuration and twelve years of test data, differences below about 0.3 Sharpe cannot be resolved.</p>
-<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
-<p>A Python package with a vectorised numpy environment (about 17,000 steps a second per core), PyTorch agents, a baseline suite, Optuna search and a training dashboard. Every run records its config, seed, environment version and code fingerprint. 23 tests cover exact P&amp;L accounting, execution timing, costs, short-sale bans and causality, including a check that catches four deliberately leaky features.</p>
 ]]></content:encoded></item></channel></rss>
