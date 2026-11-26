@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
 <link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-</head>
+<link rel="stylesheet" href="/static/css/home-lead.css?v=0f48aab8"></head>
 <body class="page-home">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="masthead" data-masthead>
@@ -52,26 +52,63 @@
 </div>
 </section>
 
-<section class="hero wrap" aria-label="Featured">
-  <article class="hero__post">
-    <div class="hero__text">
-      <div class="kicker">
-<a href="/essays/">Essays</a></div>
-      <h2 class="hero__title"><a href="/essays/teaching-a-bot-to-trade-figgie/">Beating Jane Street at their own game</a></h2>
-<p class="hero__sub">What I learned building a Figgie bot that beat Jane Street’s Hard bots.</p>      <div class="hero__meta">
-        <span class="mark mark--sm" aria-hidden="true">RS</span>
-        <span class="hero__author">Rasmus Suonio</span>
-        <div class="meta">
-  <time datetime="2026-11-20">20 Nov 2026</time>
-  <span aria-hidden="true">·</span>
-  <span>11 min read</span>
-</div>
+<section class="lead wrap" aria-labelledby="lead-h">
+  <div class="feed__head">
+    <h2 id="lead-h" class="label">Start here</h2>
+    <a class="more" href="/research/">All research <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+  </div>
+  <div class="lead__grid">
+    <article class="lead__card lead__card--long">
+      <div class="lead__top">
+        <span class="lead__ticker">NFLX</span>
+        <span class="pill pill--long pill--lg">Buy</span>
       </div>
+      <div class="kicker">
+<a href="/research/">Research</a><span class="kicker__kind">Investment memo</span></div>
+      <h3 class="lead__title"><a href="/research/netflix-investment-memo/">Netflix: the world is still switching, and the price assumes it has stopped</a></h3>
+      <dl class="lead__nums">
+<div><dt>Price, 16 Nov 2026</dt><dd>$60.75</dd></div><div><dt>12-month target (weighted DCF)</dt><dd>$71.44<span class="delta up">+17.6%</span></dd></div>      </dl>
+<figure class="range">
+  <figcaption class="range__title">Scenario values against the price</figcaption>
+  <div class="range__plot">
+    <div class="range__track"></div>
+    <div class="range__price" style="--x: 34.69%"><span>Price $60.75</span></div>
+    <div class="range__pt" style="--x: 3.7%; --d: 15.0px"></div>
+    <div class="range__lbl row-0 is-start" style="--x: 3.7%">
+      <b>Bear</b><span>$42.62 · 25%</span>
     </div>
-    <div class="hero__media">
-      <a href="/essays/teaching-a-bot-to-trade-figgie/" tabindex="-1" aria-hidden="true"><img src="/media/teaching-a-bot-to-trade-figgie/01-climb.png" alt="Dot chart of average profit per round for 15 bot versions, rising from −$29 for v1 to +$99 for v13, each with a 95% interval of about ±$35 to ±$45."></a>
+    <div class="range__pt is-main" style="--x: 55.94%; --d: 20.0px"></div>
+    <div class="range__lbl row-0" style="--x: 55.94%">
+      <b>Base</b><span>$73.18 · 50%</span>
     </div>
-  </article>
+    <div class="range__pt" style="--x: 96.3%; --d: 15.0px"></div>
+    <div class="range__lbl row-0 is-end" style="--x: 96.3%">
+      <b>Bull</b><span>$96.79 · 25%</span>
+    </div>
+  </div>
+</figure>      <p class="lead__text">The reverse DCF: at $60.75 the market implies Netflix’s share of broadband homes outside the US &amp; Canada falls from 34% today to about 27% by 2035. The memo’s base case has it rising to 41%, from a households × penetration × price model by region.</p>
+      <div class="lead__links">
+        <a class="more" href="/research/netflix-investment-memo/">Read the memo <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+<p class="lead__also">Also: <a href="/research/netflix-between-earnings/">does Netflix trade flat between earnings?</a></p>      </div>
+    </article>
+    <article class="lead__card lead__card--none">
+      <div class="lead__top">
+        <span class="lead__ticker">AAOI</span>
+        <span class="lead__company">Applied Optoelectronics</span>
+      </div>
+      <div class="kicker">
+<a href="/research/">Research</a><span class="kicker__kind">Forensic screen</span></div>
+      <h3 class="lead__title"><a href="/research/optical-forensic-screen/">AAOI: revenue is only as good as Digicomm’s payments</a></h3>
+      <dl class="lead__nums">
+        <div><dt>Digicomm, share of 2025 revenue</dt><dd>53%</dd></div>
+        <div><dt>Digicomm, share of receivables</dt><dd>67–72%</dd></div>
+      </dl>
+      <p class="lead__text">AAOI’s receivables ran at 149 days of sales, against 60 at Coherent and 47 at Lumentum. The SEC asked about the Digicomm concentration in April 2026, and AAOI’s reply added a disclosure of “longer than typical payment terms”. None of this proves misstatement; it makes Digicomm’s payments the thing to watch.</p>
+      <div class="lead__links">
+        <a class="more" href="/research/optical-forensic-screen/">Read the forensic screen <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+<p class="lead__also">Also: <a href="/projects/aaoi-alt-data-tracker/">AAOI alt-data tracker</a> · <a href="/projects/optical-intel/">deal tracker for Coherent and AAOI</a></p>      </div>
+    </article>
+  </div>
 </section>
 
 <div class="home-grid wrap">
@@ -82,17 +119,15 @@
       <article class="row">
   <div class="row__body">
 <div class="kicker">
-<a href="/research/">Research</a><span class="kicker__kind">Forensic screen</span></div>    <h3 class="row__title"><a href="/research/optical-forensic-screen/">Forensic screen: AAOI, Coherent and Lumentum</a></h3>
-<p class="row__sub">AAOI is the clear outlier: one distributor, Digicomm, was 53% of 2025 revenue and 67–72% of receivables. Coherent’s earnings quality fell sharply; Lumentum is the cleanest.</p>    
+<a href="/essays/">Essays</a></div>    <h3 class="row__title"><a href="/essays/teaching-a-bot-to-trade-figgie/">Beating Jane Street at their own game</a></h3>
+<p class="row__sub">What I learned building a Figgie bot that beat Jane Street’s Hard bots.</p>    
     <div class="meta">
-  <time datetime="2026-10-28">28 Oct 2026</time>
+  <time datetime="2026-11-20">20 Nov 2026</time>
   <span aria-hidden="true">·</span>
-  <span>12 min read</span>
+  <span>11 min read</span>
 </div>
   </div>
-  <a class="row__thumb" href="/research/optical-forensic-screen/" tabindex="-1" aria-hidden="true"><span class="chip chip--multi">
-  <span class="chip__tickers"><span>AAOI</span><span>COHR</span><span>LITE</span></span>
-<span class="chip__rating chip__rating--kind">Forensic screen</span></span></a>
+  <a class="row__thumb" href="/essays/teaching-a-bot-to-trade-figgie/" tabindex="-1" aria-hidden="true"><img src="/media/teaching-a-bot-to-trade-figgie/01-climb.png" alt="" loading="lazy"></a>
 </article>
       <article class="row">
   <div class="row__body">
@@ -207,6 +242,10 @@
       <div class="card__head"><h2 class="label">Coverage</h2></div>
       <ul class="mini-coverage">
         <li>
+          <a href="/research/netflix-investment-memo/"><span class="mc-tk"><span class="tk">NFLX</span></span><span class="mc-title">Netflix: the world is still switching, and the price assumes it has stopped</span></a>
+          <span class="pill pill--long">Buy</span>
+        </li>
+        <li>
           <a href="/research/optical-forensic-screen/"><span class="mc-tk"><span class="tk">AAOI</span><span class="tk">COHR</span><span class="tk">LITE</span></span><span class="mc-title">Forensic screen: AAOI, Coherent and Lumentum</span></a>
           
         </li>
@@ -225,10 +264,6 @@
         <li>
           <a href="/research/wynn-resorts-deep-dive/"><span class="mc-tk"><span class="tk">WYNN</span></span><span class="mc-title">Wynn Resorts: priced at the base case, with no margin of safety</span></a>
           <span class="pill pill--watch">Watchlist</span>
-        </li>
-        <li>
-          <a href="/research/ftai-investment-memo/"><span class="mc-tk"><span class="tk">FTAI</span></span><span class="mc-title">FTAI Aviation: the share price already pays for the Street’s plan</span></a>
-          <span class="pill pill--short">Short</span>
         </li>
       </ul>
       <a class="more" href="/research/">All research <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>

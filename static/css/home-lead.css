@@ -1,0 +1,49 @@
+/* Home page "Start here" block: two lead pieces side by side (stacked below 980px).
+   Uses the colour tokens from site.css, so dark mode needs no rules of its own. */
+
+.lead { padding-bottom: 44px; }
+.lead .feed__head { margin-bottom: 18px; }
+.lead__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+
+.lead__card {
+  display: flex; flex-direction: column; min-width: 0;
+  padding: 24px 26px 20px; border: 1px solid var(--rule); border-top: 4px solid var(--neutral); border-radius: 16px;
+  background: var(--surface); box-shadow: var(--shadow);
+}
+.lead__card--long { border-top-color: var(--long); }
+.lead__card--short { border-top-color: var(--short); }
+.lead__card--watch { border-top-color: var(--watch); }
+
+.lead__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.lead__ticker { font: 600 28px/1 var(--mono); letter-spacing: -.01em; color: var(--ink); }
+.lead__company { font: 400 14.5px/1.3 var(--sans); color: var(--muted); text-align: right; }
+
+.lead__title { margin: 0 0 18px; font: 600 clamp(23px, 2.3vw, 29px)/1.16 var(--serif); letter-spacing: -.012em; text-wrap: balance; }
+.lead__title a { text-decoration: none; }
+
+.lead__nums { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; margin: 0; }
+.lead__nums > div { display: flex; flex-direction: column; justify-content: flex-end; }
+.lead__nums dt { margin-bottom: 5px; font: 600 11.5px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.lead__nums dd { margin: 0; font: 600 26px/1.1 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.lead__nums .delta { margin-left: 8px; font-size: 15px; letter-spacing: 0; }
+.lead__card .range { margin-top: 16px; }
+
+.lead__text { margin: 16px 0 18px; font: 400 17px/1.5 var(--serif); color: var(--ink-2); text-wrap: pretty; }
+
+.lead__links { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--rule); }
+.lead__also { margin: 0; font: 500 14px/1.45 var(--sans); color: var(--muted); }
+.lead__also a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
+.lead__also a:hover { color: var(--accent); text-decoration-color: currentColor; }
+
+@media (max-width: 980px) {
+  .lead__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .lead { padding-bottom: 28px; }
+  .lead__card { padding: 18px 16px 16px; border-radius: 14px; }
+  .lead__ticker { font-size: 22px; }
+  .lead__title { font-size: 22px; }
+  .lead__nums dd { font-size: 22px; }
+  .lead__text { font-size: 16px; }
+}
