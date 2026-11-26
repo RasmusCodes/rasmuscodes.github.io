@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Government bond relative value across six markets · Rasmus Suonio</title>
+<meta name="description" content="A research engine and live terminal for US, German, French, UK, Japanese and Polish yield curves - curve fitting, DV01-neutral trades, carry, roll-down and scenarios - with backtests that report what did not work.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/fixed-income/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Government bond relative value across six markets">
+<meta property="og:description" content="A research engine and live terminal for US, German, French, UK, Japanese and Polish yield curves - curve fitting, DV01-neutral trades, carry, roll-down and scenarios - with backtests that report what did not work.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/fixed-income/"><meta property="og:image" content="https://rasmuscodes.github.io/media/fixed-income/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">Government bond relative value across six markets</h1>
+<p class="post__sub">A research engine and live terminal for US, German, French, UK, Japanese and Polish yield curves - curve fitting, DV01-neutral trades, carry, roll-down and scenarios - with backtests that report what did not work.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-24">24 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>4 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/fixed-income/" data-title="Government bond relative value across six markets">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/fixed-income/&amp;text=Government%20bond%20relative%20value%20across%20six%20markets" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/fixed-income/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Government%20bond%20relative%20value%20across%20six%20markets&amp;body=https%3A//rasmuscodes.github.io/projects/fixed-income/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/fixed-income-rv-engine" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://github.com/RasmusCodes/fixed-income-rv-engine/tree/main/research" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Research notes</span></a><a class="file" href="/apps/fixed-income/"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Terminal, full screen</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Curve fits judged out of sample</dt><dd class="is-text">5,608</dd></div><div><dt>Signals clearing a multiple-testing bar</dt><dd class="is-text">1 of 36: the US swap spread</dd></div><div><dt>Curve-slope mean reversion, out of sample</dt><dd class="is-text">Lost money in all six markets</dd></div><div><dt>Browser engine vs Python</dt><dd class="is-text">53 of 53 checks match</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>JavaScript</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/fixed-income/cover.png" alt="Par yield curves of the United States, Germany, France, the United Kingdom, Japan and Poland in November 2026, fitted with Nelson-Siegel-Svensson; Poland&#39;s curve is the steepest and the highest beyond two years, Japan&#39;s the lowest."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Relative-value traders in government bonds look for points on a curve, or spreads between curves, that are cheap or rich once risk is accounted for. I built the tools for that - curve models, risk, trade construction, a scanner and a backtester - for six markets, and tested which of the classic signals would have made money after costs and out of sample.</p>
+<p>The terminal below runs the same engine in your browser. Pick a market and a week, fit the curve with five models, compare it with any earlier week, then build a steepener, flattener, butterfly or cross-country spread at a target DV01 and see its carry, roll-down, key-rate risk and profit or loss under hypothetical, statistical and historical shocks. Every number is computed live from weekly official data; nothing is a static illustration.</p>
+<link rel="stylesheet" href="/apps/fixed-income/terminal.css?v=20261124a">
+<div id="fi-terminal" class="fi-terminal" data-base="/apps/fixed-income/"><p class="fi-loading">Loading the terminal...</p></div>
+<script src="/apps/fixed-income/firv.js?v=20261124a"></script>
+<script src="/apps/fixed-income/terminal.js?v=20261124a"></script>
+<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Which curve model fits best?</td>
+<td>Out of sample (each maturity left out and predicted), Nelson-Siegel-Svensson: 6.3 bp in the US, 3.3 bp in France, 4.5 bp for Polish bonds. In Japan, where every maturity from 1 to 10 years is published, a cubic spline is best (2.6 bp). Nelson-Siegel is worst in the US, France and Japan. The smoothing spline adds the least day-to-day noise at unobserved maturities in all 12 market-regime windows tested.</td>
+</tr>
+<tr>
+<td>What moves curves?</td>
+<td>Level explains 80-90% of daily changes since 2000, slope 8-13%, curvature 1-3%. Level and slope keep the same shape across two-year windows; curvature does not, so a curvature trade estimated in one period can carry level or slope risk in the next.</td>
+</tr>
+<tr>
+<td>Does fading curve and butterfly dislocations pay?</td>
+<td>No. Fading extreme 2s10s slopes lost money out of sample in all six markets (walk-forward Sharpe ratios from -0.28 to -0.52). Butterflies and cross-country 10-year spreads were flat to negative after costs, weighting butterflies by principal components did not help, and Polish trades did not cover the bid/offer measured in the official fixing.</td>
+</tr>
+<tr>
+<td>Did anything survive?</td>
+<td>One of 36 walk-forward tests clears a multiple-testing bar: mean reversion of the US 10-year swap spread, 27 bp per unit of DV01 a year, Sharpe 0.50, t-statistic 3.8 (2004-2016, on discontinued LIBOR swap rates). Ten of the twelve results with a t-statistic beyond 2 are reliable losses.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="france-versus-poland">France versus Poland <a class="header-anchor" href="#france-versus-poland">#</a></h2>
+<p>The case study compares two borrowers in different currencies under different central banks: France with much higher debt (about 120% of GDP against 77% in 2026, OECD estimates), Poland with the larger deficit (6.9% against 5.0% of GDP) and the faster-rising debt ratio. On 20 November 2026 the Polish 10-year yield was 136 bp above the French one, close to its five-year low of 130 bp. Hedged into euros at the short-rate differential, the Polish bond yielded only 5 bp more. Weekly Polish and French 10-year changes moved with a beta of 0.96 and a correlation of 0.65. None of the candidate trades - 2-, 5- and 10-year spreads and a curve box - earned a reliable return historically, and for the static versions the assumed cost of rolling Polish bonds decided the sign. The study lays out the evidence and what would have to be true for either side; it makes no call.</p>
+<h2 id="data">Data <a class="header-anchor" href="#data">#</a></h2>
+<p>Every yield comes from an official publisher, and each is labelled in the terminal: the U.S. Treasury par curve, the Bundesbank and Bank of England fitted curves, the Banque de France constant-maturity OAT yields, Japan’s Ministry of Finance yields, and the BondSpot fixing of Polish government bonds, to which I fit a curve every week. Macro inputs come from the BIS, OECD, ECB and New York Fed. Conventions were checked in the data rather than assumed: the Bundesbank, Fed and ECB yields reproduce from their published parameters only with continuous compounding, and while Bank Rate sat at 5.25% the Bank of England’s one-month OIS rate averaged 5.19%, which fits continuous compounding of an overnight rate a few basis points below Bank Rate (an annual convention would read about 5.33%). Raw Polish fixings and vendor series (ICE swap rates, Moody’s yields) are not redistributed.</p>
+<h2 id="how-it-is-built">How it is built <a class="header-anchor" href="#how-it-is-built">#</a></h2>
+<p>A Python package (<code>firv</code>) with curve models (Nelson-Siegel, Svensson, smoothing and cubic splines, bootstrapping), bond and swap analytics, key-rate risk, carry and roll-down, scenario revaluation, trade constructors with DV01, beta, regression and principal-component hedges, a relative-value scanner and a walk-forward backtester with transaction and roll costs. Trades are sized by yield DV01, as traders quote them; risk is aggregated on the zero curve. The terminal is a JavaScript port of the engine that matches the Python on all 53 reference values, and 36 Python tests cover the analytics and the data.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>Backtests use constant-maturity yields, not individual bonds: repo specials, on-the-run premia and auction cycles are ignored, and transaction costs outside Poland are assumptions (shown at zero, one and two times).</li>
+<li>No free Treasury futures prices could be used, so the futures-basis module (conversion factors, net basis, implied repo) is analytics only.</li>
+<li>The Polish curve stops at about 10 years in recent years, because the fixing has had no longer fixed-rate bonds; the 10-year point is extrapolated by up to a year.</li>
+<li>Swap data are LIBOR swaps that end in 2016; UK swap spreads use the Bank of England’s SONIA OIS curve.</li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/fixed-income/">fixed income</a><a class="tag" href="/tags/yield-curves/">yield curves</a><a class="tag" href="/tags/relative-value/">relative value</a><a class="tag" href="/tags/rates/">rates</a><a class="tag" href="/tags/backtesting/">backtesting</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/fixed-income/" data-title="Government bond relative value across six markets">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/fixed-income/&amp;text=Government%20bond%20relative%20value%20across%20six%20markets" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/fixed-income/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=Government%20bond%20relative%20value%20across%20six%20markets&amp;body=https%3A//rasmuscodes.github.io/projects/fixed-income/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/portfolio-manager/"><span>Previous</span><b>A portfolio manager that explains itself, and what optimization is worth</b></a><a class="pager__item pager__item--next" href="/projects/merger-arb/"><span>Next</span><b>A merger-arbitrage lab</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

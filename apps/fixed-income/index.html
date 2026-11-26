@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fixed income RV terminal</title>
+<meta name="description" content="Yield curves, curve fitting, DV01-neutral trade construction, carry and roll-down and scenario P&L for six government bond markets, computed in the browser.">
+<link rel="stylesheet" href="terminal.css?v=20261124a">
+<style>
+  :root { --bg: #fbfaf6; --surface: #ffffff; --surface-2: #f3f1ea; --ink: #1a1a18; --ink-2: #2f2e2a; --muted: #6b6963;
+    --rule: #e6e2d8; --rule-strong: #d3cec1; --accent: #14594b; --accent-soft: #e3efea; --accent-ink: #f6f3ea;
+    --long: #157347; --short: #b42318; color-scheme: light; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121413; --surface: #181b19; --surface-2: #1f2321; --ink: #ecebe5; --ink-2: #d8d6ce;
+      --muted: #a19e95; --rule: #2a2e2b; --rule-strong: #3a3f3b; --accent: #5ec2a7; --accent-soft: #163730; --accent-ink: #0b1f1a;
+      --long: #5cc98c; --short: #f47b6e; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #121413; --surface: #181b19; --surface-2: #1f2321; --ink: #ecebe5; --ink-2: #d8d6ce;
+    --muted: #a19e95; --rule: #2a2e2b; --rule-strong: #3a3f3b; --accent: #5ec2a7; --accent-soft: #163730; --accent-ink: #0b1f1a;
+    --long: #5cc98c; --short: #f47b6e; color-scheme: dark; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .page { max-width: 1220px; margin: 0 auto; padding: 20px 16px 40px; }
+  .page > p { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+  .page a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="page">
+  <p><a href="/projects/fixed-income/">Project write-up</a> · <a href="https://github.com/RasmusCodes/fixed-income-rv-engine">Code on GitHub</a></p>
+  <div id="fi-terminal" class="fi-terminal" data-base="./"><p class="fi-loading">Loading the terminal…</p></div>
+</div>
+<script src="firv.js?v=20261124a"></script>
+<script src="terminal.js?v=20261124a"></script>
+</body>
+</html>

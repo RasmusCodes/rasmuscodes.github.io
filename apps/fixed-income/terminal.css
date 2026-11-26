@@ -1,0 +1,140 @@
+/* Fixed income RV terminal. Uses the host site's tokens (--surface, --ink, --rule, --accent,
+   --sans, --mono ...) with fallbacks so it also works standalone. Chart series colours are the
+   validated reference palette, stepped separately for dark mode. */
+
+.fi-terminal {
+  --fi-surface: var(--surface, #ffffff);
+  --fi-surface-2: var(--surface-2, #f3f1ea);
+  --fi-ink: var(--ink, #1a1a18);
+  --fi-ink-2: var(--ink-2, #2f2e2a);
+  --fi-muted: var(--muted, #6b6963);
+  --fi-faint: var(--faint, #8f8c84);
+  --fi-rule: var(--rule, #e6e2d8);
+  --fi-rule-strong: var(--rule-strong, #d3cec1);
+  --fi-accent: var(--accent, #14594b);
+  --fi-accent-soft: var(--accent-soft, #e3efea);
+  --fi-pos: var(--long, #157347);
+  --fi-neg: var(--short, #b42318);
+  --fi-grid: #e1e0d9;
+  --fi-axis: #c3c2b7;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --s5: #e87ba4; --s6: #008300; --s7: #6250d6; --s8: #e34948;
+  --fi-sans: var(--sans, system-ui, -apple-system, "Segoe UI", sans-serif);
+  --fi-mono: var(--mono, ui-monospace, Consolas, monospace);
+  font: 400 14px/1.45 var(--fi-sans);
+  color: var(--fi-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .fi-terminal {
+    --fi-grid: #2c2c2a; --fi-axis: #383835;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+    --s5: #d55181; --s6: #0ca30c; --s7: #9085e9; --s8: #e66767;
+  }
+}
+:root[data-theme="dark"] .fi-terminal {
+  --fi-grid: #2c2c2a; --fi-axis: #383835;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --s5: #d55181; --s6: #0ca30c; --s7: #9085e9; --s8: #e66767;
+}
+
+/* break out of the 700px reading column when embedded in a post */
+.prose .fi-terminal, .fi-terminal.fi-wide {
+  width: min(1180px, calc(100vw - 40px));
+  margin-left: calc((100% - min(1180px, calc(100vw - 40px))) / 2);
+  margin-top: 1.6em; margin-bottom: 2.2em;
+}
+.fi-terminal * { box-sizing: border-box; }
+.fi-terminal :is(h2, h3, h4, p, table, ul) { margin: 0; }
+.fi-terminal h3 { font: 650 15px/1.3 var(--fi-sans); color: var(--fi-ink); letter-spacing: -.005em; }
+.fi-terminal h4 { font: 600 12px/1.3 var(--fi-sans); color: var(--fi-muted); text-transform: uppercase; letter-spacing: .06em; }
+.fi-terminal p { font: 400 13.5px/1.5 var(--fi-sans); }
+.fi-terminal button, .fi-terminal select, .fi-terminal input { font: inherit; color: inherit; }
+
+.fi-shell { border: 1px solid var(--fi-rule); border-radius: 14px; background: var(--fi-surface); overflow: hidden; }
+.fi-top { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--fi-rule); background: var(--fi-surface-2); }
+.fi-brand { display: flex; flex-direction: column; margin-right: auto; }
+.fi-brand b { font: 650 15px/1.2 var(--fi-sans); color: var(--fi-ink); }
+.fi-brand span { font-size: 12px; color: var(--fi-muted); }
+.fi-ctl { display: flex; flex-direction: column; gap: 3px; }
+.fi-ctl label, .fi-label { font: 600 11px/1.2 var(--fi-sans); color: var(--fi-muted); text-transform: uppercase; letter-spacing: .05em; }
+.fi-seg { display: inline-flex; border: 1px solid var(--fi-rule-strong); border-radius: 8px; overflow: hidden; background: var(--fi-surface); }
+.fi-seg button { border: 0; background: transparent; padding: 5px 10px; cursor: pointer; font-weight: 550; font-size: 13px; color: var(--fi-ink-2); }
+.fi-seg button + button { border-left: 1px solid var(--fi-rule); }
+.fi-seg button[aria-pressed="true"] { background: var(--fi-accent); color: var(--accent-ink, #fff); }
+.fi-seg button:focus-visible, .fi-terminal select:focus-visible, .fi-terminal input:focus-visible { outline: 2px solid var(--fi-accent); outline-offset: 1px; }
+.fi-terminal select, .fi-terminal input[type="number"], .fi-terminal input[type="date"] {
+  border: 1px solid var(--fi-rule-strong); border-radius: 8px; background: var(--fi-surface); padding: 5px 8px; font-size: 13px; min-height: 32px;
+}
+.fi-terminal input[type="number"] { width: 110px; }
+
+.fi-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 0; }
+.fi-grid--even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.fi-card { padding: 16px; border-bottom: 1px solid var(--fi-rule); min-width: 0; }
+.fi-grid > .fi-card + .fi-card { border-left: 1px solid var(--fi-rule); }
+.fi-card__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 10px; }
+.fi-card__head h3 { margin-right: auto; }
+.fi-note { font-size: 12.5px; color: var(--fi-muted); }
+.fi-badge { display: inline-block; padding: 1px 7px; border-radius: 999px; font: 600 11px/1.6 var(--fi-sans); background: var(--fi-accent-soft); color: var(--fi-accent); }
+.fi-badge--derived { background: color-mix(in srgb, var(--s4) 18%, transparent); color: var(--fi-ink-2); }
+
+.fi-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; margin: 6px 0 12px; }
+.fi-stat b { display: block; font: 650 18px/1.2 var(--fi-sans); color: var(--fi-ink); }
+.fi-stat span { font-size: 12px; color: var(--fi-muted); }
+.fi-kv { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.fi-kv td { padding: 3px 0; border-bottom: 1px solid var(--fi-rule); }
+.fi-kv td:last-child { text-align: right; font-family: var(--fi-mono); font-size: 12px; }
+
+.fi-chart { position: relative; width: 100%; }
+.fi-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fi-chart .grid line { stroke: var(--fi-grid); stroke-width: 1; }
+.fi-chart .axis text { fill: var(--fi-muted); font: 400 11px var(--fi-sans); }
+.fi-chart .axis line, .fi-chart .baseline { stroke: var(--fi-axis); }
+.fi-chart .crosshair { stroke: var(--fi-muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.fi-chart .hit { fill: transparent; cursor: crosshair; }
+.fi-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 0; font-size: 12px; color: var(--fi-ink-2); }
+.fi-legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+.fi-legend i.dot { width: 8px; height: 8px; border-radius: 50%; }
+.fi-legend i.dash { background: repeating-linear-gradient(90deg, currentColor 0 4px, transparent 4px 7px) !important; color: var(--fi-muted); }
+.fi-tip { position: absolute; pointer-events: none; z-index: 5; min-width: 150px; padding: 8px 10px; border-radius: 8px;
+  background: var(--fi-surface); border: 1px solid var(--fi-rule-strong); box-shadow: 0 6px 20px rgba(0,0,0,.12);
+  font-size: 12px; color: var(--fi-ink-2); }
+.fi-tip b { color: var(--fi-ink); }
+.fi-tip .row { display: flex; justify-content: space-between; gap: 12px; }
+.fi-tip .sw { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+.fi-table-wrap { overflow-x: auto; }
+.fi-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.fi-table th, .fi-table td { padding: 6px 8px; border-bottom: 1px solid var(--fi-rule); text-align: right; white-space: nowrap; }
+.fi-table th:first-child, .fi-table td:first-child { text-align: left; }
+.fi-table td.txt, .fi-table th.txt { text-align: left; white-space: normal; }
+.fi-table thead th { font-weight: 600; color: var(--fi-ink); background: var(--fi-surface-2); position: sticky; top: 0; }
+.fi-table .pos { color: var(--fi-pos); }
+.fi-table .neg { color: var(--fi-neg); }
+.fi-table tbody tr:hover td { background: color-mix(in srgb, var(--fi-accent) 6%, transparent); }
+
+.fi-builder { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 14px; margin-bottom: 14px; }
+.fi-sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px 16px; margin: 10px 0; }
+.fi-sliders label { display: flex; justify-content: space-between; font-size: 12px; color: var(--fi-muted); }
+.fi-sliders input[type="range"] { width: 100%; accent-color: var(--fi-accent); }
+.fi-big { font: 650 20px/1.2 var(--fi-sans); color: var(--fi-ink); }
+.fi-row { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; }
+.fi-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--fi-rule); margin-bottom: 12px; overflow-x: auto; }
+.fi-tabs button { border: 0; background: none; padding: 8px 10px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--fi-muted); border-bottom: 2px solid transparent; white-space: nowrap; }
+.fi-tabs button[aria-selected="true"] { color: var(--fi-ink); border-bottom-color: var(--fi-accent); }
+.fi-foot { padding: 14px 16px; background: var(--fi-surface-2); font-size: 12px; color: var(--fi-muted); }
+.fi-foot a { color: var(--fi-accent); }
+.fi-error { padding: 16px; color: var(--fi-neg); }
+.fi-loading { padding: 40px 16px; text-align: center; color: var(--fi-muted); }
+.fi-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (max-width: 900px) {
+  .fi-grid { grid-template-columns: minmax(0, 1fr); }
+  .fi-grid > .fi-card + .fi-card { border-left: 0; }
+}
+@media (max-width: 560px) {
+  .prose .fi-terminal, .fi-terminal.fi-wide { width: calc(100vw - 32px); margin-left: calc((100% - (100vw - 32px)) / 2); }
+  .fi-top { padding: 12px; }
+  .fi-card { padding: 12px; }
+  .fi-seg button { padding: 5px 7px; font-size: 12.5px; }
+}
