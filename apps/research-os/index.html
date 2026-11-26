@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research OS demo</title>
+<meta name="description" content="Explore a quantitative research project tracked by quant-research-os: hypotheses, experiments, data provenance, validation and reproducibility.">
+<script>
+  // Theme before first paint: same storage key as the host site, so an embedded demo matches it.
+  try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  try { if (window.parent !== window && window.parent.document) { var pt = window.parent.document.documentElement.getAttribute("data-theme"); if (pt) document.documentElement.setAttribute("data-theme", pt); } } catch (e) {}
+</script>
+<link rel="stylesheet" href="/static/fonts/fonts.css">
+<link rel="stylesheet" href="app.css?v=0b3a2c4082">
+</head>
+<body>
+<div class="shell" id="app"><div class="loading">Loading the research registry…</div></div>
+<noscript><p style="padding:24px">This demo needs JavaScript. The code and documentation are on GitHub: github.com/RasmusCodes/quant-research-os</p></noscript>
+<script src="charts.js?v=0b3a2c4082" defer></script>
+<script src="toy.js?v=0b3a2c4082" defer></script>
+<script src="app.js?v=0b3a2c4082" defer></script>
+</body>
+</html>

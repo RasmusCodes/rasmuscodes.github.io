@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A research operating system that catches the mistakes behind good-looking backtests · Rasmus Suonio</title>
+<meta name="description" content="An experiment registry, data-provenance layer and statistical validation framework for quant research, shown on a synthetic market where the right answers are known.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/projects/research-os/"><meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="A research operating system that catches the mistakes behind good-looking backtests">
+<meta property="og:description" content="An experiment registry, data-provenance layer and statistical validation framework for quant research, shown on a synthetic market where the right answers are known.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rasmuscodes.github.io/projects/research-os/"><meta property="og:image" content="https://rasmuscodes.github.io/media/research-os/cover.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="alternate" type="application/rss+xml" title="Rasmus Suonio" href="/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css?v=298114e5">
+<link rel="stylesheet" href="/static/css/site.css?v=970e20e4">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-post page-projects">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+<main id="main">
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<article class="post">
+  <header class="post__head">
+    <div class="kicker">
+<a href="/projects/">Projects</a></div>
+    <h1 class="post__title">A research operating system that catches the mistakes behind good-looking backtests</h1>
+<p class="post__sub">An experiment registry, data-provenance layer and statistical validation framework for quant research, shown on a synthetic market where the right answers are known.</p>    <div class="byline">
+      <a class="byline__author" href="/about/">
+        <span class="mark " aria-hidden="true">RS</span>
+        <span><b>Rasmus Suonio</b><div class="meta">
+  <time datetime="2026-11-22">22 Nov 2026</time>
+  <span aria-hidden="true">·</span>
+  <span>4 min read</span>
+</div></span>
+      </a>
+      <div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/research-os/" data-title="A research operating system that catches the mistakes behind good-looking backtests">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/research-os/&amp;text=A%20research%20operating%20system%20that%20catches%20the%20mistakes%20behind%20good-looking%20backtests" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/research-os/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20research%20operating%20system%20that%20catches%20the%20mistakes%20behind%20good-looking%20backtests&amp;body=https%3A//rasmuscodes.github.io/projects/research-os/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div>
+    </div>
+  </header>
+
+  <section class="sheet sheet--project" aria-label="Project summary">
+  <div class="sheet__head">
+    <div class="sheet__id">
+      <span class="pstatus pstatus--done">Done</span>
+<span class="sheet__company">Nov 2026</span>    </div>
+    <div class="sheet__files">
+<a class="file" href="https://github.com/RasmusCodes/quant-research-os" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Code on GitHub</span></a><a class="file" href="https://github.com/RasmusCodes/quant-research-os/blob/main/docs/VALIDATION.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>How the verdict is computed</span></a><a class="file" href="https://github.com/RasmusCodes/quant-research-os/blob/main/docs/INTEGRATION.md" target="_blank" rel="noopener"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Integration guide</span></a><a class="file" href="/apps/research-os/"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span>Demo, full screen</span></a>    </div>
+  </div>
+  <dl class="sheet__facts">
+<div><dt>Demo verdicts vs planted truth</dt><dd class="is-text">1 robust, 0 false discoveries</dd></div><div><dt>Planted mistakes caught</dt><dd class="is-text">6 of 6</dd></div><div><dt>Browser re-run of a recorded experiment</dt><dd class="is-text">SHA-256 identical</dd></div><div><dt>Tests</dt><dd class="is-text">104 Python, 4 Rust</dd></div>  </dl>
+<ul class="stack stack--sheet"><li>Python</li><li>SQLite</li><li>JavaScript</li><li>Rust</li></ul></section>
+
+  <figure class="post__cover"><img src="/media/research-os/cover.png" alt="Cumulative returns of 46 trend-following trials on a synthetic futures contract with no edge, in gray, and the one robust experiment, a profitability strategy confirmed on a sealed 2020-2024 holdout, in blue."></figure>
+
+  <div class="post__body">
+    <div class="prose">
+<p>Most backtests that look good are wrong for boring reasons: the researcher tried forty variants and reported the best, joined data on a date before it was published, tested on today’s surviving stocks, kept peeking at the holdout, or rewrote the hypothesis after seeing the result. None of that is visible in a Sharpe ratio. I built a research operating system that records every experiment with its hypothesis, data versions, code, parameters and seed, and then checks the record for exactly these failures.</p>
+<p>The demo below is a real registry, exported to the browser. It replays two months of research on a synthetic market in which I planted the effects, so every verdict can be checked against the truth. A profitability effect is real, momentum is real but fades, short-term reversal is real only before trading costs, and futures trend rules have no edge at all. The research script also makes the classic mistakes on purpose. Everything is synthetic and the dates are simulated.</p>
+<div class="qros-wrap"><iframe id="qros-demo" src="/apps/research-os/index.html?embed=1" title="Research OS demo: an interactive experiment registry on synthetic data"></iframe></div>
+<script>
+(function () {
+  var frame = document.getElementById("qros-demo");
+  if (!frame) return;
+  window.addEventListener("message", function (ev) {
+    if (ev.origin !== window.location.origin || ev.source !== frame.contentWindow) return;
+    var d = ev.data || {};
+    if (d.type === "qros-height" && d.height > 300) frame.style.height = Math.ceil(d.height) + "px";
+    if (d.type === "qros-navigate") {
+      var top = frame.getBoundingClientRect().top;
+      if (top < 0) window.scrollBy({ top: top - 90, behavior: "smooth" });
+    }
+  });
+})();
+</script>
+<style>
+.qros-wrap { width: min(1100px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); margin: 28px 0 36px; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.qros-wrap iframe { display: block; width: 100%; height: 1500px; border: 0; background: transparent; }
+@media (max-width: 640px) { .qros-wrap { width: calc(100vw - 24px); } }
+</style>
+<h2 id="what-the-demo-shows">What the demo shows <a class="header-anchor" href="#what-the-demo-shows">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>Evidence in the registry</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A real effect survives every check</td>
+<td>The pre-registered profitability strategy, deflated for its five trials and confirmed on the sealed 2020-2024 holdout (Sharpe 0.83, p = 0.03 on the first look)</td>
+<td>Robust</td>
+</tr>
+<tr>
+<td>In-sample significance is not robustness</td>
+<td>Momentum: deflated Sharpe ratios near 1 in-sample, but the planted effect fades, and the nine variants’ out-of-sample Sharpe ratios range from -0.61 to 0.65</td>
+<td>Fragile</td>
+</tr>
+<tr>
+<td>The best of many tries looks good by luck</td>
+<td>45 moving-average rules on a contract with nothing to time: the best has a Sharpe of 0.38 but a deflated Sharpe ratio of 0.63, and the probability of backtest overfitting is 0.70</td>
+<td>No edge</td>
+</tr>
+<tr>
+<td>Look-ahead is caught from the rows used</td>
+<td>Fundamentals joined on the quarter end instead of the publication date: an in-sample Sharpe of 2.7, and an audit trail of every row used early</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>A hypothesis rewritten after the results proves nothing</td>
+<td>“Continuation” failed, was restated as “reversal” with the prediction flipped, and re-tested on the same data</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>A holdout is spent by looking</td>
+<td>Three looks were allowed; looks four to eight, by a researcher checking the best trend rules, are flagged</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Survivors, unadjusted prices and unseeded randomness</td>
+<td>A survivor-only universe, returns computed from raw prices with splits, and a random tie-break that never reproduces</td>
+<td>Invalid</td>
+</tr>
+</tbody>
+</table></div>
+<p>The registry grades 75 experiments: 1 robust, 12 fragile, 52 with no edge and 10 invalid. No experiment without a planted effect was graded robust. Real effects can still be graded fragile or no-edge when the evidence is too weak: reversal, for example, is real before costs but not after them.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Experiment registry.</strong> A SQLite database records each experiment’s hypothesis and the version it tested, its family of related trials, parameters, seed, code hash, environment, dataset versions, windows, metrics and artifacts. Finished experiments cannot be edited (database triggers refuse it), and every change appends to a hash-chained audit log. The demo’s Audit log tab re-verifies all 793 events in the browser and shows what one edited event does to the chain.</li>
+<li><strong>Data provenance.</strong> Datasets are stored as content-addressed versions, with the transforms that derived them, the time each version was known, and point-in-time joins that audit the rows a strategy actually used. Corporate-action adjustment and a split detector catch unadjusted prices.</li>
+<li><strong>Validation.</strong> Every strategy gets the same treatment: out-of-sample tests adjusted for every trial evaluated on the same window, the deflated Sharpe ratio, the probability of backtest overfitting, stationary-bootstrap intervals, purged cross-validation, walk-forward selection, parameter-plateau and cost sensitivity, and regime analysis. A transparent scorecard turns these into a verdict anyone can recompute.</li>
+<li><strong>Hygiene rules.</strong> 26 rules flag practices that inflate results, from excessive tuning to a holdout opened without declaring it.</li>
+<li><strong>Reproducibility.</strong> Managed experiments re-run from the record and compare result hashes. In the Reproduce tab, your browser re-runs a recorded experiment with a JavaScript port of the generator and strategy and gets the same SHA-256 as the Python run.</li>
+</ul>
+<h2 id="connecting-my-other-projects">Connecting my other projects <a class="header-anchor" href="#connecting-my-other-projects">#</a></h2>
+<p>Other repositories report runs through a language-agnostic manifest (JSON plus a returns file), a one-file Python writer or a dependency-free Rust crate, so no code bases are merged. I pointed the adapters at three of my projects without changing their code: 672 simulator runs from the Rust market simulator, 192 reinforcement-learning runs and 53 statistical-arbitrage books. qros re-ran one recorded simulator run from its stored command, and the run reproduced its event digest exactly.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The demo market is synthetic and its effect sizes were chosen to be detectable; real markets are less kind.</li>
+<li>The thresholds (deflated Sharpe ratio of 0.95, PBO of 0.25, a 5% test after correction) are conventions, recorded with every report, not laws.</li>
+<li>The audit log is tamper-evident, not tamper-proof: anyone with write access to the file could rewrite the whole chain, which would change its published head hash.</li>
+<li>The deflated Sharpe ratio assumes a family’s trials come from one idea; mixing unrelated strategies in a family distorts it.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package (NumPy, pandas, SQLite) of about 6,800 lines, with a command-line interface and Python API, 104 tests checked against independent references (statsmodels for the multiple-testing corrections and Newey-West statistics, the published deflated-Sharpe example, standard SHA-256 vectors), and continuous integration on Linux and Windows that also runs the browser code under Node and the Rust crate’s tests. The dashboard is plain JavaScript and SVG with no libraries; its colours are checked for colour-blind separation in light and dark mode.</p>
+
+    </div>
+  </div>
+
+  <footer class="post__foot">
+    <div class="tags"><a class="tag" href="/tags/research-infrastructure/">research infrastructure</a><a class="tag" href="/tags/reproducibility/">reproducibility</a><a class="tag" href="/tags/backtesting/">backtesting</a><a class="tag" href="/tags/multiple-testing/">multiple testing</a><a class="tag" href="/tags/python/">python</a></div>
+    <div class="post__share"><span class="label">Share</span><div class="share" role="group" aria-label="Share" data-share="https://rasmuscodes.github.io/projects/research-os/" data-title="A research operating system that catches the mistakes behind good-looking backtests">
+  <button class="share__btn" type="button" data-copy aria-label="Copy link"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
+  <a class="share__btn" data-net="x" href="https://x.com/intent/post?url=https%3A//rasmuscodes.github.io/projects/research-os/&amp;text=A%20research%20operating%20system%20that%20catches%20the%20mistakes%20behind%20good-looking%20backtests" target="_blank" rel="noopener" aria-label="Share on X"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43Z"/></svg></a>
+  <a class="share__btn" data-net="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//rasmuscodes.github.io/projects/research-os/" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.03 0-2.34 1.58-2.34 3.21V21H10V9Z"/></svg></a>
+  <a class="share__btn" data-net="email" href="mailto:?subject=A%20research%20operating%20system%20that%20catches%20the%20mistakes%20behind%20good-looking%20backtests&amp;body=https%3A//rasmuscodes.github.io/projects/research-os/" aria-label="Share by email"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a>
+</div></div>
+
+    <section class="cta">
+      <span class="mark mark--lg" aria-hidden="true">RS</span>
+      <h2>Rasmus Suonio</h2>
+      <p>New research and essays by email. No spam, and you can unsubscribe at any time.</p>
+      <div class="subscribe subscribe--rss">
+  <a class="btn btn--accent" href="/feed.xml"><svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.2"/></svg><span>Follow via RSS</span></a>
+</div>
+
+    </section>
+
+    <nav class="pager" aria-label="More projects">
+<a class="pager__item" href="/projects/smart-router/"><span>Previous</span><b>Does smart order routing pay? A simulated market and eleven routers</b></a><a class="pager__item pager__item--next" href="/projects/alpha-combination/"><span>Next</span><b>Combining sixteen equity signals: does complexity pay?</b></a>    </nav>
+  </footer>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+<a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>      <a href="/subscribe/">Subscribe</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js?v=760444fd" defer></script>
+</body>
+</html>

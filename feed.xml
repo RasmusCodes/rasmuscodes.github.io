@@ -336,6 +336,96 @@
 </ul>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>A Python package (NumPy, pandas, scikit-learn, LightGBM) with 41 tests, checkpointed experiment runners and a registry of every run. The lab is a JavaScript port of the methods that runs in a Web Worker; 29 checks confirm it reproduces the Python library’s weights and forecasts to about one part in a trillion. The CRSP, Compustat, I/B/E/S and OptionMetrics data are licensed and not published; the lab shows only portfolio-level results.</p>
+]]></content:encoded></item><item><title>A research operating system that catches the mistakes behind good-looking backtests</title><link>https://rasmuscodes.github.io/projects/research-os/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/research-os/</guid><pubDate>Sun, 22 Nov 2026 12:00:00 +0000</pubDate><description>An experiment registry, data-provenance layer and statistical validation framework for quant research, shown on a synthetic market where the right answers are known.</description><category>research infrastructure</category><category>reproducibility</category><category>backtesting</category><category>multiple testing</category><category>python</category><content:encoded><![CDATA[<p>Most backtests that look good are wrong for boring reasons: the researcher tried forty variants and reported the best, joined data on a date before it was published, tested on today’s surviving stocks, kept peeking at the holdout, or rewrote the hypothesis after seeing the result. None of that is visible in a Sharpe ratio. I built a research operating system that records every experiment with its hypothesis, data versions, code, parameters and seed, and then checks the record for exactly these failures.</p>
+<p>The demo below is a real registry, exported to the browser. It replays two months of research on a synthetic market in which I planted the effects, so every verdict can be checked against the truth. A profitability effect is real, momentum is real but fades, short-term reversal is real only before trading costs, and futures trend rules have no edge at all. The research script also makes the classic mistakes on purpose. Everything is synthetic and the dates are simulated.</p>
+<div class="qros-wrap"><iframe id="qros-demo" src="https://rasmuscodes.github.io/apps/research-os/index.html?embed=1" title="Research OS demo: an interactive experiment registry on synthetic data"></iframe></div>
+<script>
+(function () {
+  var frame = document.getElementById("qros-demo");
+  if (!frame) return;
+  window.addEventListener("message", function (ev) {
+    if (ev.origin !== window.location.origin || ev.source !== frame.contentWindow) return;
+    var d = ev.data || {};
+    if (d.type === "qros-height" && d.height > 300) frame.style.height = Math.ceil(d.height) + "px";
+    if (d.type === "qros-navigate") {
+      var top = frame.getBoundingClientRect().top;
+      if (top < 0) window.scrollBy({ top: top - 90, behavior: "smooth" });
+    }
+  });
+})();
+</script>
+<style>
+.qros-wrap { width: min(1100px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); margin: 28px 0 36px; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.qros-wrap iframe { display: block; width: 100%; height: 1500px; border: 0; background: transparent; }
+@media (max-width: 640px) { .qros-wrap { width: calc(100vw - 24px); } }
+</style>
+<h2 id="what-the-demo-shows">What the demo shows <a class="header-anchor" href="#what-the-demo-shows">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>Evidence in the registry</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A real effect survives every check</td>
+<td>The pre-registered profitability strategy, deflated for its five trials and confirmed on the sealed 2020-2024 holdout (Sharpe 0.83, p = 0.03 on the first look)</td>
+<td>Robust</td>
+</tr>
+<tr>
+<td>In-sample significance is not robustness</td>
+<td>Momentum: deflated Sharpe ratios near 1 in-sample, but the planted effect fades, and the nine variants’ out-of-sample Sharpe ratios range from -0.61 to 0.65</td>
+<td>Fragile</td>
+</tr>
+<tr>
+<td>The best of many tries looks good by luck</td>
+<td>45 moving-average rules on a contract with nothing to time: the best has a Sharpe of 0.38 but a deflated Sharpe ratio of 0.63, and the probability of backtest overfitting is 0.70</td>
+<td>No edge</td>
+</tr>
+<tr>
+<td>Look-ahead is caught from the rows used</td>
+<td>Fundamentals joined on the quarter end instead of the publication date: an in-sample Sharpe of 2.7, and an audit trail of every row used early</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>A hypothesis rewritten after the results proves nothing</td>
+<td>“Continuation” failed, was restated as “reversal” with the prediction flipped, and re-tested on the same data</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>A holdout is spent by looking</td>
+<td>Three looks were allowed; looks four to eight, by a researcher checking the best trend rules, are flagged</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Survivors, unadjusted prices and unseeded randomness</td>
+<td>A survivor-only universe, returns computed from raw prices with splits, and a random tie-break that never reproduces</td>
+<td>Invalid</td>
+</tr>
+</tbody>
+</table></div>
+<p>The registry grades 75 experiments: 1 robust, 12 fragile, 52 with no edge and 10 invalid. No experiment without a planted effect was graded robust. Real effects can still be graded fragile or no-edge when the evidence is too weak: reversal, for example, is real before costs but not after them.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Experiment registry.</strong> A SQLite database records each experiment’s hypothesis and the version it tested, its family of related trials, parameters, seed, code hash, environment, dataset versions, windows, metrics and artifacts. Finished experiments cannot be edited (database triggers refuse it), and every change appends to a hash-chained audit log. The demo’s Audit log tab re-verifies all 793 events in the browser and shows what one edited event does to the chain.</li>
+<li><strong>Data provenance.</strong> Datasets are stored as content-addressed versions, with the transforms that derived them, the time each version was known, and point-in-time joins that audit the rows a strategy actually used. Corporate-action adjustment and a split detector catch unadjusted prices.</li>
+<li><strong>Validation.</strong> Every strategy gets the same treatment: out-of-sample tests adjusted for every trial evaluated on the same window, the deflated Sharpe ratio, the probability of backtest overfitting, stationary-bootstrap intervals, purged cross-validation, walk-forward selection, parameter-plateau and cost sensitivity, and regime analysis. A transparent scorecard turns these into a verdict anyone can recompute.</li>
+<li><strong>Hygiene rules.</strong> 26 rules flag practices that inflate results, from excessive tuning to a holdout opened without declaring it.</li>
+<li><strong>Reproducibility.</strong> Managed experiments re-run from the record and compare result hashes. In the Reproduce tab, your browser re-runs a recorded experiment with a JavaScript port of the generator and strategy and gets the same SHA-256 as the Python run.</li>
+</ul>
+<h2 id="connecting-my-other-projects">Connecting my other projects <a class="header-anchor" href="#connecting-my-other-projects">#</a></h2>
+<p>Other repositories report runs through a language-agnostic manifest (JSON plus a returns file), a one-file Python writer or a dependency-free Rust crate, so no code bases are merged. I pointed the adapters at three of my projects without changing their code: 672 simulator runs from the Rust market simulator, 192 reinforcement-learning runs and 53 statistical-arbitrage books. qros re-ran one recorded simulator run from its stored command, and the run reproduced its event digest exactly.</p>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>The demo market is synthetic and its effect sizes were chosen to be detectable; real markets are less kind.</li>
+<li>The thresholds (deflated Sharpe ratio of 0.95, PBO of 0.25, a 5% test after correction) are conventions, recorded with every report, not laws.</li>
+<li>The audit log is tamper-evident, not tamper-proof: anyone with write access to the file could rewrite the whole chain, which would change its published head hash.</li>
+<li>The deflated Sharpe ratio assumes a family’s trials come from one idea; mixing unrelated strategies in a family distorts it.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package (NumPy, pandas, SQLite) of about 6,800 lines, with a command-line interface and Python API, 104 tests checked against independent references (statsmodels for the multiple-testing corrections and Newey-West statistics, the published deflated-Sharpe example, standard SHA-256 vectors), and continuous integration on Linux and Windows that also runs the browser code under Node and the Rust crate’s tests. The dashboard is plain JavaScript and SVG with no libraries; its colours are checked for colour-blind separation in light and dark mode.</p>
 ]]></content:encoded></item><item><title>Does smart order routing pay? A simulated market and eleven routers</title><link>https://rasmuscodes.github.io/projects/smart-router/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/smart-router/</guid><pubDate>Sat, 21 Nov 2026 12:00:00 +0000</pubDate><description>A latency-aware simulation of five trading venues, routers from naive to optimised, and pre-registered experiments on what actually saves money. The simulator runs in your browser below.</description><category>market microstructure</category><category>order routing</category><category>simulation</category><category>python</category><content:encoded><![CDATA[<p>A US stock trades on more than a dozen exchanges and dozens of dark pools, each with its own fees, rebates, queue lengths and distance from your servers. A smart order router decides where every child order of a large trade goes. Vendors sell that as a source of savings; the obvious objection is that displayed prices are equal across venues most of the time, and what differs (fees, queues, the odds that a quote is still there when your order arrives, who you end up trading with) is hard to see.</p>
 <p>So I built a market where all of that is explicit, and asked a narrow question: <strong>once fees, rebates, queue position, latency, fill probability, adverse selection and market impact are all counted, does intelligent routing still save money, and which part of it does?</strong> I wrote the hypotheses, the metric and the decision rules down before running the evaluation.</p>
 <h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
@@ -871,35 +961,4 @@
 </ul>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>A Python package with a data pipeline, network and regime libraries, a stress-testing engine with seven covariance views, and portfolio-risk tools (value at risk, expected shortfall, Euler risk decomposition). 33 estimator tests run on simulated data. A report and a six-view D3 dashboard are generated from the same outputs. The public repository holds the code, figures, tables and report, but no market data.</p>
-]]></content:encoded></item><item><title>Reading Axon’s government business from public procurement records</title><link>https://rasmuscodes.github.io/projects/axon-contracts/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/axon-contracts/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A traceable database of federal awards, city payments and council approvals, and an operating model built on it. The data explains demand, not quarterly surprises.</description><category>alternative data</category><category>government contracts</category><category>operating model</category><content:encoded><![CDATA[<p>Axon Enterprise sells TASER devices, body cameras and evidence-management software to police forces and other government agencies. Its customers buy in public, so much of its business leaves a paper trail: federal contract records, city payment ledgers and council agendas. I wanted to know how much of that business those records reveal, and whether they help forecast revenue.</p>
-<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
-<p>The pipeline collects procurement records naming Axon or its competitors, each traceable to its raw source:</p>
-<ul>
-<li><strong>Federal:</strong> USAspending contract records for FY2008–FY2026 (19,642 awards and 31,143 modifications), plus <a href="http://SAM.gov" target="_blank" rel="noopener">SAM.gov</a> solicitations and sole-source notices.</li>
-<li><strong>State and local:</strong> payments in about 50 open-data checkbooks and New York City’s, co-op purchasing sales in Texas and Washington, and 4,905 council items from 202 city and county councils.</li>
-<li><strong>Context:</strong> the EFF’s Atlas of Surveillance (police technology deployments by vendor) and Axon’s own SEC filings.</li>
-</ul>
-<p>The records hold four kinds of dollar figure, and they are never added together: federal obligations (money legally committed), ceilings on contract vehicles, council-approved values (usually multi-year maximums) and payments. None of them is treated as revenue.</p>
-<p>63 federal awards matched FPDS, the federal system of record, field by field on dates, obligations and competition. Manual samples found reseller attribution right in 38 of 40 cases and 27 of 30 council approvals to be genuine Axon purchases. Each error became a rule with a regression test, from a medical-device brand that shares the Axon name to body-worn antennas that are not body cameras. Council attachments sit on hosts whose robots.txt blocks all crawlers, so terms and renewal dates come from each item’s full text via the Legistar API, with the supporting sentence kept verbatim.</p>
-<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
-<ul>
-<li><strong>Federal orders are lumpy but rising.</strong> Direct obligations went from $19M in FY2020 to $101M in FY2023, dipped to $73M in FY2025 and reached $149M in FY2026.</li>
-<li><strong>Most federal money is not competed.</strong> 71% of Axon’s federal dollars were awarded without competition, and the median award drew one offer. When the Bureau of Prisons opened its body-camera and evidence contract to competition in 2026, Motorola won the $78M award from four offers.</li>
-<li><strong>Local spending tracks reported revenue.</strong> In the open-checkbook sample, payments to Axon grew 28% a year from 2019 to 2025, against Axon’s reported 31.5% for US revenue. Existing customers spend about 1.2 times as much each year, and 89% of paying governments pay again the next year.</li>
-<li><strong>The contested front is licence-plate readers.</strong> Flock Safety holds 88% of named deployments, and its council approvals rose from 0–6 a year in 2016–21 to 34–38 in 2023–24.</li>
-<li><strong>An expiry calendar</strong> dates 437 contracts and vehicles ending in 2026–2028, each with the basis for its date.</li>
-</ul>
-<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/axon-contracts/council_approvals.png" alt="Line chart of council and board approvals per year naming Axon, Flock Safety and Motorola, 2016 to 2025" /><figcaption>Line chart of council and board approvals per year naming Axon, Flock Safety and Motorola, 2016 to 2025</figcaption></figure>
-<h2 id="the-operating-model">The operating model <a class="header-anchor" href="#the-operating-model">#</a></h2>
-<p>A quarterly model for FY2019–FY2030 forecasts revenue and gross profit by product line, in separate low, base and high cases. The procurement data sets the growth anchor for software and services (the same-customer spend ratio), the run-rates and odds of federal renewals, and range checks on US growth. Base revenue is $6.5B in FY2028 ($5.4B to $7.8B across the cases). The growth paths dominate: the three largest each swing FY2028 revenue by about $0.6B, while any one contract event moves it by about $50M at most.</p>
-<p>Two tests came back negative. An installed-base refresh model could not be calibrated without unit counts and prices, so it was dropped. And in a 23-quarter backtest, no procurement indicator predicted quarterly revenue surprises: the data follows multi-year demand, not the quarter in which revenue lands.</p>
-<p>A formula-driven Excel version, checked cell by cell against the Python engine, adds a discounted cash-flow valuation. Its base case gives about $186 a share, against a market price of $315 on 11 November 2026, and $21 to $632 across the low and high cases.</p>
-<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
-<ul>
-<li>State and local coverage is a sample of governments that publish their data, not a national total.</li>
-<li>Seat counts and unit prices sit in those council attachments, which stay unread.</li>
-<li>Reseller sales with generic descriptions such as “cameras” cannot be attributed to any vendor.</li>
-</ul>
-<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
-<p>Python and SQLite, with one HTTP client that checks robots.txt, throttles per host and caches every raw response with a timestamp and checksum, so re-runs reproduce the same figures offline.</p>
 ]]></content:encoded></item></channel></rss>
