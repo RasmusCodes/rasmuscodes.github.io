@@ -1,6 +1,6 @@
 // Alpha Combination Lab - interactive demo. Mounts into every element with [data-acl-lab].
-import { barChart, columns, dotInterval, heatmap, lineChart, seriesColor } from "./charts.js?v=20261121a";
-import { cholesky, correlationFromFamilies, dot, eigSym, METHODS, nearestCorrelation, ORDER, solve } from "./engine.js?v=20261121a";
+import { barChart, columns, dotInterval, heatmap, lineChart, seriesColor } from "./charts.js?v=20261124a";
+import { cholesky, correlationFromFamilies, dot, eigSym, METHODS, nearestCorrelation, ORDER, solve } from "./engine.js?v=20261124a";
 
 const HERE = new URL(".", import.meta.url);
 const FAMILIES = ["momentum", "value", "quality", "reversal", "investment", "lowrisk", "seasonality", "other"];
@@ -9,6 +9,20 @@ const f2 = (v) => (Number.isFinite(v) ? v.toFixed(2) : "n/a");
 const f3 = (v) => (Number.isFinite(v) ? v.toFixed(3) : "n/a");
 const f4 = (v) => (Number.isFinite(v) ? v.toFixed(4) : "n/a");
 const pct = (v, d = 1) => (Number.isFinite(v) ? `${(100 * v).toFixed(d)}%` : "n/a");
+
+// Summary sentence for one window of the signal-extension test (D.extension in real_results.json).
+function extText(x) {
+  const sg = (v, f) => (v > 0 ? "+" : "") + f(v);
+  const ew = x.rows.find((r) => r.method === "EW" && r.set !== "16 signals");
+  const top = x.rows.find((r) => r.method === x.top_sharpe.method);
+  const hedge = top && ew && x.top_sharpe.diff > 0 && top.sharpe_hedged < ew.sharpe_hedged
+    ? ` Hedged against the market, ${top.method} trails equal weighting (${f2(top.sharpe_hedged)} vs ${f2(ew.sharpe_hedged)}).` : "";
+  return `${x.label.charAt(0).toUpperCase()}${x.label.slice(1)} (${x.months} months). Equal weighting with the new signals gains ` +
+    `${f4(x.h10.ic_diff)} rank IC (Holm p ${f3(x.h10.p_ic_holm)}) and ${f2(x.h10.sharpe_diff)} net Sharpe (p ${f3(x.h10.p_sharpe)}). ` +
+    `Best complex method against it: ${x.top_sharpe.method} ${sg(x.top_sharpe.diff, f2)} net Sharpe (Holm p ${f3(x.top_sharpe.p_holm)}), ` +
+    `${x.top_ic.method} ${sg(x.top_ic.diff, f4)} rank IC (Holm p ${f3(x.top_ic.p_holm)}).${hedge} ` +
+    `Pre-registered rule met: ${x.rule_met ? "yes" : "no"}.`;
+}
 
 // ------------------------------------------------------------------ tiny DOM helpers
 function h(tag, attrs = {}, ...kids) {
@@ -311,7 +325,7 @@ function buildLab(panel) {
     status.textContent = "Simulating...";
     prog.firstChild.style.width = "0%";
     main.style.opacity = last ? "0.55" : "1";
-    worker = new Worker(new URL("./worker.js?v=20261121a", import.meta.url), { type: "module" });
+    worker = new Worker(new URL("./worker.js?v=20261124a", import.meta.url), { type: "module" });
     worker.onmessage = (e) => {
       const msg = e.data;
       if (msg.type === "progress") { prog.firstChild.style.width = `${Math.round(100 * msg.value)}%`; status.textContent = `Running ${msg.name}...`; }
@@ -408,7 +422,7 @@ async function loadReal(panel) {
   panel.dataset.loaded = "1";
   panel.replaceChildren(h("p", { class: "acl-note", text: "Loading results..." }));
   let D;
-  try { D = await (await fetch(new URL("./data/real_results.json?v=20261121a", HERE))).json(); }
+  try { D = await (await fetch(new URL("./data/real_results.json?v=20261124a", HERE))).json(); }
   catch (e) { panel.replaceChildren(h("p", { text: "Could not load the results file." })); return; }
   const order = D.order, M = D.methods, months = D.months;
   const ew = M.EW.stats;
@@ -471,6 +485,15 @@ async function loadReal(panel) {
         h("tbody", {}, order.map((m) => h("tr", { class: m === "EW" ? "is-bench" : "" }, h("td", { text: m }),
           ...pers.flatMap((p) => [h("td", { text: f2(D.subperiods[p][m]?.sharpe_net) }), h("td", { text: f3(D.subperiods[p][m]?.rank_ic) })]))))));
     })()) : null,
+    D.extension ? h("div", { class: "acl-card" }, h("h4", { text: "Adding analyst and options signals (a second pre-registered test)" }),
+      h("p", { class: "acl-note", text: "Four I/B/E/S signals (forecast revisions, revision breadth, earnings surprise, forecast dispersion) and three OptionMetrics signals (volatility skew, call-put volatility spread, realized minus implied volatility), compared on the same months as the sixteen alone. The pre-registered rule needs a complex method that beats equal weighting on all signals after the Holm correction and in an SPA test." }),
+      ...Object.values(D.extension).map((x) => h("div", { class: "acl-tablewrap", style: { marginTop: "8px" } },
+        h("p", { text: extText(x) }),
+        h("table", { class: "acl-table" },
+          h("thead", {}, h("tr", {}, ["Signals", "Method", "Rank IC", "Net Sharpe", "Net, market-hedged"].map((t) => h("th", { text: t })))),
+          h("tbody", {}, x.rows.map((r) => h("tr", { class: r.method === "EW" ? "is-bench" : "" },
+            h("td", { text: r.set }), h("td", { text: r.method }), h("td", { text: f4(r.rank_ic) }),
+            h("td", { text: f2(r.sharpe_net) }), h("td", { text: f2(r.sharpe_hedged) })))))))) : null,
     h("div", { class: "acl-card" }, h("h4", { text: "Growth of $1 after costs (pick up to five)" }), chips, cum),
     h("div", { class: "acl-grid2", style: { marginTop: "14px" } },
       h("div", { class: "acl-card" }, h("h4", { text: "Rolling 5-year rank IC, selected method minus EW" }), roll),

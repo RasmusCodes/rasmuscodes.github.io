@@ -1,5 +1,5 @@
 // Runs a lab experiment off the main thread: simulate the world, walk every chosen method forward, evaluate.
-import { deciles, evaluate, moments, oracleEval, simulate, summarize, walkForward } from "./engine.js?v=20261121a";
+import { deciles, evaluate, moments, oracleEval, simulate, summarize, walkForward } from "./engine.js?v=20261124a";
 
 self.onmessage = (e) => {
   const { world, methods, opt } = e.data;
