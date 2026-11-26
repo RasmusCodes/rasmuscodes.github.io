@@ -71,65 +71,78 @@ export function maxUnits(equity, L, M, ratio, pol = { maxLoss: 0.10, minExcess: 
   return { units: best, binding };
 }
 
-// ---------------- probabilities and the signal
-export function breakPnl(L0, M0, R, S, j, feePs = 0, carry = 0) { return (S + feePs - L0) - R * M0 * j - carry; }
+// ---------------- probabilities and the signal (port of analytics/probability.py + analytics/signal.py)
+// Break P&L per unit: target -> S (+ fee received), acquirer jumps by j and, when it pays the fee, loses accFee per share.
+export function breakPnl(L0, M0, R, S, j, feePs = 0, carry = 0, accFee = 0) { return (S + feePs - L0) - R * (M0 * j - accFee) - carry; }
+// averaged over break types: a share w of breaks are regulatory terminations that pay the reverse fee (s8.2(d))
+export function mixedBreakPnl(L0, M0, R, S, j, carry, w, fL, fM) {
+  return (1 - w) * breakPnl(L0, M0, R, S, j, 0, carry, 0) + w * breakPnl(L0, M0, R, S, j, fL, carry, fM);
+}
 export function breakevenP(C, B) { if (C <= 0) return 1; if (B >= 0) return 0; return -B / (C - B); }
 export function carryUnit(deal, M, start, end, fee) {
   const yrs = Math.max(yearFrac(start, end), 0), n = exDatesBetween(deal.acq_dividend, start, end).length;
   return deal.ratio * (n * deal.acq_dividend.amount + fee * M * yrs);
 }
-export function evaluate(deal, x) {
-  const R = deal.ratio, L = x.L, M = x.M, V = R * M + deal.cash;
+// x: L, M, date, close, fee (borrow), p, S, j, Ss, js, rf, finRate, hurdle, fresh, w (P(regulatory | break)),
+//    fL / fM (after-tax fee per target / acquirer share), entry / exitB (trading costs per unit), tb (years to a break)
+export function economics(deal, x, L = x.L, fee = x.fee) {
+  const R = deal.ratio, M = x.M, V = R * M + deal.cash;
   const years = Math.max(yearFrac(x.date, x.close), 1 / 365.25);
-  const C = (V - L) - carryUnit(deal, M, x.date, x.close, x.fee);
   const half = addDays(x.date, Math.floor((toDay(x.close) - toDay(x.date)) / 2));
-  const cb = carryUnit(deal, M, x.date, half, x.fee);
-  const B = breakPnl(L, M, R, x.S, x.j, 0, cb), Bs = breakPnl(L, M, R, x.Ss, x.js, 0, cb);
-  const pStar = breakevenP(C, B), pStarS = breakevenP(C, Bs);
-  const cap = 0.5 * (L + R * M), ev = x.p * C + (1 - x.p) * B, evS = x.p * C + (1 - x.p) * Bs;
-  const ann = (e) => (e > -1 ? Math.pow(1 + e, 1 / years) - 1 : -1);
-  const excess = ann(ev / cap) - x.rf;
-  const excessAt = (Lx, fee) => {
-    const cc = (V - Lx) - carryUnit(deal, M, x.date, x.close, fee);
-    const bb = breakPnl(Lx, M, R, x.S, x.j, 0, carryUnit(deal, M, x.date, half, fee));
-    return ann((x.p * cc + (1 - x.p) * bb) / (0.5 * (Lx + R * M))) - x.rf;
-  };
+  const tb = x.tb ?? years / 2, fin = x.finRate ?? x.rf, w = x.w || 0, fL = x.fL || 0, fM = x.fM || 0;
+  const en = x.entry || 0, costB = en + (x.exitB || 0);
+  const cc = carryUnit(deal, M, x.date, x.close, fee), cb = carryUnit(deal, M, x.date, half, fee);
+  const C = (V - L) - cc - en;
+  const B = mixedBreakPnl(L, M, R, x.S, x.j, cb, w, fL, fM) - costB, Bs = mixedBreakPnl(L, M, R, x.Ss, x.js, cb, w, fL, fM) - costB;
+  const B0 = mixedBreakPnl(L, M, R, x.S, x.j, cb, 0, fL, fM) - costB, B1 = mixedBreakPnl(L, M, R, x.S, x.j, cb, 1, fL, fM) - costB;
+  const finC = fin * L * years, finB = fin * L * tb, p = x.p;
+  const cap = 0.5 * (L + R * M), capY = cap * (p * years + (1 - p) * tb);
+  const ev = p * C + (1 - p) * B, evS = p * C + (1 - p) * Bs;
+  const evN = p * (C - finC) + (1 - p) * (B - finB), evSN = p * (C - finC) + (1 - p) * (Bs - finB);
+  return { V, years, tb, C, B, Bs, B0, B1, finC, finB, cap, capY, ev, evS, evN, evSN, excess: evN / capY, excessS: evSN / capY,
+    pStar: breakevenP(C - finC, B - finB), pStarS: breakevenP(C - finC, Bs - finB), pStarG: breakevenP(C, B) };
+}
+export function evaluate(deal, x) {
+  const L = x.L, e = economics(deal, x), V = e.V, years = e.years;
+  const ann = (r) => (r > -1 ? Math.pow(1 + r, 1 / years) - 1 : -1);
   let lo = 0.2 * V, hi = V;
-  for (let i = 0; i < 80; i++) { const mid = 0.5 * (lo + hi); if (excessAt(mid, x.fee) >= x.hurdle) lo = mid; else hi = mid; }
+  for (let i = 0; i < 80; i++) { const mid = 0.5 * (lo + hi); if (economics(deal, x, mid, x.fee).excess >= x.hurdle) lo = mid; else hi = mid; }
   let fmax = 0;
-  if (excessAt(L, 0) >= x.hurdle) { let a = 0, b = 2; for (let i = 0; i < 80; i++) { const mid = 0.5 * (a + b); if (excessAt(L, mid) >= x.hurdle) a = mid; else b = mid; } fmax = a; }
-  const hard = [], soft = [];
+  if (economics(deal, x, L, 0).excess >= x.hurdle) { let a = 0, b = 2; for (let i = 0; i < 80; i++) { const mid = 0.5 * (a + b); if (economics(deal, x, L, mid).excess >= x.hurdle) a = mid; else b = mid; } fmax = a; }
+  const hard = [], soft = [], excess = e.excess;
   if (!x.fresh) hard.push("market data stale or unavailable");
   if (x.fee > 0.03) hard.push(`borrow fee ${(100 * x.fee).toFixed(2)}% above the 3% limit`);
   if (x.close > deal.final_outside_date) hard.push(`expected close ${x.close} is after the final outside date ${deal.final_outside_date}`);
-  if (excess < 0) hard.push(`expected excess return ${(100 * excess).toFixed(1)}%/yr is negative at p=${Math.round(100 * x.p)}%`);
+  if (excess < 0) hard.push(`expected excess return ${(100 * excess).toFixed(1)}%/yr (after financing the long) is negative at p=${Math.round(100 * x.p)}%`);
   else if (excess < x.hurdle) soft.push(`expected excess return ${(100 * excess).toFixed(1)}%/yr is below the ${Math.round(100 * x.hurdle)}% hurdle`);
-  const edge = x.p - pStar;
-  if (edge < 0.10) (edge < 0 ? hard : soft).push(`probability edge ${(100 * edge).toFixed(0)} pts (p ${Math.round(100 * x.p)}% vs break-even ${Math.round(100 * pStar)}%) is below 10 pts`);
-  if (evS < 0) soft.push(`expected P&L is negative under the stress break case (break-even p ${Math.round(100 * pStarS)}%)`);
+  const edge = x.p - e.pStar;
+  if (edge < 0.10) (edge < 0 ? hard : soft).push(`probability edge ${(100 * edge).toFixed(0)} pts (p ${Math.round(100 * x.p)}% vs break-even ${Math.round(100 * e.pStar)}%) is below 10 pts`);
+  if (e.evSN < 0) soft.push(`expected P&L is negative under the stress break case (break-even p ${Math.round(100 * e.pStarS)}%)`);
   return { decision: hard.length ? "NO TRADE" : soft.length ? "WATCH" : "TRADE", reasons: [...hard, ...soft],
     m: { gross_spread: V / L - 1, spread_usd: V - L, implied_value: V, years_to_close: years,
-      annualized_if_complete: Math.pow(1 + C / L, 1 / years) - 1, completion_pnl_unit: C, break_pnl_unit_base: B,
-      break_pnl_unit_stress: Bs, breakeven_p_base: pStar, breakeven_p_stress: pStarS, expected_pnl_unit: ev,
-      expected_pnl_unit_stress: evS, regt_capital_unit: cap, expected_return_on_capital: ev / cap,
-      expected_annualized: ann(ev / cap), expected_excess_annual: excess, expected_annualized_stress: ann(evS / cap),
-      required_spread_for_hurdle: V / lo - 1,
-      max_borrow_fee_for_hurdle: fmax, edge } };
+      annualized_if_complete: Math.pow(1 + e.C / L, 1 / years) - 1, completion_pnl_unit: e.C, break_pnl_unit_base: e.B,
+      break_pnl_unit_base_nofee: e.B0, break_pnl_unit_base_regulatory: e.B1, break_pnl_unit_stress: e.Bs, reg_break_share: x.w || 0,
+      breakeven_p_base: e.pStar, breakeven_p_base_gross: e.pStarG, breakeven_p_stress: e.pStarS, expected_pnl_unit: e.ev,
+      expected_pnl_unit_stress: e.evS, expected_pnl_unit_net: e.evN, expected_pnl_unit_stress_net: e.evSN,
+      financing_cost_complete: e.finC, financing_cost_break: e.finB, years_to_break: e.tb, regt_capital_unit: e.cap,
+      capital_years_unit: e.capY, expected_return_on_capital: e.ev / e.cap, expected_annualized: ann(e.ev / e.cap),
+      expected_excess_annual: excess, expected_excess_annual_stress: e.excessS, expected_annualized_stress: ann(e.evS / e.cap),
+      required_spread_for_hurdle: V / lo - 1, max_borrow_fee_for_hurdle: fmax, edge } };
 }
 
 // ---------------- deterministic scenarios (port of analytics/scenarios.py)
-export function defaultScenarios(deal, start, g0, Sopt, Sstress, jb, jf, vote = "2027-06-30") {
+export function defaultScenarios(deal, start, g0, Sopt, Sstress, jb, jf, vote = "2027-06-30", tax = 0.21) {
   const close = deal.expected_close, fod = deal.final_outside_date;
   const d3 = addDays(close, 91), d6 = addDays(close, 183), mid = addDays(start, 183), q = addDays(start, 92);
-  const w = Math.max(g0, 0.30), fee = deal.regulatory_fee_per_share;
+  const w = Math.max(g0, 0.30), fee = deal.regulatory_fee_per_share * (1 - tax), accFee = (deal.regulatory_fee_per_acquirer_share || 0) * (1 - tax);
   return [
     { key: "1_on_schedule", name: `Closes on schedule (${close})`, end: close, outcome: "complete", knots: [[start, 1, g0], [close, 1, 0]] },
     { key: "2_delay_3m", name: `Closes 3 months late (${d3})`, end: d3, outcome: "complete", knots: [[start, 1, g0], [d3, 1, 0]] },
     { key: "3_delay_6m", name: `Closes 6 months late (${d6}) - after the outside date`, end: d6, outcome: "complete", knots: [[start, 1, g0], [d6, 1, 0]] },
     { key: "4_break_unaffected", name: "Fails; both back to Oct-28 prices", end: vote, outcome: "break", knots: [[start, 1, g0], [vote, 1, w]], bt: deal.unaffected_target },
-    { key: "4b_break_model", name: "Fails at votes; factor-model standalone", end: vote, outcome: "break", knots: [[start, 1, g0], [vote, 1, w]], bt: Sopt, bmMult: 1 + jb },
+    { key: "4b_break_model", name: `Fails at votes; factor-model standalone, ${Math.round(100 * jb / jf)}% of MRVL's discount reverses`, end: vote, outcome: "break", knots: [[start, 1, g0], [vote, 1, w]], bt: Sopt, bmMult: 1 + jb },
     { key: "4c_break_stress", name: "Fails at votes; worst-peer standalone, full reversal", end: vote, outcome: "break", knots: [[start, 1, g0], [vote, 1, w]], bt: Sstress, bmMult: 1 + jf },
-    { key: "4d_break_regulatory", name: "Regulatory failure at final outside date (+ fee)", end: fod, outcome: "break", knots: [[start, 1, g0], [addDays(fod, -1), 1, w]], bt: Sstress, bmMult: 1 + jf, fee },
+    { key: "4d_break_regulatory", name: "Regulatory failure at final outside date (+ fee, after tax; MRVL pays it)", end: fod, outcome: "break", knots: [[start, 1, g0], [addDays(fod, -1), 1, w]], bt: Sstress, bmMult: 1 + jf, fee, accFee },
     { key: "5_mrvl_down40", name: "MRVL -40%, deal closes", end: close, outcome: "complete", knots: [[start, 1, g0], [mid, 0.6, g0], [close, 0.6, 0]] },
     { key: "6_mrvl_up60_lite_lags", name: "MRVL +60% while LITE lags (spread 35%), closes", end: close, outcome: "complete", knots: [[start, 1, g0], [q, 1.6, 0.35], [close, 1.6, 0]] },
     { key: "7_both_down40", name: "Both -40%, closes", end: close, outcome: "complete", knots: [[start, 1, g0], [mid, 0.6, g0], [close, 0.6, 0]] },
@@ -172,7 +185,7 @@ export function runScenario(spec, deal, pos, equity0, L0, M0, start, fee0, liqBp
   let Le = L[last], Me = M[last], outcome = spec.outcome;
   if (liq) outcome = "liquidated (margin call)";
   else if (spec.outcome === "complete") Le = R * Me + deal.cash;
-  else if (spec.outcome === "break") { Le = spec.bt + (spec.fee || 0); Me = M0 * (spec.bmMult ?? (deal.unaffected_acquirer / M0)); comm += commission(pos.t, Le) + commission(pos.a, Me); }
+  else if (spec.outcome === "break") { Le = spec.bt + (spec.fee || 0); Me = M0 * (spec.bmMult ?? (deal.unaffected_acquirer / M0)) - (spec.accFee || 0); comm += commission(pos.t, Le) + commission(pos.a, Me); }
   else if (spec.outcome === "forced_close") { comm += commission(pos.t, Le) + commission(pos.a, Me) + (pos.t * Le + pos.a * Me) * (b.halfSpreadBps + b.slippageBps) / 1e4; }
   const pl = pos.t * (Le - L0), ps = -pos.a * (Me - M0), net = pl + ps - div - bor + int - comm;
   const endD = fromDay(days[last]), years = Math.max((days[last] - toDay(start)) / 365.25, 1 / 365.25), roe = net / equity0;
@@ -192,6 +205,8 @@ export function monteCarlo(deal, pos, equity, L0, M0, start, c) {
   const idxOf = (s) => { const t = toDay(s); let k = days.findIndex((d) => d >= t); return k < 1 ? 1 : k; };
   const tri = (a, m, b) => { const u = rnd(), f = (m - a) / (b - a); return u < f ? a + Math.sqrt(u * (b - a) * (m - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - m)); };
   const res = [], unit = [];
+  const pC = (1 - c.pAcqVote) * (1 - c.pTgtVote) * (1 - c.pReg) * (1 - c.pOther), pB = Math.max(1 - pC, 1e-12);
+  const wReg = (1 - c.pAcqVote) * (1 - c.pTgtVote) * c.pReg / pB, tax = c.tax ?? 0.21;
   for (let p = 0; p < c.n; p++) {
     const vf = rnd() < c.pAcqVote || rnd() < c.pTgtVote, rf = !vf && rnd() < c.pReg, of = !vf && !rf && rnd() < c.pOther;
     const out = vf ? 1 : rf ? 2 : of ? 3 : 0;
@@ -201,7 +216,8 @@ export function monteCarlo(deal, pos, equity, L0, M0, start, c) {
     else if (out === 3) rIdx = idxOf(fromDay(Math.round(toDay(start) + rnd() * (toDay(deal.expected_close) - toDay(start)))));
     else rIdx = idxOf(fromDay(Math.round(tri(toDay("2027-11-01"), toDay(deal.expected_close), toDay(horizon)))));
     rIdx = Math.min(rIdx, D - 1);
-    const s0 = c.sLo && c.sHi ? Math.exp(Math.log(c.sLo) + rnd() * (Math.log(c.sHi) - Math.log(c.sLo))) : c.s0;
+    const s0 = c.sSigma ? c.s0 * Math.exp(c.sSigma * norm())
+      : c.sLo && c.sHi ? Math.exp(Math.log(c.sLo) + rnd() * (Math.log(c.sHi) - Math.log(c.sLo))) : c.s0;
     const kap = c.kLo !== undefined ? c.kLo + rnd() * (c.kHi - c.kLo) : c.kappa, j = kap * c.delta / (1 - c.delta);
     const T = rIdx * dt;
     let lm = 0, ls = 0, W = 0, bor = 0, div = 0, peak = equity, mdd = 0, liq = false, endI = rIdx, Lc = L0, Mc = M0;
@@ -224,18 +240,21 @@ export function monteCarlo(deal, pos, equity, L0, M0, start, c) {
       if (i < rIdx && eq < 0.25 * pos.t * Lc + 0.30 * pos.a * Mc) { liq = true; endI = i; break; }
     }
     let Le = Lc, Me = Mc;
-    const Sx = s0 * Math.exp(ls), feeV = out === 2 ? (c.feePs || 0) * 0.79 : 0;
+    const Sx = s0 * Math.exp(ls), feeV = out === 2 ? (c.feePs || 0) * (1 - tax) : 0, feeMV = out === 2 ? (c.feeAcqPs || 0) * (1 - tax) : 0;
     if (!liq && out === 0) Le = R * Me;
-    if (!liq && out > 0) { Le = Sx + feeV; Me = Mc * (1 + j); }
+    if (!liq && out > 0) { Le = Sx + feeV; Me = Mc * (1 + j) - feeMV; }
     const slip = liq ? (pos.t * Le + pos.a * Me) * 25 / 1e4 : 0;
     const pnl = pos.t * (Le - L0) - pos.a * (Me - M0) - bor - div - slip;
     res.push({ pnl, out: liq ? 4 : out, years: endI * dt, dd: Math.max(mdd, (peak - (equity + pnl)) / peak) });
-    const dL = (out === 0 ? R * Mc : Sx + feeV) - L0, dM = (out === 0 ? Mc : Mc * (1 + j)) - M0;
+    // completion-state acquirer value for the hedge comparison: M0 = p*M_C + (1-p)*E[M_B]
+    const kc = Math.max((1 - (1 - pC) * ((1 + j) - wReg * (c.feeAcqPs || 0) * (1 - tax) / M0)) / Math.max(pC, 1e-12), 0.05);
+    const dL = (out === 0 ? R * Mc * kc : Sx + feeV) - L0, dM = (out === 0 ? Mc * kc : Mc * (1 + j) - feeMV) - M0;
     unit.push({ dL, dM, carry: (bor + div) / Math.max(pos.a, 1), out });
   }
   const pn = res.map((r) => r.pnl).sort((a, b) => a - b), mean = pn.reduce((a, b) => a + b, 0) / pn.length;
   const q05 = pn[Math.floor(0.05 * pn.length)], tail = pn.filter((v) => v <= q05);
-  return { res, unit, summary: { n: pn.length, mean, median: pn[Math.floor(pn.length / 2)], pLoss: pn.filter((v) => v < 0).length / pn.length,
+  const meanNet = res.reduce((a, r) => a + r.pnl - (c.finRate || 0) * pos.t * L0 * r.years, 0) / res.length;
+  return { res, unit, summary: { n: pn.length, mean, meanNet, median: pn[Math.floor(pn.length / 2)], pLoss: pn.filter((v) => v < 0).length / pn.length,
     var95: -q05, es95: -tail.reduce((a, b) => a + b, 0) / tail.length, pLiq: res.filter((r) => r.out === 4).length / res.length,
     meanYears: res.reduce((a, r) => a + r.years, 0) / res.length } };
 }
@@ -258,11 +277,12 @@ export function checkParity(snap, cases) {
   for (const c of cases) {
     const x = c.inputs, js = x.kappa * x.delta / (1 - x.delta), jf = x.delta / (1 - x.delta);
     const s = evaluate(deal, { L: x.L0, M: x.M0, date: snap.as_of, close: deal.expected_close, fee: x.fee, p: x.p, S: x.S, j: js,
-      Ss: snap.standalone.stress, js: jf, rf: x.rf, hurdle: 0.05, fresh: true });
+      Ss: snap.standalone.stress, js: jf, rf: x.rf, finRate: x.fin, hurdle: 0.05, fresh: true, w: x.w, fL: x.fL, fM: x.fM,
+      entry: x.entry, exitB: x.entry, tb: x.tb });
     for (const k of Object.keys(c.signal)) rows.push({ case: x.lots, key: k, py: c.signal[k], js: s.m[k], diff: Math.abs((s.m[k] ?? NaN) - c.signal[k]) });
     rows.push({ case: x.lots, key: "decision", py: c.decision, js: s.decision, diff: c.decision === s.decision ? 0 : 1 });
     const pos = unitsToPosition(x.lots, deal.ratio);
-    const specs = defaultScenarios(deal, snap.as_of, deal.ratio * x.M0 / x.L0 - 1, snap.standalone.factor_model, snap.standalone.stress, js, jf);
+    const specs = defaultScenarios(deal, snap.as_of, deal.ratio * x.M0 / x.L0 - 1, snap.standalone.factor_model, snap.standalone.stress, js, jf, "2027-06-30", x.tax);
     for (const sp of specs) { const r = runScenario(sp, deal, pos, x.equity, x.L0, x.M0, snap.as_of, x.fee); rows.push({ case: x.lots, key: sp.key, py: c.scenarios[sp.key].net_pnl, js: r.net_pnl, diff: Math.abs(r.net_pnl - c.scenarios[sp.key].net_pnl) }); }
     const mu = maxUnits(x.equity, x.L0, x.M0, deal.ratio); rows.push({ case: x.lots, key: "max_units", py: c.max_units, js: mu.units, diff: Math.abs(mu.units - c.max_units) });
   }

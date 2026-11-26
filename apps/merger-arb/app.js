@@ -1,16 +1,17 @@
-import * as E from "./engine.js?v=2";
+import * as E from "./engine.js?v=4";
 
 const $ = (id) => document.getElementById(id);
 const pct = (x, d = 1) => (Number.isFinite(x) ? `${(100 * x).toFixed(d)}%` : "n/a");
-const usd = (x, d = 0) => (Number.isFinite(x) ? `${x < 0 ? "-" : ""}$${Math.abs(x).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d })}` : "n/a");
+const usd = (x, d = 0) => (Number.isFinite(x) ? `${x < 0 && Math.abs(x) >= 0.5 * 10 ** -d ? "-" : ""}$${Math.abs(x).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d })}` : "n/a");
 const css = (v) => getComputedStyle(document.querySelector(".viz-root")).getPropertyValue(v).trim();
 
-const snap = await (await fetch("data/snapshot.json?v=3")).json();
+const snap = await (await fetch("data/snapshot.json?v=4")).json();
 const deal = snap.deal;
 const T = deal.target, A = deal.acquirer;
+const mdl = snap.model;
 const defaults = { ratio: deal.ratio, L0: snap.L0, M0: snap.M0, close: deal.expected_close, equity: 10000, lots: 1,
-  fee: 100 * snap.borrow_fee, pa: 0.90, pt: 0.90, pr: 0.61, po: 0.97, S: Math.round(snap.standalone.blend * 100) / 100,
-  kappa: 0.5, hurdle: 0.05 };
+  fee: 100 * snap.borrow_fee, pa: 0.90, pt: 0.90, pr: 0.605, po: 0.97, S: Math.round(snap.standalone.factor_model * 100) / 100,
+  kappa: mdl.rebound_kappa, hurdle: 0.05 };
 
 function setInputs(v) { for (const [k, val] of Object.entries(v)) { const el = $(k); if (el) el.value = val; } }
 function readInputs() {
@@ -43,8 +44,8 @@ $("datanote").innerHTML = `This research page recomputes the model in your brows
 
 function verdictHTML(sig) {
   const cls = sig.decision === "TRADE" ? "b-trade" : sig.decision === "WATCH" ? "b-watch" : "b-no";
-  return `<span class="badge ${cls}">${sig.decision}</span> <strong>Report verdict (defaults): unattractive at today's spread: no trade.</strong>
-  <div class="small muted">Gate by gate, completion is about 48% (China's SAMR is the weak link), about the market's own ~50%. At a 21.5% spread the expected return is about 2 points a year below Treasuries. The trade needs a ~35% spread, or conviction that LITE would hold ~$600 on its own.</div>`;
+  return `<span class="badge ${cls}">${sig.decision}</span> <strong>Report verdict (defaults, revised 25 Nov after a triple check): potentially attractive, small size only.</strong>
+  <div class="small muted">${snap.verdict_note}</div>`;
 }
 
 // ---------------------------------------------------------------- render
@@ -54,22 +55,26 @@ function render() {
   for (const k of ["pa", "pt", "pr", "po"]) $(`o_${k}`).textContent = pct(x[k], 0);
   $("o_k").textContent = pct(x.kappa, 0); $("o_h").textContent = pct(x.hurdle, 0);
   const p = x.pa * x.pt * x.pr * x.po;
-  $("pc").textContent = pct(p, 0);
+  $("pc").textContent = pct(p, 1);
   const d = { ...deal, ratio: x.ratio, expected_close: x.close };
   const delta = 1 - x.M0 / snap.standalone.acquirer_counterfactual, j = x.kappa * delta / (1 - delta), jf = delta / (1 - delta);
-  $("shint").textContent = `model ${snap.standalone.factor_model.toFixed(0)} / stress ${snap.standalone.stress.toFixed(0)}`;
+  $("shint").textContent = `factor model ${snap.standalone.factor_model.toFixed(0)} (±${(100 * snap.standalone.sigma).toFixed(0)}%) / stress ${snap.standalone.stress.toFixed(0)}`;
   const years = Math.max(E.yearFrac(snap.as_of, x.close), 1 / 365);
-  const sig = E.evaluate(d, { L: x.L0, M: x.M0, date: snap.as_of, close: x.close, fee: x.fee, p, S: x.S, j, Ss: snap.standalone.stress,
-    js: jf, rf: rf(years), hurdle: x.hurdle, fresh: true });
+  const w = x.pa * x.pt * (1 - x.pr) / Math.max(1 - p, 1e-12);       // P(regulatory termination | break): pays the fee
+  const xIn = { L: x.L0, M: x.M0, date: snap.as_of, close: x.close, fee: x.fee, p, S: x.S, j, Ss: snap.standalone.stress,
+    js: jf, rf: rf(years), finRate: rf(years), hurdle: x.hurdle, fresh: true, w, fL: mdl.fee_target_after_tax,
+    fM: mdl.fee_acquirer_after_tax, entry: mdl.entry_cost_unit, exitB: mdl.entry_cost_unit, tb: mdl.years_to_break };
+  $("feehint").textContent = `If regulators kill the deal, Marvell pays $3.2bn: +${usd(mdl.fee_target_after_tax, 2)} per ${T} share and −${usd(mdl.fee_acquirer_after_tax, 2)} per ${A} share after tax. At these odds ${pct(w, 0)} of breaks would pay it (failed votes pay nothing).`;
+  const sig = E.evaluate(d, xIn);
   const m = sig.m;
   $("verdict").innerHTML = verdictHTML(sig);
   const tiles = [["Gross spread", pct(m.gross_spread), `${usd(m.spread_usd, 2)} per ${T} share`],
-    ["Annualised if it closes", pct(m.annualized_if_complete), `net of carry, ${years.toFixed(2)} years`],
-    ["Expected excess return", `${m.expected_excess_annual >= 0 ? "+" : ""}${pct(m.expected_excess_annual)}/yr`, `risk-free ${pct(rf(years), 2)}`],
+    ["Annualised if it closes", pct(m.annualized_if_complete), `net of carry and costs, ${years.toFixed(2)} years`],
+    ["Expected excess return", `${m.expected_excess_annual >= 0 ? "+" : ""}${pct(m.expected_excess_annual)}/yr`, `after financing the long at ${pct(rf(years), 2)}`],
     ["Break-even P(complete)", pct(m.breakeven_p_base, 0), `stress ${pct(m.breakeven_p_stress, 0)}; yours ${pct(p, 0)}`],
-    ["Completion P&L", usd(m.completion_pnl_unit, 2), `per ${T} share, net of carry`],
-    ["Break P&L", usd(m.break_pnl_unit_base, 2), `stress ${usd(m.break_pnl_unit_stress, 0)}`],
-    ["Spread needed for hurdle", pct(m.required_spread_for_hurdle), `hurdle ${pct(x.hurdle, 0)}/yr`],
+    ["Completion P&L", usd(m.completion_pnl_unit, 2), `per ${T} share, net of carry and costs`],
+    ["Break P&L (average)", usd(m.break_pnl_unit_base, 2), `failed vote ${usd(m.break_pnl_unit_base_nofee, 0)}; regulatory ${usd(m.break_pnl_unit_base_regulatory, 0)}; stress ${usd(m.break_pnl_unit_stress, 0)}`],
+    ["Spread needed for hurdle", pct(m.required_spread_for_hurdle), `hurdle ${pct(x.hurdle, 0)}/yr after financing`],
     ["Signal", sig.decision, "recomputed from your inputs"]];
   $("tiles").innerHTML = tiles.map(([k, v, s]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${s}</div></div>`).join("");
   $("reasons").innerHTML = sig.reasons.length ? sig.reasons.map((r) => `<li>${r}</li>`).join("") : "<li>All checks pass. Execution still requires manual approval in the local tool.</li>";
@@ -84,11 +89,10 @@ function render() {
 
   // EV vs probability
   const ps = []; for (let q = 0.30; q <= 0.951; q += 0.05) ps.push(+q.toFixed(2));
-  const cap = m.regt_capital_unit, ann = (e) => (e > -1 ? Math.pow(1 + e, 1 / years) - 1 : -1) - rf(years);
-  const line = (B, name, col) => ({ x: ps, y: ps.map((q) => ann((q * m.completion_pnl_unit + (1 - q) * B) / cap)), name, mode: "lines",
+  const line = (S_, j_, name, col) => ({ x: ps, y: ps.map((q) => E.economics(d, { ...xIn, p: q, S: S_, j: j_ }).excess), name, mode: "lines",
     line: { color: col, width: 2 }, hovertemplate: `${name}: P(complete) %{x:.0%} → %{y:+.1%}/yr<extra></extra>` });
-  Plotly.react("ch_ev", [line(m.break_pnl_unit_base, "your break case", css("--s1")), line(m.break_pnl_unit_stress, "stress break", css("--s2"))],
-    layout("Expected excess return per year vs completion probability", { xaxis: { tickformat: ".0%", gridcolor: css("--grid") },
+  Plotly.react("ch_ev", [line(x.S, j, "your break case", css("--s1")), line(snap.standalone.stress, jf, "stress break", css("--s2"))],
+    layout("Expected excess return per year (after financing) vs completion probability", { xaxis: { tickformat: ".0%", gridcolor: css("--grid") },
       yaxis: { tickformat: ".0%", gridcolor: css("--grid") },
       shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: x.hurdle, y1: x.hurdle, line: { color: css("--muted"), width: 1 } },
         { type: "line", x0: p, x1: p, yref: "paper", y0: 0, y1: 1, line: { color: css("--axis"), width: 1 } }],
@@ -98,11 +102,11 @@ function render() {
   // break-even heatmap
   const Ss = []; for (let s = 380; s <= 700; s += 20) Ss.push(s);
   const js = [0, 0.05, +j.toFixed(4), 0.2, +jf.toFixed(4), 0.35].filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b);
-  const z = Ss.map((S) => js.map((jj) => E.breakevenP(m.completion_pnl_unit, E.breakPnl(x.L0, x.M0, x.ratio, S, jj))));
+  const z = Ss.map((S) => js.map((jj) => E.economics(d, { ...xIn, S, j: jj }).pStar));
   const ramp = ["--seq0", "--seq1", "--seq2", "--seq3", "--seq4", "--seq5", "--seq6"].map((v, i, a) => [i / (a.length - 1), css(v)]);
   Plotly.react("ch_heat", [{ type: "heatmap", z, x: js.map((v) => `+${(100 * v).toFixed(0)}%`), y: Ss.map((v) => `$${v}`), zmin: 0, zmax: 1,
     colorscale: ramp, colorbar: { tickformat: ".0%", outlinewidth: 0 }, hovertemplate: `${A} jump %{x}, ${T} at %{y}: break-even p %{z:.0%}<extra></extra>` }],
-    layout("Break-even completion probability by break assumption", { xaxis: { type: "category", title: { text: `${A} jump on a break` } },
+    layout("Break-even completion probability (after the fee and financing)", { xaxis: { type: "category", title: { text: `${A} jump on a break` } },
       yaxis: { type: "category", title: { text: `${T} price on a break` } } }), cfg);
 
   // scenarios
@@ -138,16 +142,19 @@ function render() {
 }
 
 function runMC() {
-  const { d, pos, x, delta } = lastMC;
+  const { d, pos, x, delta, years } = lastMC;
   if (!x.lots) { $("mcstatus").textContent = "set at least one lot"; return; }
   $("mcstatus").textContent = "running...";
   setTimeout(() => {
     const t0 = performance.now(), c = snap.calibration;
+    // model uncertainty as in the repository's base run: break value lognormal around your input, reversal +/- 25 pts
     const r = E.monteCarlo(d, pos, x.equity, x.L0, x.M0, snap.as_of, { n: parseInt($("paths").value, 10), seed: 20261124,
-      acqVol: c.acq_vol, sVol: c.standalone_vol, rho: c.rho, spreadVol: c.spread_vol, widen: 0.35, s0: x.S, kappa: x.kappa, delta,
-      pAcqVote: 1 - x.pa, pTgtVote: 1 - x.pt, pReg: 1 - x.pr, pOther: 1 - x.po, vote: "2027-06-30", fee: x.fee, feePs: deal.regulatory_fee_per_share });
+      acqVol: c.acq_vol, sVol: c.standalone_vol, rho: c.rho, spreadVol: c.spread_vol, widen: 0.35, s0: x.S, sSigma: snap.standalone.sigma,
+      kLo: Math.max(0, x.kappa - 0.25), kHi: Math.min(1, x.kappa + 0.25), delta,
+      pAcqVote: 1 - x.pa, pTgtVote: 1 - x.pt, pReg: 1 - x.pr, pOther: 1 - x.po, vote: "2027-06-30", fee: x.fee,
+      feePs: deal.regulatory_fee_per_share, feeAcqPs: deal.regulatory_fee_per_acquirer_share, tax: deal.fee_tax_rate, finRate: rf(years) });
     const s = r.summary;
-    $("mcout").innerHTML = `<div class="tiles">${[["Mean P&L", usd(s.mean), pct(s.mean / x.equity) + " of equity"], ["Median", usd(s.median), ""],
+    $("mcout").innerHTML = `<div class="tiles">${[["Mean P&L", usd(s.mean), `${pct(s.mean / x.equity)} of equity; ${usd(s.meanNet)} after financing`], ["Median", usd(s.median), ""],
       ["P(loss)", pct(s.pLoss, 0), ""], ["95% VaR / ES", `${usd(s.var95)} / ${usd(s.es95)}`, pct(s.es95 / x.equity, 0) + " of equity (ES)"],
       ["P(margin liquidation)", pct(s.pLiq, 2), ""], ["Mean holding", `${s.meanYears.toFixed(2)} yrs`, ""]].map(([k, v, dd]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${dd}</div></div>`).join("")}</div>`;
     const xs = r.res.map((q) => q.pnl / x.equity).sort((a, b) => a - b);
@@ -175,11 +182,11 @@ function antitrust() {
   $("gap").textContent = usd(a.gap_at_q50);
   $("gates").innerHTML = `<thead><tr><th>Gate</th><th>P(success)</th></tr></thead><tbody>` +
     a.gates.map((g) => `<tr><td>${g.gate}</td><td>${pct(g.p_success, 1)}</td></tr>`).join("") + "</tbody>";
-  const rows = $("rev").value === "full" ? a.impact_full : a.impact_half;
+  const v = $("rev").value, rows = v === "full" ? a.impact_full : v === "half" ? a.impact_half : a.impact_base;
   const keep = ["HSR second request issued", "EU opens phase 2", "SAMR acceptance delayed / pull-and-refile", "US agency sues to block",
-    "Court blocks the merger", "Both stockholder votes pass", "SAMR approves (conditional)"];
-  $("headlines").innerHTML = `<thead><tr><th>Headline</th><th>Odds after</th><th>${T}</th><th>${A}</th><th>Spread</th><th>P&L / ${T} sh</th></tr></thead><tbody>` +
-    rows.filter((r) => keep.includes(r.headline)).map((r) => `<tr><td>${r.headline}</td><td>${pct(r.market_q_after, 0)}</td><td>${pct(r.tgt_move)}</td><td>${pct(r.acq_move)}</td><td>${(100 * r.spread_pts >= 0 ? "+" : "") + (100 * r.spread_pts).toFixed(1)} pts</td><td>${usd(r.arb_pnl_unit)}</td></tr>`).join("") + "</tbody>";
+    "Court rules for the merger", "Court blocks the merger", "A stockholder vote fails", "Both stockholder votes pass", "SAMR approves (conditional)"];
+  $("headlines").innerHTML = `<thead><tr><th>Headline</th><th>Odds after</th><th>${T}</th><th>${A}</th><th>Spread</th><th>P&L / ${T} sh, from today</th><th>on the day</th></tr></thead><tbody>` +
+    rows.filter((r) => keep.includes(r.headline)).map((r) => `<tr><td>${r.headline}</td><td>${pct(r.market_q_after, 0)}</td><td>${pct(r.tgt_move)}</td><td>${pct(r.acq_move)}</td><td>${(100 * r.spread_pts >= 0 ? "+" : "") + (100 * r.spread_pts).toFixed(1)} pts</td><td>${usd(r.arb_pnl_unit)}</td><td>${usd(r.arb_pnl_unit_day)}</td></tr>`).join("") + "</tbody>";
 }
 $("rev").addEventListener("change", antitrust);
 

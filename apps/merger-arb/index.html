@@ -33,13 +33,14 @@
   <h3>Completion probability</h3>
   <label>MRVL vote passes <output id="o_pa"></output><input id="pa" type="range" min="0.5" max="1" step="0.01"></label>
   <label>LITE vote passes <output id="o_pt"></output><input id="pt" type="range" min="0.5" max="1" step="0.01"></label>
-  <label>Regulatory approvals in time <output id="o_pr"></output><input id="pr" type="range" min="0.3" max="1" step="0.01"></label>
+  <label>Regulatory approvals in time <output id="o_pr"></output><input id="pr" type="range" min="0.3" max="1" step="0.005"></label>
   <label>No other termination <output id="o_po"></output><input id="po" type="range" min="0.8" max="1" step="0.01"></label>
   <p class="pc">P(complete) <strong id="pc"></strong></p>
   <h3>If the deal breaks</h3>
-  <label>LITE price on a break <span class="hint" id="shint"></span><input id="S" type="number" step="5"></label>
+  <label>LITE price on a break, before any fee <span class="hint" id="shint"></span><input id="S" type="number" step="5"></label>
   <label>Share of MRVL's deal discount that reverses <output id="o_k"></output><input id="kappa" type="range" min="0" max="1" step="0.05"></label>
-  <label>Hurdle: excess return /yr <output id="o_h"></output><input id="hurdle" type="range" min="0" max="0.2" step="0.01"></label>
+  <p class="small muted" id="feehint"></p>
+  <label>Hurdle: excess return /yr after financing <output id="o_h"></output><input id="hurdle" type="range" min="0" max="0.2" step="0.01"></label>
   <button id="reset" type="button">Reset to report defaults</button>
 </aside>
 
@@ -54,7 +55,8 @@
   <section class="card">
     <h2>Antitrust: what each regulatory headline does <span class="muted small">market odds 50%; Bayesian updates from the gate tree</span></h2>
     <p class="small muted">Each stock is a mix of its deal and no-deal value, weighted by the market's completion odds. A headline moves the odds, and the hedged trade loses or gains the change in odds times G = spread / (1 &minus; odds). That is <strong id="gap"></strong> per LITE share for the full 100 points, about a tenth of it per 10-point move. How the move splits between LITE and MRVL depends on how much of MRVL's ~21% deal discount would reverse on a break:
-      <label class="inline"><select id="rev"><option value="half" selected>half reverses</option><option value="full">all reverses</option></select></label></p>
+      <label class="inline"><select id="rev"><option value="half">half reverses</option><option value="base" selected>three quarters reverse (base)</option><option value="full">all reverses</option></select></label>
+      "From today" is the change once the headline is known; "on the day" starts from the news that must come first (a court ruling follows a lawsuit).</p>
     <div class="grid2">
       <div class="tablewrap"><table id="gates"></table></div>
       <div class="tablewrap"><table id="headlines"></table></div>
@@ -88,6 +90,6 @@
 </main>
 </div>
 </div>
-<script type="module" src="app.js?v=3"></script>
+<script type="module" src="app.js?v=5"></script>
 </body>
 </html>
