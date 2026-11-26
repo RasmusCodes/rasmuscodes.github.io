@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 218" width="760" height="218" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" role="img" aria-label="The indicators are coincident, not leading">
+<text x="0" y="22" font-size="17" font-weight="600" fill="#1a1a18">The indicators are coincident, not leading</text>
+<text x="0" y="44" font-size="13" fill="#6b6963">Error relative to the history-only model by forecast horizon, all companies, 2016-26</text>
+<line x1="312.0" x2="312.0" y1="64" y2="172" stroke="#e1e0d9" stroke-width="1"/>
+<text x="312.0" y="188" font-size="11.5" fill="#6b6963" text-anchor="middle">0.96</text>
+<line x1="396.0" x2="396.0" y1="64" y2="172" stroke="#e1e0d9" stroke-width="1"/>
+<text x="396.0" y="188" font-size="11.5" fill="#6b6963" text-anchor="middle">0.98</text>
+<line x1="480.0" x2="480.0" y1="64" y2="172" stroke="#e1e0d9" stroke-width="1"/>
+<text x="480.0" y="188" font-size="11.5" fill="#6b6963" text-anchor="middle">1.00</text>
+<line x1="564.0" x2="564.0" y1="64" y2="172" stroke="#e1e0d9" stroke-width="1"/>
+<text x="564.0" y="188" font-size="11.5" fill="#6b6963" text-anchor="middle">1.02</text>
+<line x1="648.0" x2="648.0" y1="64" y2="172" stroke="#e1e0d9" stroke-width="1"/>
+<text x="648.0" y="188" font-size="11.5" fill="#6b6963" text-anchor="middle">1.04</text>
+<line x1="480.0" x2="480.0" y1="60" y2="172" stroke="#c3c2b7" stroke-width="1.5"/>
+<text x="258" y="91.0" font-size="13" fill="#1a1a18" text-anchor="end">Nowcast (quarter ended, not reported)</text>
+<path d="M480.0,80.0H451.4Q447.4,80.0 447.4,84.0V90.0Q447.4,94.0 451.4,94.0H480.0Z" fill="#2a78d6"/>
+<text x="441.4" y="91.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="end">0.99</text>
+<text x="258" y="125.0" font-size="13" fill="#1a1a18" text-anchor="end">One quarter earlier</text>
+<path d="M480.0,114.0H481.2Q485.2,114.0 485.2,118.0V124.0Q485.2,128.0 481.2,128.0H480.0Z" fill="#2a78d6"/>
+<text x="491.2" y="125.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="start">1.00</text>
+<text x="258" y="159.0" font-size="13" fill="#1a1a18" text-anchor="end">Two quarters earlier</text>
+<path d="M480.0,148.0H539.5Q543.5,148.0 543.5,152.0V158.0Q543.5,162.0 539.5,162.0H480.0Z" fill="#2a78d6"/>
+<text x="549.5" y="159.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="start">1.02</text>
+<text x="0" y="210" font-size="11.5" fill="#6b6963">Below 1 = indicators help. Source: out/revenue_summary.csv</text>
+</svg>

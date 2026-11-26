@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Industrial Intelligence dashboard · Rasmus Suonio</title>
+<meta name="description" content="Public operational data mapped to 17 industrial companies and tested point in time against what they later reported: segments, indicators, forecasts, historical errors and a dated timeline, with the source of every series.">
+<meta name="author" content="Rasmus Suonio">
+<link rel="canonical" href="https://rasmuscodes.github.io/apps/industrial-intelligence/">
+<meta property="og:site_name" content="Rasmus Suonio">
+<meta property="og:title" content="Industrial Intelligence dashboard">
+<meta property="og:description" content="Operational data against reported fundamentals for 17 industrial companies, point in time.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts/fonts.css">
+<link rel="stylesheet" href="/static/css/site.css">
+<link rel="stylesheet" href="app.css?v=3">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body class="page-app">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" data-masthead>
+  <div class="masthead__bar wrap">
+    <a class="brand" href="/" aria-label="Rasmus Suonio, home">
+      <span class="mark " aria-hidden="true">RS</span>
+      <span class="brand__name">Rasmus Suonio</span>
+    </a>
+    <div class="masthead__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark mode" title="Light or dark"><svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none"/></svg></button>
+      <a class="btn btn--accent btn--sm" href="/subscribe/">Subscribe</a>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs__inner wrap">
+    <a class="tab" href="/">Home</a>
+    <a class="tab" href="/research/">Research</a>
+    <a class="tab" href="/portfolio/">Portfolio</a>
+    <a class="tab is-active" href="/projects/" aria-current="page">Projects</a>
+    <a class="tab" href="/essays/">Essays</a>
+    <a class="tab" href="/archive/">Archive</a>
+    <a class="tab" href="/about/">About</a>
+  </div>
+</nav>
+
+<main id="main" class="ii">
+  <section class="ii-hero wrap">
+    <p class="ii-kicker"><a href="/projects/industrial-intelligence/">Project write-up</a><span aria-hidden="true"> · </span><a href="https://github.com/RasmusCodes/industrial-intelligence">Code and data pipeline on GitHub</a></p>
+    <h1 class="ii-title">Industrial Intelligence</h1>
+    <p class="ii-lede">Public operational data (factory orders, power-plant pipelines, grid demand, customers' capital spending, construction registrations and tenders) mapped to industrial companies and tested, point in time, against what the companies later reported.</p>
+    <p class="ii-meta" id="ii-meta">Loading data…</p>
+  </section>
+
+  <div class="ii-filters wrap" role="group" aria-label="Choose a company">
+    <label class="ii-field"><span>Sector</span>
+      <select id="ii-sector"><option value="">All sectors</option></select></label>
+    <label class="ii-field ii-field--grow"><span>Company</span>
+      <select id="ii-company"></select></label>
+  </div>
+
+  <div id="ii-app" aria-live="polite">
+    <section class="wrap ii-section" id="sec-overview" aria-labelledby="h-overview">
+      <div class="ii-section__head"><h2 id="h-overview">Company</h2><p class="ii-section__sub" id="ov-sub"></p></div>
+      <div class="ii-tiles" id="ov-tiles"></div>
+      <div id="ov-profile"></div>
+    </section>
+
+    <section class="wrap ii-section" id="sec-segments" aria-labelledby="h-segments">
+      <div class="ii-section__head"><h2 id="h-segments">Revenue segments</h2>
+        <p class="ii-section__sub">Quarterly revenue by reportable segment from the companies' XBRL filings, latest reported values.</p></div>
+      <div id="seg-body"></div>
+    </section>
+
+    <section class="wrap ii-section" id="sec-indicators" aria-labelledby="h-indicators">
+      <div class="ii-section__head"><h2 id="h-indicators">Operational indicators against reported revenue</h2>
+        <p class="ii-section__sub">Each indicator was linked to the company from its own business description before any model was fitted. Growth rates are year over year, as first published.</p></div>
+      <div class="ii-indgrid">
+        <div class="ii-indlist" id="ind-list" role="listbox" aria-label="Indicators mapped to this company"></div>
+        <div id="ind-detail"></div>
+      </div>
+    </section>
+
+    <section class="wrap ii-section" id="sec-forecast" aria-labelledby="h-forecast">
+      <div class="ii-section__head"><h2 id="h-forecast">Forecast and assumptions</h2>
+        <p class="ii-section__sub">Revenue for the next three quarters from the partially pooled indicator model, fitted on every quarter reported so far. Change the indicator assumptions to see the trajectory move.</p></div>
+      <div id="fc-body"></div>
+    </section>
+
+    <section class="wrap ii-section" id="sec-errors" aria-labelledby="h-errors">
+      <div class="ii-section__head"><h2 id="h-errors">Historical forecast errors</h2>
+        <p class="ii-section__sub">Walk-forward: every forecast uses only data public one second before the company's release, with models refit each quarter.</p></div>
+      <div class="ii-seg" role="radiogroup" aria-label="Forecast horizon" id="err-h">
+        <button type="button" role="radio" aria-checked="true" data-h="0">Nowcast, just before release</button>
+        <button type="button" role="radio" aria-checked="false" data-h="1">One quarter earlier</button>
+        <button type="button" role="radio" aria-checked="false" data-h="2">Two quarters earlier</button>
+      </div>
+      <div id="err-body"></div>
+    </section>
+
+    <section class="wrap ii-section" id="sec-timeline" aria-labelledby="h-timeline">
+      <div class="ii-section__head"><h2 id="h-timeline">Contracts, projects and announcements</h2>
+        <p class="ii-section__sub">Company press releases (8-K), federal contract awards, large planned power plants and Texas data center registrations, each with its source.</p></div>
+      <div class="ii-chips" id="tl-kinds" role="group" aria-label="Event types"></div>
+      <ol class="ii-timeline" id="tl-list"></ol>
+    </section>
+
+    <section class="wrap ii-section" id="sec-research" aria-labelledby="h-research">
+      <div class="ii-section__head"><h2 id="h-research">What the tests found, all companies</h2>
+        <p class="ii-section__sub">Out-of-sample accuracy of revenue-growth forecasts; 2016–2020 development period and 2021 onward holdout. Lower error is better; ratios below 1 beat the baseline.</p></div>
+      <div id="res-body"></div>
+    </section>
+
+    <section class="wrap ii-section" id="sec-sources" aria-labelledby="h-sources">
+      <div class="ii-section__head"><h2 id="h-sources">Data provenance</h2>
+        <p class="ii-section__sub">Every source, how its point-in-time date is set and whether it was used. "Revised data, lagged" means only today's revised history exists, so revisions are not point in time.</p></div>
+      <div id="src-body"></div>
+    </section>
+  </div>
+  <div class="ii-tip" id="ii-tip" role="tooltip" hidden></div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="mark mark--sm" aria-hidden="true">RS</span>
+      <div><strong>Rasmus Suonio</strong><span>Investment research, quant projects and portfolio notes.</span></div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="/research/">Research</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/essays/">Essays</a><a href="/archive/">Archive</a><a href="/about/">About</a>
+      <a href="/subscribe/">Subscribe</a><a href="/feed.xml">RSS</a>
+      <a href="https://github.com/RasmusCodes" rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+    <p class="site-footer__legal">© 2026 Rasmus Suonio. Nothing on this site is investment advice. I am not a licensed financial adviser, and I may hold positions in securities I write about. Forecasts on this page are model output on public data and can be wrong.</p>
+  </div>
+</footer>
+<script src="/static/js/site.js" defer></script>
+<script src="app.js?v=5" defer></script>
+</body>
+</html>

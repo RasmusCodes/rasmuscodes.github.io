@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" role="img" aria-label="Nowcast error with indicators, relative to company history alone">
+<text x="0" y="22" font-size="17" font-weight="600" fill="#1a1a18">Nowcast error with indicators, relative to company history alone</text>
+<text x="0" y="44" font-size="13" fill="#6b6963">Mean absolute error of revenue growth, 2021-26 holdout; below 1 = indicators help</text>
+<line x1="270.0" x2="270.0" y1="64" y2="274" stroke="#e1e0d9" stroke-width="1"/>
+<text x="270.0" y="290" font-size="11.5" fill="#6b6963" text-anchor="middle">0.94</text>
+<line x1="354.0" x2="354.0" y1="64" y2="274" stroke="#e1e0d9" stroke-width="1"/>
+<text x="354.0" y="290" font-size="11.5" fill="#6b6963" text-anchor="middle">0.96</text>
+<line x1="438.0" x2="438.0" y1="64" y2="274" stroke="#e1e0d9" stroke-width="1"/>
+<text x="438.0" y="290" font-size="11.5" fill="#6b6963" text-anchor="middle">0.98</text>
+<line x1="522.0" x2="522.0" y1="64" y2="274" stroke="#e1e0d9" stroke-width="1"/>
+<text x="522.0" y="290" font-size="11.5" fill="#6b6963" text-anchor="middle">1.00</text>
+<line x1="606.0" x2="606.0" y1="64" y2="274" stroke="#e1e0d9" stroke-width="1"/>
+<text x="606.0" y="290" font-size="11.5" fill="#6b6963" text-anchor="middle">1.02</text>
+<line x1="690.0" x2="690.0" y1="64" y2="274" stroke="#e1e0d9" stroke-width="1"/>
+<text x="690.0" y="290" font-size="11.5" fill="#6b6963" text-anchor="middle">1.04</text>
+<line x1="522.0" x2="522.0" y1="60" y2="274" stroke="#c3c2b7" stroke-width="1.5"/>
+<text x="258" y="91.0" font-size="13" fill="#1a1a18" text-anchor="end">Data center power and cooling</text>
+<path d="M522.0,80.0H435.6Q431.6,80.0 431.6,84.0V90.0Q431.6,94.0 435.6,94.0H522.0Z" fill="#2a78d6"/>
+<text x="425.6" y="91.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="end">0.98</text>
+<text x="258" y="125.0" font-size="13" fill="#1a1a18" text-anchor="end">Electrical equipment and grid</text>
+<path d="M522.0,114.0H407.2Q403.2,114.0 403.2,118.0V124.0Q403.2,128.0 407.2,128.0H522.0Z" fill="#2a78d6"/>
+<text x="397.2" y="125.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="end">0.97</text>
+<text x="258" y="159.0" font-size="13" fill="#1a1a18" text-anchor="end">Semiconductor equipment</text>
+<path d="M522.0,148.0H371.7Q367.7,148.0 367.7,152.0V158.0Q367.7,162.0 371.7,162.0H522.0Z" fill="#2a78d6"/>
+<text x="361.7" y="159.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="end">0.96</text>
+<text x="258" y="193.0" font-size="13" fill="#1a1a18" text-anchor="end">Backlog reporters</text>
+<path d="M522.0,182.0H444.3Q440.3,182.0 440.3,186.0V192.0Q440.3,196.0 444.3,196.0H522.0Z" fill="#2a78d6"/>
+<text x="434.3" y="193.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="end">0.98</text>
+<text x="258" y="227.0" font-size="13" fill="#1a1a18" text-anchor="end">Caterpillar and machinery</text>
+<path d="M522.0,216.0H637.4Q641.4,216.0 641.4,220.0V226.0Q641.4,230.0 637.4,230.0H522.0Z" fill="#2a78d6"/>
+<text x="647.4" y="227.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="start">1.03</text>
+<text x="258" y="261.0" font-size="13" fill="#1a1a18" text-anchor="end">All 17 companies</text>
+<path d="M522.0,250.0H462.2Q458.2,250.0 458.2,254.0V260.0Q458.2,264.0 462.2,264.0H522.0Z" fill="#2a78d6"/>
+<text x="452.2" y="261.0" font-size="12" font-weight="500" fill="#1a1a18" text-anchor="end">0.98</text>
+<text x="0" y="312" font-size="11.5" fill="#6b6963">Partially pooled model, forecast one second before each earnings release. Source: this repository, out/revenue_summary.csv</text>
+</svg>

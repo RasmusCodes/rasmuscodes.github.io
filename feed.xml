@@ -426,6 +426,44 @@
 </ul>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>A Python package (NumPy, pandas, SQLite) of about 6,800 lines, with a command-line interface and Python API, 104 tests checked against independent references (statsmodels for the multiple-testing corrections and Newey-West statistics, the published deflated-Sharpe example, standard SHA-256 vectors), and continuous integration on Linux and Windows that also runs the browser code under Node and the Rust crate’s tests. The dashboard is plain JavaScript and SVG with no libraries; its colours are checked for colour-blind separation in light and dark mode.</p>
+]]></content:encoded></item><item><title>Reading industrial demand before the earnings release</title><link>https://rasmuscodes.github.io/projects/industrial-intelligence/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/industrial-intelligence/</guid><pubDate>Sat, 21 Nov 2026 12:00:00 +0000</pubDate><description>Factory orders, power-plant pipelines, grid load, customers’ capital spending, permits and tenders, mapped to 17 industrial companies and tested point in time. They nowcast revenue slightly better than company history, lead nothing, and predict no excess returns.</description><category>alternative data</category><category>industrials</category><category>nowcasting</category><category>point-in-time</category><category>data centers</category><content:encoded><![CDATA[<p>Industrial Intelligence is a platform that tracks physical economic activity (factory orders, planned power plants, electricity demand, the capital spending of the companies’ customers, construction registrations, utility tenders) and asks whether it tells you an industrial company’s revenue and margins before the company reports them. It covers 17 US-listed equipment makers and contractors, among them Caterpillar, Vertiv, Eaton, GE Vernova, Quanta and the three big chip-tool makers, and maps ABB, Siemens Energy and Schneider Electric without modelling them.</p>
+<p>The <a href="https://rasmuscodes.github.io/apps/industrial-intelligence/">interactive dashboard</a> lets you pick a company and inspect its segments, its mapped indicators against reported revenue, a forecast you can change, its historical forecast errors and a dated timeline of contracts, projects and announcements.</p>
+<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
+<ul>
+<li><strong>Sources.</strong> Eighteen sources were probed and ranked by availability, reliability and economic relevance; twelve public ones are used: SEC filings (financials, 879 XBRL documents with segment data, 1,055 press releases), Census factory orders and construction spending with every published vintage, EIA’s monthly power-plant inventory since 2015, hourly grid demand, three grid operators’ interconnection queues, Texas data center registrations, EU utility tenders, job postings and trade flows. Where a site’s robots.txt or terms said no (the BLS API, ERCOT), or a source sits behind a login, it is listed as not used.</li>
+<li><strong>Point in time.</strong> Every value carries the moment it became public. Revisions are new rows, not overwrites. Forecasts are made one second before each earnings release, so a model only ever sees what was published by then.</li>
+<li><strong>A mapping layer written first.</strong> Each company is linked to the indicators that should drive it, with the segment, the expected timing and the channel, before any model saw the data. Its profile (segments, geography, customers, backlog, pricing, margin drivers) quotes its own 10-K, and all 250 quotes are checked against the filing text by the test suite.</li>
+<li><strong>Models and tests.</strong> Baselines (random walk, the company’s own history), a composite of the mapped indicators, a partially pooled Bayesian version, ridge, gradient boosting and backlog models, refit every quarter. 2016–2020 is the development period and 2021–2026 the holdout. Diebold-Mariano and Clark-West tests treat each quarter as one observation.</li>
+</ul>
+<h2 id="what-it-found">What it found <a class="header-anchor" href="#what-it-found">#</a></h2>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/industrial-intelligence/cover.svg" alt="Bar chart of nowcast error relative to company history by case study, 2021 to 2026" /><figcaption>Bar chart of nowcast error relative to company history by case study, 2021 to 2026</figcaption></figure>
+<ul>
+<li><strong>A small, real nowcast gain.</strong> Just before the release, the indicator model misses reported revenue growth by 7.39 percentage points on average in the holdout, against 7.50 for the company’s own history and 7.82 for a random walk. The indicators carry information history lacks (Clark-West p = 0.002), but the accuracy gain is too small to be significant on its own (Diebold-Mariano p = 0.23), and there was none in 2016–2020.</li>
+<li><strong>Where it works:</strong> data center suppliers, grid equipment, chip-tool makers (2–4% better in the holdout). Not for Caterpillar, Cummins and United Rentals (3% worse).</li>
+<li><strong>Coincident, not leading.</strong> One or two quarters before a release the indicators add nothing. Their information arrives with the quarter itself.</li>
+</ul>
+<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/industrial-intelligence/horizons.svg" alt="Bar chart of error relative to the history-only model at three horizons: 0.99 at the nowcast, 1.00 one quarter earlier, 1.02 two quarters earlier" /><figcaption>Bar chart of error relative to the history-only model at three horizons: 0.99 at the nowcast, 1.00 one quarter earlier, 1.02 two quarters earlier</figcaption></figure>
+<ul>
+<li><strong>A careless backtest would have said more.</strong> On today’s revised data with no publication lags, the holdout gain reads 2.6% instead of 1.5%.</li>
+<li><strong>More model is worse.</strong> Gradient boosting was 14% worse than company history and a ridge on every indicator 24% worse: 650 company-quarters is not enough data for them.</li>
+<li><strong>No excess returns.</strong> The indicators’ extra information predicted neither earnings-day returns nor the drift into the release (CRSP data through 2024, 12 companies). Predicting revenue and predicting the stock are different questions, and only the first got a positive answer.</li>
+</ul>
+<h2 id="four-case-studies">Four case studies <a class="header-anchor" href="#four-case-studies">#</a></h2>
+<ul>
+<li><strong><a href="https://github.com/RasmusCodes/industrial-intelligence/blob/main/docs/case_studies/01_data_center_power_cooling.md" target="_blank" rel="noopener">Data center power and cooling</a>.</strong> Hyperscaler capex appears to lead Vertiv’s revenue by two quarters in sample, but out of sample the lead disappears; HVAC orders and cloud capex help the nowcast slightly.</li>
+<li><strong><a href="https://github.com/RasmusCodes/industrial-intelligence/blob/main/docs/case_studies/02_caterpillar_equipment_demand.md" target="_blank" rel="noopener">Caterpillar equipment demand</a>.</strong> The composite fails, mostly because sales follow dealer inventories. One series, US construction-machinery orders, leads by about a quarter at every horizon, but does not survive a multiple-testing correction: a hypothesis for the next earnings seasons.</li>
+<li><strong><a href="https://github.com/RasmusCodes/industrial-intelligence/blob/main/docs/case_studies/03_electrical_equipment_grid.md" target="_blank" rel="noopener">Electrical equipment and grid</a>.</strong> Utility capex is too smooth to be a quarterly signal, and price indexes do not beat simple mean reversion for margins.</li>
+<li><strong><a href="https://github.com/RasmusCodes/industrial-intelligence/blob/main/docs/case_studies/04_backlog_conversion.md" target="_blank" rel="noopener">Order backlogs and conversion</a>.</strong> Backlogs grew faster than revenue at all ten companies that report them, so every backlog-to-revenue rule fails; the indicators do track implied order intake.</li>
+</ul>
+<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
+<ul>
+<li>No consensus estimates are licensed, so “surprise” means surprise against a statistical baseline, not against the market.</li>
+<li>Some series exist only as revised history (Census data center construction, grid load); for them the backtest assumes a publication lag and cannot replay revisions.</li>
+<li>UN Comtrade’s anonymous quota cut the trade series short, satellite data need accounts the project does not have, and companies outside the SEC’s quarterly XBRL (ABB, Siemens Energy, Schneider) are mapped but not modelled.</li>
+<li>17 companies and about 40 quarters each is a small sample: company-level results are noisy.</li>
+</ul>
+<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
+<p>A Python package with one polite HTTP client for every source (robots.txt, throttling, a raw cache with checksums), a point-in-time store, an XBRL replay that derives each quarter in the order filings were accepted, and a walk-forward engine with a leakage audit. 41 tests cover the replay, the as-of feature engine, the statistics and the parsers, and recompute sampled features from raw observations to check the point-in-time logic. The dashboard is static: everything it shows is exported as JSON, so it runs without the repository.</p>
 ]]></content:encoded></item><item><title>Does smart order routing pay? A simulated market and eleven routers</title><link>https://rasmuscodes.github.io/projects/smart-router/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/smart-router/</guid><pubDate>Sat, 21 Nov 2026 12:00:00 +0000</pubDate><description>A latency-aware simulation of five trading venues, routers from naive to optimised, and pre-registered experiments on what actually saves money. The simulator runs in your browser below.</description><category>market microstructure</category><category>order routing</category><category>simulation</category><category>python</category><content:encoded><![CDATA[<p>A US stock trades on more than a dozen exchanges and dozens of dark pools, each with its own fees, rebates, queue lengths and distance from your servers. A smart order router decides where every child order of a large trade goes. Vendors sell that as a source of savings; the obvious objection is that displayed prices are equal across venues most of the time, and what differs (fees, queues, the odds that a quote is still there when your order arrives, who you end up trading with) is hard to see.</p>
 <p>So I built a market where all of that is explicit, and asked a narrow question: <strong>once fees, rebates, queue position, latency, fill probability, adverse selection and market impact are all counted, does intelligent routing still save money, and which part of it does?</strong> I wrote the hypotheses, the metric and the decision rules down before running the evaluation.</p>
 <h2 id="try-it">Try it <a class="header-anchor" href="#try-it">#</a></h2>
@@ -906,59 +944,4 @@
 <p>Real data is the whole gap. The in-game model needs real match timelines, which only screen recordings and trained detectors can supply, and the simulation feature needs a faithful game engine.</p>
 <h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
 <p>Python throughout: SQLAlchemy and SQLite for the data, LightGBM, XGBoost, CatBoost and scikit-learn for the models, SHAP for explanations, OpenCV for the vision pipeline and FastAPI for the dashboard’s API. The dashboard itself is plain JavaScript with Chart.js.</p>
-]]></content:encoded></item><item><title>Six tests of market contagion: no early warning, adaptive models win</title><link>https://rasmuscodes.github.io/projects/contagion-lab/</link><guid isPermaLink="true">https://rasmuscodes.github.io/projects/contagion-lab/</guid><pubDate>Tue, 17 Nov 2026 12:00:00 +0000</pubDate><description>A reproducible platform for how shocks spread across US stocks, rates, credit, currencies and commodities, with every claim labelled descriptive, predictive or causal.</description><category>systemic risk</category><category>networks</category><category>regimes</category><category>stress testing</category><content:encoded><![CDATA[<p>Contagion Lab is a research platform for how financial shocks spread across US stocks, sectors, banks, Treasury yields, credit, currencies, commodities and volatility indices. It asks six questions a risk manager would ask, and writes each answer from the computed numbers rather than from a verdict decided in advance.</p>
-<h2 id="how-it-works">How it works <a class="header-anchor" href="#how-it-works">#</a></h2>
-<ul>
-<li><strong>Data.</strong> 93 daily series from Yahoo Finance, FRED, Cboe and the Federal Reserve, aligned on NYSE trading days. The main cross-asset network has 15 series from April 2003, and the data run to November 2026.</li>
-<li><strong>Timing as data.</strong> Every series carries its closing time. Tokyo closes before New York opens and some prices are stale, so part of what looks like a shock spreading over several days is a series taking in the previous day’s US news late. That lag is measured for each series.</li>
-<li><strong>Clean inputs.</strong> Yahoo’s daily currency bars changed convention around 2011, so FX comes from the Fed’s noon rates; oil and gold futures are spliced into ETF prices to remove roll jumps and the negative oil print of April 2020.</li>
-<li><strong>Models.</strong> Correlation and partial-correlation networks, dynamic factors, Granger and VAR networks, Diebold-Yilmaz connectedness (the share of each asset’s forecast-error variance that comes from the others), tail dependence and CoVaR, copulas, hidden Markov regimes, change-point detection and DCC-GARCH.</li>
-<li><strong>Claim levels.</strong> Every result is labelled descriptive (co-movement only), predictive (lead-lag content, tested out of sample) or identified (causal under stated assumptions), and the report keeps them apart. Every out-of-sample routine sees data up to the previous day only.</li>
-</ul>
-<h2 id="what-i-found">What I found <a class="header-anchor" href="#what-i-found">#</a></h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Question</th>
-<th>Answer</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Does connectedness rise before crises?</td>
-<td>Not reliably: no consistent build-up before 7 bear-market peaks (placebo p 0.47; smallest corrected q 0.36). It rises during crises and adds nothing out of sample beyond VIX and realised volatility</td>
-</tr>
-<tr>
-<td>Which assets transmit shocks?</td>
-<td>Equities in the standard sense, but about 90% of that is same-day co-movement. Lagged spillovers are 1–3% of connectedness and line up with series that react late</td>
-</tr>
-<tr>
-<td>Which sectors are most rate-sensitive?</td>
-<td>Real estate, homebuilders and utilities on descriptive betas. FOMC days identify the S&amp;P 500’s response, −0.98% per 10bp policy-driven rise in the 2-year yield, but only 3 of 18 sector responses precisely</td>
-</tr>
-<tr>
-<td>Do dynamic networks improve stress tests?</td>
-<td>Yes. An exponentially weighted (EWMA) covariance cuts stress-day prediction error by 18% against a static network (t −3.9). Yet every model’s 90% intervals cover only 62–80% of stress-day moves</td>
-</tr>
-<tr>
-<td>Are tail correlations more informative?</td>
-<td>Tail dependence is real, but correlations measured on past tail days forecast future ones no better than the full history</td>
-</tr>
-<tr>
-<td>Does regime detection improve hedging?</td>
-<td>No. Hedging with Treasuries, gold and the dollar, an adaptive (DCC) hedge cuts S&amp;P 500 variance by 24.7%; hedges built on a hidden Markov regime model cut it by about 6%, no better than a static hedge</td>
-</tr>
-</tbody>
-</table></div>
-<p>The models that win the stress tests all weight recent data heavily, while covariances conditioned on past crises do worse. Crises differ: the stock-bond correlation had opposite signs in 2008–2020 and in 2022.</p>
-<figure class="figure"><img loading="lazy" decoding="async" src="https://rasmuscodes.github.io/media/contagion-lab/hedge_variance.png" alt="Bar charts of S&amp;P 500 variance reduction by hedging method, with Treasuries, gold and the dollar as hedges and with Treasuries only; DCC and EWMA hedges lead and the regime-model hedges come last" /><figcaption>Bar charts of S&amp;P 500 variance reduction by hedging method, with Treasuries, gold and the dollar as hedges and with Treasuries only; DCC and EWMA hedges lead and the regime-model hedges come last</figcaption></figure>
-<p>The regime model’s value is episodic. In the 2020 crash its hedge lost 22.7% against 33.4% unhedged. In the 2022 rate shock it stayed long Treasuries while stocks and bonds fell together, and lost 40.1% against 24.1% unhedged. That fits a high-volatility state learned from flight-to-quality crises: the model can tell that markets are stressed, but a hedge needs the current correlation, not that of past crises.</p>
-<h2 id="limits">Limits <a class="header-anchor" href="#limits">#</a></h2>
-<ul>
-<li>Seven crisis onsets is a small sample, so a modest pre-crisis effect could be missed.</li>
-<li>Long credit history relies on Moody’s Baa spread, which updates a day late relative to equities, because the free ICE BofA spreads go back only three years.</li>
-<li>No model is well calibrated: every stress-test interval here is too narrow for real stress days.</li>
-</ul>
-<h2 id="how-its-built">How it’s built <a class="header-anchor" href="#how-its-built">#</a></h2>
-<p>A Python package with a data pipeline, network and regime libraries, a stress-testing engine with seven covariance views, and portfolio-risk tools (value at risk, expected shortfall, Euler risk decomposition). 33 estimator tests run on simulated data. A report and a six-view D3 dashboard are generated from the same outputs. The public repository holds the code, figures, tables and report, but no market data.</p>
 ]]></content:encoded></item></channel></rss>
